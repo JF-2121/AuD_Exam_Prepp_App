@@ -83,5 +83,24 @@
       2
     ],
     "explanation": "DFS uses a stack (explicit or via recursion), not a queue — that's BFS. A full traversal of either visits every reachable node, so neither is universally 'fewer'. The undirected-DFS-only-tree-and-back-edges fact is a classic result (no forward/cross edges possible in undirected DFS)."
+  },
+  {
+    "id": "gt-q-3",
+    "topicId": "graphs-traversal",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Topological sort via DFS inserts each finished vertex where in the output list?",
+    "options": ["At the back", "At the front", "Wherever it was discovered", "Sorted by vertex ID"],
+    "correctIndexes": [1],
+    "explanation": "Each vertex finishes only after all its descendants — inserting at the front as vertices finish naturally produces a valid topological order in Θ(V+E)."
+  },
+  {
+    "id": "gt-q-4",
+    "topicId": "graphs-traversal",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "The SCC algorithm's second DFS pass runs on which graph, visited in what order?",
+    "acceptedAnswers": ["transpose graph in descending finish time", "the transpose, descending finish time", "gt in descending finish time order"],
+    "explanation": "It runs on Gᵀ (all edges reversed), processing vertices in the main loop by descending finish time from the first DFS pass — each resulting tree is one SCC."
   }
 ]

@@ -82,5 +82,29 @@
       3
     ],
     "explanation": "Dijkstra doesn't specifically detect or abort on cycles — it just never revisits a finalized vertex. Non-negative weights include 0, so 0-weight edges are fine. The O(V log V) option omits the edge-relaxation cost entirely; Θ(V log V + E) matches the Fibonacci-heap implementation of Dijkstra (O(1) amortized decrease-key)."
+  },
+  {
+    "id": "sp-q-3",
+    "topicId": "shortest-paths",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Why can the DAG shortest-paths algorithm skip using a priority queue entirely?",
+    "options": [
+      "Because DAGs never have weighted edges",
+      "Because a topological order already guarantees every predecessor of a vertex is relaxed before it, so one pass suffices",
+      "Because it only works on unweighted graphs, like BFS",
+      "Priority queues are optional for Dijkstra too"
+    ],
+    "correctIndexes": [1],
+    "explanation": "Processing vertices in topological order means when you relax u's outgoing edges, u's own dist value is already final — no vertex needs revisiting, so a simple Θ(V+E) linear pass replaces Dijkstra's repeated extract-min."
+  },
+  {
+    "id": "sp-q-4",
+    "topicId": "shortest-paths",
+    "type": "short-answer",
+    "difficulty": "easy",
+    "prompt": "What does A* add to plain Dijkstra to make it goal-directed?",
+    "acceptedAnswers": ["a heuristic", "heuristic estimate", "a heuristic function", "distance heuristic to target"],
+    "explanation": "A heuristic estimate (e.g. straight-line distance to the target) is added to the priority key, biasing the search toward the goal."
   }
 ]

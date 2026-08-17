@@ -4,6 +4,9 @@ import { selectionSort } from './algorithms/sorting/selectionSort';
 import { mergeSort } from './algorithms/sorting/mergeSort';
 import { quickSort } from './algorithms/sorting/quickSort';
 import { bstInsert } from './algorithms/trees/bstInsert';
+import { rbtInsert } from './algorithms/trees/rbtInsert';
+import { dijkstra } from './algorithms/graphs/dijkstra';
+import { kruskal } from './algorithms/graphs/kruskal';
 import type { AnyAlgorithmDef } from './core/types';
 
 export const algorithmRegistry: AnyAlgorithmDef[] = [
@@ -13,6 +16,9 @@ export const algorithmRegistry: AnyAlgorithmDef[] = [
   mergeSort,
   quickSort,
   bstInsert,
+  rbtInsert,
+  dijkstra,
+  kruskal,
 ];
 
 export function getAlgorithm(id: string): AnyAlgorithmDef | undefined {

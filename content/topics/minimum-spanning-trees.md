@@ -3,7 +3,7 @@ id: minimum-spanning-trees
 title: "Minimum Spanning Trees: Kruskal & Prim"
 category: "Graphs"
 order: 3
-relatedAlgorithmIds: []
+relatedAlgorithmIds: ["kruskal"]
 sourceFiles: ["AuD_AnkiDeck"]
 ---
 

@@ -51,3 +51,42 @@ DFS-VISIT(u)
 **Complexity**: Θ(V + E), same as BFS — the difference is exploration order (stack/LIFO vs. queue/FIFO), not asymptotic cost.
 
 **BFS vs. DFS**: use BFS when you need shortest paths in an unweighted graph or level-by-level exploration; use DFS when you need to explore full paths, detect cycles, or compute finishing-time-based properties (topological order, SCCs).
+
+## Edge classification (via DFS)
+
+Every edge examined during a DFS falls into one of four types, determined by the color/discovery-time of the node it points to:
+
+| Type | When (u,v) is examined | Meaning |
+|---|---|---|
+| Tree edge | v.color == WHITE | v discovered for the first time via this edge |
+| Back edge | v.color == GRAY | v is an ancestor of u (this edge closes a cycle) |
+| Forward edge | v.color == BLACK and u.disc < v.disc | v is a descendant of u, already finished |
+| Cross edge | v.color == BLACK and u.disc > v.disc | v is in an already-explored, unrelated part of the tree |
+
+**Undirected graphs only ever produce tree and back edges** — no forward or cross edges are possible, since every edge is encountered from both endpoints.
+
+## Topological Sort
+
+Only defined for a **DAG** (Directed Acyclic Graph). Orders all vertices so that every edge (u,v) has u appearing before v.
+
+```
+TOPOLOGICAL-SORT(G)
+  run DFS(G); each time a vertex finishes, insert it at the FRONT of a linked list L
+  return L
+```
+
+**Complexity**: Θ(V+E) (same as DFS; front-insertion into a linked list is Θ(1)).
+
+## Strongly Connected Components (SCC)
+
+A maximal set of vertices C where every pair u,v ∈ C has a path u→v **and** v→u. Two different SCCs never overlap.
+
+```
+SCC(G)
+  run DFS(G)                                    // get finish times
+  compute Gᵀ                                     // transpose: reverse every edge
+  run DFS(Gᵀ), visiting vertices in the main loop by DESCENDING finish time from step 1
+  output each DFS tree from step 3 as one SCC
+```
+
+**Complexity**: Θ(V+E) — two DFS passes plus building the transpose.

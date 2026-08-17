@@ -1,13 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowDownWideNarrow, GitBranch, Play, RotateCcw } from 'lucide-react';
+import { ArrowDownWideNarrow, GitBranch, Play, RotateCcw, Share2, type LucideIcon } from 'lucide-react';
 import { algorithmRegistry, getAlgorithm } from './registry';
 import { StepPlayer } from './core/StepPlayer';
+
+const FAMILY_ICON: Record<string, LucideIcon> = {
+  'bst-insert': GitBranch,
+  'rbt-insert': GitBranch,
+  dijkstra: Share2,
+  kruskal: Share2,
+};
 
 export function VisualizerPage() {
   const { algoId } = useParams();
   const navigate = useNavigate();
   const algorithm = algoId ? getAlgorithm(algoId) : undefined;
+  const hasInput = algorithm ? algorithm.defaultInput !== undefined : false;
   const [inputText, setInputText] = useState(() => JSON.stringify(algorithm?.defaultInput ?? []));
 
   useEffect(() => {
@@ -23,7 +31,7 @@ export function VisualizerPage() {
         <p className="mb-5 text-sm text-[var(--color-text-dim)]">Pick an algorithm to step through interactively.</p>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {algorithmRegistry.map((a) => {
-            const Icon = a.id === 'bst-insert' ? GitBranch : ArrowDownWideNarrow;
+            const Icon = FAMILY_ICON[a.id] ?? ArrowDownWideNarrow;
             return (
               <Link
                 key={a.id}
@@ -45,7 +53,7 @@ export function VisualizerPage() {
   let parsedInput: unknown;
   let parseError: string | null = null;
   try {
-    parsedInput = JSON.parse(inputText);
+    parsedInput = hasInput ? JSON.parse(inputText) : undefined;
   } catch {
     parseError = 'Invalid JSON input.';
   }
@@ -62,17 +70,19 @@ export function VisualizerPage() {
           ))}
         </select>
       </div>
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        <label className="text-sm text-[var(--color-text-dim)]">Input (JSON):</label>
-        <input
-          className="input w-full sm:w-72"
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-        />
-        <button className="btn" onClick={() => setInputText(JSON.stringify(algorithm.defaultInput))}>
-          <RotateCcw size={13} /> Reset to default
-        </button>
-      </div>
+      {hasInput && (
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          <label className="text-sm text-[var(--color-text-dim)]">Input (JSON):</label>
+          <input
+            className="input w-full sm:w-72"
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+          />
+          <button className="btn" onClick={() => setInputText(JSON.stringify(algorithm.defaultInput))}>
+            <RotateCcw size={13} /> Reset to default
+          </button>
+        </div>
+      )}
       {parseError ? (
         <p className="text-[var(--color-bad)]">{parseError}</p>
       ) : (

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getAllSrsState, putSrsState } from '../../lib/db';
+import { getAllSrsState, putSrsState, recordReviewLog } from '../../lib/db';
 import { isDue, nextSrsState, type Grade } from '../../lib/srs';
 import type { Flashcard, SrsState } from '../../lib/types';
 
@@ -24,6 +24,7 @@ export function useSrsQueue(allCards: Flashcard[], topicId?: string) {
     async (flashcardId: string, g: Grade) => {
       const next = nextSrsState(srsStates[flashcardId], flashcardId, g);
       await putSrsState(next);
+      await recordReviewLog(flashcardId);
       setSrsStates((prev) => ({ ...prev, [flashcardId]: next }));
     },
     [srsStates],

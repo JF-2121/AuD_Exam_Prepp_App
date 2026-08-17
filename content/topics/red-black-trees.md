@@ -3,7 +3,7 @@ id: red-black-trees
 title: "Red-Black Trees"
 category: "Trees"
 order: 2
-relatedAlgorithmIds: []
+relatedAlgorithmIds: ["rbt-insert"]
 sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD26 Maxine RBT Delete"]
 ---
 

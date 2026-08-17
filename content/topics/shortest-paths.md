@@ -3,13 +3,21 @@ id: shortest-paths
 title: "Shortest Paths & Maximum Flow"
 category: "Graphs"
 order: 2
-relatedAlgorithmIds: []
+relatedAlgorithmIds: ["dijkstra"]
 sourceFiles: ["AuD_AnkiDeck"]
 ---
 
 ## Single-Source Shortest Paths (SSSP)
 
-Given a weighted graph and a source vertex, find the shortest (minimum total weight) path from the source to every other vertex.
+Given a weighted graph and a source vertex, find the shortest (minimum total weight) path from the source to every other vertex. Every algorithm below is built on the same primitive:
+
+```
+relax(G, u, v, w):
+  if v.dist > u.dist + w(u,v) then
+    v.dist = u.dist + w(u,v); v.pred = u
+```
+
+Rule: positive-weight cycles never help (only add cost) and negative-weight cycles make "shortest path" undefined (you could loop forever, decreasing cost each time) — so a shortest path is always simple. A shortest path's every subpath is itself a shortest path between its endpoints.
 
 ## Dijkstra's Algorithm
 
@@ -49,11 +57,34 @@ BellmanFord(G, s)
 
 **Complexity**: O(V·E) — much slower than Dijkstra, but strictly more general.
 
-| Algorithm | Handles negative weights? | Time |
-|---|---|---|
-| Dijkstra | No | O((V+E) log V) |
-| Bellman-Ford | Yes (detects negative cycles) | O(V·E) |
-| BFS (unweighted only) | n/a | O(V+E) |
+## DAG Shortest Paths
+
+If the graph is guaranteed acyclic, there's a faster option than Bellman-Ford: topologically sort once, then relax every vertex's outgoing edges in that order. Because a topological order guarantees every predecessor of u is processed before u, one pass suffices — no repeated relaxation needed.
+
+```
+DAGShortestPaths(G, s, w)
+  initSSSP(G, s, w)
+  topologically sort V
+  for each u in V, in topological order:
+    for each v in adj(u):
+      relax(G, u, v, w)
+```
+
+**Complexity**: Θ(V+E) — faster than both Dijkstra and Bellman-Ford, but only applicable to DAGs.
+
+## A* Search
+
+A goal-directed variant of Dijkstra: adds a **heuristic** estimate `u.heur` (e.g. straight-line distance to the target t) so the priority queue orders vertices by `dist + heur` instead of `dist` alone, biasing exploration toward the target instead of expanding uniformly in all directions. Stops as soon as the target is popped from the queue.
+
+**Trade-offs vs. Dijkstra**: usually much faster in practice (fewer wasted expansions away from the goal), but needs extra memory for the heuristic values and — like Dijkstra — still doesn't handle negative weights.
+
+| Algorithm | Handles negative weights? | Time | Notes |
+|---|---|---|---|
+| BFS | n/a (unweighted only) | O(V+E) | shortest path by edge count |
+| DAG shortest paths | Yes (no cycles to begin with) | Θ(V+E) | fastest, but DAG-only |
+| Dijkstra | No | O((V+E) log V) | classic greedy SSSP |
+| A* | No | O((V+E) log V) | Dijkstra + goal-directed heuristic |
+| Bellman-Ford | Yes (detects negative cycles) | O(V·E) | most general, slowest |
 
 ## Maximum Flow (Ford-Fulkerson)
 

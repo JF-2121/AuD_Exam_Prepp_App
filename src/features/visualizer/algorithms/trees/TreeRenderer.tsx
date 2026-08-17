@@ -5,6 +5,8 @@ export interface TreeNode {
   value: number;
   left: string | null;
   right: string | null;
+  /** Present for Red-Black trees; absent for plain BSTs, which fall back to the default accent color. */
+  color?: 'red' | 'black';
 }
 
 export interface TreeState {
@@ -78,11 +80,26 @@ export function TreeRenderer({ step }: { step: AlgorithmStep<TreeState> }) {
         const cy = node.y * ySpacing + 24;
         const isHighlight = node.id === highlightId;
         const isNew = node.id === newId;
-        const fill = isNew ? 'var(--color-good)' : isHighlight ? 'var(--color-warn)' : 'var(--color-accent)';
+        let fill = 'var(--color-accent)';
+        let textColor = '#0b0b10';
+        if (node.color === 'red') {
+          fill = '#dc2626';
+          textColor = '#fef2f2';
+        } else if (node.color === 'black') {
+          fill = '#3f3f46';
+          textColor = '#f4f4f5';
+        }
+        if (isNew) {
+          fill = 'var(--color-good)';
+          textColor = '#0b0b10';
+        } else if (isHighlight) {
+          fill = 'var(--color-warn)';
+          textColor = '#0b0b10';
+        }
         return (
           <g key={node.id}>
-            <circle cx={cx} cy={cy} r={18} fill={fill} />
-            <text x={cx} y={cy + 5} textAnchor="middle" fontSize={13} fill="#0f1115">
+            <circle cx={cx} cy={cy} r={18} fill={fill} stroke={node.color ? 'var(--color-border-strong)' : 'none'} strokeWidth={1.5} />
+            <text x={cx} y={cy + 5} textAnchor="middle" fontSize={13} fill={textColor}>
               {node.value}
             </text>
           </g>
