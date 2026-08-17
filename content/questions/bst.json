@@ -1,0 +1,23 @@
+[
+  {
+    "id": "bst-q-1", "topicId": "bst", "type": "multiple-choice", "difficulty": "easy",
+    "prompt": "What traversal of a BST yields values in ascending sorted order?",
+    "options": ["Pre-order", "In-order", "Post-order", "Level-order"],
+    "correctIndex": 1,
+    "explanation": "In-order traversal (left, node, right) visits BST nodes in ascending order by definition of the BST invariant."
+  },
+  {
+    "id": "bst-q-2", "topicId": "bst", "type": "short-answer", "difficulty": "medium",
+    "prompt": "What is the worst-case time complexity of inserting into an unbalanced BST?",
+    "acceptedAnswers": ["O(n)", "n"],
+    "explanation": "A degenerate BST (e.g. built from already-sorted input) is effectively a linked list, so insertion is O(n)."
+  },
+  {
+    "id": "bst-q-3", "topicId": "bst", "type": "trace", "difficulty": "hard",
+    "prompt": "Insert 8, 3, 10, 1, 6 (in that order) into an empty BST. Give the in-order traversal as JSON, e.g. [1,3,5,8].",
+    "algorithmId": "bst-insert",
+    "initialInput": [8, 3, 10, 1, 6],
+    "expectedFinalOutput": [1, 3, 6, 8, 10],
+    "explanation": "In-order traversal of any BST always yields the values in ascending sorted order, regardless of insertion order or shape."
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "mock-1",
+    "title": "Mock Exam 1 (Sample)",
+    "durationMinutes": 15,
+    "sections": [
+      { "topicIds": ["sorting-basics"], "count": 3 },
+      { "topicIds": ["bst"], "count": 3 }
+    ]
+  }
+]

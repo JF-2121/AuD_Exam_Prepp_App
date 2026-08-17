@@ -1,0 +1,5 @@
+[
+  { "id": "sort-fc-1", "topicId": "sorting-basics", "front": "Worst-case time complexity of Bubble Sort?", "back": "O(n²)", "tags": ["complexity"] },
+  { "id": "sort-fc-2", "topicId": "sorting-basics", "front": "Is Bubble Sort a stable sort?", "back": "Yes — equal elements never cross each other.", "tags": ["properties"] },
+  { "id": "sort-fc-3", "topicId": "sorting-basics", "front": "Does Bubble Sort use extra space proportional to n?", "back": "No — it sorts in place, O(1) auxiliary space.", "tags": ["space"] }
+]

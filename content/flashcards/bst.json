@@ -1,0 +1,5 @@
+[
+  { "id": "bst-fc-1", "topicId": "bst", "front": "Average-case time to insert into a BST?", "back": "O(log n)", "tags": ["complexity"] },
+  { "id": "bst-fc-2", "topicId": "bst", "front": "What input order produces a degenerate (worst-case) BST?", "back": "Already-sorted input — the tree becomes a linked list, O(n) operations.", "tags": ["complexity"] },
+  { "id": "bst-fc-3", "topicId": "bst", "front": "In-order traversal of a BST visits nodes in what order?", "back": "Ascending sorted order of their values.", "tags": ["traversal"] }
+]
