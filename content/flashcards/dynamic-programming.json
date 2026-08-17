@@ -1,0 +1,8 @@
+[
+  { "id": "dp-fc-1", "topicId": "dynamic-programming", "front": "What two properties must a problem have for DP to apply?", "back": "Optimal substructure (optimal solution built from optimal subproblem solutions) and overlapping subproblems (the same subproblem recurs).", "tags": ["definitions"] },
+  { "id": "dp-fc-2", "topicId": "dynamic-programming", "front": "Top-down vs. bottom-up DP?", "back": "Top-down: natural recursion with memoized cache. Bottom-up: iteratively fill a table starting from base cases in dependency order.", "tags": ["technique"] },
+  { "id": "dp-fc-3", "topicId": "dynamic-programming", "front": "Why doesn't memoizing Merge Sort help, even though it has optimal substructure?", "back": "Merge Sort's subproblems don't overlap — each subarray is only ever solved once, so there's nothing to cache and reuse.", "tags": ["dp-vs-dc"] },
+  { "id": "dp-fc-4", "topicId": "dynamic-programming", "front": "What makes Backtracking faster than brute-force enumeration in practice?", "back": "Pruning — abandoning a partial candidate as soon as it can't possibly lead to a valid solution.", "tags": ["backtracking"] },
+  { "id": "dp-fc-5", "topicId": "dynamic-programming", "front": "Is 0/1 Knapsack solvable by a greedy algorithm?", "back": "No — it lacks the greedy-choice property and requires DP. Fractional Knapsack, by contrast, is correctly greedy.", "tags": ["greedy"] },
+  { "id": "dp-fc-6", "topicId": "dynamic-programming", "front": "In Simulated Annealing, why does the algorithm sometimes accept a worse move?", "back": "To escape local optima — the probability of accepting a worse move decreases over time, analogous to a cooling temperature.", "tags": ["metaheuristics"] }
+]

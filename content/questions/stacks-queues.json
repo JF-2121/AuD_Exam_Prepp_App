@@ -1,0 +1,67 @@
+[
+  {
+    "id": "sq-q-1",
+    "topicId": "stacks-queues",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "A queue implemented as a fixed-size array without wraparound has what problem?",
+    "options": [
+      "It runs out of usable space even when logically not full, as front/rear only advance forward",
+      "It cannot store more than 1 element",
+      "It becomes a stack automatically",
+      "There is no problem"
+    ],
+    "explanation": "Without treating the array as cyclic (via modulo), the front/rear indices only ever increase, eventually running off the end even though slots at the beginning are free.",
+    "correctIndexes": [
+      0
+    ]
+  },
+  {
+    "id": "sq-q-2",
+    "topicId": "stacks-queues",
+    "type": "short-answer",
+    "difficulty": "easy",
+    "prompt": "What operator makes a cyclic-array queue implementation work?",
+    "acceptedAnswers": [
+      "modulo",
+      "%",
+      "mod"
+    ],
+    "explanation": "The modulo operator wraps the index back to 0 once it passes the end of the array."
+  },
+  {
+    "id": "real-sq-1",
+    "topicId": "stacks-queues",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "[Real 2025 exam question] Which statement about stacks and queues is correct?",
+    "options": [
+      "The stack and the queue both work by the LIFO principle.",
+      "The stack and the queue both work by the FIFO principle.",
+      "The stack works by LIFO, the queue by FIFO.",
+      "The stack works by FIFO, the queue by LIFO."
+    ],
+    "correctIndexes": [
+      2
+    ],
+    "explanation": "Stack = Last-In-First-Out, Queue = First-In-First-Out."
+  },
+  {
+    "id": "real-sq-2",
+    "topicId": "stacks-queues",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "[Real 2025 exam question] Which two statements about stacks/queues are correct?",
+    "options": [
+      "An element in the middle of a stack can be accessed without removing the elements above it.",
+      "Push and pop on a stack typically run in O(1).",
+      "Enqueue and dequeue on a queue typically run in O(n).",
+      "Enqueueing then immediately dequeueing on a queue returns the same element only if the queue was empty beforehand."
+    ],
+    "correctIndexes": [
+      1,
+      3
+    ],
+    "explanation": "Push/pop are O(1) with a proper array or linked implementation. If the queue wasn't empty, dequeue returns whatever was already at the front, not the just-enqueued element — only an empty queue guarantees enqueue then dequeue returns the same element."
+  }
+]

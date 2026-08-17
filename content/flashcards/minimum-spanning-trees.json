@@ -1,0 +1,5 @@
+[
+  { "id": "mst-fc-1", "topicId": "minimum-spanning-trees", "front": "What do Kruskal's and Prim's algorithms both compute?", "back": "The Minimum Spanning Tree (MST) of a connected, undirected, weighted graph.", "tags": ["definitions"] },
+  { "id": "mst-fc-2", "topicId": "minimum-spanning-trees", "front": "Kruskal's algorithm: what data structure detects cycles, and what dominates its time complexity?", "back": "A Union-Find (Disjoint-Set) structure detects cycles; the O(E log E) sort of edges dominates overall complexity.", "tags": ["kruskal"] },
+  { "id": "mst-fc-3", "topicId": "minimum-spanning-trees", "front": "Is Kruskal edge-centric or vertex-centric? Prim?", "back": "Kruskal is edge-centric (processes edges globally sorted by weight). Prim is vertex-centric (grows one tree from a start vertex), structurally similar to Dijkstra.", "tags": ["comparison"] }
+]

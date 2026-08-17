@@ -1,0 +1,5 @@
+[
+  { "id": "sel-fc-1", "topicId": "sorting-selection", "front": "Selection Sort: best-case complexity?", "back": "Θ(n²) — even for already-sorted input, it still scans the whole unsorted remainder every time to find the minimum.", "tags": ["complexity"] },
+  { "id": "sel-fc-2", "topicId": "sorting-selection", "front": "What's the main practical advantage of Selection Sort over other O(n²) sorts?", "back": "At most n swaps total, useful when write operations are much more expensive than comparisons.", "tags": ["properties"] },
+  { "id": "sel-fc-3", "topicId": "sorting-selection", "front": "Is naive Selection Sort stable?", "back": "No — swapping the found minimum into place can move an equal element out of its original relative order.", "tags": ["properties"] }
+]

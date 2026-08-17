@@ -39,7 +39,7 @@ function generateSteps(input: number[]): AlgorithmStep<ArrayState>[] {
 export const bubbleSort: AlgorithmDef<number[], ArrayState> = {
   id: 'bubble-sort',
   title: 'Bubble Sort',
-  topicId: 'sorting-basics',
+  topicId: 'sorting-bubble',
   pseudocode,
   defaultInput: [5, 3, 8, 1, 9, 4],
   generateSteps,

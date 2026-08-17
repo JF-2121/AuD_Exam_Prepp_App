@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
+import { ChevronLeft, ChevronRight, Timer, Trophy, CheckCircle2, XCircle, Play } from 'lucide-react';
 import { recordExamAttempt } from '../../lib/db';
 import type { ExamTemplate, Question, Topic } from '../../lib/types';
+import { DifficultyBadge } from '../../components/DifficultyBadge';
 import { gradeQuestion, type GradeResult } from '../quiz/grading';
 import { assembleExam } from './examAssembler';
 import { MultipleChoice } from '../quiz/MultipleChoice';
@@ -89,28 +91,25 @@ export function ExamRunner({
   if (phase === 'select') {
     return (
       <div>
-        <h1 className="mb-4 text-2xl font-semibold text-[var(--color-text-h)]">Mock Exam</h1>
+        <h1 className="mb-4 flex items-center gap-2 text-2xl font-semibold tracking-tight text-[var(--color-text-h)]">
+          <Trophy size={22} className="text-[var(--color-accent)]" /> Mock Exam
+        </h1>
         {examTemplates.length === 0 ? (
           <p className="text-[var(--color-text-dim)]">No exam templates authored yet.</p>
         ) : (
-          <>
-            <select
-              className="mb-4 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-sm"
-              value={templateId}
-              onChange={(e) => setTemplateId(e.target.value)}
-            >
+          <div className="card max-w-sm p-5">
+            <label className="mb-1.5 block text-xs font-medium text-[var(--color-text-dim)]">Choose a template</label>
+            <select className="input mb-4 w-full" value={templateId} onChange={(e) => setTemplateId(e.target.value)}>
               {examTemplates.map((t) => (
                 <option key={t.id} value={t.id}>
                   {t.title} ({t.durationMinutes} min)
                 </option>
               ))}
             </select>
-            <div>
-              <button className="btn btn-primary" onClick={start}>
-                Start exam
-              </button>
-            </div>
-          </>
+            <button className="btn btn-primary w-full justify-center" onClick={start}>
+              <Play size={14} /> Start exam
+            </button>
+          </div>
         )}
       </div>
     );
@@ -120,11 +119,17 @@ export function ExamRunner({
     const q = examQuestions[cursor];
     const minutes = Math.floor(secondsLeft / 60);
     const secs = secondsLeft % 60;
+    const lowTime = secondsLeft < 60;
     return (
       <div>
         <div className="mb-4 flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-[var(--color-text-h)]">{template?.title}</h1>
-          <span className="rounded bg-[var(--color-surface)] px-3 py-1 font-mono text-sm">
+          <h1 className="text-xl font-semibold tracking-tight text-[var(--color-text-h)]">{template?.title}</h1>
+          <span
+            className={`flex items-center gap-1.5 rounded-md px-3 py-1 font-mono text-sm ${
+              lowTime ? 'bg-[var(--color-bad-dim)] text-[var(--color-bad)]' : 'bg-[var(--color-surface)] text-[var(--color-text)]'
+            }`}
+          >
+            <Timer size={14} />
             {minutes}:{secs.toString().padStart(2, '0')}
           </span>
         </div>
@@ -132,12 +137,12 @@ export function ExamRunner({
           {examQuestions.map((eq, i) => (
             <button
               key={eq.id}
-              className={`h-7 w-7 rounded text-xs ${
+              className={`h-7 w-7 rounded-md text-xs font-medium transition-colors ${
                 i === cursor
-                  ? 'bg-[var(--color-accent)] text-black'
+                  ? 'bg-[var(--color-accent)] text-[#0b0b10]'
                   : answers[eq.id] !== undefined
-                    ? 'bg-[var(--color-good)] text-black'
-                    : 'bg-[var(--color-surface)] text-[var(--color-text-dim)]'
+                    ? 'bg-[var(--color-good-dim)] text-[var(--color-good)]'
+                    : 'bg-[var(--color-surface)] text-[var(--color-text-dim)] hover:bg-[var(--color-surface-hover)]'
               }`}
               onClick={() => setCursor(i)}
             >
@@ -146,10 +151,11 @@ export function ExamRunner({
           ))}
         </div>
         {q && (
-          <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
-            <p className="mb-2 text-xs uppercase tracking-wide text-[var(--color-text-dim)]">
-              {topicTitle.get(q.topicId)} · {q.difficulty}
-            </p>
+          <div className="card p-5">
+            <div className="mb-3 flex items-center gap-2">
+              <span className="badge badge-neutral">{topicTitle.get(q.topicId)}</span>
+              <DifficultyBadge difficulty={q.difficulty} />
+            </div>
             {q.type === 'multiple-choice' && (
               <MultipleChoice question={q} onSubmit={(a) => setAnswers((prev) => ({ ...prev, [q.id]: a }))} />
             )}
@@ -163,11 +169,11 @@ export function ExamRunner({
         )}
         <div className="mt-4 flex justify-between">
           <button className="btn" disabled={cursor === 0} onClick={() => setCursor((c) => c - 1)}>
-            ◀ Previous
+            <ChevronLeft size={14} /> Previous
           </button>
           {cursor < examQuestions.length - 1 ? (
             <button className="btn" onClick={() => setCursor((c) => c + 1)}>
-              Next ▶
+              Next <ChevronRight size={14} />
             </button>
           ) : (
             <button className="btn btn-primary" onClick={submit}>
@@ -182,20 +188,23 @@ export function ExamRunner({
   const totalCorrect = results ? Object.values(results).filter((r) => r.correct).length : 0;
   return (
     <div>
-      <h1 className="mb-2 text-2xl font-semibold text-[var(--color-text-h)]">Results</h1>
+      <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold tracking-tight text-[var(--color-text-h)]">
+        <Trophy size={22} className="text-[var(--color-accent)]" /> Results
+      </h1>
       <p className="mb-4 text-[var(--color-text-dim)]">
-        {totalCorrect}/{examQuestions.length} correct
+        <span className="font-medium text-[var(--color-text)]">{totalCorrect}/{examQuestions.length}</span> correct
       </p>
       <div className="flex flex-col gap-3">
         {examQuestions.map((q, i) => {
           const r = results?.[q.id];
           return (
-            <div key={q.id} className="rounded border border-[var(--color-border)] p-3">
+            <div key={q.id} className="card p-3">
               <p className="text-xs text-[var(--color-text-dim)]">
                 Q{i + 1} · {topicTitle.get(q.topicId)}
               </p>
               <p className="my-1">{q.prompt}</p>
-              <p className={r?.correct ? 'text-[var(--color-good)]' : 'text-[var(--color-bad)]'}>
+              <p className={`flex items-center gap-1.5 text-sm font-medium ${r?.correct ? 'text-[var(--color-good)]' : 'text-[var(--color-bad)]'}`}>
+                {r?.correct ? <CheckCircle2 size={14} /> : <XCircle size={14} />}
                 {r?.correct ? 'Correct' : 'Incorrect'}
               </p>
               <p className="text-sm text-[var(--color-text-dim)]">{r?.explanation}</p>

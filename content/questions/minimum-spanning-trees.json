@@ -1,0 +1,32 @@
+[
+  {
+    "id": "mst-q-1",
+    "topicId": "minimum-spanning-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "What does Kruskal's algorithm use to avoid creating a cycle when adding an edge?",
+    "options": [
+      "A priority queue keyed by distance",
+      "A Union-Find (Disjoint-Set) structure",
+      "A BFS queue",
+      "A hash table of visited nodes"
+    ],
+    "explanation": "Union-Find lets Kruskal check in near-O(1) amortized time whether two endpoints are already connected, i.e. whether adding the edge would form a cycle.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "mst-q-2",
+    "topicId": "minimum-spanning-trees",
+    "type": "short-answer",
+    "difficulty": "easy",
+    "prompt": "Which MST algorithm is structurally most similar to Dijkstra's shortest-path algorithm?",
+    "acceptedAnswers": [
+      "Prim",
+      "Prim's",
+      "prim's algorithm"
+    ],
+    "explanation": "Prim's algorithm grows a single tree from a start vertex using a min-priority queue, just like Dijkstra grows a shortest-path tree."
+  }
+]

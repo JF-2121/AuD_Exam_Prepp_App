@@ -1,0 +1,7 @@
+[
+  { "id": "rbt-fc-1", "topicId": "red-black-trees", "front": "What are the four Red-Black Tree rules?", "back": "1) Every node is red or black. 2) The root is black. 3) A red node never has a red child. 4) Every root-to-leaf path has the same number of black nodes.", "tags": ["definitions"] },
+  { "id": "rbt-fc-2", "topicId": "red-black-trees", "front": "What height guarantee does a Red-Black Tree provide?", "back": "Height ≤ 2·log(n+1), keeping search/insert/delete at Θ(log n) worst case.", "tags": ["complexity"] },
+  { "id": "rbt-fc-3", "topicId": "red-black-trees", "front": "Why use a shared sentinel node instead of null pointers in an RBT implementation?", "back": "It ensures every node always has valid left/right/parent references, removing most null-checking special cases from the algorithms.", "tags": ["implementation"] },
+  { "id": "rbt-fc-4", "topicId": "red-black-trees", "front": "What color is a newly inserted node in an RBT, before fixup?", "back": "Red — this can only violate rule 3 (red-red), never rule 4 (black-height), which fixup then repairs.", "tags": ["insert"] },
+  { "id": "rbt-fc-5", "topicId": "red-black-trees", "front": "What real-world system uses a Red-Black Tree, and for what?", "back": "The Linux kernel's Completely Fair Scheduler (CFS) — keeps runnable processes ordered by virtual runtime.", "tags": ["applications"] }
+]

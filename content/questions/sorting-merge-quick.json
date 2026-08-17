@@ -1,0 +1,80 @@
+[
+  {
+    "id": "mq-q-1",
+    "topicId": "sorting-merge-quick",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Why does Quicksort hit Θ(n²) on already-sorted input when using the first element as pivot?",
+    "options": [
+      "Because comparisons take longer on sorted data",
+      "Because the pivot is always the minimum, producing maximally unbalanced partitions",
+      "Because Quicksort cannot handle sorted input at all",
+      "Because Merge Sort would be used instead"
+    ],
+    "explanation": "With sorted input and first-element pivot, every partition splits into one empty side and one side of size n-1, giving recursion depth n.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "mq-q-2",
+    "topicId": "sorting-merge-quick",
+    "type": "trace",
+    "difficulty": "hard",
+    "prompt": "Run Merge Sort on [8, 3, 5, 1, 9, 2]. Give the final sorted array as JSON.",
+    "algorithmId": "merge-sort",
+    "initialInput": [
+      8,
+      3,
+      5,
+      1,
+      9,
+      2
+    ],
+    "expectedFinalOutput": [
+      1,
+      2,
+      3,
+      5,
+      8,
+      9
+    ],
+    "explanation": "Merge Sort recursively splits the array in half and merges sorted halves back together."
+  },
+  {
+    "id": "mq-q-3",
+    "topicId": "sorting-merge-quick",
+    "type": "trace",
+    "difficulty": "hard",
+    "prompt": "Run Quicksort on [6, 1, 8, 3, 5]. Give the final sorted array as JSON.",
+    "algorithmId": "quicksort",
+    "initialInput": [
+      6,
+      1,
+      8,
+      3,
+      5
+    ],
+    "expectedFinalOutput": [
+      1,
+      3,
+      5,
+      6,
+      8
+    ],
+    "explanation": "Quicksort partitions around a pivot (first element of the region), then recursively sorts each side."
+  },
+  {
+    "id": "mq-q-4",
+    "topicId": "sorting-merge-quick",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "What is the asymptotic lower bound for ANY comparison-based sorting algorithm's worst case?",
+    "acceptedAnswers": [
+      "Ω(n log n)",
+      "omega(n log n)",
+      "n log n"
+    ],
+    "explanation": "From the decision-tree argument: log₂(n!) = Θ(n log n) comparisons are needed in the worst case."
+  }
+]

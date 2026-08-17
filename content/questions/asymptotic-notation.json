@@ -1,0 +1,86 @@
+[
+  {
+    "id": "asym-q-1",
+    "topicId": "asymptotic-notation",
+    "type": "short-answer",
+    "difficulty": "easy",
+    "prompt": "Simplify f(n) = 7n³ + 100n² + 5 to Θ notation.",
+    "acceptedAnswers": [
+      "Θ(n^3)",
+      "Θ(n³)",
+      "theta(n^3)",
+      "theta(n³)",
+      "O(n^3)"
+    ],
+    "explanation": "Take the highest-growth term (7n³) and drop the constant → Θ(n³)."
+  },
+  {
+    "id": "asym-q-2",
+    "topicId": "asymptotic-notation",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "T(n) = 2T(n/2) + Θ(n). Which Master Theorem case applies, and what is T(n)?",
+    "options": [
+      "Case 1, T(n) = Θ(n)",
+      "Case 2, T(n) = Θ(n log n)",
+      "Case 3, T(n) = Θ(n²)",
+      "Master Theorem does not apply"
+    ],
+    "explanation": "a=2, b=2, so n^(log_b a) = n. f(n) = Θ(n) matches n^(log_b a) exactly → Case 2 → T(n) = Θ(n log n) (this is Merge Sort's recurrence).",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "asym-q-3",
+    "topicId": "asymptotic-notation",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Which notation is used to express a worst-case running time?",
+    "options": [
+      "Ω",
+      "O",
+      "ω",
+      "none of these"
+    ],
+    "explanation": "O-notation gives an upper bound, which is what 'worst case' means: the algorithm never does worse than this.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "real-asym-1",
+    "topicId": "asymptotic-notation",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "[Real 2025 exam question] Order these functions by growing complexity: f1(n)=n log n, f2(n)=n², f3(n)=2ⁿ, f4(n)=n^(log n).",
+    "options": [
+      "f1 < f2 < f3 < f4",
+      "f1 < f2 < f4 < f3",
+      "f1 < f4 < f2 < f3",
+      "f4 < f2 < f1 < f3"
+    ],
+    "correctIndexes": [
+      1
+    ],
+    "explanation": "n^(log n) = 2^(log² n), which eventually outgrows n² = 2^(2 log n) since log²n > 2logn for large n, but 2^(log²n) still grows slower than 2ⁿ. So: n log n < n² < n^(log n) < 2ⁿ."
+  },
+  {
+    "id": "real-asym-2",
+    "topicId": "asymptotic-notation",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "[Real 2025 exam question] What is the runtime f(n) of this code (choose exactly 2 true statements)?\n\nAlg(n):\n  c=0\n  for i=1 to n:\n    j=1\n    while j<i: j=2*j; c=c+j\n  return c",
+    "options": [
+      "f(n) ∈ O(n)",
+      "f(n) ∈ O(n²)",
+      "f(n) ∈ Θ(n·log(n))",
+      "f(n) ∈ Θ(n²)"
+    ],
+    "correctIndexes": [
+      1,
+      2
+    ],
+    "explanation": "The inner loop doubles j from 1 until j≥i, running ~log₂(i) times. Summed over i=1..n gives Θ(n log n) — which is also O(n²) (a valid, just non-tight, upper bound), but not O(n) and not Θ(n²)."
+  }
+]

@@ -1,0 +1,33 @@
+[
+  {
+    "id": "rbt-q-1",
+    "topicId": "red-black-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Which of the four Red-Black Tree rules is a newly-inserted red node most likely to violate?",
+    "options": [
+      "Rule 1 (color exists)",
+      "Rule 2 (root is black)",
+      "Rule 3 (no red-red)",
+      "Rule 4 (black-height)"
+    ],
+    "explanation": "A new node is always colored red; if its parent is also red, rule 3 (no red node has a red child) is violated and fixup is triggered.",
+    "correctIndexes": [
+      2
+    ]
+  },
+  {
+    "id": "rbt-q-2",
+    "topicId": "red-black-trees",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "What is the worst-case height bound of a Red-Black Tree with n nodes?",
+    "acceptedAnswers": [
+      "2 log(n+1)",
+      "2*log(n+1)",
+      "o(log n)",
+      "O(log n)"
+    ],
+    "explanation": "Height ≤ 2·log(n+1), which keeps search/insert/delete at Θ(log n) even in the worst case."
+  }
+]

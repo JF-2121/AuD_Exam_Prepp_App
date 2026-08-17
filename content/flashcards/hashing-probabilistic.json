@@ -1,0 +1,8 @@
+[
+  { "id": "hash-fc-1", "topicId": "hashing-probabilistic", "front": "Expected time complexity of hash table insert/search/delete?", "back": "O(1) expected, under the simple uniform hashing assumption.", "tags": ["complexity"] },
+  { "id": "hash-fc-2", "topicId": "hashing-probabilistic", "front": "What is the load factor α of a hash table?", "back": "α = n/m, the ratio of stored keys (n) to table slots (m). It governs expected performance under chaining: O(1+α).", "tags": ["definitions"] },
+  { "id": "hash-fc-3", "topicId": "hashing-probabilistic", "front": "Chaining vs. open addressing — key difference?", "back": "Chaining stores colliding keys in a linked list per slot. Open addressing probes alternative slots within the array itself on collision.", "tags": ["collision-resolution"] },
+  { "id": "hash-fc-4", "topicId": "hashing-probabilistic", "front": "What error type can a Bloom filter produce, and which is impossible?", "back": "False positives are possible (says 'yes' incorrectly). False negatives are impossible (an inserted element is always correctly reported as present).", "tags": ["bloom-filter"] },
+  { "id": "hash-fc-5", "topicId": "hashing-probabilistic", "front": "Can you delete an element from a standard Bloom filter?", "back": "No — clearing its bits could break membership for other elements that share those same bit positions.", "tags": ["bloom-filter"] },
+  { "id": "hash-fc-6", "topicId": "hashing-probabilistic", "front": "How does a Skip List achieve O(log n) expected search without any balancing rotations?", "back": "Elements are randomly promoted to higher 'express lane' levels (~50% chance each), so search can skip large portions of the list — balance emerges probabilistically, not structurally.", "tags": ["skip-list"] }
+]

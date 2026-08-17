@@ -1,0 +1,8 @@
+[
+  { "id": "avl-fc-1", "topicId": "avl-trees", "front": "AVL Tree balance invariant?", "back": "For every node, the heights of its left and right subtrees differ by at most 1.", "tags": ["definitions"] },
+  { "id": "avl-fc-2", "topicId": "avl-trees", "front": "AVL vs. Red-Black Tree — which favors reads, which favors writes?", "back": "AVL is more rigidly balanced → faster lookups. RBT allows looser balance → fewer rotations on insert/delete, better for write-heavy workloads.", "tags": ["comparison"] },
+  { "id": "avl-fc-3", "topicId": "avl-trees", "front": "What property must every node satisfy in a binary max-heap?", "back": "Every parent's value is ≥ both its children's values.", "tags": ["heap"] },
+  { "id": "avl-fc-4", "topicId": "avl-trees", "front": "Where is the maximum element always located in a binary max-heap?", "back": "At the root.", "tags": ["heap"] },
+  { "id": "avl-fc-5", "topicId": "avl-trees", "front": "What is the complexity of building a heap from an unsorted array?", "back": "O(n) — not O(n log n) — via a bottom-up sift-down from the last non-leaf node to the root.", "tags": ["heap"] },
+  { "id": "avl-fc-6", "topicId": "avl-trees", "front": "Is Heap Sort stable?", "back": "No.", "tags": ["heap"] }
+]

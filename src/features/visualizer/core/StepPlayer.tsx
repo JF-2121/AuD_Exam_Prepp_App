@@ -1,3 +1,4 @@
+import { Code2, Pause, Play, RotateCcw, SkipBack, SkipForward } from 'lucide-react';
 import type { AlgorithmDef } from './types';
 import { useStepPlayback } from './useStepPlayback';
 
@@ -8,28 +9,32 @@ export function StepPlayer<TInput, TState>({ algorithm, input }: { algorithm: Al
 
   return (
     <div className="flex flex-col gap-4 md:flex-row">
-      <div className="flex-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
-        <algorithm.Renderer step={step} />
+      <div className="card min-w-0 flex-1 p-4">
+        <div className="overflow-x-auto">
+          <algorithm.Renderer step={step} />
+        </div>
         <p className="mt-4 text-sm text-[var(--color-text-dim)]">{step.description}</p>
-        <div className="mt-4 flex items-center gap-2">
+        <div className="mt-4 flex flex-wrap items-center gap-2">
           <button className="btn" onClick={playback.stepBack} disabled={playback.index === 0}>
-            ◀ Back
+            <SkipBack size={13} /> Back
           </button>
           {playback.isPlaying ? (
-            <button className="btn" onClick={playback.pause}>Pause</button>
+            <button className="btn btn-primary" onClick={playback.pause}>
+              <Pause size={13} /> Pause
+            </button>
           ) : (
-            <button className="btn" onClick={playback.play} disabled={playback.index >= steps.length - 1}>
-              ▶ Play
+            <button className="btn btn-primary" onClick={playback.play} disabled={playback.index >= steps.length - 1}>
+              <Play size={13} /> Play
             </button>
           )}
           <button className="btn" onClick={playback.stepForward} disabled={playback.index >= steps.length - 1}>
-            Next ▶
+            Next <SkipForward size={13} />
           </button>
           <button className="btn" onClick={playback.reset}>
-            ⟲ Reset
+            <RotateCcw size={13} /> Reset
           </button>
           <select
-            className="ml-2 rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-2 py-1 text-sm"
+            className="input ml-auto"
             value={playback.speed}
             onChange={(e) => playback.setSpeed(Number(e.target.value))}
           >
@@ -40,7 +45,7 @@ export function StepPlayer<TInput, TState>({ algorithm, input }: { algorithm: Al
           </select>
         </div>
         <input
-          className="mt-3 w-full"
+          className="mt-3 w-full accent-[var(--color-accent)]"
           type="range"
           min={0}
           max={steps.length - 1}
@@ -51,8 +56,10 @@ export function StepPlayer<TInput, TState>({ algorithm, input }: { algorithm: Al
           Step {playback.index + 1} / {steps.length}
         </p>
       </div>
-      <div className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 md:w-72">
-        <h3 className="mb-2 text-sm font-semibold text-[var(--color-text-h)]">Pseudocode</h3>
+      <div className="card w-full p-4 md:w-72">
+        <h3 className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-[var(--color-text-h)]">
+          <Code2 size={14} className="text-[var(--color-accent)]" /> Pseudocode
+        </h3>
         <pre className="overflow-x-auto text-xs leading-6">
           {algorithm.pseudocode.map((line, i) => (
             <div

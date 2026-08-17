@@ -1,0 +1,68 @@
+[
+  {
+    "id": "ll-q-1",
+    "topicId": "linked-lists",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Why is deleting a node Θ(1) in a doubly linked list but Θ(n) in a singly linked list (given only a pointer to the node)?",
+    "options": [
+      "Doubly linked lists are always shorter",
+      "A doubly linked list's prev pointer avoids walking from the head to find the predecessor",
+      "Singly linked lists don't support deletion",
+      "There's no actual difference"
+    ],
+    "explanation": "With a prev pointer, you can directly relink the predecessor and successor. Without it, you must scan from the head to find the predecessor first.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "ll-q-2",
+    "topicId": "linked-lists",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "What is the main purpose of a sentinel node in a linked list implementation?",
+    "acceptedAnswers": [
+      "avoid special cases",
+      "eliminate special-case handling",
+      "removes edge cases",
+      "avoids edge case handling"
+    ],
+    "explanation": "A sentinel provides a permanent dummy head/tail so every real node always has a valid neighbor, removing the need to special-case empty lists or boundaries."
+  },
+  {
+    "id": "real-ll-1",
+    "topicId": "linked-lists",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Real 2025 exam question] Which statement about linked lists is correct?",
+    "options": [
+      "Inserting two elements consecutively at the end of a singly linked list (no tail pointer) requires at most two traversals of the list.",
+      "Every element in a singly linked list contains at least two pointers.",
+      "Singly linked lists allow direct indexed access to an arbitrary element.",
+      "You can iterate backwards through a singly linked list."
+    ],
+    "correctIndexes": [
+      0
+    ],
+    "explanation": "Without a tail pointer, each append walks from head to the end — one traversal per insert, so two inserts cost at most two traversals. A singly linked node has only one pointer (next), no index access, and no backward iteration."
+  },
+  {
+    "id": "real-ll-2",
+    "topicId": "linked-lists",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Real 2025 exam question] Which two statements are correct?",
+    "options": [
+      "An advantage of linked lists is that insert/delete can be done by simply adjusting pointers, without shifting the remaining elements.",
+      "In a doubly linked list, each element holds a pointer only to the next element.",
+      "An abstract data type (ADT) describes the possible values, operations, and behavior of a data type, but not its concrete implementation.",
+      "The ADT description specifies the time complexity of operations on linked lists."
+    ],
+    "correctIndexes": [
+      0,
+      2
+    ],
+    "explanation": "Doubly linked lists have both next and prev pointers. An ADT is implementation-agnostic by definition — complexity depends on the concrete implementation chosen, not the ADT spec."
+  }
+]

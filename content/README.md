@@ -41,10 +41,10 @@ ID convention: `<topicId short>-fc-<n>`, unique across the whole app.
 
 One file per topic, an array of a discriminated union on `type`. Three types:
 
-**multiple-choice**
+**multiple-choice** (`correctIndexes` has 1 entry for classic single-answer MC, or 2+ entries for "choose exactly N" style — the real exam's 42-point MC section uses "choose exactly 2 of 4")
 ```json
 { "id": "sort-q-1", "topicId": "sorting-basics", "type": "multiple-choice", "difficulty": "easy",
-  "prompt": "...", "options": ["A", "B", "C"], "correctIndex": 1, "explanation": "..." }
+  "prompt": "...", "options": ["A", "B", "C"], "correctIndexes": [1], "explanation": "..." }
 ```
 
 **short-answer** (case-insensitive, whitespace-normalized match against any of `acceptedAnswers`)

@@ -1,0 +1,6 @@
+[
+  { "id": "rad-fc-1", "topicId": "sorting-radix", "front": "Why can Radix Sort beat the Ω(n log n) comparison-sort lower bound?", "back": "Because it never compares two elements directly — it distributes by digit value instead, so the comparison-based lower bound simply doesn't apply.", "tags": ["complexity"] },
+  { "id": "rad-fc-2", "topicId": "sorting-radix", "front": "Radix Sort general complexity, and when does it become O(n)?", "back": "O(d·(n+D)) in general. If both D (digit alphabet size) and d (number of digits) are treated as constants, it becomes O(n).", "tags": ["complexity"] },
+  { "id": "rad-fc-3", "topicId": "sorting-radix", "front": "Which digit does Radix Sort process first: most or least significant?", "back": "Least significant digit first (LSD radix sort).", "tags": ["mechanics"] },
+  { "id": "rad-fc-4", "topicId": "sorting-radix", "front": "Why must each digit-pass of Radix Sort be a stable sort?", "back": "Because an unstable pass would undo the correct ordering established by previous (less significant digit) passes.", "tags": ["mechanics"] }
+]

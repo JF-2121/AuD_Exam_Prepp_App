@@ -1,0 +1,7 @@
+[
+  { "id": "np-fc-1", "topicId": "np-completeness", "front": "Define P and NP.", "back": "P = problems solvable in polynomial time. NP = problems whose solutions can be verified in polynomial time.", "tags": ["definitions"] },
+  { "id": "np-fc-2", "topicId": "np-completeness", "front": "What does it mean for a problem to be NP-complete?", "back": "It is in NP (verifiable in poly time) AND NP-hard (every problem in NP reduces to it in poly time) — the hardest problems in NP.", "tags": ["definitions"] },
+  { "id": "np-fc-3", "topicId": "np-completeness", "front": "If a single NP-complete problem were solved in polynomial time, what would follow?", "back": "P = NP, and every problem in NP would also be solvable in polynomial time.", "tags": ["implications"] },
+  { "id": "np-fc-4", "topicId": "np-completeness", "front": "What is the seed NP-complete problem most reductions chain back to?", "back": "SAT (Boolean satisfiability), proven NP-complete directly via the Cook-Levin theorem.", "tags": ["reductions"] },
+  { "id": "np-fc-5", "topicId": "np-completeness", "front": "Practically, what should you reach for when a problem is shown NP-complete?", "back": "Approximation algorithms, heuristics/metaheuristics, or exact exponential-time algorithms with pruning (backtracking) for small inputs.", "tags": ["practical"] }
+]

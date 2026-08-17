@@ -1,5 +1,9 @@
 [
   { "id": "bst-fc-1", "topicId": "bst", "front": "Average-case time to insert into a BST?", "back": "O(log n)", "tags": ["complexity"] },
   { "id": "bst-fc-2", "topicId": "bst", "front": "What input order produces a degenerate (worst-case) BST?", "back": "Already-sorted input — the tree becomes a linked list, O(n) operations.", "tags": ["complexity"] },
-  { "id": "bst-fc-3", "topicId": "bst", "front": "In-order traversal of a BST visits nodes in what order?", "back": "Ascending sorted order of their values.", "tags": ["traversal"] }
+  { "id": "bst-fc-3", "topicId": "bst", "front": "In-order traversal of a BST visits nodes in what order?", "back": "Ascending sorted order of their values.", "tags": ["traversal"] },
+  { "id": "bst-fc-4", "topicId": "bst", "front": "BST delete: a node with two children is removed by replacing it with...?", "back": "Its successor — the smallest key in its right subtree (found by walking left from z.right until there's no more left child).", "tags": ["delete"] },
+  { "id": "bst-fc-5", "topicId": "bst", "front": "Preorder traversal alone — does it uniquely determine a tree's shape?", "back": "No. But preorder + inorder together (with all-unique keys) do uniquely reconstruct the tree.", "tags": ["traversal"] },
+  { "id": "bst-fc-6", "topicId": "bst", "front": "Which traversal order is naturally suited to safely deleting an entire tree?", "back": "Postorder (left, right, node) — children are freed before their parent.", "tags": ["traversal"] },
+  { "id": "bst-fc-7", "topicId": "bst", "front": "What is the BST invariant for a node z?", "back": "Everything in z's left subtree is < z.key, everything in z's right subtree is ≥ z.key.", "tags": ["definitions"] }
 ]

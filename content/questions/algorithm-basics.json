@@ -1,0 +1,31 @@
+[
+  {
+    "id": "algo-q-1",
+    "topicId": "algorithm-basics",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Which property means 'the same input always produces the exact same sequence of intermediate steps'?",
+    "options": [
+      "Determiniertheit",
+      "Determinismus",
+      "Terminierbarkeit",
+      "Effektivität"
+    ],
+    "explanation": "Determinismus concerns the steps taken; Determiniertheit only concerns the final output being identical for identical input.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "algo-q-2",
+    "topicId": "algorithm-basics",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "Name the three components of a standard correctness proof for an in-place sorting algorithm.",
+    "acceptedAnswers": [
+      "termination, sortedness, permutation",
+      "terminierung, sortiertheit, permutation"
+    ],
+    "explanation": "Termination (the loop/recursion ends), sortedness (output satisfies the ordering, usually via loop invariant), and the permutation property (no elements lost or invented)."
+  }
+]

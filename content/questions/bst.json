@@ -1,23 +1,88 @@
 [
   {
-    "id": "bst-q-1", "topicId": "bst", "type": "multiple-choice", "difficulty": "easy",
+    "id": "bst-q-1",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "easy",
     "prompt": "What traversal of a BST yields values in ascending sorted order?",
-    "options": ["Pre-order", "In-order", "Post-order", "Level-order"],
-    "correctIndex": 1,
-    "explanation": "In-order traversal (left, node, right) visits BST nodes in ascending order by definition of the BST invariant."
+    "options": [
+      "Pre-order",
+      "In-order",
+      "Post-order",
+      "Level-order"
+    ],
+    "explanation": "In-order traversal (left, node, right) visits BST nodes in ascending order by definition of the BST invariant.",
+    "correctIndexes": [
+      1
+    ]
   },
   {
-    "id": "bst-q-2", "topicId": "bst", "type": "short-answer", "difficulty": "medium",
+    "id": "bst-q-2",
+    "topicId": "bst",
+    "type": "short-answer",
+    "difficulty": "medium",
     "prompt": "What is the worst-case time complexity of inserting into an unbalanced BST?",
-    "acceptedAnswers": ["O(n)", "n"],
+    "acceptedAnswers": [
+      "O(n)",
+      "n"
+    ],
     "explanation": "A degenerate BST (e.g. built from already-sorted input) is effectively a linked list, so insertion is O(n)."
   },
   {
-    "id": "bst-q-3", "topicId": "bst", "type": "trace", "difficulty": "hard",
+    "id": "bst-q-3",
+    "topicId": "bst",
+    "type": "trace",
+    "difficulty": "hard",
     "prompt": "Insert 8, 3, 10, 1, 6 (in that order) into an empty BST. Give the in-order traversal as JSON, e.g. [1,3,5,8].",
     "algorithmId": "bst-insert",
-    "initialInput": [8, 3, 10, 1, 6],
-    "expectedFinalOutput": [1, 3, 6, 8, 10],
+    "initialInput": [
+      8,
+      3,
+      10,
+      1,
+      6
+    ],
+    "expectedFinalOutput": [
+      1,
+      3,
+      6,
+      8,
+      10
+    ],
     "explanation": "In-order traversal of any BST always yields the values in ascending sorted order, regardless of insertion order or shape."
+  },
+  {
+    "id": "bst-q-4",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "When deleting a BST node that has two children, which node replaces it?",
+    "options": [
+      "Its parent",
+      "The root of the tree",
+      "Its successor (smallest key in its right subtree)",
+      "A randomly chosen descendant"
+    ],
+    "explanation": "The successor keeps the BST invariant intact: it's the smallest value still larger than everything in the deleted node's left subtree.",
+    "correctIndexes": [
+      2
+    ]
+  },
+  {
+    "id": "real-bst-1",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "[Real 2025 exam question] Which traversal of a binary search tree outputs the elements in ascending sorted order?",
+    "options": [
+      "Preorder traversal",
+      "Postorder traversal",
+      "Inorder traversal",
+      "Every one of the above"
+    ],
+    "correctIndexes": [
+      2
+    ],
+    "explanation": "Inorder (left, node, right) visits BST nodes in ascending sorted order by definition of the BST invariant."
   }
 ]

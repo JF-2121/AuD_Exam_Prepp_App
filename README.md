@@ -1,32 +1,41 @@
-# React + TypeScript + Vite
+# AuD Grind
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A local study app for the "Algorithmen und Datenstrukturen" (AuD) final exam: browse topic summaries, watch interactive algorithm visualizations, drill spaced-repetition flashcards, practice quiz questions, and sit timed mock exams — with a dashboard that tracks your weakest topics.
 
-Currently, two official plugins are available:
+## Running it
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Open the printed `localhost` URL. No backend, no account, no internet connection needed — everything (your flashcard review history, quiz attempts, mock exam scores) is stored locally in your browser via IndexedDB.
+
+## How the app is organized
+
+- `content/` — all study material (topic summaries, flashcards, quiz questions, exam templates). This is the **only** thing the app reads at runtime. See `content/README.md` for the exact schema if you want to add material yourself.
+- `raw-materials/` — drop unprocessed PDFs/slides here. The app never reads this folder directly; it's the inbox a future Claude session works from to author real content into `content/`.
+- `src/features/` — one folder per app module: `topics`, `visualizer`, `flashcards`, `quiz`, `exam`, `dashboard`.
+- `src/lib/` — shared logic: content loading, IndexedDB persistence, the SM-2 spaced-repetition scheduler, and dashboard mastery scoring.
+
+## Adding an interactive algorithm visualizer
+
+New algorithms plug into the framework in `src/features/visualizer/`:
+
+1. Write a `generateSteps(input) -> AlgorithmStep[]` function (see `algorithms/sorting/insertionSort.ts` for a simple example, or `algorithms/trees/bstInsert.ts` for a tree-shaped one).
+2. Reuse an existing `Renderer` (`ArrayRenderer` for array-shaped state, `TreeRenderer` for tree-shaped state) if your state shape matches — this is the common case and needs zero new UI code.
+3. Register it in `src/features/visualizer/registry.ts`.
+
+## Deploying
+
+The app is a static build — `npm run build` outputs a self-contained `dist/` folder.
+
+- **Render / Vercel / Netlify**: point the build command at `npm run build`, publish directory `dist`, no server-side config needed.
+- **GitHub Pages** (project site, e.g. `username.github.io/AuD_Grind`): build with the repo name as the base path, then publish `dist/` to the `gh-pages` branch (e.g. via the `gh-pages` npm package or a GitHub Actions workflow):
+  ```bash
+  VITE_BASE_PATH=/AuD_Grind/ npm run build
+  ```
+
+## Current content coverage
+
+18 topics across Grundlagen, Sorting, Basic Data Structures, Trees, Graphs, Advanced Design, and Complexity Theory — sourced from the course's typed summary, the shared Anki deck, exercise sheets, and a past exam + exam memory protocol. 6 algorithms have interactive step-through visualizers (Insertion/Bubble/Selection/Merge Sort, Quicksort, BST Insert). See `content/README.md` for how to extend this as more raw material comes in.

@@ -1,0 +1,6 @@
+[
+  { "id": "bub-fc-1", "topicId": "sorting-bubble", "front": "Optimized Bubble Sort: best-case complexity, and what triggers it?", "back": "Θ(n) — triggered when the input is already sorted, so the first pass makes zero swaps and the early-exit flag stops further passes.", "tags": ["complexity"] },
+  { "id": "bub-fc-2", "topicId": "sorting-bubble", "front": "Does the naive (unoptimized) Bubble Sort's iteration count change in the best case?", "back": "No — without an early-exit flag it always runs the full Θ(n²) comparisons regardless of input order.", "tags": ["complexity"] },
+  { "id": "bub-fc-3", "topicId": "sorting-bubble", "front": "After the first full pass of Bubble Sort, what's guaranteed?", "back": "The largest element has 'bubbled' to its final correct position at the end of the array.", "tags": ["mechanics"] },
+  { "id": "bub-fc-4", "topicId": "sorting-bubble", "front": "Bubble Sort vs. Insertion Sort: same Θ complexity, but which is usually faster in practice?", "back": "Insertion Sort — it performs fewer actual operations per element despite matching asymptotic complexity.", "tags": ["comparison"] }
+]

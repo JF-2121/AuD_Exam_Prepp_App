@@ -6,8 +6,11 @@ export interface GradeResult {
   explanation: string;
 }
 
-function gradeMultipleChoice(q: MultipleChoiceQuestion, answer: number): GradeResult {
-  return { correct: answer === q.correctIndex, explanation: q.explanation };
+function gradeMultipleChoice(q: MultipleChoiceQuestion, answer: number[]): GradeResult {
+  const expected = [...q.correctIndexes].sort((a, b) => a - b);
+  const given = [...answer].sort((a, b) => a - b);
+  const correct = expected.length === given.length && expected.every((v, i) => v === given[i]);
+  return { correct, explanation: q.explanation };
 }
 
 function normalize(s: string): string {
@@ -43,7 +46,7 @@ export function gradeQuestion(question: Question, answer: unknown): GradeResult 
   }
   switch (question.type) {
     case 'multiple-choice':
-      return gradeMultipleChoice(question, answer as number);
+      return gradeMultipleChoice(question, answer as number[]);
     case 'short-answer':
       return gradeShortAnswer(question, answer as string);
     case 'trace':

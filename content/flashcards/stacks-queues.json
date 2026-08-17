@@ -1,0 +1,7 @@
+[
+  { "id": "sq-fc-1", "topicId": "stacks-queues", "front": "Stack principle vs. Queue principle?", "back": "Stack = LIFO (Last-In-First-Out). Queue = FIFO (First-In-First-Out).", "tags": ["definitions"] },
+  { "id": "sq-fc-2", "topicId": "stacks-queues", "front": "Which operator is central to implementing a Queue as a cyclic array (ring buffer)?", "back": "The modulo operator (%), to wrap the index back to 0 at the end of the array.", "tags": ["implementation"] },
+  { "id": "sq-fc-3", "topicId": "stacks-queues", "front": "What's the amortized cost of push/pop on a dynamically-resizing array stack?", "back": "Θ(1) amortized — occasional O(n) resizes (doubling/halving) are spread out over many O(1) operations.", "tags": ["complexity"] },
+  { "id": "sq-fc-4", "topicId": "stacks-queues", "front": "Name two real-world use cases each for stacks and queues.", "back": "Stacks: function call management, undo history, syntax parsing. Queues: task scheduling, buffering, breadth-first search.", "tags": ["applications"] },
+  { "id": "sq-fc-5", "topicId": "stacks-queues", "front": "What is a deque?", "back": "A double-ended queue — allows insertion and removal at both ends.", "tags": ["definitions"] }
+]

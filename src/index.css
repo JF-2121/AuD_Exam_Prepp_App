@@ -2,18 +2,24 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-bg: #0f1115;
-  --color-surface: #171a21;
-  --color-surface-hover: #1f232c;
-  --color-border: #2a2e38;
-  --color-text: #d5d8e0;
-  --color-text-dim: #8b909c;
-  --color-text-h: #f4f5f7;
-  --color-accent: #7c9cff;
-  --color-accent-dim: rgba(124, 156, 255, 0.15);
+  --color-bg: #09090b;
+  --color-surface: #18181b;
+  --color-surface-hover: #232327;
+  --color-border: #27272a;
+  --color-border-strong: #3f3f46;
+  --color-text: #d4d4d8;
+  --color-text-dim: #8b8b93;
+  --color-text-h: #fafafa;
+  --color-accent: #818cf8;
+  --color-accent-hover: #a5b4fc;
+  --color-accent-dim: rgba(129, 140, 248, 0.12);
   --color-good: #4ade80;
+  --color-good-dim: rgba(74, 222, 128, 0.12);
   --color-warn: #fbbf24;
+  --color-warn-dim: rgba(251, 191, 36, 0.12);
   --color-bad: #f87171;
+  --color-bad-dim: rgba(248, 113, 113, 0.12);
+  --radius: 0.65rem;
 }
 
 html,
@@ -26,27 +32,47 @@ body {
   margin: 0;
   background: var(--color-bg);
   color: var(--color-text);
-  font: 16px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
+  font: 15px/1.6 -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
 }
 
 code,
 pre {
-  font-family: ui-monospace, Consolas, monospace;
+  font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+}
+
+::selection {
+  background: var(--color-accent-dim);
+  color: var(--color-accent-hover);
+}
+
+/* --- shadcn-ish primitives --- */
+
+.card {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius);
 }
 
 .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);
-  border-radius: 6px;
-  padding: 6px 12px;
-  font-size: 14px;
+  border-radius: calc(var(--radius) - 0.15rem);
+  padding: 7px 14px;
+  font-size: 13.5px;
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
 
 .btn:hover:not(:disabled) {
   background: var(--color-surface-hover);
+  border-color: var(--color-border-strong);
 }
 
 .btn:disabled {
@@ -55,7 +81,60 @@ pre {
 }
 
 .btn-primary {
+  border-color: transparent;
+  background: var(--color-accent);
+  color: #0b0b10;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+  border-color: transparent;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.badge-easy {
+  background: var(--color-good-dim);
+  color: var(--color-good);
+}
+
+.badge-medium {
+  background: var(--color-warn-dim);
+  color: var(--color-warn);
+}
+
+.badge-hard {
+  background: var(--color-bad-dim);
+  color: var(--color-bad);
+}
+
+.badge-neutral {
+  background: var(--color-surface-hover);
+  color: var(--color-text-dim);
+  border: 1px solid var(--color-border);
+}
+
+.input {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: calc(var(--radius) - 0.15rem);
+  padding: 7px 10px;
+  font-size: 13.5px;
+  transition: border-color 0.12s ease;
+}
+
+.input:focus {
+  outline: none;
   border-color: var(--color-accent);
-  background: var(--color-accent-dim);
-  color: var(--color-accent);
 }

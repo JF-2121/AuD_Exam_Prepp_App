@@ -1,0 +1,84 @@
+[
+  {
+    "id": "hash-q-1",
+    "topicId": "hashing-probabilistic",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Which error type is impossible in a Bloom filter?",
+    "options": [
+      "False positive",
+      "False negative",
+      "Both are possible",
+      "Neither is possible"
+    ],
+    "explanation": "An inserted element always has all k of its bits set, so contains() can never wrongly report it absent — only false positives can occur.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "hash-q-2",
+    "topicId": "hashing-probabilistic",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "What is the expected search time in a Skip List with n elements?",
+    "acceptedAnswers": [
+      "O(log n)",
+      "log n",
+      "o(log n)"
+    ],
+    "explanation": "The randomized 'express lane' levels give expected O(log n) search, matching balanced trees without explicit rebalancing."
+  },
+  {
+    "id": "hash-q-3",
+    "topicId": "hashing-probabilistic",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "In a chained hash table, expected search time is O(1+α). What does α represent?",
+    "options": [
+      "The number of hash functions used",
+      "The load factor n/m (keys per slot)",
+      "The table's total memory in bytes",
+      "The number of collisions so far"
+    ],
+    "explanation": "α = n/m is the load factor — average number of keys per slot, directly governing expected chain length.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "real-hash-1",
+    "topicId": "hashing-probabilistic",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "[Real 2025 exam question] Searching in a Bloom filter:",
+    "options": [
+      "Only false negatives are possible.",
+      "Only false positives are possible.",
+      "Both false negatives and false positives are possible.",
+      "Neither false negatives nor false positives are possible."
+    ],
+    "correctIndexes": [
+      1
+    ],
+    "explanation": "An inserted element always has all its bits set, so it's always correctly reported present — only false positives (from bit overlap with other elements) can occur."
+  },
+  {
+    "id": "real-hash-2",
+    "topicId": "hashing-probabilistic",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Real 2025 exam question] Which two statements about hash tables/functions are correct?",
+    "options": [
+      "Hash tables are used to store data in compressed form.",
+      "A hash function is deterministic.",
+      "No hash function can completely avoid collisions (for an unrestricted key universe).",
+      "The main goal of hash functions in hash tables is to encrypt keys for security."
+    ],
+    "correctIndexes": [
+      1,
+      2
+    ],
+    "explanation": "A hash function must be deterministic (same key → same slot) to work at all. By the pigeonhole principle, collisions are unavoidable once the key universe exceeds the table size. Hashing is about fast lookup, not compression or security."
+  }
+]

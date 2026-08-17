@@ -1,0 +1,86 @@
+[
+  {
+    "id": "avl-q-1",
+    "topicId": "avl-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "An AVL tree node has left subtree height 4 and right subtree height 1. Is this valid?",
+    "options": [
+      "Yes, always valid",
+      "No — balance factor of 3 violates the ≤1 invariant",
+      "Only valid for the root",
+      "Only valid if the tree has fewer than 10 nodes"
+    ],
+    "explanation": "AVL requires every node's left/right subtree heights to differ by at most 1. A difference of 3 requires rebalancing via rotation.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "avl-q-2",
+    "topicId": "avl-trees",
+    "type": "short-answer",
+    "difficulty": "easy",
+    "prompt": "What is the time complexity of building a binary heap from an unsorted array of n elements?",
+    "acceptedAnswers": [
+      "O(n)",
+      "n",
+      "linear"
+    ],
+    "explanation": "Bottom-up heap construction (sift-down from the last non-leaf to the root) is O(n), not O(n log n)."
+  },
+  {
+    "id": "real-avl-1",
+    "topicId": "avl-trees",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "[Real 2025 exam question] Which two statements about advanced tree equivalences are correct?",
+    "options": [
+      "Every binary max-heap can be colored as a valid Red-Black tree.",
+      "Every Red-Black tree is a binary search tree.",
+      "Every Red-Black tree is an AVL tree.",
+      "Every AVL tree can be colored as a valid Red-Black tree."
+    ],
+    "correctIndexes": [
+      1,
+      3
+    ],
+    "explanation": "Red-Black trees are BSTs with coloring by definition. AVL's stricter height balance (≤1.44 log n) always fits within RBT's looser height bound (≤2 log(n+1)), so every AVL tree admits a valid RB coloring — a classic textbook result. The reverse doesn't hold (RBTs can be less balanced than AVL allows)."
+  },
+  {
+    "id": "real-avl-2",
+    "topicId": "avl-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Real 2025 exam question] Which two trees need NO rotation function at all when inserting?",
+    "options": [
+      "Splay trees",
+      "AVL trees",
+      "Plain binary search trees",
+      "Binary max-heaps"
+    ],
+    "correctIndexes": [
+      2,
+      3
+    ],
+    "explanation": "Splay trees rotate (splay) on every access including insert; AVL trees rotate to rebalance after insert. Plain BST insert never rotates, and heap insert uses sift-up (swaps along a path), not rotation."
+  },
+  {
+    "id": "real-avl-3",
+    "topicId": "avl-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Real 2025 exam question] Which two statements about binary max-heaps are correct?",
+    "options": [
+      "The largest element is at the root.",
+      "A binary max-heap is always a binary search tree.",
+      "Deleting the max by moving the last node to the root and then running heapify results in a valid binary max-heap again.",
+      "The largest elements are located in the leaves."
+    ],
+    "correctIndexes": [
+      0,
+      2
+    ],
+    "explanation": "Max-heap property puts the largest element at the root, not the leaves. A heap has no BST ordering. Move-last-to-root + heapify (sift-down) is exactly the standard delete-max algorithm."
+  }
+]

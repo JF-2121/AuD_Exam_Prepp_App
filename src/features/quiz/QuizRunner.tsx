@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { CheckCircle2, XCircle } from 'lucide-react';
 import { recordQuizAttempt } from '../../lib/db';
 import type { Difficulty, Question, Topic } from '../../lib/types';
+import { DifficultyBadge } from '../../components/DifficultyBadge';
 import { gradeQuestion, type GradeResult } from './grading';
 import { MultipleChoice } from './MultipleChoice';
 import { ShortAnswer } from './ShortAnswer';
@@ -54,9 +56,9 @@ export function QuizRunner({ questions, topics }: { questions: Question[]; topic
   return (
     <div>
       <div className="mb-4 flex flex-wrap items-center gap-2">
-        <h1 className="text-2xl font-semibold text-[var(--color-text-h)]">Practice</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-[var(--color-text-h)]">Practice</h1>
         <select
-          className="ml-auto rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-sm"
+          className="input ml-auto"
           value={topicId ?? ''}
           onChange={(e) => setParams((p) => new URLSearchParams({ ...Object.fromEntries(p), topic: e.target.value || '' }))}
         >
@@ -68,7 +70,7 @@ export function QuizRunner({ questions, topics }: { questions: Question[]; topic
           ))}
         </select>
         <select
-          className="rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-sm"
+          className="input"
           value={difficulty ?? ''}
           onChange={(e) => setParams((p) => new URLSearchParams({ ...Object.fromEntries(p), difficulty: e.target.value || '' }))}
         >
@@ -80,22 +82,24 @@ export function QuizRunner({ questions, topics }: { questions: Question[]; topic
       </div>
 
       <p className="mb-3 text-sm text-[var(--color-text-dim)]">
-        Score this session: {score.correct}/{score.total}
+        Score this session: <span className="font-medium text-[var(--color-text)]">{score.correct}/{score.total}</span>
       </p>
 
       {!question ? (
         <p className="text-[var(--color-text-dim)]">No questions match this filter (or you've been through them all).</p>
       ) : (
-        <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
-          <p className="mb-2 text-xs uppercase tracking-wide text-[var(--color-text-dim)]">
-            {question.difficulty} · {question.type}
-          </p>
+        <div className="card p-5">
+          <div className="mb-3 flex items-center gap-2">
+            <DifficultyBadge difficulty={question.difficulty} />
+            <span className="badge badge-neutral">{question.type}</span>
+          </div>
           {!result && question.type === 'multiple-choice' && <MultipleChoice question={question} onSubmit={handleSubmit} />}
           {!result && question.type === 'short-answer' && <ShortAnswer question={question} onSubmit={handleSubmit} />}
           {!result && question.type === 'trace' && <TraceAlgorithm question={question} onSubmit={handleSubmit} />}
           {result && (
             <div>
-              <p className={result.correct ? 'text-[var(--color-good)]' : 'text-[var(--color-bad)]'}>
+              <p className={`flex items-center gap-1.5 font-medium ${result.correct ? 'text-[var(--color-good)]' : 'text-[var(--color-bad)]'}`}>
+                {result.correct ? <CheckCircle2 size={16} /> : <XCircle size={16} />}
                 {result.correct ? 'Correct!' : 'Not quite.'}
               </p>
               <p className="mt-1 text-sm text-[var(--color-text-dim)]">{result.explanation}</p>

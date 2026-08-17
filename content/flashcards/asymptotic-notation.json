@@ -1,0 +1,8 @@
+[
+  { "id": "asym-fc-1", "topicId": "asymptotic-notation", "front": "What do O, Ω, and Θ each describe informally?", "back": "O = asymptotic upper bound (worst case). Ω = asymptotic lower bound (best case). Θ = tight/exact bound (O and Ω together).", "tags": ["notation"] },
+  { "id": "asym-fc-2", "topicId": "asymptotic-notation", "front": "f(n) = 5n² + 2n. What is f(n) in Θ notation?", "back": "Θ(n²) — take the highest-growth term and drop constants.", "tags": ["notation"] },
+  { "id": "asym-fc-3", "topicId": "asymptotic-notation", "front": "Which grows faster: O(n log n) or O(n²)?", "back": "O(n²) grows significantly faster than O(n log n) for large n.", "tags": ["notation"] },
+  { "id": "asym-fc-4", "topicId": "asymptotic-notation", "front": "General form of a divide-and-conquer recurrence relation?", "back": "T(n) = a·T(n/b) + f(n), where a ≥ 1 is the number of subproblems, b > 1 is the size-reduction factor, and f(n) is the divide/combine cost.", "tags": ["master-theorem"] },
+  { "id": "asym-fc-5", "topicId": "asymptotic-notation", "front": "Master Theorem Case 2: when does it apply and what's the result?", "back": "When f(n) = Θ(n^(log_b a)) — recursion and combine cost tie. Result: T(n) = Θ(n^(log_b a) · log n).", "tags": ["master-theorem"] },
+  { "id": "asym-fc-6", "topicId": "asymptotic-notation", "front": "What's the difference between Ω and its 'little' counterpart ω?", "back": "Ω allows f(n) = c·g(n) (the growth rates can be equal); ω requires f(n) to grow strictly faster than g(n) — a strict lower bound.", "tags": ["notation"] }
+]

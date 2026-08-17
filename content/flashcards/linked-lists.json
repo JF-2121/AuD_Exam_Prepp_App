@@ -1,0 +1,6 @@
+[
+  { "id": "ll-fc-1", "topicId": "linked-lists", "front": "Array vs. Linked List: key runtime tradeoff?", "back": "Arrays give O(1) random access but O(n) insert/delete (must shift). Linked lists give O(1) insert/delete at a known position but O(n) random access.", "tags": ["comparison"] },
+  { "id": "ll-fc-2", "topicId": "linked-lists", "front": "Singly vs. doubly linked list: why does delete differ in complexity?", "back": "Singly linked lists lack a prev pointer, so deleting requires walking from head to find the predecessor — Θ(n). Doubly linked lists have prev, making delete Θ(1) given a pointer to the node.", "tags": ["comparison"] },
+  { "id": "ll-fc-3", "topicId": "linked-lists", "front": "What purpose does a sentinel (Wächter) node serve in a linked list?", "back": "It eliminates special-case handling for empty lists or list boundaries during insert/delete, since every real node always has a valid neighbor to link against.", "tags": ["implementation"] },
+  { "id": "ll-fc-4", "topicId": "linked-lists", "front": "What is the complexity of inserting at the head of a linked list?", "back": "Θ(1) — just repoint a couple of pointers, no shifting needed.", "tags": ["complexity"] }
+]

@@ -1,0 +1,54 @@
+[
+  {
+    "id": "ins-q-1",
+    "topicId": "sorting-insertion",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "What is the worst-case time complexity of Insertion Sort?",
+    "options": [
+      "O(n)",
+      "O(n log n)",
+      "O(n²)",
+      "O(log n)"
+    ],
+    "explanation": "Reverse-sorted input forces every element to shift all the way to the front → Θ(n²).",
+    "correctIndexes": [
+      2
+    ]
+  },
+  {
+    "id": "ins-q-2",
+    "topicId": "sorting-insertion",
+    "type": "trace",
+    "difficulty": "medium",
+    "prompt": "Run Insertion Sort on [9, 5, 1, 4, 3]. Give the final sorted array as JSON.",
+    "algorithmId": "insertion-sort",
+    "initialInput": [
+      9,
+      5,
+      1,
+      4,
+      3
+    ],
+    "expectedFinalOutput": [
+      1,
+      3,
+      4,
+      5,
+      9
+    ],
+    "explanation": "Insertion Sort builds up a sorted prefix one element at a time, shifting larger elements right to make room."
+  },
+  {
+    "id": "ins-q-3",
+    "topicId": "sorting-insertion",
+    "type": "short-answer",
+    "difficulty": "easy",
+    "prompt": "Is Insertion Sort a stable sorting algorithm? (yes/no)",
+    "acceptedAnswers": [
+      "yes",
+      "ja"
+    ],
+    "explanation": "Yes — it only shifts elements strictly greater than the key, so equal keys keep their original relative order."
+  }
+]

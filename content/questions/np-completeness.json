@@ -1,0 +1,31 @@
+[
+  {
+    "id": "np-q-1",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "What does it mean for a problem to be NP-hard but not necessarily in NP?",
+    "options": [
+      "It's easier than NP-complete problems",
+      "Every NP problem reduces to it in polynomial time, but its own solutions may not be verifiable in polynomial time",
+      "It has already been proven unsolvable",
+      "It is automatically also in P"
+    ],
+    "explanation": "NP-hard only requires being 'at least as hard as' every NP problem via reduction — it doesn't require membership in NP itself. NP-complete = NP-hard AND in NP.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "np-q-2",
+    "topicId": "np-completeness",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "What is the standard two-step approach to prove a new problem X is NP-complete?",
+    "acceptedAnswers": [
+      "show x is in np and reduce a known np-complete problem to x",
+      "prove np membership and reduce from a known np-complete problem"
+    ],
+    "explanation": "1) Show X ∈ NP (a solution can be checked in poly time). 2) Show a known NP-complete problem reduces to X in poly time."
+  }
+]

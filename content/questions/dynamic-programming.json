@@ -1,0 +1,121 @@
+[
+  {
+    "id": "dp-q-1",
+    "topicId": "dynamic-programming",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "What distinguishes Dynamic Programming from plain Divide & Conquer?",
+    "options": [
+      "DP never uses recursion",
+      "DP's subproblems overlap and get memoized; D&C's subproblems are independent",
+      "DP is always faster in every case",
+      "D&C cannot be implemented recursively"
+    ],
+    "explanation": "DP specifically targets problems where the same subproblem recurs, caching results to avoid recomputation — that's the whole point of memoization.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "dp-q-2",
+    "topicId": "dynamic-programming",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Which of these is correctly solved by a greedy algorithm?",
+    "options": [
+      "0/1 Knapsack",
+      "Fractional Knapsack",
+      "Longest Common Subsequence",
+      "Edit Distance"
+    ],
+    "explanation": "Fractional Knapsack has the greedy-choice property (take items by value/weight ratio). 0/1 Knapsack, LCS, and Edit Distance all require DP.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "dp-q-3",
+    "topicId": "dynamic-programming",
+    "type": "short-answer",
+    "difficulty": "easy",
+    "prompt": "What technique does Backtracking use to avoid exploring the full exponential search space?",
+    "acceptedAnswers": [
+      "pruning",
+      "prune",
+      "backtrack early"
+    ],
+    "explanation": "Pruning: abandoning a partial candidate as soon as it can't possibly lead to a valid solution."
+  },
+  {
+    "id": "real-dp-1",
+    "topicId": "dynamic-programming",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Real 2025 exam question] Which two statements about D&C / DP / Greedy are correct?",
+    "options": [
+      "A Divide & Conquer algorithm's runtime depends only on the complexity of the combine step.",
+      "Dynamic programming is an efficient method for problems where a naive recursive algorithm would solve the same subproblems repeatedly.",
+      "If a problem can be optimally solved with dynamic programming, a greedy algorithm always finds the optimal solution for it too.",
+      "Both dynamic programming and greedy algorithms require the problem to have optimal substructure."
+    ],
+    "correctIndexes": [
+      1,
+      3
+    ],
+    "explanation": "D&C runtime depends on both the recursive part and the combine step (per the Master theorem), not combine alone. DP-solvability doesn't imply greedy works (e.g. 0/1 Knapsack). Both paradigms require optimal substructure; greedy additionally needs the greedy-choice property."
+  },
+  {
+    "id": "real-dp-2",
+    "topicId": "dynamic-programming",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Real 2025 exam question] Which two statements are correct?",
+    "options": [
+      "Backtracking makes, on average, the same number of steps as brute force.",
+      "Metaheuristics are a general-purpose approach for solving optimization problems.",
+      "Hill climbing always finds the best solution.",
+      "Minimum Edit Distance measures how many operations are needed to transform one string into another."
+    ],
+    "correctIndexes": [
+      1,
+      3
+    ],
+    "explanation": "Backtracking's whole point is pruning to take far fewer steps than brute force on average. Hill climbing can get stuck in local optima and does not guarantee the global best."
+  },
+  {
+    "id": "real-dp-3",
+    "topicId": "dynamic-programming",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Real 2025 exam question] Which two statements are correct?",
+    "options": [
+      "In Divide & Conquer, every decomposition step must split the problem into equally-sized subproblems for the algorithm to be correct.",
+      "Dijkstra's algorithm is an example of a greedy algorithm.",
+      "Backtracking can be applied to both decision problems and optimization problems.",
+      "Dynamic programming requires a problem to have non-overlapping subproblems."
+    ],
+    "correctIndexes": [
+      1,
+      2
+    ],
+    "explanation": "D&C correctness doesn't require equal-sized subproblems (e.g. Quicksort splits unevenly and is still correct, just with different complexity). DP requires OVERLAPPING subproblems — the opposite of what's stated."
+  },
+  {
+    "id": "real-dp-4",
+    "topicId": "dynamic-programming",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "[Real 2025 exam question] Which two statements about the Fast Fourier Transform (FFT) are correct?",
+    "options": [
+      "FFT is a metaheuristic method for solving optimization problems.",
+      "FFT uses exclusively real numbers, never complex numbers.",
+      "FFT uses the n-th primitive root of unity e^(2πi/n) to make the computation more efficient.",
+      "FFT reduces the runtime of multiplying two degree-(n-1) polynomials from Θ(n²) to Θ(n·log(n))."
+    ],
+    "correctIndexes": [
+      2,
+      3
+    ],
+    "explanation": "FFT is a divide-and-conquer numerical algorithm, not a metaheuristic, and it's fundamentally built on complex roots of unity. It's the classic way to speed up polynomial multiplication from the naive Θ(n²) to Θ(n log n)."
+  }
+]

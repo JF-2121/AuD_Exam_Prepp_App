@@ -1,11 +1,43 @@
 [
   {
-    "id": "mock-1",
-    "title": "Mock Exam 1 (Sample)",
-    "durationMinutes": 15,
+    "id": "mock-full",
+    "title": "Full Mock Exam",
+    "durationMinutes": 60,
     "sections": [
-      { "topicIds": ["sorting-basics"], "count": 3 },
-      { "topicIds": ["bst"], "count": 3 }
+      { "topicIds": ["algorithm-basics", "asymptotic-notation"], "count": 3 },
+      { "topicIds": ["sorting-insertion", "sorting-bubble", "sorting-selection"], "count": 3 },
+      { "topicIds": ["sorting-merge-quick", "sorting-radix"], "count": 3 },
+      { "topicIds": ["stacks-queues", "linked-lists"], "count": 2 },
+      { "topicIds": ["bst", "red-black-trees", "avl-trees"], "count": 4 },
+      { "topicIds": ["hashing-probabilistic"], "count": 2 },
+      { "topicIds": ["graphs-traversal", "shortest-paths", "minimum-spanning-trees"], "count": 3 },
+      { "topicIds": ["dynamic-programming", "np-completeness"], "count": 2 }
+    ]
+  },
+  {
+    "id": "mock-sorting",
+    "title": "Sorting Deep-Dive",
+    "durationMinutes": 25,
+    "sections": [
+      { "topicIds": ["sorting-insertion"], "count": 3 },
+      { "topicIds": ["sorting-bubble"], "count": 2 },
+      { "topicIds": ["sorting-selection"], "count": 2 },
+      { "topicIds": ["sorting-merge-quick"], "count": 4 },
+      { "topicIds": ["sorting-radix"], "count": 2 }
+    ]
+  },
+  {
+    "id": "mock-trees-graphs",
+    "title": "Trees & Graphs Deep-Dive",
+    "durationMinutes": 30,
+    "sections": [
+      { "topicIds": ["bst"], "count": 4 },
+      { "topicIds": ["red-black-trees"], "count": 2 },
+      { "topicIds": ["avl-trees"], "count": 2 },
+      { "topicIds": ["hashing-probabilistic"], "count": 2 },
+      { "topicIds": ["graphs-traversal"], "count": 2 },
+      { "topicIds": ["shortest-paths"], "count": 2 },
+      { "topicIds": ["minimum-spanning-trees"], "count": 2 }
     ]
   }
 ]

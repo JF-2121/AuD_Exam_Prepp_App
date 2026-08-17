@@ -1,0 +1,42 @@
+[
+  {
+    "id": "bub-q-1",
+    "topicId": "sorting-bubble",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "What optimization lets Bubble Sort achieve a Θ(n) best case?",
+    "options": [
+      "Random pivot selection",
+      "An early-exit flag when a pass makes zero swaps",
+      "Using a temp array",
+      "Recursion"
+    ],
+    "explanation": "If a full pass makes no swaps, the array is already sorted and the algorithm can stop early.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "bub-q-2",
+    "topicId": "sorting-bubble",
+    "type": "trace",
+    "difficulty": "medium",
+    "prompt": "Run Bubble Sort on [4, 2, 7, 1, 3]. Give the final sorted array as JSON.",
+    "algorithmId": "bubble-sort",
+    "initialInput": [
+      4,
+      2,
+      7,
+      1,
+      3
+    ],
+    "expectedFinalOutput": [
+      1,
+      2,
+      3,
+      4,
+      7
+    ],
+    "explanation": "Each pass bubbles the largest remaining element to the end of the unsorted region."
+  }
+]

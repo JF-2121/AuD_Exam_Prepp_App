@@ -1,0 +1,86 @@
+[
+  {
+    "id": "sp-q-1",
+    "topicId": "shortest-paths",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "A graph has an edge of weight -5. Which algorithm should you use for correct shortest paths?",
+    "options": [
+      "Dijkstra",
+      "Bellman-Ford",
+      "BFS",
+      "Either Dijkstra or Bellman-Ford"
+    ],
+    "explanation": "Dijkstra requires exclusively non-negative weights and can give wrong answers with negative edges. Bellman-Ford handles them correctly.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "sp-q-2",
+    "topicId": "shortest-paths",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "What extra thing (besides shortest paths) can Bellman-Ford detect that Dijkstra cannot even attempt?",
+    "acceptedAnswers": [
+      "negative cycle",
+      "negative weight cycle",
+      "negative cycles"
+    ],
+    "explanation": "Bellman-Ford can detect a negative-weight cycle reachable from the source, in which case no shortest path exists."
+  },
+  {
+    "id": "real-sp-1",
+    "topicId": "shortest-paths",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "[Real 2025 exam question] Which two statements about maximum flow (Ford-Fulkerson) are correct?",
+    "options": [
+      "The maximum flow is defined as the sum of the capacities of all edges incoming to the sink t.",
+      "The algorithm terminates when no more augmenting path exists.",
+      "The residual graph always has fewer edges than the original graph.",
+      "A node v ∈ V\\{s,t} cannot have more incoming flow than outgoing flow."
+    ],
+    "correctIndexes": [
+      1,
+      3
+    ],
+    "explanation": "That edge-capacity sum is an upper bound (a cut capacity), not the definition of max flow itself. The residual graph typically has MORE edges (each original edge can contribute both a forward and a backward residual edge). Flow conservation at intermediate nodes means incoming flow equals outgoing flow exactly, so incoming can never exceed outgoing."
+  },
+  {
+    "id": "real-sp-2",
+    "topicId": "shortest-paths",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Real 2025 exam question] Which two statements about Dijkstra and Bellman-Ford are correct?",
+    "options": [
+      "Dijkstra's algorithm only works for non-negative edge weights.",
+      "Dijkstra's algorithm only works for directed acyclic graphs (DAGs).",
+      "Bellman-Ford only works for non-negative edge weights.",
+      "Bellman-Ford also works for graphs with only negative edge weights."
+    ],
+    "correctIndexes": [
+      0,
+      3
+    ],
+    "explanation": "Dijkstra requires non-negative weights but works on general graphs (cycles are fine). Bellman-Ford's whole purpose is handling negative weights — it works correctly even if every weight is negative, as long as there's no negative cycle reachable from the source."
+  },
+  {
+    "id": "real-sp-3",
+    "topicId": "shortest-paths",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "[Real 2025 exam question] Which two statements about Dijkstra are correct?",
+    "options": [
+      "Dijkstra aborts as soon as it detects a cycle.",
+      "Edge weights are allowed to be 0.",
+      "Dijkstra's runtime is O(|V|·log|V|).",
+      "Dijkstra's runtime is Θ(|V|·log|V| + |E|)."
+    ],
+    "correctIndexes": [
+      1,
+      3
+    ],
+    "explanation": "Dijkstra doesn't specifically detect or abort on cycles — it just never revisits a finalized vertex. Non-negative weights include 0, so 0-weight edges are fine. The O(V log V) option omits the edge-relaxation cost entirely; Θ(V log V + E) matches the Fibonacci-heap implementation of Dijkstra (O(1) amortized decrease-key)."
+  }
+]

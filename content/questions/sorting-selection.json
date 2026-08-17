@@ -1,0 +1,40 @@
+[
+  {
+    "id": "sel-q-1",
+    "topicId": "sorting-selection",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "What is the best-case time complexity of Selection Sort?",
+    "options": [
+      "Θ(n)",
+      "Θ(n log n)",
+      "Θ(n²)",
+      "Θ(1)"
+    ],
+    "explanation": "Selection Sort always scans the full unsorted remainder to find the minimum, regardless of input order — no fast best case.",
+    "correctIndexes": [
+      2
+    ]
+  },
+  {
+    "id": "sel-q-2",
+    "topicId": "sorting-selection",
+    "type": "trace",
+    "difficulty": "medium",
+    "prompt": "Run Selection Sort on [3, 1, 4, 2]. Give the final sorted array as JSON.",
+    "algorithmId": "selection-sort",
+    "initialInput": [
+      3,
+      1,
+      4,
+      2
+    ],
+    "expectedFinalOutput": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "explanation": "Each pass finds the minimum of the unsorted remainder and swaps it into place at the front."
+  }
+]

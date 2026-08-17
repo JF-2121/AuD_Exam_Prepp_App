@@ -1,0 +1,7 @@
+[
+  { "id": "algo-fc-1", "topicId": "algorithm-basics", "front": "What are the three top-level requirements an algorithm must satisfy? (Bestimmt, Berechenbar, Anwendbar)", "back": "Determined (same input → same output & same steps), Computable (finite, terminates, executable), Applicable (general and correct).", "tags": ["definitions"] },
+  { "id": "algo-fc-2", "topicId": "algorithm-basics", "front": "Determiniertheit vs. Determinismus — what's the difference?", "back": "Determiniertheit: same input always gives the same output. Determinismus: same input always produces the exact same sequence of steps/intermediate states.", "tags": ["definitions"] },
+  { "id": "algo-fc-3", "topicId": "algorithm-basics", "front": "What are the three parts of a standard correctness proof for a sorting algorithm?", "back": "1) Termination, 2) Sortedness (via loop invariant), 3) Permutation property (no elements lost or invented).", "tags": ["proofs"] },
+  { "id": "algo-fc-4", "topicId": "algorithm-basics", "front": "Schleifeninvariante (loop invariant) — what is it used for?", "back": "A condition true before, during, and after every loop iteration; used to prove an algorithm's correctness by induction.", "tags": ["proofs"] },
+  { "id": "algo-fc-5", "topicId": "algorithm-basics", "front": "Finit vs. Terminierbar — what's the difference?", "back": "Finit: the algorithm's description itself has finite length (theoretical). Terminierbar: the algorithm actually halts in finite time on any input (practical).", "tags": ["definitions"] }
+]

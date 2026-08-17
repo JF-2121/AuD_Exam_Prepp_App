@@ -1,0 +1,6 @@
+[
+  { "id": "gt-fc-1", "topicId": "graphs-traversal", "front": "Which graph traversal guarantees the shortest path (by edge count) in an unweighted graph?", "back": "BFS (Breadth-First Search).", "tags": ["bfs"] },
+  { "id": "gt-fc-2", "topicId": "graphs-traversal", "front": "BFS uses which data structure to track what to visit next? DFS?", "back": "BFS uses a queue (FIFO). DFS uses a stack (LIFO), often implicit via recursion.", "tags": ["comparison"] },
+  { "id": "gt-fc-3", "topicId": "graphs-traversal", "front": "Time complexity of both BFS and DFS?", "back": "Θ(V + E) — every vertex visited once, every edge examined once (twice for undirected graphs).", "tags": ["complexity"] },
+  { "id": "gt-fc-4", "topicId": "graphs-traversal", "front": "Adjacency list vs. adjacency matrix: space complexity of each?", "back": "Adjacency list: Θ(V+E), good for sparse graphs. Adjacency matrix: Θ(V²), O(1) edge lookup but wasteful for sparse graphs.", "tags": ["representation"] }
+]

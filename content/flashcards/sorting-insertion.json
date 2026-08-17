@@ -1,0 +1,6 @@
+[
+  { "id": "ins-fc-1", "topicId": "sorting-insertion", "front": "Insertion Sort: best/worst/average case complexity?", "back": "Best: Θ(n) (already sorted). Worst: Θ(n²) (reverse sorted). Average: Θ(n²).", "tags": ["complexity"] },
+  { "id": "ins-fc-2", "topicId": "sorting-insertion", "front": "Is Insertion Sort stable?", "back": "Yes — it never swaps two equal elements past each other.", "tags": ["properties"] },
+  { "id": "ins-fc-3", "topicId": "sorting-insertion", "front": "What is the loop invariant for Insertion Sort?", "back": "Before iteration i begins, A[0..i-1] is already sorted.", "tags": ["proofs"] },
+  { "id": "ins-fc-4", "topicId": "sorting-insertion", "front": "Insertion Sort mnemonic?", "back": "Like sorting playing cards in your hand — pick up the next card and insert it into the correct spot among the cards you're already holding.", "tags": ["mnemonic"] }
+]

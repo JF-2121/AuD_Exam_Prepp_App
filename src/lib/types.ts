@@ -29,7 +29,8 @@ interface QuestionBase {
 export interface MultipleChoiceQuestion extends QuestionBase {
   type: 'multiple-choice';
   options: string[];
-  correctIndex: number;
+  /** Indexes of every correct option. Length 1 = classic single-answer MC; length 2+ = "choose exactly N" style (as used in the real exam's 42-point MC section). */
+  correctIndexes: number[];
 }
 
 export interface ShortAnswerQuestion extends QuestionBase {

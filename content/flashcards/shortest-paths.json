@@ -1,0 +1,9 @@
+[
+  { "id": "sp-fc-1", "topicId": "shortest-paths", "front": "Can Dijkstra's algorithm correctly handle negative edge weights?", "back": "No — Dijkstra requires exclusively non-negative edge weights.", "tags": ["dijkstra"] },
+  { "id": "sp-fc-2", "topicId": "shortest-paths", "front": "Which SSSP algorithm handles negative weights, and what extra thing can it detect?", "back": "Bellman-Ford — it can also detect negative-weight cycles reachable from the source.", "tags": ["bellman-ford"] },
+  { "id": "sp-fc-3", "topicId": "shortest-paths", "front": "Time complexity: Dijkstra (binary heap) vs. Bellman-Ford?", "back": "Dijkstra: O((V+E) log V). Bellman-Ford: O(V·E) — much slower but strictly more general.", "tags": ["complexity"] },
+  { "id": "sp-fc-4", "topicId": "shortest-paths", "front": "What operation does both Dijkstra and Bellman-Ford repeatedly perform on edges?", "back": "Relaxation — updating a vertex's distance if a shorter path through another vertex is found.", "tags": ["mechanics"] },
+  { "id": "sp-fc-5", "topicId": "shortest-paths", "front": "When does Ford-Fulkerson terminate, and why is that correct?", "back": "When no augmenting path exists in the residual graph — by the max-flow min-cut theorem, this guarantees the current flow is maximum.", "tags": ["max-flow"] },
+  { "id": "sp-fc-6", "topicId": "shortest-paths", "front": "Why does the residual graph usually have MORE edges than the original graph, not fewer?", "back": "Each original edge can contribute both a forward residual edge (remaining capacity) and a backward residual edge (flow already sent, which can be undone).", "tags": ["max-flow"] },
+  { "id": "sp-fc-7", "topicId": "shortest-paths", "front": "Flow conservation: what must be true at every intermediate node (not s or t)?", "back": "Total incoming flow must exactly equal total outgoing flow.", "tags": ["max-flow"] }
+]

@@ -1,0 +1,87 @@
+[
+  {
+    "id": "gt-q-1",
+    "topicId": "graphs-traversal",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "You need the shortest path (by number of edges) between two nodes in an unweighted graph. Which traversal guarantees this?",
+    "options": [
+      "DFS",
+      "BFS",
+      "Either, they're equivalent here",
+      "Neither, you need Dijkstra"
+    ],
+    "explanation": "BFS explores in layers outward from the source, so the first time it reaches a node is guaranteed to be via a shortest (fewest-edge) path.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "gt-q-2",
+    "topicId": "graphs-traversal",
+    "type": "short-answer",
+    "difficulty": "easy",
+    "prompt": "What is the time complexity of both BFS and DFS on a graph with V vertices and E edges?",
+    "acceptedAnswers": [
+      "Θ(V+E)",
+      "O(V+E)",
+      "theta(v+e)",
+      "o(v+e)"
+    ],
+    "explanation": "Both visit every vertex once and examine every edge once (twice for undirected graphs) — Θ(V+E)."
+  },
+  {
+    "id": "real-graph-1",
+    "topicId": "graphs-traversal",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Real 2025 exam question] Which two statements about graph fundamentals are correct?",
+    "options": [
+      "A finite graph consists of a finite number of nodes and a finite number of edges.",
+      "A finite graph consists of a finite number of nodes and can have an infinite number of edges.",
+      "The edge set of a directed graph is defined as E := V×V such that (u,v)∈E ⇔ (v,u)∈E.",
+      "The edge set of an undirected graph is defined as E := V×V such that (u,v)∈E ⇔ (v,u)∈E."
+    ],
+    "correctIndexes": [
+      0,
+      3
+    ],
+    "explanation": "A finite graph has finitely many edges too (bounded by n² for simple graphs). Undirected edges are inherently symmetric; a directed graph's edges are not required to be."
+  },
+  {
+    "id": "real-graph-2",
+    "topicId": "graphs-traversal",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "[Real 2025 exam question] Which two statements are correct?",
+    "options": [
+      "If a connected undirected graph with n nodes has n−1 edges, it must be a tree.",
+      "For a fully/completely connected directed graph, topological sort does not terminate.",
+      "A preorder traversal of a min-heap outputs the elements in sorted order.",
+      "During DFS on a directed acyclic graph (DAG), cross edges can occur."
+    ],
+    "correctIndexes": [
+      0,
+      3
+    ],
+    "explanation": "Connected + exactly n-1 edges ⇔ acyclic ⇔ tree, a classic graph theory equivalence. Topological sort on a cyclic graph still terminates — it just fails/reports a cycle, it doesn't loop forever. A heap has no BST ordering so traversal order is meaningless for sortedness. DAGs can produce cross edges during DFS (no back edges since acyclic, but forward and cross edges are possible)."
+  },
+  {
+    "id": "real-graph-3",
+    "topicId": "graphs-traversal",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Real 2025 exam question] Which two statements about BFS/DFS are correct?",
+    "options": [
+      "BFS can be used to find shortest paths in unweighted graphs.",
+      "DFS must use a queue to manage the open nodes.",
+      "In an undirected graph, DFS produces only tree edges and back edges.",
+      "BFS always visits fewer nodes than DFS, for any input."
+    ],
+    "correctIndexes": [
+      0,
+      2
+    ],
+    "explanation": "DFS uses a stack (explicit or via recursion), not a queue — that's BFS. A full traversal of either visits every reachable node, so neither is universally 'fewer'. The undirected-DFS-only-tree-and-back-edges fact is a classic result (no forward/cross edges possible in undirected DFS)."
+  }
+]

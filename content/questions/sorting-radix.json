@@ -1,0 +1,33 @@
+[
+  {
+    "id": "rad-q-1",
+    "topicId": "sorting-radix",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Why doesn't the Ω(n log n) comparison-sort lower bound apply to Radix Sort?",
+    "options": [
+      "Radix Sort is actually O(n log n) too, so it's irrelevant",
+      "Radix Sort never directly compares two elements against each other",
+      "Radix Sort only works on already-sorted input",
+      "The lower bound only applies to recursive algorithms"
+    ],
+    "explanation": "The Ω(n log n) bound is specifically a lower bound for comparison-based sorts. Radix Sort distributes by digit value instead of comparing elements, so it's exempt.",
+    "correctIndexes": [
+      1
+    ]
+  },
+  {
+    "id": "rad-q-2",
+    "topicId": "sorting-radix",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "In LSD Radix Sort, which digit is processed in the very first pass?",
+    "acceptedAnswers": [
+      "least significant digit",
+      "the 1s digit",
+      "ones digit",
+      "1s place"
+    ],
+    "explanation": "LSD = Least Significant Digit first; the first pass sorts by the 1s place."
+  }
+]
