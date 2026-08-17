@@ -92,6 +92,7 @@ export const dijkstra: AlgorithmDef<string, GraphState> = {
   id: 'dijkstra',
   title: "Dijkstra's Algorithm",
   topicId: 'shortest-paths',
+  family: 'Graphs',
   pseudocode,
   defaultInput: 'A',
   generateSteps,

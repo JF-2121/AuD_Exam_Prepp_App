@@ -79,6 +79,7 @@ export const kruskal: AlgorithmDef<undefined, GraphState> = {
   id: 'kruskal',
   title: "Kruskal's Algorithm (MST)",
   topicId: 'minimum-spanning-trees',
+  family: 'Graphs',
   pseudocode,
   defaultInput: undefined,
   generateSteps,

@@ -7,10 +7,13 @@ export interface AlgorithmStep<TState> {
   meta?: Record<string, unknown>;
 }
 
+export type AlgorithmFamily = 'Sorting' | 'Trees' | 'Graphs';
+
 export interface AlgorithmDef<TInput, TState> {
   id: string;
   title: string;
   topicId: string;
+  family: AlgorithmFamily;
   pseudocode: string[];
   defaultInput: TInput;
   generateSteps: (input: TInput) => AlgorithmStep<TState>[];

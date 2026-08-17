@@ -190,6 +190,7 @@ export const rbtInsert: AlgorithmDef<number[], TreeState> = {
   id: 'rbt-insert',
   title: 'Red-Black Tree Insert',
   topicId: 'red-black-trees',
+  family: 'Trees',
   pseudocode,
   defaultInput: [10, 18, 7, 15, 16, 30, 25, 40, 60, 2],
   generateSteps,

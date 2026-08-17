@@ -55,6 +55,7 @@ export const insertionSort: AlgorithmDef<number[], ArrayState> = {
   id: 'insertion-sort',
   title: 'Insertion Sort',
   topicId: 'sorting-insertion',
+  family: 'Sorting',
   pseudocode,
   defaultInput: [5, 3, 2, 4, 1],
   generateSteps,

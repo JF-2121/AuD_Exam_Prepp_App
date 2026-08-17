@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowDownWideNarrow, GitBranch, Play, RotateCcw, Share2, type LucideIcon } from 'lucide-react';
-import { algorithmRegistry, getAlgorithm } from './registry';
+import { algorithmRegistry, FAMILY_ORDER, getAlgorithm } from './registry';
+import type { AlgorithmFamily } from './core/types';
 import { StepPlayer } from './core/StepPlayer';
 
-const FAMILY_ICON: Record<string, LucideIcon> = {
-  'bst-insert': GitBranch,
-  'rbt-insert': GitBranch,
-  dijkstra: Share2,
-  kruskal: Share2,
+const FAMILY_ICON: Record<AlgorithmFamily, LucideIcon> = {
+  Sorting: ArrowDownWideNarrow,
+  Trees: GitBranch,
+  Graphs: Share2,
 };
 
 export function VisualizerPage() {
@@ -29,20 +29,31 @@ export function VisualizerPage() {
           <Play size={22} className="text-[var(--color-accent)]" /> Visualize
         </h1>
         <p className="mb-5 text-sm text-[var(--color-text-dim)]">Pick an algorithm to step through interactively.</p>
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {algorithmRegistry.map((a) => {
-            const Icon = FAMILY_ICON[a.id] ?? ArrowDownWideNarrow;
+        <div className="flex flex-col gap-6">
+          {FAMILY_ORDER.map((family) => {
+            const algos = algorithmRegistry.filter((a) => a.family === family);
+            if (algos.length === 0) return null;
+            const Icon = FAMILY_ICON[family];
             return (
-              <Link
-                key={a.id}
-                to={`/visualize/${a.id}`}
-                className="card flex items-center gap-3 p-4 transition-colors hover:bg-[var(--color-surface-hover)]"
-              >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[var(--color-accent-dim)] text-[var(--color-accent)]">
-                  <Icon size={16} />
-                </span>
-                <span className="font-medium text-[var(--color-text-h)]">{a.title}</span>
-              </Link>
+              <div key={family}>
+                <h2 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-dim)]">
+                  <Icon size={13} /> {family}
+                </h2>
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                  {algos.map((a) => (
+                    <Link
+                      key={a.id}
+                      to={`/visualize/${a.id}`}
+                      className="card flex items-center gap-3 p-4 transition-colors hover:bg-[var(--color-surface-hover)]"
+                    >
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[var(--color-accent-dim)] text-[var(--color-accent)]">
+                        <Icon size={16} />
+                      </span>
+                      <span className="font-medium text-[var(--color-text-h)]">{a.title}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
             );
           })}
         </div>
@@ -63,10 +74,16 @@ export function VisualizerPage() {
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-2xl font-semibold tracking-tight text-[var(--color-text-h)]">{algorithm.title}</h1>
         <select className="input" value={algorithm.id} onChange={(e) => navigate(`/visualize/${e.target.value}`)}>
-          {algorithmRegistry.map((a) => (
-            <option key={a.id} value={a.id}>
-              {a.title}
-            </option>
+          {FAMILY_ORDER.map((family) => (
+            <optgroup key={family} label={family}>
+              {algorithmRegistry
+                .filter((a) => a.family === family)
+                .map((a) => (
+                  <option key={a.id} value={a.id}>
+                    {a.title}
+                  </option>
+                ))}
+            </optgroup>
           ))}
         </select>
       </div>

@@ -33,24 +33,54 @@ interface AudGrindDB extends DBSchema {
 
 let dbPromise: Promise<IDBPDatabase<AudGrindDB>> | null = null;
 
-function getDb() {
+/**
+ * IndexedDB's open() can hang forever if another tab holds an older-version connection open
+ * (its `versionchange` never fires until that tab closes or self-closes). The `blocking` handler
+ * makes THIS tab self-close when a newer version wants in elsewhere, so it never becomes the
+ * thing blocking someone else. The timeout below is the safety net for the reverse case — some
+ * other tab blocking us — so the UI degrades to "empty" instead of hanging indefinitely.
+ */
+function openDbFresh() {
+  return openDB<AudGrindDB>('aud-grind', 2, {
+    upgrade(db, oldVersion) {
+      if (oldVersion < 1) {
+        db.createObjectStore('srsState', { keyPath: 'flashcardId' });
+        const quizStore = db.createObjectStore('quizAttempts', { keyPath: 'id', autoIncrement: true });
+        quizStore.createIndex('topicId', 'topicId');
+        db.createObjectStore('examAttempts', { keyPath: 'id', autoIncrement: true });
+        db.createObjectStore('meta');
+      }
+      if (oldVersion < 2) {
+        db.createObjectStore('reviewLog', { keyPath: 'id', autoIncrement: true });
+      }
+    },
+    blocking() {
+      dbInstance?.close();
+      dbPromise = null;
+    },
+    terminated() {
+      dbPromise = null;
+    },
+  }).then((database) => {
+    dbInstance = database;
+    return database;
+  });
+}
+
+let dbInstance: IDBPDatabase<AudGrindDB> | undefined;
+
+function getDb(): Promise<IDBPDatabase<AudGrindDB>> {
   if (!dbPromise) {
-    dbPromise = openDB<AudGrindDB>('aud-grind', 2, {
-      upgrade(db, oldVersion) {
-        if (oldVersion < 1) {
-          db.createObjectStore('srsState', { keyPath: 'flashcardId' });
-          const quizStore = db.createObjectStore('quizAttempts', { keyPath: 'id', autoIncrement: true });
-          quizStore.createIndex('topicId', 'topicId');
-          db.createObjectStore('examAttempts', { keyPath: 'id', autoIncrement: true });
-          db.createObjectStore('meta');
-        }
-        if (oldVersion < 2) {
-          db.createObjectStore('reviewLog', { keyPath: 'id', autoIncrement: true });
-        }
-      },
-    });
+    dbPromise = openDbFresh();
   }
   return dbPromise;
+}
+
+function withTimeout<T>(promise: Promise<T>, fallback: T, ms = 4000): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((resolve) => setTimeout(() => resolve(fallback), ms)),
+  ]);
 }
 
 export async function getSrsState(flashcardId: string): Promise<SrsState | undefined> {
@@ -59,8 +89,10 @@ export async function getSrsState(flashcardId: string): Promise<SrsState | undef
 }
 
 export async function getAllSrsState(): Promise<SrsState[]> {
-  const db = await getDb();
-  return db.getAll('srsState');
+  return withTimeout(
+    getDb().then((db) => db.getAll('srsState')),
+    [],
+  );
 }
 
 export async function putSrsState(state: SrsState): Promise<void> {
@@ -74,8 +106,10 @@ export async function recordQuizAttempt(attempt: QuizAttempt): Promise<void> {
 }
 
 export async function getAllQuizAttempts(): Promise<QuizAttempt[]> {
-  const db = await getDb();
-  return db.getAll('quizAttempts');
+  return withTimeout(
+    getDb().then((db) => db.getAll('quizAttempts')),
+    [],
+  );
 }
 
 export async function recordExamAttempt(attempt: ExamAttempt): Promise<void> {
@@ -84,8 +118,10 @@ export async function recordExamAttempt(attempt: ExamAttempt): Promise<void> {
 }
 
 export async function getAllExamAttempts(): Promise<ExamAttempt[]> {
-  const db = await getDb();
-  return db.getAll('examAttempts');
+  return withTimeout(
+    getDb().then((db) => db.getAll('examAttempts')),
+    [],
+  );
 }
 
 export async function recordReviewLog(flashcardId: string): Promise<void> {
@@ -94,6 +130,8 @@ export async function recordReviewLog(flashcardId: string): Promise<void> {
 }
 
 export async function getAllReviewLog(): Promise<ReviewLogEntry[]> {
-  const db = await getDb();
-  return db.getAll('reviewLog');
+  return withTimeout(
+    getDb().then((db) => db.getAll('reviewLog')),
+    [],
+  );
 }

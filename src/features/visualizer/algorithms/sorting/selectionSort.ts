@@ -54,6 +54,7 @@ export const selectionSort: AlgorithmDef<number[], ArrayState> = {
   id: 'selection-sort',
   title: 'Selection Sort',
   topicId: 'sorting-selection',
+  family: 'Sorting',
   pseudocode,
   defaultInput: [5, 3, 2, 4, 1],
   generateSteps,

@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { BookOpen, ListChecks, Play, SquareStack } from 'lucide-react';
 import type { Topic } from '../../lib/types';
+import { getAlgorithm } from '../visualizer/registry';
 
 export function TopicPage({ topics }: { topics: Topic[] }) {
   const { topicId } = useParams();
@@ -28,7 +29,7 @@ export function TopicPage({ topics }: { topics: Topic[] }) {
       <div className="mb-6 flex flex-wrap gap-2">
         {topic.relatedAlgorithmIds.map((algoId) => (
           <Link key={algoId} to={`/visualize/${algoId}`} className="btn btn-primary">
-            <Play size={14} /> Visualize {algoId}
+            <Play size={14} /> {getAlgorithm(algoId)?.title ?? algoId}
           </Link>
         ))}
         <Link to={`/quiz?topic=${topic.id}`} className="btn">

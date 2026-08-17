@@ -67,6 +67,7 @@ export const quickSort: AlgorithmDef<number[], ArrayState> = {
   id: 'quicksort',
   title: 'Quicksort',
   topicId: 'sorting-merge-quick',
+  family: 'Sorting',
   pseudocode,
   defaultInput: [4, 3, 2, 5, 1],
   generateSteps,

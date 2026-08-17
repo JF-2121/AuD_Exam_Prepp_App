@@ -40,6 +40,7 @@ export const bubbleSort: AlgorithmDef<number[], ArrayState> = {
   id: 'bubble-sort',
   title: 'Bubble Sort',
   topicId: 'sorting-bubble',
+  family: 'Sorting',
   pseudocode,
   defaultInput: [5, 3, 8, 1, 9, 4],
   generateSteps,

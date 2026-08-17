@@ -3,7 +3,7 @@ id: bst
 title: "Binary Search Trees"
 category: "Trees"
 order: 1
-relatedAlgorithmIds: ["bst-insert"]
+relatedAlgorithmIds: ["bst-insert", "bst-delete"]
 sourceFiles: ["AuD-Zusammenfassung.pdf"]
 ---
 

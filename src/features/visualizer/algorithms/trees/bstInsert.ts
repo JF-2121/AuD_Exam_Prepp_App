@@ -92,6 +92,7 @@ export const bstInsert: AlgorithmDef<number[], TreeState> = {
   id: 'bst-insert',
   title: 'Binary Search Tree Insert',
   topicId: 'bst',
+  family: 'Trees',
   pseudocode,
   defaultInput: [8, 3, 10, 1, 6, 14, 4, 7],
   generateSteps,

@@ -63,6 +63,7 @@ export const mergeSort: AlgorithmDef<number[], ArrayState> = {
   id: 'merge-sort',
   title: 'Merge Sort',
   topicId: 'sorting-merge-quick',
+  family: 'Sorting',
   pseudocode,
   defaultInput: [5, 3, 8, 1, 9, 4],
   generateSteps,
