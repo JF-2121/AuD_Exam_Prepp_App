@@ -126,3 +126,5 @@ The app is a static build — `npm run build` outputs a self-contained `dist/` f
 Not yet covered by a visualizer (they need a directed-graph example and, for the last one, a flow-network data model — bigger separate additions): Topological Sort, Strongly Connected Components, DAG Shortest Paths, A* Search, Ford-Fulkerson Max Flow. Binary heaps / heap sort (under AVL Trees & Heaps) are also unvisualized.
 
 See `content/README.md` for how to extend content as more raw material comes in.
+
+*Disclaimer this projects code was generated and revisited with the help of AI, for questions or any other recommendations please feel free to open an issue or PR :)*
