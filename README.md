@@ -2,16 +2,62 @@
 
 A local study app for the "Algorithmen und Datenstrukturen" (AuD) final exam: browse topic summaries, watch interactive algorithm visualizations, drill spaced-repetition flashcards, practice quiz questions, and sit timed mock exams — with a dashboard that tracks your weakest topics and a GitHub-style activity heatmap of your study streak.
 
-**Live on Vercel**, auto-deploying from `main` on every push.
+No backend, no account, nothing to pay for or sign up to. Everything runs entirely in your own browser, and every copy is independent — see "Get your own copy" below.
 
-## Running it
+## Get your own copy
+
+You don't need to know how to code to use this. Pick whichever of the two feels easier:
+
+- **Just want it on your own computer, nothing online?** → [Run it locally](#run-it-locally). Takes about 5 minutes the first time.
+- **Want a real web link you can open from your phone, bookmark, or send to a friend?** → [Get your own hosted copy](#get-your-own-hosted-copy-self-host). One click, no terminal needed, free.
+
+You can do either, both, or neither first — they don't depend on each other.
+
+### Run it locally
+
+**1. Install Node.js** (skip this if you already have it — check by opening a terminal and typing `node -v`; if you see a version number like `v20.x.x`, you're set).
+
+Go to **[nodejs.org](https://nodejs.org)**, download the **LTS** version for your operating system, and run the installer (click Next/Continue through the defaults — nothing to configure).
+
+**2. Get the code onto your computer.** Two ways, pick whichever you're comfortable with:
+
+- **No terminal experience?** On this repo's GitHub page, click the green **`Code`** button → **`Download ZIP`**, then unzip it anywhere (e.g. your Desktop).
+- **Comfortable with a terminal?**
+  ```bash
+  git clone https://github.com/JF-2121/AuD_Exam_Prepp_App.git
+  cd AuD_Exam_Prepp_App
+  ```
+
+**3. Open a terminal in that folder.**
+
+- **Windows**: open the unzipped folder in File Explorer, click the address bar, type `cmd`, press Enter.
+- **Mac**: open the unzipped folder in Finder, right-click it → `New Terminal at Folder` (or open Terminal and type `cd ` then drag the folder in).
+
+**4. Run these two commands:**
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open the printed `localhost` URL. No backend, no account, no internet connection needed — everything (your flashcard review history, quiz attempts, mock exam scores) is stored locally in your browser via IndexedDB. Click the "AuD Grind" logo any time to jump back to the dashboard.
+The first one only needs to happen once (it downloads everything the app needs); the second one starts the app. Wait for a line like `Local: http://localhost:5173/` to appear, then open that address in your browser.
+
+That's it — the app is now running entirely on your machine. To stop it, go back to the terminal and press `Ctrl+C`. To run it again later, you only need step 4's second command (`npm run dev`) from inside the folder.
+
+**Nothing is ever sent anywhere.** No internet connection is needed once it's running (except the very first load, to fetch fonts); all your progress lives in your browser via IndexedDB — see "Syncing progress across devices" below for moving it between your own devices.
+
+### Get your own hosted copy (self-host)
+
+This gives you a real `https://` link — like the one this project already runs on — that works from any device, with nothing installed. Every person who does this gets their **own independent copy** with their **own web address**; nobody else's progress or changes affect yours.
+
+You'll need a free GitHub account (to hold your copy of the code) and one of these:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/JF-2121/AuD_Exam_Prepp_App)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/JF-2121/AuD_Exam_Prepp_App)
+
+Click either button and follow the prompts — it walks you through signing in with GitHub, copying the repo into your own account, and deploying it. No configuration needed (this repo already has everything both platforms need to build it correctly); no terminal, no `npm install`, none of the steps above. A couple of minutes later you'll have a live link.
+
+Once it's live, that link **is** the app — anyone with it (including you, on any device) can open it in a browser. It updates itself automatically whenever the underlying code changes, the same way the original does.
 
 ## Syncing progress across devices
 
@@ -56,15 +102,17 @@ New algorithms plug into the framework in `src/features/visualizer/`, grouped in
 2. Reuse an existing `Renderer` if your state shape matches — this is the common case and needs zero new UI code.
 3. Add a `family` and register it in `src/features/visualizer/registry.ts`.
 
-## Deploying
+## Deploying (more options / more detail)
 
-The app is a static build — `npm run build` outputs a self-contained `dist/` folder.
+The "Get your own hosted copy" buttons above are the easiest path. This section is the deeper reference — for tweaking the Vercel/Netlify setup, using a different host, or building manually.
 
-- **Vercel** (current setup): imports the GitHub repo directly, framework auto-detected as Vite, `vercel.json` adds the SPA rewrite so deep links (e.g. `/topics/bst`) don't 404 on refresh.
-- **Render / Netlify**: point the build command at `npm run build`, publish directory `dist`, no server-side config needed.
-- **GitHub Pages** (project site, e.g. `username.github.io/AuD_Grind`): build with the repo name as the base path, then publish `dist/` to the `gh-pages` branch:
+The app is a static build — `npm run build` outputs a self-contained `dist/` folder that any static host can serve.
+
+- **Vercel** (what the buttons above use): imports the GitHub repo directly, framework auto-detected as Vite, `vercel.json` adds the SPA rewrite so deep links (e.g. `/topics/bst`) don't 404 on refresh.
+- **Render**: point the build command at `npm run build`, publish directory `dist`, no server-side config needed.
+- **GitHub Pages** (project site, e.g. `username.github.io/AuD_Exam_Prepp_App`) — more manual than the buttons above, needs the terminal: build with the repo name as the base path, then publish `dist/` to the `gh-pages` branch:
   ```bash
-  VITE_BASE_PATH=/AuD_Grind/ npm run build
+  VITE_BASE_PATH=/AuD_Exam_Prepp_App/ npm run build
   ```
 
 ## Current content coverage
