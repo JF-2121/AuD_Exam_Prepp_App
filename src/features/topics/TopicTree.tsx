@@ -33,7 +33,7 @@ export function TopicTree({ topics }: { topics: Topic[] }) {
                   <li key={t.id}>
                     <Link
                       to={`/topics/${t.id}`}
-                      className={`block rounded-md px-2 py-1 text-sm transition-colors ${
+                      className={`flex min-h-9 items-center rounded-md px-2 text-sm transition-colors ${
                         topicId === t.id
                           ? 'bg-[var(--color-accent-dim)] text-[var(--color-accent)]'
                           : 'text-[var(--color-text)] hover:bg-[var(--color-surface-hover)]'

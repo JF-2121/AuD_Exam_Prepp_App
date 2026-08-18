@@ -3,7 +3,7 @@ id: avl-trees
 title: "AVL Trees & Heaps"
 category: "Trees"
 order: 3
-relatedAlgorithmIds: []
+relatedAlgorithmIds: ["avl-insert", "avl-delete"]
 sourceFiles: ["AuD_AnkiDeck"]
 ---
 

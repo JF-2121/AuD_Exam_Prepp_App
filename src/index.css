@@ -1,25 +1,59 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/*
+  Apple design system (design/DESIGN.md), dark-mode translation.
+  Source is a light-dominant marketing site with alternating light/dark
+  "tiles"; this app commits fully to the dark-tile half of that system as
+  its one persistent canvas, since the app has no photography to alternate
+  around. Two blues per the doc's own dark-surface rule: Action Blue
+  (#0066cc) is the *fill* color for buttons/progress (built to carry white
+  text); Sky Link Blue (#2997ff) is the *on-dark* color for text, icons,
+  links, borders and focus rings, because Action Blue "disappears against
+  the tile background" as plain foreground content.
+*/
+
 @theme {
-  --color-bg: #09090b;
-  --color-surface: #18181b;
-  --color-surface-hover: #232327;
-  --color-border: #27272a;
-  --color-border-strong: #3f3f46;
-  --color-text: #d4d4d8;
-  --color-text-dim: #8b8b93;
-  --color-text-h: #fafafa;
-  --color-accent: #818cf8;
-  --color-accent-hover: #a5b4fc;
-  --color-accent-dim: rgba(129, 140, 248, 0.12);
-  --color-good: #4ade80;
-  --color-good-dim: rgba(74, 222, 128, 0.12);
-  --color-warn: #fbbf24;
-  --color-warn-dim: rgba(251, 191, 36, 0.12);
-  --color-bad: #f87171;
-  --color-bad-dim: rgba(248, 113, 113, 0.12);
-  --radius: 0.65rem;
+  /* Surface — surface-tile-1/2, surface-black */
+  --color-bg: #272729;
+  --color-surface: #2a2a2c;
+  --color-surface-hover: #333335;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.18);
+  --color-nav: #000000;
+
+  /* Text — body-on-dark, body-muted */
+  --color-text: #ffffff;
+  --color-text-dim: #cccccc;
+  --color-text-h: #ffffff;
+
+  /* Accent — primary-on-dark ("Sky Link Blue"), for text/icons/links/borders on dark */
+  --color-accent: #2997ff;
+  --color-accent-hover: #5cadff;
+  --color-accent-dim: rgba(41, 151, 255, 0.16);
+
+  /* Fill — primary ("Action Blue"), for filled buttons/progress carrying white text */
+  --color-accent-fill: #0066cc;
+  --color-accent-fill-hover: #0071e3;
+  --color-on-accent-fill: #ffffff;
+
+  /* Ink — doc's near-black text token, used where light/saturated fills (good/warn/bad) need dark text on top */
+  --color-ink: #1d1d1f;
+
+  /* Semantic — no direct doc equivalent (marketing site, no error states);
+     drawn from Apple's own dark-mode system palette, lightened slightly for AA. */
+  --color-good: #32d74b;
+  --color-good-dim: rgba(50, 215, 75, 0.14);
+  --color-warn: #ff9f0a;
+  --color-warn-dim: rgba(255, 159, 10, 0.14);
+  --color-bad: #ff5c52;
+  --color-bad-dim: rgba(255, 92, 82, 0.14);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  --radius-pill: 9999px;
+  --radius-card: 1.125rem; /* rounded.lg — 18px */
+  --radius-sm: 0.5rem; /* rounded.sm — 8px */
 }
 
 html,
@@ -32,9 +66,16 @@ body {
   margin: 0;
   background: var(--color-bg);
   color: var(--color-text);
-  font: 15px/1.6 -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+  font: 400 17px/1.47 var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.021em; /* Inter substitute: nudge tighter than SF Pro's own -0.374px/17px */
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 600; /* doc's ladder: 300/400/600/700 — 500 never appears */
+  letter-spacing: -0.02em;
 }
 
 code,
@@ -47,32 +88,80 @@ pre {
   color: var(--color-accent-hover);
 }
 
-/* --- shadcn-ish primitives --- */
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 999px;
+  border: 3px solid var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+* {
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-fill-hover);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* --- surfaces ---
+   Doc's shadow philosophy: no shadow on chrome, ever — elevation comes only
+   from a surface-color step (bg → surface) plus a hairline border. The one
+   documented shadow is reserved for product photography, which this app
+   has none of. */
 
 .card {
   border: 1px solid var(--color-border);
   background: var(--color-surface);
-  border-radius: var(--radius);
+  border-radius: var(--radius-card);
 }
+
+.nav-bar {
+  background: var(--color-nav);
+}
+
+/* --- controls ---
+   Two button grammars per the doc: a full pill for the one primary action
+   on a screen (Action Blue fill), and a compact utility rect for everything
+   else (secondary/neutral, the far more common case in this app). */
 
 .btn {
   display: inline-flex;
+  min-height: 44px;
   align-items: center;
   gap: 6px;
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);
-  border-radius: calc(var(--radius) - 0.15rem);
-  padding: 7px 14px;
-  font-size: 13.5px;
-  font-weight: 500;
+  border-radius: var(--radius-sm);
+  padding: 8px 15px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.224px;
   cursor: pointer;
-  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
 
 .btn:hover:not(:disabled) {
   background: var(--color-surface-hover);
   border-color: var(--color-border-strong);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.95); /* the doc's one system-wide micro-interaction */
 }
 
 .btn:disabled {
@@ -82,12 +171,17 @@ pre {
 
 .btn-primary {
   border-color: transparent;
-  background: var(--color-accent);
-  color: #0b0b10;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-fill);
+  color: var(--color-on-accent-fill);
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: -0.374px;
+  padding: 11px 22px;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: var(--color-accent-hover);
+  background: var(--color-accent-fill-hover);
   border-color: transparent;
 }
 
@@ -95,7 +189,7 @@ pre {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   padding: 2px 9px;
   font-size: 11px;
   font-weight: 600;
@@ -125,16 +219,38 @@ pre {
 }
 
 .input {
+  min-height: 44px;
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);
-  border-radius: calc(var(--radius) - 0.15rem);
-  padding: 7px 10px;
-  font-size: 13.5px;
-  transition: border-color 0.12s ease;
+  border-radius: var(--radius-pill);
+  padding: 9px 16px;
+  font-size: 15px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .input:focus {
   outline: none;
   border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-dim);
+}
+
+/* Native <select> ignores the theme by default (OS-drawn gradient box + arrow
+   spinner) unless appearance is stripped and a matching chevron is drawn in
+   its place. */
+select.input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8L9.5 4.5' stroke='%23cccccc' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px;
+  cursor: pointer;
+}
+
+select.input option {
+  background: var(--color-surface);
+  color: var(--color-text);
 }

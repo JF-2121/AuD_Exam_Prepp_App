@@ -3,7 +3,7 @@ id: graphs-traversal
 title: "Graphs: Representation, BFS & DFS"
 category: "Graphs"
 order: 1
-relatedAlgorithmIds: []
+relatedAlgorithmIds: ["bfs", "dfs"]
 sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD_AnkiDeck"]
 ---
 

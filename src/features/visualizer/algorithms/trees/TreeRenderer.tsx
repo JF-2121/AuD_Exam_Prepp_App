@@ -7,6 +7,8 @@ export interface TreeNode {
   right: string | null;
   /** Present for Red-Black trees; absent for plain BSTs, which fall back to the default accent color. */
   color?: 'red' | 'black';
+  /** Small annotation rendered beside the node (e.g. an AVL balance factor). */
+  label?: string;
 }
 
 export interface TreeState {
@@ -80,28 +82,47 @@ export function TreeRenderer({ step }: { step: AlgorithmStep<TreeState> }) {
         const cy = node.y * ySpacing + 24;
         const isHighlight = node.id === highlightId;
         const isNew = node.id === newId;
-        let fill = 'var(--color-accent)';
-        let textColor = '#0b0b10';
+        let fill = 'var(--color-accent-fill)';
+        let textColor = 'var(--color-on-accent-fill)';
         if (node.color === 'red') {
-          fill = '#dc2626';
-          textColor = '#fef2f2';
+          fill = 'var(--color-bad)';
+          textColor = 'var(--color-ink)';
         } else if (node.color === 'black') {
-          fill = '#3f3f46';
-          textColor = '#f4f4f5';
+          fill = 'var(--color-nav)';
+          textColor = 'var(--color-text-h)';
         }
         if (isNew) {
           fill = 'var(--color-good)';
-          textColor = '#0b0b10';
+          textColor = 'var(--color-ink)';
         } else if (isHighlight) {
           fill = 'var(--color-warn)';
-          textColor = '#0b0b10';
+          textColor = 'var(--color-ink)';
         }
         return (
           <g key={node.id}>
-            <circle cx={cx} cy={cy} r={18} fill={fill} stroke={node.color ? 'var(--color-border-strong)' : 'none'} strokeWidth={1.5} />
-            <text x={cx} y={cy + 5} textAnchor="middle" fontSize={13} fill={textColor}>
+            <circle
+              cx={cx}
+              cy={cy}
+              r={18}
+              fill={fill}
+              stroke={node.color || node.label !== undefined ? 'var(--color-accent)' : 'none'}
+              strokeWidth={1.5}
+            />
+            <text x={cx} y={cy + 5} textAnchor="middle" fontSize={14} fontWeight={700} fill={textColor}>
               {node.value}
             </text>
+            {node.label !== undefined && (
+              <text
+                x={cx + 15}
+                y={cy - 15}
+                textAnchor="middle"
+                fontSize={10}
+                fontWeight={700}
+                fill="var(--color-accent)"
+              >
+                {node.label}
+              </text>
+            )}
           </g>
         );
       })}

@@ -63,12 +63,13 @@ export function GraphRenderer({ step }: { step: AlgorithmStep<GraphState> }) {
       {exampleNodes.map((n) => {
         const isCurrent = current === n.id;
         const isVisited = visited.includes(n.id);
-        const fill = isCurrent ? 'var(--color-warn)' : isVisited ? 'var(--color-good)' : 'var(--color-accent)';
+        const fill = isCurrent ? 'var(--color-warn)' : isVisited ? 'var(--color-good)' : 'var(--color-accent-fill)';
+        const textColor = isCurrent || isVisited ? 'var(--color-ink)' : 'var(--color-on-accent-fill)';
         const label = labels[n.id];
         return (
           <g key={n.id}>
-            <circle cx={n.x} cy={n.y} r={17} fill={fill} />
-            <text x={n.x} y={n.y + 4} textAnchor="middle" fontSize={12} fontWeight={600} fill="#0b0b10">
+            <circle cx={n.x} cy={n.y} r={17} fill={fill} stroke="var(--color-accent-dim)" strokeWidth={1} />
+            <text x={n.x} y={n.y + 4} textAnchor="middle" fontSize={13} fontWeight={700} fill={textColor}>
               {n.label}
             </text>
             {label !== undefined && (

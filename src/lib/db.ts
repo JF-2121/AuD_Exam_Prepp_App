@@ -124,9 +124,9 @@ export async function getAllExamAttempts(): Promise<ExamAttempt[]> {
   );
 }
 
-export async function recordReviewLog(flashcardId: string): Promise<void> {
+export async function recordReviewLog(flashcardId: string, timestamp = new Date().toISOString()): Promise<void> {
   const db = await getDb();
-  await db.add('reviewLog', { flashcardId, timestamp: new Date().toISOString() });
+  await db.add('reviewLog', { flashcardId, timestamp });
 }
 
 export async function getAllReviewLog(): Promise<ReviewLogEntry[]> {

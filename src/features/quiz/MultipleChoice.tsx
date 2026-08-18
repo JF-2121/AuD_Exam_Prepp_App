@@ -39,7 +39,7 @@ export function MultipleChoice({
           return (
             <button
               key={i}
-              className={`flex items-center gap-2 rounded-md border px-3 py-2 text-left text-sm transition-colors ${
+              className={`flex min-h-11 items-center gap-2 rounded-md border px-3 py-2 text-left text-sm transition-colors ${
                 isSelected
                   ? 'border-[var(--color-accent)] bg-[var(--color-accent-dim)]'
                   : 'border-[var(--color-border)] hover:bg-[var(--color-surface-hover)]'
@@ -48,10 +48,10 @@ export function MultipleChoice({
             >
               <span
                 className={`flex h-4 w-4 shrink-0 items-center justify-center border ${multi ? 'rounded' : 'rounded-full'} ${
-                  isSelected ? 'border-[var(--color-accent)] bg-[var(--color-accent)]' : 'border-[var(--color-border-strong)]'
+                  isSelected ? 'border-[var(--color-accent-fill)] bg-[var(--color-accent-fill)]' : 'border-[var(--color-border-strong)]'
                 }`}
               >
-                {isSelected && <Check size={11} className="text-[#0b0b10]" strokeWidth={3} />}
+                {isSelected && <Check size={11} className="text-[var(--color-on-accent-fill)]" strokeWidth={3} />}
               </span>
               {opt}
             </button>

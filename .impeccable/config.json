@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-08-18T08:10:31.940Z",
+        "reason": "user directed use of design/DESIGN.md (Apple design-system analysis), which explicitly names Inter as the documented open-source substitute for SF Pro Display/Text on non-Apple platforms"
+      }
+    ]
+  }
+}

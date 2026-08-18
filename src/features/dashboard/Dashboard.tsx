@@ -6,6 +6,7 @@ import { buildActivityCalendar } from '../../lib/activity';
 import type { ExamAttempt, Flashcard, QuizAttempt, SrsState, Topic } from '../../lib/types';
 import { MasteryHeatmap } from './MasteryHeatmap';
 import { ActivityHeatmap } from './ActivityHeatmap';
+import { BackupPanel } from './BackupPanel';
 
 export function Dashboard({ topics, flashcards }: { topics: Topic[]; flashcards: Flashcard[] }) {
   const [srsStates, setSrsStates] = useState<SrsState[]>([]);
@@ -14,14 +15,20 @@ export function Dashboard({ topics, flashcards }: { topics: Topic[]; flashcards:
   const [reviewLog, setReviewLog] = useState<ReviewLogEntry[]>([]);
   const [loaded, setLoaded] = useState(false);
 
+  function loadAll() {
+    return Promise.all([getAllSrsState(), getAllQuizAttempts(), getAllExamAttempts(), getAllReviewLog()]).then(
+      ([s, q, e, r]) => {
+        setSrsStates(s);
+        setQuizAttempts(q);
+        setExamAttempts(e);
+        setReviewLog(r);
+        setLoaded(true);
+      },
+    );
+  }
+
   useEffect(() => {
-    Promise.all([getAllSrsState(), getAllQuizAttempts(), getAllExamAttempts(), getAllReviewLog()]).then(([s, q, e, r]) => {
-      setSrsStates(s);
-      setQuizAttempts(q);
-      setExamAttempts(e);
-      setReviewLog(r);
-      setLoaded(true);
-    });
+    loadAll();
   }, []);
 
   if (!loaded) {
@@ -42,21 +49,24 @@ export function Dashboard({ topics, flashcards }: { topics: Topic[]; flashcards:
 
   return (
     <div>
-      <h1 className="mb-1 flex items-center gap-2 text-2xl font-semibold tracking-tight text-[var(--color-text-h)]">
-        <LayoutDashboard size={22} className="text-[var(--color-accent)]" /> Dashboard
+      <h1 className="mb-1 flex items-center gap-2.5 text-[28px] font-semibold tracking-tight text-[var(--color-text-h)]">
+        <LayoutDashboard size={24} className="text-[var(--color-accent)]" strokeWidth={2} /> Dashboard
       </h1>
       <p className="mb-6 text-sm text-[var(--color-text-dim)]">
         Weakest topics first — combines flashcard maturity, quiz accuracy, and mock exam performance.
       </p>
 
-      <div className="card mb-6 p-5">
-        <div className="mb-2 flex items-baseline justify-between">
-          <h2 className="text-sm font-semibold text-[var(--color-text-h)]">Overall exam readiness</h2>
-          <span className="text-2xl font-bold tabular-nums text-[var(--color-text-h)]">{overallScore}%</span>
+      <div className="card mb-6 overflow-hidden p-5 sm:p-6">
+        <div className="mb-3 flex items-baseline justify-between gap-4">
+          <h2 className="text-sm tracking-wide text-[var(--color-text-dim)]">Overall exam readiness</h2>
+          <span className="text-4xl font-semibold tabular-nums text-[var(--color-accent)]">
+            {overallScore}
+            <span className="text-xl text-[var(--color-text-dim)]">%</span>
+          </span>
         </div>
-        <div className="h-3 overflow-hidden rounded-full bg-[var(--color-surface-hover)]">
+        <div className="h-2.5 overflow-hidden rounded-full bg-[var(--color-surface-hover)]">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-good)] transition-[width] duration-500"
+            className="h-full rounded-full bg-[var(--color-accent-fill)] transition-[width] duration-500"
             style={{ width: `${overallScore}%` }}
           />
         </div>
@@ -81,7 +91,11 @@ export function Dashboard({ topics, flashcards }: { topics: Topic[]; flashcards:
         <ActivityHeatmap days={calendar} />
       </div>
 
-      <MasteryHeatmap mastery={mastery} />
+      <div className="mb-6">
+        <MasteryHeatmap mastery={mastery} />
+      </div>
+
+      <BackupPanel onImported={loadAll} />
     </div>
   );
 }
@@ -89,12 +103,12 @@ export function Dashboard({ topics, flashcards }: { topics: Topic[]; flashcards:
 function Stat({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string | number }) {
   return (
     <div className="card flex items-center gap-3 p-4">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[var(--color-accent-dim)] text-[var(--color-accent)]">
-        <Icon size={16} />
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-dim)] text-[var(--color-accent)]">
+        <Icon size={16} strokeWidth={2} />
       </span>
       <div className="min-w-0">
         <p className="truncate text-xs text-[var(--color-text-dim)]">{label}</p>
-        <p className="text-lg font-semibold text-[var(--color-text-h)]">{value}</p>
+        <p className="text-xl font-semibold text-[var(--color-text-h)]">{value}</p>
       </div>
     </div>
   );

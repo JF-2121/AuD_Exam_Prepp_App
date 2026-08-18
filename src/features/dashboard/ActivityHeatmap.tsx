@@ -13,10 +13,10 @@ function levelFor(count: number): 0 | 1 | 2 | 3 | 4 {
 }
 
 const LEVEL_COLOR: Record<number, string> = {
-  0: 'var(--color-surface-hover)',
-  1: 'color-mix(in srgb, var(--color-accent) 25%, var(--color-surface))',
-  2: 'color-mix(in srgb, var(--color-accent) 50%, var(--color-surface))',
-  3: 'color-mix(in srgb, var(--color-accent) 75%, var(--color-surface))',
+  0: 'rgba(227, 226, 234, 0.06)',
+  1: 'color-mix(in srgb, var(--color-accent) 28%, var(--color-surface))',
+  2: 'color-mix(in srgb, var(--color-accent) 52%, var(--color-surface))',
+  3: 'color-mix(in srgb, var(--color-accent) 78%, var(--color-surface))',
   4: 'var(--color-accent)',
 };
 
@@ -52,7 +52,7 @@ export function ActivityHeatmap({ days }: { days: ActivityDay[] }) {
         <div className="flex items-center gap-3 text-xs text-[var(--color-text-dim)]">
           <span>{totalActive} active days</span>
           {streak > 0 && (
-            <span className="flex items-center gap-1 font-medium text-[var(--color-warn)]">
+            <span className="flex items-center gap-1 font-semibold text-[var(--color-warn)]">
               <Flame size={13} /> {streak}-day streak
             </span>
           )}

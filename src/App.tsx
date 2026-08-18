@@ -34,25 +34,26 @@ export default function App() {
 
   return (
     <div className="mx-auto flex min-h-screen max-w-6xl flex-col">
-      <header className="flex items-center gap-3 border-b border-[var(--color-border)] px-4 py-3 sm:gap-6 sm:px-6">
-        <Link to="/dashboard" className="flex shrink-0 items-center gap-1.5 font-semibold tracking-tight text-[var(--color-text-h)]">
-          <Sigma size={17} className="text-[var(--color-accent)]" strokeWidth={2.5} />
+      <header className="nav-bar sticky top-0 z-10 flex items-center gap-3 px-4 sm:gap-6 sm:px-6">
+        <Link
+          to="/dashboard"
+          className="flex shrink-0 items-center gap-2 text-[15px] font-semibold tracking-tight text-white"
+        >
+          <Sigma size={17} className="text-[var(--color-accent)]" strokeWidth={2.25} />
           AuD Grind
         </Link>
-        <nav className="flex flex-1 gap-1 overflow-x-auto text-sm">
+        <nav className="flex flex-1 gap-1 overflow-x-auto">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `flex shrink-0 items-center gap-1.5 rounded-md px-2.5 py-1.5 transition-colors ${
-                  isActive
-                    ? 'bg-[var(--color-accent-dim)] text-[var(--color-accent)]'
-                    : 'text-[var(--color-text-dim)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]'
+                `flex min-h-11 shrink-0 items-center gap-1.5 rounded-md px-3 text-xs tracking-tight transition-colors ${
+                  isActive ? 'text-[var(--color-accent)]' : 'text-[var(--color-text-dim)] hover:text-white'
                 }`
               }
             >
-              <item.icon size={15} />
+              <item.icon size={14} />
               {item.label}
             </NavLink>
           ))}

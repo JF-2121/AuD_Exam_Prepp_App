@@ -98,7 +98,7 @@ export function ExamRunner({
           <p className="text-[var(--color-text-dim)]">No exam templates authored yet.</p>
         ) : (
           <div className="card max-w-sm p-5">
-            <label className="mb-1.5 block text-xs font-medium text-[var(--color-text-dim)]">Choose a template</label>
+            <label className="mb-1.5 block text-xs font-semibold text-[var(--color-text-dim)]">Choose a template</label>
             <select className="input mb-4 w-full" value={templateId} onChange={(e) => setTemplateId(e.target.value)}>
               {examTemplates.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -137,9 +137,9 @@ export function ExamRunner({
           {examQuestions.map((eq, i) => (
             <button
               key={eq.id}
-              className={`h-7 w-7 rounded-md text-xs font-medium transition-colors ${
+              className={`h-7 w-7 rounded-md text-xs font-semibold transition-colors ${
                 i === cursor
-                  ? 'bg-[var(--color-accent)] text-[#0b0b10]'
+                  ? 'bg-[var(--color-accent-fill)] text-[var(--color-on-accent-fill)]'
                   : answers[eq.id] !== undefined
                     ? 'bg-[var(--color-good-dim)] text-[var(--color-good)]'
                     : 'bg-[var(--color-surface)] text-[var(--color-text-dim)] hover:bg-[var(--color-surface-hover)]'
@@ -192,7 +192,7 @@ export function ExamRunner({
         <Trophy size={22} className="text-[var(--color-accent)]" /> Results
       </h1>
       <p className="mb-4 text-[var(--color-text-dim)]">
-        <span className="font-medium text-[var(--color-text)]">{totalCorrect}/{examQuestions.length}</span> correct
+        <span className="font-semibold text-[var(--color-text)]">{totalCorrect}/{examQuestions.length}</span> correct
       </p>
       <div className="flex flex-col gap-3">
         {examQuestions.map((q, i) => {
@@ -203,7 +203,7 @@ export function ExamRunner({
                 Q{i + 1} · {topicTitle.get(q.topicId)}
               </p>
               <p className="my-1">{q.prompt}</p>
-              <p className={`flex items-center gap-1.5 text-sm font-medium ${r?.correct ? 'text-[var(--color-good)]' : 'text-[var(--color-bad)]'}`}>
+              <p className={`flex items-center gap-1.5 text-sm font-semibold ${r?.correct ? 'text-[var(--color-good)]' : 'text-[var(--color-bad)]'}`}>
                 {r?.correct ? <CheckCircle2 size={14} /> : <XCircle size={14} />}
                 {r?.correct ? 'Correct' : 'Incorrect'}
               </p>

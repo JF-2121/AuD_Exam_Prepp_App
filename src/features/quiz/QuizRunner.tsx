@@ -82,7 +82,7 @@ export function QuizRunner({ questions, topics }: { questions: Question[]; topic
       </div>
 
       <p className="mb-3 text-sm text-[var(--color-text-dim)]">
-        Score this session: <span className="font-medium text-[var(--color-text)]">{score.correct}/{score.total}</span>
+        Score this session: <span className="font-semibold text-[var(--color-text)]">{score.correct}/{score.total}</span>
       </p>
 
       {!question ? (
@@ -98,7 +98,7 @@ export function QuizRunner({ questions, topics }: { questions: Question[]; topic
           {!result && question.type === 'trace' && <TraceAlgorithm question={question} onSubmit={handleSubmit} />}
           {result && (
             <div>
-              <p className={`flex items-center gap-1.5 font-medium ${result.correct ? 'text-[var(--color-good)]' : 'text-[var(--color-bad)]'}`}>
+              <p className={`flex items-center gap-1.5 font-semibold ${result.correct ? 'text-[var(--color-good)]' : 'text-[var(--color-bad)]'}`}>
                 {result.correct ? <CheckCircle2 size={16} /> : <XCircle size={16} />}
                 {result.correct ? 'Correct!' : 'Not quite.'}
               </p>

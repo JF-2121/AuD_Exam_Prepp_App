@@ -49,7 +49,7 @@ export function VisualizerPage() {
                       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[var(--color-accent-dim)] text-[var(--color-accent)]">
                         <Icon size={16} />
                       </span>
-                      <span className="font-medium text-[var(--color-text-h)]">{a.title}</span>
+                      <span className="font-semibold text-[var(--color-text-h)]">{a.title}</span>
                     </Link>
                   ))}
                 </div>

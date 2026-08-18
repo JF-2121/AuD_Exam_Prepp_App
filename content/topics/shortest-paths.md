@@ -3,7 +3,7 @@ id: shortest-paths
 title: "Shortest Paths & Maximum Flow"
 category: "Graphs"
 order: 2
-relatedAlgorithmIds: ["dijkstra"]
+relatedAlgorithmIds: ["dijkstra", "bellman-ford"]
 sourceFiles: ["AuD_AnkiDeck"]
 ---
 
