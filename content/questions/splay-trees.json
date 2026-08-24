@@ -1,0 +1,122 @@
+[
+  {
+    "id": "splay-q-1",
+    "topicId": "splay-trees",
+    "type": "short-answer",
+    "difficulty": "easy",
+    "prompt": "What balance metadata (heights, colors, balance factors, etc.) does a Splay Tree store per node?",
+    "acceptedAnswers": ["none", "no metadata", "nothing"],
+    "explanation": "Splay trees keep no balance metadata at all — structure comes purely from rotations triggered by access (splaying)."
+  },
+  {
+    "id": "splay-q-2",
+    "topicId": "splay-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Which splay case applies when the node being splayed has no grandparent (its parent is the root)?",
+    "options": ["Zig", "Zig-Zig", "Zig-Zag", "None — splaying stops"],
+    "correctIndexes": [0],
+    "explanation": "Zig: a single rotation around the parent. It happens at most once per splay, as the final step."
+  },
+  {
+    "id": "splay-q-3",
+    "topicId": "splay-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Node w and its parent p are both LEFT children of their respective parents. Which case applies, and in what order do you rotate?",
+    "options": [
+      "Zig-Zig: rotate around the grandparent g first, then around p",
+      "Zig-Zig: rotate around p first, then around g",
+      "Zig-Zag: rotate around p first, then around g",
+      "Zig: rotate once around p"
+    ],
+    "correctIndexes": [0],
+    "explanation": "Zig-Zig applies when node and parent are on the same side (both left or both right). The FARTHER node (grandparent g) is rotated first, then the nearer (p) — this order is what distinguishes it from two independent Zig steps."
+  },
+  {
+    "id": "splay-q-4",
+    "topicId": "splay-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Node w is a LEFT child of p, and p is a RIGHT child of g. Which case applies, and in what order do you rotate?",
+    "options": [
+      "Zig-Zag: rotate around p first, then around g",
+      "Zig-Zig: rotate around g first, then around p",
+      "Zig-Zag: rotate around g first, then around p",
+      "Zig: rotate once around g"
+    ],
+    "correctIndexes": [0],
+    "explanation": "Opposite sides = Zig-Zag. Rotate around the nearer node (p) first, then the grandparent (g)."
+  },
+  {
+    "id": "splay-q-5",
+    "topicId": "splay-trees",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "In Splay Tree search, if the searched key is NOT found, what happens?",
+    "options": [
+      "The last node visited before falling off the tree is still splayed to the root.",
+      "Nothing — only successful searches trigger a splay.",
+      "The tree is rebuilt from scratch.",
+      "An error is thrown and the tree is left in an invalid state."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Splaying happens whether or not the key was found — a key part of what makes the tree 'self-adjusting'."
+  },
+  {
+    "id": "splay-q-6",
+    "topicId": "splay-trees",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "Splay Tree delete: the target is found and splayed to the root. The root's left subtree L is non-empty. What single node from L becomes the new root, and why does attaching R to it require no further checks?",
+    "acceptedAnswers": [
+      "the maximum of L, because it has no right child",
+      "max of L",
+      "the largest node in L, it has no right child",
+      "maximum of L has no right child"
+    ],
+    "explanation": "The maximum of L is splayed to become L's new root; being the maximum, it has no right child by definition, so R attaches directly into that free slot."
+  },
+  {
+    "id": "splay-q-7",
+    "topicId": "splay-trees",
+    "type": "trace",
+    "difficulty": "hard",
+    "prompt": "[Lecture example] Starting from the tree rooted at 12 (right child 20, whose children are 13 and 21, with 13's right child 15), insert 14, 18, 17, 11, 16, 19 in that order. What is the value at the root of the final tree?",
+    "algorithmId": "splay-insert",
+    "initialInput": { "seed": [12, 20, 13, 21, 15], "insertions": [14, 18, 17, 11, 16, 19] },
+    "expectedFinalOutput": 19,
+    "explanation": "Splay insert always finishes by splaying the just-inserted node to the root — so after inserting 19 last, 19 is the root, regardless of the intervening rotations."
+  },
+  {
+    "id": "splay-q-8",
+    "topicId": "splay-trees",
+    "type": "trace",
+    "difficulty": "hard",
+    "prompt": "[Lecture example] Continuing from the tree built in the previous question, search for 15, then delete 18. What is the value at the root of the final tree?",
+    "algorithmId": "splay-delete",
+    "initialInput": {
+      "seed": [12, 20, 13, 21, 15],
+      "insertions": [14, 18, 17, 11, 16, 19],
+      "searches": [15],
+      "deletions": [18]
+    },
+    "expectedFinalOutput": 17,
+    "explanation": "Deleting 18 first splays it to the root (via find), removes it (splitting into L and R), then splays the maximum of L to become the new root before attaching R — which lands on 17 for this tree."
+  },
+  {
+    "id": "splay-q-9",
+    "topicId": "splay-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "What is the amortized time complexity of Splay Tree insert/search/delete, and what is the worst case for a SINGLE operation?",
+    "options": [
+      "Amortized O(log n); a single operation can be O(n) worst case",
+      "Always O(log n), worst case included",
+      "Amortized O(1); worst case O(log n)",
+      "Amortized O(n); worst case O(n)"
+    ],
+    "correctIndexes": [0],
+    "explanation": "A single splay can touch every node on the path to the old root (O(n)), but the amortized cost over a sequence of operations is O(log n) via a potential-function argument."
+  }
+]

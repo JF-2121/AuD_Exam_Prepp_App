@@ -8,9 +8,11 @@
       { "topicIds": ["sorting-insertion", "sorting-bubble", "sorting-selection"], "count": 3 },
       { "topicIds": ["sorting-merge-quick", "sorting-radix"], "count": 3 },
       { "topicIds": ["stacks-queues", "linked-lists"], "count": 2 },
-      { "topicIds": ["bst", "red-black-trees", "avl-trees"], "count": 4 },
+      { "topicIds": ["bst", "red-black-trees", "avl-trees", "splay-trees"], "count": 4 },
+      { "topicIds": ["b-trees", "heaps"], "count": 3 },
       { "topicIds": ["hashing-probabilistic"], "count": 2 },
       { "topicIds": ["graphs-traversal", "shortest-paths", "minimum-spanning-trees"], "count": 3 },
+      { "topicIds": ["string-matching"], "count": 2 },
       { "topicIds": ["dynamic-programming", "np-completeness"], "count": 2 }
     ]
   },
@@ -34,10 +36,21 @@
       { "topicIds": ["bst"], "count": 4 },
       { "topicIds": ["red-black-trees"], "count": 2 },
       { "topicIds": ["avl-trees"], "count": 2 },
+      { "topicIds": ["splay-trees"], "count": 2 },
+      { "topicIds": ["b-trees"], "count": 2 },
+      { "topicIds": ["heaps"], "count": 2 },
       { "topicIds": ["hashing-probabilistic"], "count": 2 },
       { "topicIds": ["graphs-traversal"], "count": 2 },
       { "topicIds": ["shortest-paths"], "count": 2 },
       { "topicIds": ["minimum-spanning-trees"], "count": 2 }
+    ]
+  },
+  {
+    "id": "mock-strings",
+    "title": "String Matching Deep-Dive",
+    "durationMinutes": 20,
+    "sections": [
+      { "topicIds": ["string-matching"], "count": 6 }
     ]
   }
 ]

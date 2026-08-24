@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
-import { ArrowDownWideNarrow, Compass, GitBranch, Infinity as InfinityIcon, Layers, Puzzle, Share2, type LucideIcon } from 'lucide-react';
+import { ArrowDownWideNarrow, CaseSensitive, Compass, GitBranch, Infinity as InfinityIcon, Layers, Puzzle, Share2, type LucideIcon } from 'lucide-react';
 import type { Topic } from '../../lib/types';
 
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
@@ -10,6 +10,7 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   Graphs: Share2,
   'Advanced Design': Puzzle,
   'Complexity Theory': InfinityIcon,
+  'String Algorithms': CaseSensitive,
 };
 
 export function TopicTree({ topics }: { topics: Topic[] }) {

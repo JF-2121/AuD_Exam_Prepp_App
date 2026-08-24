@@ -1,0 +1,117 @@
+[
+  {
+    "id": "strmatch-q-1",
+    "topicId": "string-matching",
+    "type": "short-answer",
+    "difficulty": "easy",
+    "prompt": "Naive String Matching complexity, in terms of text length n and pattern length m?",
+    "acceptedAnswers": ["O((n-m+1)m)", "O((n-m+1)*m)", "O(nm)", "O((n - m + 1) * m)"],
+    "explanation": "The outer loop tries n − m + 1 shifts; the inner loop compares up to m characters per shift, with no information carried over between shifts."
+  },
+  {
+    "id": "strmatch-q-2",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "What is the core idea behind the Rabin-Karp algorithm?",
+    "options": [
+      "Compare a numeric fingerprint (hash) of each text window against the pattern's fingerprint, instead of comparing characters.",
+      "Precompute a finite automaton that reads the text in a single pass.",
+      "Sort the text and pattern, then binary search.",
+      "Use a suffix tree of the text."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Treating P and every length-m window of T as base-d numbers lets Rabin-Karp compare O(1) numeric fingerprints instead of O(m) character comparisons."
+  },
+  {
+    "id": "strmatch-q-3",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "In Rabin-Karp, if t_sft ≡ p (mod q), what can you conclude?",
+    "options": [
+      "sft MIGHT be a valid shift — a spurious hit is possible, so an explicit character check is required.",
+      "sft is definitely a valid shift, no further check needed.",
+      "sft is definitely NOT a valid shift.",
+      "The algorithm has failed and must restart."
+    ],
+    "correctIndexes": [0],
+    "explanation": "The modular test can produce false positives ('spurious hits' / 'unechte Treffer') but never false negatives. A matching hash requires an explicit character-by-character verification."
+  },
+  {
+    "id": "strmatch-q-4",
+    "topicId": "string-matching",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "Why does Rabin-Karp compute p and t_sft modulo a prime q instead of using their exact values?",
+    "acceptedAnswers": [
+      "to keep the numbers small enough to fit in a machine word",
+      "the numbers get too large otherwise",
+      "so arithmetic stays O(1)",
+      "to avoid numbers larger than a computer word"
+    ],
+    "explanation": "For long patterns, the exact numeric values can exceed a machine word, breaking the assumption that each arithmetic operation is O(1). q is chosen so 10q still fits in a word."
+  },
+  {
+    "id": "strmatch-q-5",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "What does automaton state st mean in FSM-based string matching, after reading a prefix of T?",
+    "options": [
+      "The last st characters read equal P[0..st-1] (a prefix of P), and no larger overlap holds.",
+      "st counts how many total characters have been read so far.",
+      "st is always equal to the current shift sft.",
+      "st is the number of mismatches seen so far."
+    ],
+    "correctIndexes": [0],
+    "explanation": "State st = length of the longest suffix of what's been read so far that is also a prefix of P — this can even decrease on a mismatch, unlike a naive match-counter that just resets to 0."
+  },
+  {
+    "id": "strmatch-q-6",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Which algorithm achieves O(n) matching time (after preprocessing), with no possibility of spurious hits or backtracking?",
+    "options": ["Finite-Automaton matching", "Naive String Matching", "Rabin-Karp (worst case)", "None of the three guarantee O(n)"],
+    "correctIndexes": [0],
+    "explanation": "FSM matching reads T in a single O(n) pass with no backtracking after O(m·|Σ|) preprocessing — strictly better than Rabin-Karp's expected (not worst-case) O(n+m), and with no spurious hits since the automaton's transitions are exact."
+  },
+  {
+    "id": "strmatch-q-7",
+    "topicId": "string-matching",
+    "type": "trace",
+    "difficulty": "medium",
+    "prompt": "[Lecture example] Run Naive String Matching with T = [a,a,b,a,a,a,a,a,b] and P = [a,a,b]. What is the list of valid shifts?",
+    "algorithmId": "string-match-naive",
+    "initialInput": { "text": ["a", "a", "b", "a", "a", "a", "a", "a", "b"], "pattern": ["a", "a", "b"] },
+    "expectedFinalOutput": [0, 6],
+    "explanation": "T[0..2] = 'aab' matches P directly. T[6..8] = 'aab' also matches. All other shifts fail on the first or second character comparison."
+  },
+  {
+    "id": "strmatch-q-8",
+    "topicId": "string-matching",
+    "type": "trace",
+    "difficulty": "hard",
+    "prompt": "[Lecture example] Run Rabin-Karp with T = [2,1,3,1,4,9,1,3,2,3,1,4,5,3,1,4], P = [3,1,4], q = 13. What is the list of valid (real, non-spurious) shifts?",
+    "algorithmId": "string-match-rabin-karp",
+    "initialInput": { "text": [2, 1, 3, 1, 4, 9, 1, 3, 2, 3, 1, 4, 5, 3, 1, 4], "pattern": [3, 1, 4], "q": 13 },
+    "expectedFinalOutput": [2, 9, 13],
+    "explanation": "The fast modular test also passes at sft=6 and sft=10, but those are spurious hits (fail the explicit character check) — the real matches are sft = 2, 9, 13."
+  },
+  {
+    "id": "strmatch-q-9",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "All three string-matching algorithms (Naive, Rabin-Karp, FSM) solve the same problem. What is the axis they actually differ on?",
+    "options": [
+      "The tradeoff between preprocessing cost and per-character matching cost.",
+      "They find different sets of valid shifts.",
+      "Only some of them support patterns longer than the text.",
+      "They require different definitions of 'valid shift'."
+    ],
+    "correctIndexes": [0],
+    "explanation": "All three return the exact same set of valid shifts for a given T and P — they differ purely in how much work is front-loaded into preprocessing versus spent per character during the scan."
+  }
+]

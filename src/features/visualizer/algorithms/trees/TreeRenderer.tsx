@@ -16,6 +16,8 @@ export interface TreeState {
   rootId: string | null;
   highlightId?: string;
   newId?: string;
+  /** Values removed so far, in removal order (used by heap extract-max to report the sorted output). */
+  extractedOrder?: number[];
 }
 
 interface Positioned extends TreeNode {

@@ -1,0 +1,117 @@
+[
+  {
+    "id": "heap-q-1",
+    "topicId": "heaps",
+    "type": "short-answer",
+    "difficulty": "easy",
+    "prompt": "What is the time complexity of building a binary heap from an unsorted array of n elements?",
+    "acceptedAnswers": ["O(n)", "n", "linear", "Θ(n)"],
+    "explanation": "Bottom-up heap construction (sift-down from the last non-leaf to the root) is Θ(n), not O(n log n)."
+  },
+  {
+    "id": "heap-q-2",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Why does BuildHeap only need to call heapify on roughly the first half of the array's indices?",
+    "options": [
+      "The remaining indices are leaves, which have no children to violate the heap property against.",
+      "It's a performance optimization that sacrifices correctness for speed.",
+      "Because arrays are 0-indexed.",
+      "Because only even indices can hold valid heap nodes."
+    ],
+    "correctIndexes": [0],
+    "explanation": "In a complete binary tree, roughly the last ⌈n/2⌉ indices are leaves — calling heapify on them is a guaranteed no-op, so they're skipped entirely."
+  },
+  {
+    "id": "heap-q-3",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Why must BuildHeap process array indices from highest to lowest (bottom-up), not lowest to highest (top-down)?",
+    "options": [
+      "heapify(A, i) is only correct if both children of i are already valid heaps — top-down processes the root before its subtrees are fixed, so large values buried deep can never bubble past the top.",
+      "It doesn't actually matter; both orders always produce the same valid heap.",
+      "Top-down is fine for max-heaps but not for min-heaps.",
+      "Bottom-up is only a convention with no correctness implication."
+    ],
+    "correctIndexes": [0],
+    "explanation": "A tree like 3→(2→(4,5), 1→(6,7)) shows the failure: top-down heapify at the root does nothing (3 already ≥ its children 2,1), and the larger values 4,5,6,7 two levels down can never be revisited once the root has already been processed."
+  },
+  {
+    "id": "heap-q-4",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "During sift-down (heapify) at node i, node i is smaller than both its children. What should happen?",
+    "options": [
+      "Swap i with the larger of its two children, then recurse into that child's position.",
+      "Swap i with the smaller of its two children.",
+      "Swap i with both children simultaneously.",
+      "Do nothing — the heap property still holds."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Swapping with the smaller child would not fix the heap property against the larger child. Always swap with the larger child, then continue sifting down from its old position."
+  },
+  {
+    "id": "heap-q-5",
+    "topicId": "heaps",
+    "type": "short-answer",
+    "difficulty": "easy",
+    "prompt": "Insert(H, k) appends k, then does what to restore the heap property?",
+    "acceptedAnswers": ["sift up", "sift-up", "bubble up", "bubble-up", "swap with parent while larger"],
+    "explanation": "Sift-up (bubble-up): repeatedly swap k with its parent while k is larger than its parent, until the property holds or the root is reached."
+  },
+  {
+    "id": "heap-q-6",
+    "topicId": "heaps",
+    "type": "trace",
+    "difficulty": "medium",
+    "prompt": "Insert 7, 5, 2, 9, 4, 8 (in that order, via sift-up) into an empty max-heap. What is the final array (level-order)?",
+    "algorithmId": "heap-insert",
+    "initialInput": [7, 5, 2, 9, 4, 8],
+    "expectedFinalOutput": [9, 7, 8, 5, 4, 2],
+    "explanation": "Each insert appends then sifts up. Following the sequence: [7] → [7,5] → [7,5,2] → [9,7,2,5] (9 bubbles to root) → [9,7,2,5,4] → [9,7,8,5,4,2] (8 bubbles past 2)."
+  },
+  {
+    "id": "heap-q-7",
+    "topicId": "heaps",
+    "type": "trace",
+    "difficulty": "hard",
+    "prompt": "[Lecture example] Given A = [7, 5, 2, 9, 4, 8], run HeapSort (BuildHeap, then repeatedly extract-max). What is the sequence of extracted values (i.e. the descending-sorted output)?",
+    "algorithmId": "heap-delete",
+    "initialInput": { "initial": [7, 5, 2, 9, 4, 8], "extractCount": 6 },
+    "expectedFinalOutput": [9, 8, 7, 5, 4, 2],
+    "explanation": "BuildHeap (bottom-up sift-down from index 2 down to 0) first turns A into a valid max-heap, then repeated extract-max produces the descending-sorted array [9, 8, 7, 5, 4, 2] — exactly HeapSort's output."
+  },
+  {
+    "id": "real-heap-1",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Real 2025 exam question] Which two statements about binary max-heaps are correct?",
+    "options": [
+      "The largest element is at the root.",
+      "A binary max-heap is always a binary search tree.",
+      "Deleting the max by moving the last node to the root and then running heapify results in a valid binary max-heap again.",
+      "The largest elements are located in the leaves."
+    ],
+    "correctIndexes": [0, 2],
+    "explanation": "Max-heap property puts the largest element at the root, not the leaves. A heap has no BST ordering. Move-last-to-root + heapify (sift-down) is exactly the standard delete-max algorithm."
+  },
+  {
+    "id": "heap-q-8",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Is Heap Sort stable and/or in-place?",
+    "options": [
+      "In-place, but not stable",
+      "Stable, but not in-place",
+      "Both stable and in-place",
+      "Neither"
+    ],
+    "correctIndexes": [0],
+    "explanation": "Heap Sort sorts within the original array (O(1) extra space, in-place), but the swaps used during sift-down/extract-max can reorder equal-valued elements, so it is not stable."
+  }
+]
