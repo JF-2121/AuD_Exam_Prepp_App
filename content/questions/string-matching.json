@@ -113,5 +113,14 @@
     ],
     "correctIndexes": [0],
     "explanation": "All three return the exact same set of valid shifts for a given T and P — they differ purely in how much work is front-loaded into preprocessing versus spent per character during the scan."
+  },
+  {
+    "id": "strmatch-q-10",
+    "topicId": "string-matching",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "[Lecture example] FSM matching with pattern P = [lambda,delta,lambda,sigma] (m=4, alphabet of 4 Greek letters) is run over a 16-character text. The automaton reaches state 4 at text index sft=12. What is the resulting valid shift?",
+    "acceptedAnswers": ["9"],
+    "explanation": "Valid shift = sft - m + 1 = 12 - 4 + 1 = 9."
   }
 ]

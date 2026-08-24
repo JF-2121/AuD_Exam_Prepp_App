@@ -4,7 +4,7 @@ title: "String Matching"
 category: "String Algorithms"
 order: 1
 relatedAlgorithmIds: ["string-match-naive", "string-match-rabin-karp"]
-sourceFiles: ["AuD26_Sheet07-GrpSol.pdf"]
+sourceFiles: ["AuD26_Sheet07-GrpSol.pdf", "AuD26_Sheet09-Sol.pdf"]
 ---
 
 ## Problem statement
@@ -111,6 +111,8 @@ FSMMatching(T, δ, m):
 ```
 
 **Complexity**: building `δ` costs O(m·|Σ|) (one row per state, one column per alphabet symbol); the matching pass itself is **O(n)** — a strict improvement over Rabin–Karp's *expected* bound, at the price of a heavier, alphabet-dependent preprocessing step.
+
+**FSM works over any alphabet, not just letters/digits** — a second worked example uses `Σ = {β, δ, λ, σ}` (Greek letters) and pattern `P = [λ, δ, λ, σ]` (so `m = 4`, automaton has states `0..4`). Running the resulting automaton over `T = [β,λ,δ,λ,β,σ,λ,λ,δ,λ,δ,λ,σ,λ,σ,β]` (n=16): the state trace is `0,1,2,3,0,0,1,1,2,3,2,3,4,1,0,0` — reaching state `st=4=m` at text index `sft=12` (reading `T[12]=σ`), giving the single valid shift `12 − 4 + 1 = 9`. Confirm: `T[9..12] = [λ,δ,λ,σ] = P` ✓.
 
 ## Comparing the three approaches
 

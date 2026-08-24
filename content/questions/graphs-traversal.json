@@ -102,5 +102,61 @@
     "prompt": "The SCC algorithm's second DFS pass runs on which graph, visited in what order?",
     "acceptedAnswers": ["transpose graph in descending finish time", "the transpose, descending finish time", "gt in descending finish time order"],
     "explanation": "It runs on Gᵀ (all edges reversed), processing vertices in the main loop by descending finish time from the first DFS pass — each resulting tree is one SCC."
+  },
+  {
+    "id": "gt-q-5",
+    "topicId": "graphs-traversal",
+    "type": "trace",
+    "difficulty": "medium",
+    "prompt": "Run BFS from node A on the example graph (edges: A-B=4, A-C=2, B-C=1, B-D=5, C-D=8, C-E=10, D-E=2, D-F=6, E-F=3 — weights are irrelevant for BFS). Give the final dist labels (edge count from A) as a JSON object.",
+    "algorithmId": "bfs",
+    "initialInput": "A",
+    "expectedFinalOutput": { "A": "0", "B": "1", "C": "1", "D": "2", "E": "2", "F": "3" },
+    "explanation": "A is distance 0. B and C are direct neighbors of A (distance 1). D and E are each reachable in 2 hops (via B or C). F is reachable in 3 hops (via D or E)."
+  },
+  {
+    "id": "gt-q-6",
+    "topicId": "graphs-traversal",
+    "type": "trace",
+    "difficulty": "hard",
+    "prompt": "Run DFS from node A on the same example graph. Give the final disc/finish labels as a JSON object mapping each node to its \"disc/finish\" string.",
+    "algorithmId": "dfs",
+    "initialInput": "A",
+    "expectedFinalOutput": { "A": "1/12", "B": "2/11", "C": "3/10", "D": "4/9", "E": "5/8", "F": "6/7" },
+    "explanation": "A single deep chain forms: A→B→C→D→E→F, each nested inside the previous (disc times 1..6 descending into the graph, finish times 7..12 unwinding back out) — a classic nested-interval DFS pattern with no cross edges since the graph is undirected."
+  },
+  {
+    "id": "gt-q-7",
+    "topicId": "graphs-traversal",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "[Worked example] A directed graph has 5 SCCs: {1}, {3}, {2,4,6}, {5,8,9}, {7,10}. A new edge is added that threads a cycle through {1}, {3}, {2,4,6}, and {5,8,9} (but not {7,10}). How many SCCs does the graph have afterward?",
+    "options": ["1", "2", "4", "5"],
+    "correctIndexes": [1],
+    "explanation": "The four threaded components merge into one big SCC; {7,10} is untouched. 5 total − 4 merged + 1 merged-result = 2 SCCs afterward."
+  },
+  {
+    "id": "gt-q-8",
+    "topicId": "graphs-traversal",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "What is the necessary condition on every vertex's in-degree and out-degree for a directed graph to have an Eulerian circuit?",
+    "acceptedAnswers": ["in-degree equals out-degree", "indegree = outdegree", "in-degree = out-degree for every vertex"],
+    "explanation": "If a vertex is visited k times by the circuit, exactly k incoming and k outgoing edges must be used there — no more, no fewer, since no edge is reused."
+  },
+  {
+    "id": "gt-q-9",
+    "topicId": "graphs-traversal",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Removing a single edge from a directed graph can change its number of SCCs. Which of these outcomes is IMPOSSIBLE?",
+    "options": [
+      "The SCC count increases",
+      "The SCC count stays the same",
+      "The SCC count decreases",
+      "One SCC splits into three"
+    ],
+    "correctIndexes": [2],
+    "explanation": "Removing an edge can only break connectivity apart (split an SCC into more pieces) or leave it unchanged — it can never cause two SCCs to merge, so the count can never decrease."
   }
 ]

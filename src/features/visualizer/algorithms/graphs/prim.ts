@@ -95,4 +95,5 @@ export const prim: AlgorithmDef<string, GraphState> = {
   defaultInput: 'A',
   generateSteps,
   Renderer: GraphRenderer,
+  extractResult: (state) => [...(state.acceptedEdges ?? [])].sort(),
 };

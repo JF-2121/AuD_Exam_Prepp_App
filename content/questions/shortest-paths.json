@@ -106,5 +106,51 @@
     "prompt": "What does A* add to plain Dijkstra to make it goal-directed?",
     "acceptedAnswers": ["a heuristic", "heuristic estimate", "a heuristic function", "distance heuristic to target"],
     "explanation": "A heuristic estimate (e.g. straight-line distance to the target) is added to the priority key, biasing the search toward the goal."
+  },
+  {
+    "id": "sp-q-5",
+    "topicId": "shortest-paths",
+    "type": "trace",
+    "difficulty": "medium",
+    "prompt": "Run Dijkstra's algorithm from node A on the example graph (edges: A-B=4, A-C=2, B-C=1, B-D=5, C-D=8, C-E=10, D-E=2, D-F=6, E-F=3). Give the final dist labels as a JSON object mapping each node to its distance (as a string).",
+    "algorithmId": "dijkstra",
+    "initialInput": "A",
+    "expectedFinalOutput": { "A": "0", "B": "3", "C": "2", "D": "8", "E": "10", "F": "13" },
+    "explanation": "Shortest paths from A: A=0, C=2 (direct), B=3 (via C: 2+1), D=8 (via B: 3+5), E=10 (via D: 8+2), F=13 (via E: 10+3)."
+  },
+  {
+    "id": "sp-q-6",
+    "topicId": "shortest-paths",
+    "type": "trace",
+    "difficulty": "medium",
+    "prompt": "Run Bellman-Ford from node A on the same example graph as Dijkstra (all edges treated as bidirectional since the demo graph is undirected). Give the final dist labels as a JSON object.",
+    "algorithmId": "bellman-ford",
+    "initialInput": "A",
+    "expectedFinalOutput": { "A": "0", "B": "3", "C": "2", "D": "8", "E": "10", "F": "13" },
+    "explanation": "Bellman-Ford converges to the same shortest-path distances as Dijkstra on this graph (no negative edges here) — it just takes more passes (relaxing every edge V−1 times) to get there."
+  },
+  {
+    "id": "sp-q-7",
+    "topicId": "shortest-paths",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "This course's Ford-Fulkerson augmenting-path search rule is:",
+    "options": [
+      "DFS from s, always branching into the smallest-numbered/lettered reachable node first, ignoring capacities during the search itself",
+      "BFS from s, always taking the highest-capacity edge first (Edmonds-Karp style)",
+      "Random path selection each iteration",
+      "Always the shortest path by edge count"
+    ],
+    "correctIndexes": [0],
+    "explanation": "The course pins down a specific, testable convention: DFS with smallest-node-first branching, capacities used only afterward to compute the path's bottleneck."
+  },
+  {
+    "id": "sp-q-8",
+    "topicId": "shortest-paths",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "prompt": "In a Dijkstra step-by-step exam table, what must you write in a table cell whose value is unchanged from the previous row, to avoid losing points?",
+    "acceptedAnswers": ["=", "an equals sign", "equals sign"],
+    "explanation": "This course's tutors explicitly warn students to write \"=\" in unchanged cells rather than leaving them blank."
   }
 ]

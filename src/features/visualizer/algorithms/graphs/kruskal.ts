@@ -84,4 +84,5 @@ export const kruskal: AlgorithmDef<undefined, GraphState> = {
   defaultInput: undefined,
   generateSteps,
   Renderer: GraphRenderer,
+  extractResult: (state) => [...(state.acceptedEdges ?? [])].sort(),
 };

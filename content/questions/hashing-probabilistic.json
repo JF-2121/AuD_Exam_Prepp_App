@@ -80,5 +80,29 @@
       2
     ],
     "explanation": "A hash function must be deterministic (same key → same slot) to work at all. By the pigeonhole principle, collisions are unavoidable once the key universe exceeds the table size. Hashing is about fast lookup, not compression or security."
+  },
+  {
+    "id": "hash-q-4",
+    "topicId": "hashing-probabilistic",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "prompt": "n pairwise-distinct keys are hashed uniformly at random into an array of length a. What is E[number of empty slots], in terms of a and n?",
+    "acceptedAnswers": ["a(1-1/a)^n", "a*(1-1/a)^n", "a(1 - 1/a)^n"],
+    "explanation": "Each slot is empty with probability (1-1/a)^n (all n keys independently miss it); summing over all a slots via linearity of expectation gives a*(1-1/a)^n."
+  },
+  {
+    "id": "hash-q-5",
+    "topicId": "hashing-probabilistic",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "[Worked example] A 12-bit Bloom filter with 3 hash functions has bits {1,4,5,6,8,9} set after inserting a few elements. Querying x=33 finds all 3 of its hash positions (1, 9, 6) already set, but x=33 was never inserted. What does this demonstrate?",
+    "options": [
+      "A false positive -- the filter incorrectly reports presence due to coincidental bit overlap with other elements",
+      "A false negative -- a bug in the filter",
+      "The filter is corrupted and must be rebuilt",
+      "x=33 must actually have been inserted earlier without being recorded"
+    ],
+    "correctIndexes": [0],
+    "explanation": "This is exactly how Bloom filter false positives arise: an unqueried element's hash positions can all happen to already be set by OTHER inserted elements, with no way to distinguish this from a true positive."
   }
 ]

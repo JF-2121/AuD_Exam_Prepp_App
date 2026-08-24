@@ -1,6 +1,5 @@
 import { bubbleSort } from './algorithms/sorting/bubbleSort';
 import { insertionSort } from './algorithms/sorting/insertionSort';
-import { selectionSort } from './algorithms/sorting/selectionSort';
 import { mergeSort } from './algorithms/sorting/mergeSort';
 import { quickSort } from './algorithms/sorting/quickSort';
 import { bstInsert } from './algorithms/trees/bstInsert';
@@ -28,7 +27,6 @@ import type { AlgorithmFamily, AnyAlgorithmDef } from './core/types';
 export const algorithmRegistry: AnyAlgorithmDef[] = [
   insertionSort,
   bubbleSort,
-  selectionSort,
   mergeSort,
   quickSort,
   bstInsert,

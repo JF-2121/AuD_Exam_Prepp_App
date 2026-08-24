@@ -97,4 +97,5 @@ export const dijkstra: AlgorithmDef<string, GraphState> = {
   defaultInput: 'A',
   generateSteps,
   Renderer: GraphRenderer,
+  extractResult: (state) => state.labels,
 };

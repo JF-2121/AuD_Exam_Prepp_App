@@ -5,7 +5,7 @@
     "durationMinutes": 60,
     "sections": [
       { "topicIds": ["algorithm-basics", "asymptotic-notation"], "count": 3 },
-      { "topicIds": ["sorting-insertion", "sorting-bubble", "sorting-selection"], "count": 3 },
+      { "topicIds": ["sorting-insertion", "sorting-bubble"], "count": 3 },
       { "topicIds": ["sorting-merge-quick", "sorting-radix"], "count": 3 },
       { "topicIds": ["stacks-queues", "linked-lists"], "count": 2 },
       { "topicIds": ["bst", "red-black-trees", "avl-trees", "splay-trees"], "count": 4 },
@@ -23,7 +23,6 @@
     "sections": [
       { "topicIds": ["sorting-insertion"], "count": 3 },
       { "topicIds": ["sorting-bubble"], "count": 2 },
-      { "topicIds": ["sorting-selection"], "count": 2 },
       { "topicIds": ["sorting-merge-quick"], "count": 4 },
       { "topicIds": ["sorting-radix"], "count": 2 }
     ]
@@ -51,6 +50,15 @@
     "durationMinutes": 20,
     "sections": [
       { "topicIds": ["string-matching"], "count": 6 }
+    ]
+  },
+  {
+    "id": "mock-advanced",
+    "title": "DP, Backtracking & NP-Completeness Deep-Dive",
+    "durationMinutes": 30,
+    "sections": [
+      { "topicIds": ["dynamic-programming"], "count": 6 },
+      { "topicIds": ["np-completeness"], "count": 6 }
     ]
   }
 ]

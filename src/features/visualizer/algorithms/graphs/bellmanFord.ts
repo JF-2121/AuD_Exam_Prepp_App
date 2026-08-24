@@ -105,4 +105,5 @@ export const bellmanFord: AlgorithmDef<string, GraphState> = {
   defaultInput: 'A',
   generateSteps,
   Renderer: GraphRenderer,
+  extractResult: (state) => state.labels,
 };

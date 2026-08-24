@@ -111,4 +111,5 @@ export const dfs: AlgorithmDef<string, GraphState> = {
   defaultInput: 'A',
   generateSteps,
   Renderer: GraphRenderer,
+  extractResult: (state) => state.labels,
 };

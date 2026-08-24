@@ -102,4 +102,5 @@ export const bfs: AlgorithmDef<string, GraphState> = {
   defaultInput: 'A',
   generateSteps,
   Renderer: GraphRenderer,
+  extractResult: (state) => state.labels,
 };

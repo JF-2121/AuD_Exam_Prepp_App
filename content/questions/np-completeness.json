@@ -27,5 +27,83 @@
       "prove np membership and reduce from a known np-complete problem"
     ],
     "explanation": "1) Show X ∈ NP (a solution can be checked in poly time). 2) Show a known NP-complete problem reduces to X in poly time."
+  },
+  {
+    "id": "np-q-3",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Which pair correctly matches (polynomial-time problem, NP-complete problem)?",
+    "options": [
+      "2-colorability (bipartiteness) is in P; 3-colorability is NP-complete",
+      "3-colorability is in P; 2-colorability is NP-complete",
+      "Both 2-colorability and 3-colorability are in P",
+      "Both 2-colorability and 3-colorability are NP-complete"
+    ],
+    "correctIndexes": [0],
+    "explanation": "2-colorability (bipartiteness) is checkable via BFS/DFS in O(V+E) — a vertex's color deterministically forces its neighbors' colors. 3-colorability leaves 2 open options per neighbor, creating exponential branching, and is one of Karp's original 21 NP-complete problems."
+  },
+  {
+    "id": "np-q-4",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Which is true of 2-SAT vs. 3-SAT?",
+    "options": [
+      "2-SAT is in P (solvable via implication graphs and SCCs); 3-SAT is NP-complete",
+      "Both are NP-complete",
+      "Both are in P",
+      "3-SAT is in P; 2-SAT is NP-complete"
+    ],
+    "correctIndexes": [0],
+    "explanation": "2-literal clauses encode pairwise implications decidable via a graph-connectivity (SCC) check. 3-literal clauses interlink variables in a way that resists this shortcut — 3-SAT is the canonical NP-complete problem."
+  },
+  {
+    "id": "np-q-5",
+    "topicId": "np-completeness",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "prompt": "Fill in the blank from the standard P/NP text: an entscheidungsproblem L_E belongs to the class P exactly when there is an algorithm solving it deterministically in ___-case ___ time.",
+    "acceptedAnswers": ["worst-case polynomial", "worst case polynomial time", "worst-case polynomial time"],
+    "explanation": "P requires a deterministic algorithm with polynomial WORST-CASE runtime — not merely average-case or best-case polynomial."
+  },
+  {
+    "id": "np-q-6",
+    "topicId": "np-completeness",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "What is the canonical NP-complete problem that most NP-completeness proofs ultimately chain their reduction back to (proven directly via the Cook-Levin theorem)?",
+    "acceptedAnswers": ["SAT", "sat", "boolean satisfiability", "3SAT", "3-SAT"],
+    "explanation": "SAT (and its restricted form 3SAT) is proven NP-complete directly by encoding a poly-time verifier's entire computation as a boolean formula; nearly every other NP-completeness proof reduces from SAT or a problem already shown to reduce from it."
+  },
+  {
+    "id": "np-q-7",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Proving HAM-PATH ∈ NP: which condition on the certificate p = (v_1, ..., v_n) costs O(V²) to verify, making it the bottleneck of the O(V²) total verification time?",
+    "options": [
+      "Checking that all vertices in p are pairwise distinct (no repeats)",
+      "Checking that p has the correct number of vertices",
+      "Checking that every v_i is a vertex of G",
+      "Checking that consecutive pairs (v_i, v_{i+1}) are edges of G"
+    ],
+    "correctIndexes": [0],
+    "explanation": "Distinctness requires comparing up to O(V²) pairs of vertices in the worst case; the other three checks are each a single O(V) pass over the certificate."
+  },
+  {
+    "id": "np-q-8",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Why can the Hamiltonian Path problem be solved in polynomial time when restricted to directed acyclic graphs (DAGs), even though the general problem is NP-complete?",
+    "options": [
+      "In a DAG, any Hamiltonian path must follow the (unique) topological order, collapsing the exponential search space to exactly one candidate to check",
+      "DAGs never have a Hamiltonian path, so the answer is trivially always 'no'",
+      "DAGs allow negative-weight edges, which speeds up the search",
+      "The NP-completeness proof for general graphs doesn't actually apply to any graphs, so this isn't a real restriction"
+    ],
+    "correctIndexes": [0],
+    "explanation": "A path can't go backward against a DAG's edge directions without revisiting a vertex, so it must respect topological order — checking whether that one specific order is actually a valid path (each consecutive pair an edge) takes only O(V+E) via topological sort plus O(V) verification."
   }
 ]
