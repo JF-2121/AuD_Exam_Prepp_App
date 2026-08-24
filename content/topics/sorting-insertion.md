@@ -4,7 +4,7 @@ title: "Insertion Sort"
 category: "Sorting"
 order: 1
 relatedAlgorithmIds: ["insertion-sort"]
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD_AnkiDeck"]
+sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD_AnkiDeck", "AuD26_Sheet01-GrpSol.pdf"]
 ---
 
 ## Idea
@@ -34,7 +34,15 @@ insertionSort(A)
 | Worst | reverse sorted | Θ(n²) — every element shifts all the way to index 0 |
 | Average | random order | Θ(n²) |
 
-**Stable**: yes — equal keys are never swapped past each other.
+**Stable**: yes — equal keys are never swapped past each other. This hinges entirely on the **strict** inequality `A[j] > key` in the while-condition: the shift only happens for elements *strictly greater* than `key`, so when `A[j] == key`, the loop stops and `key` is inserted immediately after its equal predecessor — never before it.
+
+**Worked example demonstrating stability**: sort `[5, 2, 5*, 1]` where `5*` marks the *second* occurrence of the value 5 (tracked to show ordering, not a different value):
+
+- **i=1**, key=2: shift 5 right → `[2, 5, 5*, 1]`
+- **i=2**, key=5\*: compare with A[1]=5 — `5 > 5*` is **false** (equal, not strictly greater) → no shift, 5\* stays put → `[2, 5, 5*, 1]` (unchanged)
+- **i=3**, key=1: shift 5\*, 5, 2 all right → `[1, 2, 5, 5*]`
+
+**Final: [1, 2, 5, 5\*]** — the original 5 still comes before 5\*, exactly as in the input. Had the comparison been `≥` instead of `>`, step i=2 would have shifted 5 past 5\*, silently breaking stability.
 
 ## Worked example: [5, 3, 2, 4, 1]
 

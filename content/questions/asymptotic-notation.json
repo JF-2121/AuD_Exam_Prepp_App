@@ -82,5 +82,53 @@
       2
     ],
     "explanation": "The inner loop doubles j from 1 until j≥i, running ~log₂(i) times. Summed over i=1..n gives Θ(n log n) — which is also O(n²) (a valid, just non-tight, upper bound), but not O(n) and not Θ(n²)."
+  },
+  {
+    "id": "asym-q-4",
+    "topicId": "asymptotic-notation",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Which relation defined on functions IS a valid equivalence relation: f <=O g (:= f in O(g)), or f =Theta g (:= f in Theta(g))?",
+    "options": [
+      "f =Theta g is an equivalence relation; f <=O g is not even antisymmetric",
+      "f <=O g is an equivalence relation; f =Theta g is not",
+      "Both are valid equivalence relations",
+      "Neither is a valid relation of any kind"
+    ],
+    "correctIndexes": [0],
+    "explanation": "f(n)=n and g(n)=2n satisfy f<=O g and g<=O f but f != g, so <=O fails antisymmetry (it's not even a partial order). =Theta g IS reflexive, symmetric, and transitive."
+  },
+  {
+    "id": "asym-q-5",
+    "topicId": "asymptotic-notation",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "Towers of Hanoi with n disks: what is the minimum number of moves required, in closed form?",
+    "acceptedAnswers": ["2^n-1", "2^n - 1", "2ⁿ-1", "2ⁿ - 1"],
+    "explanation": "The recurrence M(n) = 2*M(n-1)+1 (M(0)=0) solves via substitution P(n)=M(n)+1 to P(n)=2^n, giving M(n) = 2^n - 1 -- exponential, hence not efficient."
+  },
+  {
+    "id": "asym-q-6",
+    "topicId": "asymptotic-notation",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Which of these function pairs (f(n), g(n)) satisfies f in Theta(g)?",
+    "options": [
+      "f(n)=log^k(n), g(n)=n^epsilon (k>=1, epsilon>0)",
+      "f(n)=2^n, g(n)=2^(n/2)",
+      "f(n)=n^log(c), g(n)=c^log(n) (c>1)",
+      "f(n)=n^r, g(n)=n^s (r<s)"
+    ],
+    "correctIndexes": [2],
+    "explanation": "n^log(c) = 2^(log(n)log(c)) = c^log(n) -- the two functions are exactly equal, so f in Theta(g). The others are all f in o(g) or f in omega(g), strict (non-tight) relationships."
+  },
+  {
+    "id": "asym-q-7",
+    "topicId": "asymptotic-notation",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "R(n) = R(n-1) + n for n>1, R(1)=r. Using the substitution method, R(n) is in which Big-O class?",
+    "acceptedAnswers": ["O(n^2)", "O(n²)", "o(n^2)"],
+    "explanation": "R accumulates the arithmetic series 1+2+...+n, so R(n) is in O(n^2) -- provable by guessing C=max(r,1) and verifying R(n+1) <= C(n+1)^2 by induction. This is exactly Insertion Sort's worst-case recurrence."
   }
 ]

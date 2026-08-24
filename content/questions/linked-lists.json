@@ -64,5 +64,29 @@
       2
     ],
     "explanation": "Doubly linked lists have both next and prev pointers. An ADT is implementation-agnostic by definition — complexity depends on the concrete implementation chosen, not the ADT spec."
+  },
+  {
+    "id": "ll-q-3",
+    "topicId": "linked-lists",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "Removing duplicates from an unsorted singly-linked list of n elements, using only O(1) extra memory (no hash set or auxiliary list) and no recursion -- what is the achievable worst-case time complexity?",
+    "acceptedAnswers": ["O(n^2)", "O(n²)", "n^2", "n²"],
+    "explanation": "Without extra memory to track 'seen' values, each of the n elements must be checked against every element still ahead of it in the list -- worst case (n-1)+(n-2)+...+1 = Theta(n^2) total operations."
+  },
+  {
+    "id": "ll-q-4",
+    "topicId": "linked-lists",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "In the O(n^2) in-place RemoveDuplicates algorithm for a singly-linked list, pointer a walks the list once as a fixed reference, and pointer b scans ahead. What does b do when it finds b.next.key == a.key?",
+    "options": [
+      "Splice out the duplicate: b.next = b.next.next",
+      "Swap a and b's positions",
+      "Delete node a instead",
+      "Stop the algorithm immediately -- duplicates mean the input is invalid"
+    ],
+    "correctIndexes": [0],
+    "explanation": "Removing b.next from the list (by pointing b.next past it) is the O(1) splice operation that removes the duplicate without needing extra memory."
   }
 ]

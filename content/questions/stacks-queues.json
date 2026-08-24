@@ -63,5 +63,29 @@
       3
     ],
     "explanation": "Push/pop are O(1) with a proper array or linked implementation. If the queue wasn't empty, dequeue returns whatever was already at the front, not the just-enqueued element — only an empty queue guarantees enqueue then dequeue returns the same element."
+  },
+  {
+    "id": "sq-q-3",
+    "topicId": "stacks-queues",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Implementing a Queue with two Stacks (S1, S2): dequeue() checks if S2 is empty, and if so drains all of S1 into S2 first. Why does this drain step correctly reverse the order?",
+    "options": [
+      "Popping every element off S1 (LIFO) and pushing each onto S2 (LIFO) inverts the order twice-removed, putting the oldest enqueued element on top of S2",
+      "It doesn't reverse anything -- S2 ends up in the same order as S1",
+      "The drain step is only needed to free memory, not to fix ordering",
+      "Stacks cannot be drained into each other without a queue as intermediate storage"
+    ],
+    "correctIndexes": [0],
+    "explanation": "S1 has the oldest enqueued element at the BOTTOM (pushed first). Popping S1 (removes from top, i.e. newest first) and pushing onto S2 reverses that order, so the oldest element ends up on TOP of S2 -- exactly where a dequeue (pop) needs it."
+  },
+  {
+    "id": "sq-q-4",
+    "topicId": "stacks-queues",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "Implementing a Stack with two Queues, pop() must reach the most-recently-pushed element. What is the worst-case time complexity of a single pop() call?",
+    "acceptedAnswers": ["O(n)", "n"],
+    "explanation": "Since a queue can only dequeue from the front, reaching the last-pushed element requires shuffling every other element into the second queue first -- O(n)."
   }
 ]

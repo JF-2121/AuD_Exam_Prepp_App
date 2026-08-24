@@ -27,5 +27,34 @@
       "terminierung, sortiertheit, permutation"
     ],
     "explanation": "Termination (the loop/recursion ends), sortedness (output satisfies the ordering, usually via loop invariant), and the permutation property (no elements lost or invented)."
+  },
+  {
+    "id": "algo-q-3",
+    "topicId": "algorithm-basics",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Which of these is a legitimate reason to deliberately use a LESS efficient algorithm?",
+    "options": [
+      "A constant-time algorithm avoids leaking secret information through timing (a side-channel), even though a faster-on-average algorithm exists",
+      "It's never legitimate -- the most efficient algorithm is always the correct choice",
+      "Less efficient algorithms are always easier to implement in any language",
+      "Compilers automatically upgrade inefficient code to efficient code, so it doesn't matter"
+    ],
+    "correctIndexes": [0],
+    "explanation": "Runtime itself can leak information (e.g. a password check that returns faster on an early mismatch reveals how many characters matched) -- a deliberately constant-time algorithm avoids this even at an average-case efficiency cost."
+  },
+  {
+    "id": "algo-q-4",
+    "topicId": "algorithm-basics",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "In a loop invariant that tracks 'the largest index where a chain of conditions has held so far', what boolean variable is typically needed alongside the index itself, and why?",
+    "acceptedAnswers": [
+      "a flag that latches false once the condition fails",
+      "conditionTrue flag",
+      "a latching flag",
+      "a boolean that stays false forever once it becomes false"
+    ],
+    "explanation": "Once the run-condition fails at some index, it must never be considered valid again for any later index, even if that later index would locally satisfy the condition -- a flag that only ever flips true-to-false (never back) enforces this."
   }
 ]

@@ -2,5 +2,6 @@
   { "id": "ins-fc-1", "topicId": "sorting-insertion", "front": "Insertion Sort: best/worst/average case complexity?", "back": "Best: Θ(n) (already sorted). Worst: Θ(n²) (reverse sorted). Average: Θ(n²).", "tags": ["complexity"] },
   { "id": "ins-fc-2", "topicId": "sorting-insertion", "front": "Is Insertion Sort stable?", "back": "Yes — it never swaps two equal elements past each other.", "tags": ["properties"] },
   { "id": "ins-fc-3", "topicId": "sorting-insertion", "front": "What is the loop invariant for Insertion Sort?", "back": "Before iteration i begins, A[0..i-1] is already sorted.", "tags": ["proofs"] },
-  { "id": "ins-fc-4", "topicId": "sorting-insertion", "front": "Insertion Sort mnemonic?", "back": "Like sorting playing cards in your hand — pick up the next card and insert it into the correct spot among the cards you're already holding.", "tags": ["mnemonic"] }
+  { "id": "ins-fc-4", "topicId": "sorting-insertion", "front": "Insertion Sort mnemonic?", "back": "Like sorting playing cards in your hand — pick up the next card and insert it into the correct spot among the cards you're already holding.", "tags": ["mnemonic"] },
+  { "id": "ins-fc-5", "topicId": "sorting-insertion", "front": "Insertion Sort's stability hinges on which specific detail of the while-condition?", "back": "The STRICT inequality A[j] > key: elements equal to key are never shifted past it, so equal keys keep their original relative order. A >= comparison would break stability.", "tags": ["proofs", "properties"] }
 ]

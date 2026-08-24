@@ -84,5 +84,60 @@
       2
     ],
     "explanation": "Inorder (left, node, right) visits BST nodes in ascending sorted order by definition of the BST invariant."
+  },
+  {
+    "id": "bst-q-5",
+    "topicId": "bst",
+    "type": "trace",
+    "difficulty": "medium",
+    "prompt": "[Lecture example] Insert 50, 30, 15, 80, 20, 60, 90, 70 (in that order) into an empty BST. Give the in-order traversal as JSON.",
+    "algorithmId": "bst-insert",
+    "initialInput": [50, 30, 15, 80, 20, 60, 90, 70],
+    "expectedFinalOutput": [15, 20, 30, 50, 60, 70, 80, 90],
+    "explanation": "In-order traversal is always the sorted values, regardless of insertion order -- the same fact holds whether or not the tree stays balanced."
+  },
+  {
+    "id": "bst-q-6",
+    "topicId": "bst",
+    "type": "trace",
+    "difficulty": "hard",
+    "prompt": "[Lecture example] Continuing from the tree built by inserting 50, 30, 15, 80, 20, 60, 90, 70, delete 15, then 70, then 80 (in that order). Give the in-order traversal of the final tree as JSON.",
+    "algorithmId": "bst-delete",
+    "initialInput": { "initial": [50, 30, 15, 80, 20, 60, 90, 70], "deletions": [15, 70, 80] },
+    "expectedFinalOutput": [20, 30, 50, 60, 90],
+    "explanation": "15 (one child, 20) is spliced out and replaced by 20. 70 (a leaf) is removed directly. 80 (two children, whose right child 90 has no left child) is replaced by 90. Remaining values: 20, 30, 50, 60, 90."
+  },
+  {
+    "id": "bst-q-7",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Which of these number sequences is NOT a valid BST search path?",
+    "options": [
+      "124, 153, 131, 148, 142, 156",
+      "47, 19, 41, 26, 33, 38",
+      "312, 814, 421, 715, 523, 618, 594",
+      "None of the above -- all are valid"
+    ],
+    "correctIndexes": [0],
+    "explanation": "After turning left at 153 (going to 131), the upper bound for all subsequent values is fixed at 153. The final value 156 violates this bound (156 > 153), so no BST could produce this path."
+  },
+  {
+    "id": "bst-q-8",
+    "topicId": "bst",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "prompt": "What is the minimum number of nodes needed to build a counterexample showing that inorder traversal alone (even with unique keys and no half-leaves) does not uniquely determine a BST?",
+    "acceptedAnswers": ["5", "five"],
+    "explanation": "0, 1, and 2-node trees are trivially or vacuously unique. Every valid (no-half-leaf) 3-node shape is uniquely forced by sorted inorder values. All 4 valid 4-node shapes still contain a half-leaf elsewhere. Only at 5 nodes does a genuine ambiguous pair first appear."
+  },
+  {
+    "id": "bst-q-9",
+    "topicId": "bst",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "prompt": "A strict (full) binary tree -- every node has 0 or 2 children -- has n nodes. How many leaves does it have, in terms of n?",
+    "acceptedAnswers": ["(n+1)/2", "(n + 1) / 2"],
+    "explanation": "Provable by induction: splitting into left/right strict subtrees with n_L + n_R = n-1 nodes, the leaf counts (n_L+1)/2 and (n_R+1)/2 sum to exactly (n+1)/2."
   }
 ]
