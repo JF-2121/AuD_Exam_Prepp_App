@@ -118,5 +118,41 @@
     ],
     "explanation": "Approximation ✓ und das Ausnutzen struktureller Spezialfälle ✓ sind zwei der vier üblichen Ausweichwege (Heuristiken und beschnittene exponentielle Suche sind die anderen). Einen exakten Polynomialzeit-Algorithmus zu finden würde P = NP beweisen ✗, und NP-vollständige Probleme sind sehr wohl entscheidbar — nur eben nicht bekanntermaßen effizient ✗.",
     "source": "AuD-Zusammenfassung §10.5, praktisches Fazit"
+  },
+  {
+    "id": "np-mc-6",
+    "prompt": "Berechnungsprobleme und Entscheidungsprobleme — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Jedes Berechnungsproblem lässt sich in ein Entscheidungsproblem überführen.",
+      "Ist die Entscheidungsvariante in Polynomialzeit lösbar, so auch die Berechnungsvariante — die Lösung lässt sich Bit für Bit rekonstruieren, indem wiederholt gefragt wird: „Ist s Präfix der Binärdarstellung einer Lösung?“",
+      "Ein Entscheidungsproblem gibt die Lösung selbst zurück, ein Berechnungsproblem nur eine Ja/Nein-Antwort.",
+      "Die Umformulierung als Entscheidungsproblem verändert die Komplexitätsklasse des Problems."
+    ],
+    "explanation": "Die Umformulierung ist immer möglich ✓, und der Präfix-Trick macht aus einem Entscheider einen Konstruktor, indem der Kandidatenstring Bit für Bit verlängert wird ✓ — deshalb darf sich die Komplexitätstheorie ohne Verlust auf Entscheidungsprobleme beschränken. In Option 3 sind die beiden Arten vertauscht ✗, und die Umformulierung ist gerade darauf angelegt, die Lösbarkeit zu erhalten ✗.",
+    "source": "AuD-Zusammenfassung §10.2"
+  },
+  {
+    "id": "np-mc-7",
+    "prompt": "Wofür steht das „N“ in der Komplexitätsklasse NP?",
+    "options": [
+      "Nicht-polynomiell — die Laufzeit ist durch kein Polynom beschränkt.",
+      "Nichtdeterministische Polynomialzeit.",
+      "Nicht praktikabel — die Probleme sind für echte Maschinen zu schwer.",
+      "Nahezu polynomiell — die Laufzeit ist bis auf logarithmische Faktoren polynomiell."
+    ],
+    "explanation": "NP steht für *nichtdeterministische* Polynomialzeit: Eine nichtdeterministische Maschine könnte einen Zeugen raten und ihn dann in Polynomialzeit verifizieren. Das N als „nicht-polynomiell“ zu lesen ist der klassische Denkfehler — dann wäre P ⊆ NP unmöglich, während P ⊆ NP tatsächlich immer gilt.",
+    "source": "AuD-Zusammenfassung §10.4"
+  },
+  {
+    "id": "np-mc-8",
+    "prompt": "Das Erfüllbarkeitsproblem SAT — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "SAT fragt, ob eine boolesche Formel aus ∧, ∨ und ¬ in n Variablen eine erfüllende Belegung hat.",
+      "SAT ∈ NP ist unmittelbar klar: Eine erfüllende Belegung dient als Zeuge, und das Auswerten der Formel darauf gelingt in Polynomialzeit.",
+      "SAT fragt nach der Belegung, die möglichst viele Klauseln erfüllt.",
+      "SAT ist NP-schwer, liegt aber selbst nicht in NP."
+    ],
+    "explanation": "SAT ist ein Entscheidungsproblem — existiert eine erfüllende Belegung ✓ — und die Belegung ist der naheliegende Zeuge, die Zugehörigkeit zu NP kostet also keine Arbeit ✓. Die Anzahl erfüllter Klauseln zu maximieren ist MAX-SAT, ein anderes (Optimierungs-)Problem ✗, und SAT ist das kanonische NP-*vollständige* Problem, also NP-schwer **und** in NP ✗.",
+    "source": "AuD-Zusammenfassung §10.4"
   }
 ]

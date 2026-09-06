@@ -110,5 +110,24 @@
     ],
     "explanation": "n−1 edges ✓ and connected + acyclic ✓ are the definition of a spanning tree. An MST minimises *total* weight, not pairwise distances — the s–t path in an MST can be far from the shortest path ✗ — and the heaviest edge is typically the first one a greedy algorithm avoids ✗.",
     "source": "AuD-Zusammenfassung §8.5, MST definition"
+  },
+  {
+    "id": "mst-mc-5",
+    "topicId": "minimum-spanning-trees",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "You are shown a partial, highlighted edge set and must decide whether it can come from Kruskal, from Prim, from both, or from neither. Which two statements are correct?",
+    "options": [
+      "A highlighted set that forms one connected tree containing the start vertex is consistent with both algorithms.",
+      "Every set Kruskal has accepted so far consists of the cheapest edges that did not close a cycle — so a snapshot holding an expensive edge while a cheaper, cycle-free edge is still unhighlighted can come from neither.",
+      "A set of several disjoint tree fragments is consistent with Prim.",
+      "Any set of n−1 edges is a valid snapshot of one of the two algorithms."
+    ],
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "Prim only ever grows one connected tree, and Kruskal can also happen to produce a connected set, so \"connected and containing the start vertex\" fits both ✓. Kruskal's weight-ordered acceptance rule is what rules a snapshot out entirely ✓. Disjoint fragments are Kruskal's signature and immediately exclude Prim ✗, and n−1 arbitrary edges need not even be acyclic, let alone reachable by either algorithm ✗.",
+    "source": "AuD-Zusammenfassung §8.5"
   }
 ]

@@ -214,5 +214,17 @@
     ],
     "explanation": "Die dreistufige Pipeline ✓ und die Kostenverteilung ✓ sind die Standardzusammenfassung. 2n Werte paarweise zu multiplizieren ist ein einzelner linearer Durchlauf ✗, und gesucht sind die Koeffizienten — nicht eine Liste von Punktwerten —, weshalb die Rücktransformation erforderlich ist ✗.",
     "source": "AuD-Zusammenfassung §9, FFT-Überblick"
+  },
+  {
+    "id": "dp-mc-10",
+    "prompt": "Eine unveränderliche Liste von N ganzen Zahlen soll Q Bereichsabfragen beantworten („wie viele Einträge liegen zwischen l und h?“), wobei Q > N gilt. Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Liste einmal in Θ(N log N) zu sortieren und jede Abfrage mit zwei binären Suchen zu beantworten ergibt insgesamt Θ(N log N + Q log N).",
+      "Weil Q größer als N ist, lohnt es sich, Arbeit in einen einmaligen Vorverarbeitungsschritt zu verlagern — selbst wenn dieser mehr kostet als eine einzelne Abfrage.",
+      "Die Liste pro Abfrage zu durchlaufen ist asymptotisch optimal, da jede Abfrage jedes Element betrachten muss.",
+      "Vorverarbeitung hilft hier nicht, weil die Abfragen nicht im Voraus bekannt sind."
+    ],
+    "explanation": "Einmal sortieren, dann pro Abfrage beide Grenzen lokalisieren — die Anzahl ist die Differenz der beiden Positionen ✓ — und einen festen Rüstaufwand über viele Abfragen zu amortisieren ist bei Q > N genau der richtige Zug ✓. Der naive Durchlauf pro Abfrage ist Θ(Q·N) und wird vom sortierten Ansatz geschlagen ✗, und die Vorverarbeitung funktioniert gerade *deshalb*, weil sie nur von der (unveränderlichen) Liste abhängt und nicht von den Abfragen ✗.",
+    "source": "AuD-Zusammenfassung §9"
   }
 ]

@@ -184,5 +184,61 @@
     ],
     "explanation": "Approximation ✓ and exploiting structural special cases ✓ are two of the four standard escapes (heuristics and pruned exponential search are the others). Finding an exact poly-time algorithm would prove P = NP ✗, and NP-complete problems are perfectly decidable — just not known to be efficiently so ✗.",
     "source": "AuD-Zusammenfassung §10.5, practical takeaway"
+  },
+  {
+    "id": "np-mc-6",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Computation problems and decision problems — which two statements are correct?",
+    "options": [
+      "Every computation problem can be recast as a decision problem.",
+      "If the decision variant is solvable in polynomial time, so is the computation variant — the solution can be recovered bit by bit by repeatedly asking \"is s a prefix of the binary representation of a solution?\"",
+      "A decision problem returns the solution itself, a computation problem only a yes/no answer.",
+      "Recasting a problem as a decision problem changes which complexity class it belongs to."
+    ],
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "The reformulation is always possible ✓, and the prefix trick turns a decider into a constructor by extending the candidate string one bit at a time ✓ — which is why complexity theory can restrict itself to decision problems without loss. Option 3 has the two kinds swapped ✗, and the reformulation is precisely designed to preserve tractability ✗.",
+    "source": "AuD-Zusammenfassung §10.2"
+  },
+  {
+    "id": "np-mc-7",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "What does the \"N\" in the complexity class NP stand for?",
+    "options": [
+      "Non-polynomial — the running time is not bounded by any polynomial.",
+      "Nondeterministic polynomial time.",
+      "Not practicable — the problems are too hard for real machines.",
+      "Nearly polynomial — the running time is polynomial up to logarithmic factors."
+    ],
+    "correctIndexes": [
+      1
+    ],
+    "explanation": "NP is *nondeterministic* polynomial time: a nondeterministic machine could guess a witness and then verify it in polynomial time. Reading the N as \"non-polynomial\" is the classic misconception — it would make P ⊆ NP impossible, whereas P ⊆ NP in fact always holds.",
+    "source": "AuD-Zusammenfassung §10.4"
+  },
+  {
+    "id": "np-mc-8",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "The satisfiability problem SAT — which two statements are correct?",
+    "options": [
+      "SAT asks whether a Boolean formula over ∧, ∨ and ¬ in n variables has a satisfying assignment.",
+      "SAT ∈ NP is immediate: a satisfying assignment serves as the witness, and evaluating the formula on it takes polynomial time.",
+      "SAT asks for the assignment that satisfies as many clauses as possible.",
+      "SAT is NP-hard but does not itself lie in NP."
+    ],
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "SAT is a decision problem — does a satisfying assignment exist ✓ — and the assignment is the obvious witness, so membership in NP needs no work ✓. Maximising the number of satisfied clauses is MAX-SAT, a different (optimisation) problem ✗, and SAT is the canonical NP-*complete* problem, i.e. NP-hard **and** in NP ✗.",
+    "source": "AuD-Zusammenfassung §10.4"
   }
 ]

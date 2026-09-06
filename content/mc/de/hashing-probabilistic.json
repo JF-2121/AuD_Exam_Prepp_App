@@ -142,5 +142,41 @@
     ],
     "explanation": "Nur False Positives sind möglich ✓, und ein einziges Einfügen genügt bereits, sobald h₁(y), …, h_k(y) ⊆ {h₁(x), …, h_k(x)} gilt — etwa wenn beide Elemente auf dieselben Positionen hashen ✓. Die Behauptung „mindestens zwei“ wird durch dieses Gegenbeispiel widerlegt ✗, und die Unabhängigkeit der Hashfunktionen spielt hier keine Rolle ✗.",
     "source": "AuD-Zusammenfassung §7"
+  },
+  {
+    "id": "hash-mc-9",
+    "prompt": "Deterministische gegenüber probabilistischen Datenstrukturen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Deterministische Strukturen bieten garantierte Worst-Case-Zeitkomplexität, probabilistische zielen auf gute erwartete durchschnittliche Leistung.",
+      "Die Zufälligkeit einer probabilistischen Struktur macht sie widerstandsfähiger gegenüber adversen Eingaben, z. B. einem gezielten Hash-Kollisionsangriff.",
+      "Probabilistische Strukturen sind schwerer zu implementieren, weil die Ausgleichslogik zusätzlich den Zufallsfall behandeln muss.",
+      "Deterministische Strukturen benötigen eine probabilistische Analyse, um ihre Leistungsgarantien angeben zu können."
+    ],
+    "explanation": "Worst-Case-Garantie gegen erwartete Leistung ist der zentrale Kompromiss ✓, und genau die Unvorhersehbarkeit verhindert, dass ein Gegner einen Worst Case konstruiert ✓ — eine deterministische Struktur ist vorhersehbar und damit ausnutzbar. Probabilistische Strukturen sind meist *einfacher* zu implementieren, weil sie gar keine Ausgleichslogik brauchen ✗, und es sind die probabilistischen, die eine probabilistische Analyse erfordern ✗.",
+    "source": "AuD-Zusammenfassung §7.1"
+  },
+  {
+    "id": "hash-mc-10",
+    "prompt": "Struktur einer Skip-Liste — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein Skip-Listen-Knoten führt next und prev sowie up und down, die Ebenen sind also in beide Richtungen verkettet.",
+      "Die Anzahl der Elemente auf Ebene h nimmt ungefähr nach dem Schema p^h · n ab.",
+      "Jedes Element ist auf jeder Ebene vorhanden; nur die Zeiger unterscheiden sich zwischen den Ebenen.",
+      "Die Höhe der Liste wird bei ihrer Erzeugung festgelegt und ändert sich danach nicht mehr."
+    ],
+    "explanation": "Die vier Zeiger ✓ machen aus einer Skip-Liste „mehrere aufeinandergestapelte Linked Lists“ statt einer einzigen Liste, und die Belegung der Ebenen fällt geometrisch mit p^h·n ✓. Nur Ebene 0 enthält jedes Element — genau darin besteht der Sinn der Schnellspuren ✗ — und ein Einfügen erhöht die Höhe, sobald das gezogene Level über der aktuellen Höhe liegt ✗.",
+    "source": "AuD-Zusammenfassung §7.2"
+  },
+  {
+    "id": "hash-mc-11",
+    "prompt": "Suchen in einer Skip-Liste — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Suche startet am Head der höchsten Ebene und läuft nach rechts, solange der nächste Schlüssel ≤ dem gesuchten ist, andernfalls steigt sie eine Ebene ab.",
+      "Obwohl die erwarteten Kosten O(log n) betragen, ist eine einzelne Suche im Worst Case O(n).",
+      "Eine erfolglose Suche steht bereits fest, sobald die aktuelle Ebene erschöpft ist; die tieferen Ebenen müssen nicht mehr betrachtet werden.",
+      "Die Suche muss in jedem Fall Ebene 0 erreichen, selbst wenn der Schlüssel auf einer höheren Ebene liegt."
+    ],
+    "explanation": "Nach rechts, solange nicht überschossen wird, sonst hinunter — das ist die Suchregel ✓, und eine unglückliche Folge von Münzwürfen kann die Liste zu einer einzigen verketteten Liste entarten lassen ⟹ O(n) ✓. Das Ende einer Ebene bedeutet lediglich „absteigen“ ✗, und ein auf einer Schnellspur gefundener Schlüssel wird sofort zurückgegeben, ohne weiter abzusteigen ✗.",
+    "source": "AuD-Zusammenfassung §7.2"
   }
 ]

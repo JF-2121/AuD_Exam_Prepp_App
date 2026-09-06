@@ -223,5 +223,62 @@
     ],
     "explanation": "Only false positives are possible ✓, and a single insertion already suffices whenever h₁(y), …, h_k(y) ⊆ {h₁(x), …, h_k(x)} — e.g. when both elements hash to the same positions ✓. So the \"at least two\" claim is refuted by that counterexample ✗, and independence of the hash functions is unrelated ✗.",
     "source": "AuD-Zusammenfassung §7"
+  },
+  {
+    "id": "hash-mc-9",
+    "topicId": "hashing-probabilistic",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Deterministic versus probabilistic data structures — which two statements are correct?",
+    "options": [
+      "Deterministic structures offer guaranteed worst-case time complexity, while probabilistic ones aim at good expected average performance.",
+      "The randomness of a probabilistic structure makes it more robust against adversarial input, e.g. a deliberate hash-collision attack.",
+      "Probabilistic structures are harder to implement, because the balancing logic additionally has to handle the random case.",
+      "Deterministic structures need a probabilistic analysis in order to state their performance guarantees."
+    ],
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "Worst-case guarantee versus expected performance is the central trade-off ✓, and unpredictability is exactly what stops an adversary from constructing a worst case ✓ — a deterministic structure is predictable and can therefore be exploited. Probabilistic structures are usually *simpler* to implement precisely because they need no rebalancing logic ✗, and it is the probabilistic ones that require probabilistic analysis ✗.",
+    "source": "AuD-Zusammenfassung §7.1"
+  },
+  {
+    "id": "hash-mc-10",
+    "topicId": "hashing-probabilistic",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Structure of a skip list — which two statements are correct?",
+    "options": [
+      "A skip-list node carries next and prev as well as up and down, so the levels are linked in both directions.",
+      "The number of elements on level h shrinks roughly as p^h · n.",
+      "Every element appears on every level; only the pointers differ between levels.",
+      "The height of the list is fixed when it is created and never changes afterwards."
+    ],
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "The four pointers ✓ are what makes a skip list \"stacked linked lists\" rather than one list, and the level occupancy falls off geometrically as p^h·n ✓. Only level 0 holds every element — that is the whole point of the express lanes ✗ — and an insert raises the height whenever its drawn level exceeds the current one ✗.",
+    "source": "AuD-Zusammenfassung §7.2"
+  },
+  {
+    "id": "hash-mc-11",
+    "topicId": "hashing-probabilistic",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Searching in a skip list — which two statements are correct?",
+    "options": [
+      "The search starts at the head of the highest level and moves right while the next key is ≤ the sought key, otherwise it descends one level.",
+      "Although the expected cost is O(log n), a single search is O(n) in the worst case.",
+      "A failed search is already detected once the current level is exhausted; the lower levels need not be examined.",
+      "The search always has to reach level 0, even when the key sits on a higher level."
+    ],
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "Right-while-not-overshooting, otherwise down, is the search rule ✓, and an unlucky sequence of coin flips can degenerate the list into a single linked list ⟹ O(n) ✓. Running out of room on one level only means \"descend\" ✗, and a key found on an express lane is returned immediately without descending further ✗.",
+    "source": "AuD-Zusammenfassung §7.2"
   }
 ]

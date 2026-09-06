@@ -146,5 +146,43 @@
     ],
     "explanation": "These are the two standard cases of TREE-SUCCESSOR ✓✓. The successor can be an ancestor rather than a descendant ✗, and the maximum is the rightmost node, which need not be the deepest one ✗.",
     "source": "AuD-Zusammenfassung §5.4"
+  },
+  {
+    "id": "bst-mc-5",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Reconstructing a tree from traversals — which two statements are correct?",
+    "options": [
+      "Preorder and inorder together determine a binary tree with pairwise distinct keys uniquely.",
+      "For a binary *search* tree the preorder alone already suffices, because the inorder is just the keys in sorted order and therefore adds nothing.",
+      "The preorder alone determines any binary tree uniquely.",
+      "For a BST the inorder alone suffices, precisely because it is sorted."
+    ],
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "Preorder + inorder is the standard unique reconstruction ✓. In a BST the inorder is forced to be the sorted key sequence, so it carries no shape information and the preorder alone is enough ✓ — the same argument makes the postorder alone sufficient. For an arbitrary binary tree the preorder alone is ambiguous ✗, and the inorder alone is the *least* informative for a BST: every BST over the same keys has the identical inorder ✗.",
+    "source": "AuD-Zusammenfassung §5.4"
+  },
+  {
+    "id": "bst-mc-6",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Which insertion orders produce a given binary search tree? Which two statements are correct?",
+    "options": [
+      "The root must have been inserted first.",
+      "Several different insertion orders can produce the same tree — any order in which every node comes after all of its ancestors.",
+      "The insertion order is uniquely determined by the resulting tree.",
+      "Inserting the keys in ascending order reproduces any given BST."
+    ],
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "A BST insert only ever appends a leaf, so a node can only be placed once its whole ancestor path exists — hence the root first ✓, and any ancestors-before-descendants order works ✓ (a level-order insertion is always one such order). So the order is generally *not* unique ✗, and ascending insertion always degenerates into a right-leaning chain ✗.",
+    "source": "AuD-Zusammenfassung §5.4"
   }
 ]

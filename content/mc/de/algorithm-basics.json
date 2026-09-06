@@ -106,5 +106,17 @@
     ],
     "explanation": "Die Berechenbarkeit zerfällt in Finitheit (endliche *Beschreibung*) ✓, Terminierbarkeit (endliche *Ausführung* — das beschreibt Option 3) ✗ und Effektivität (jeder Schritt maschinell ausführbar) ✓. Effektivität hat nichts damit zu tun, der schnellste bekannte Algorithmus zu sein ✗ — das wäre Effizienz.",
     "source": "AuD-Zusammenfassung §2"
+  },
+  {
+    "id": "algo-mc-8",
+    "prompt": "`MinSort` sortiert aufsteigend mit `for i = 0 to n-2: imin = indexOfMin{A[i],…,A[n-1]}; swap(A[i], A[imin])`. Welche zwei Aussagen über seine Schleifeninvariante sind korrekt?",
+    "options": [
+      "Die Invariante hat zwei Hälften: A enthält genau die Einträge des ursprünglichen Arrays, und A[0..i−1] enthält die i Einträge mit den kleinsten Schlüsseln, aufsteigend sortiert.",
+      "Bei der Terminierung bricht die Schleife vor dem (n−1)-ten Durchlauf ab; Einsetzen von i = n−1 lässt A[0..n−2] die n−1 kleinsten Schlüssel enthalten, womit A[n−1] der größte sein muss.",
+      "Es ist dieselbe Invariante wie bei Insertion Sort, da auch dieser ein sortiertes Präfix aufbaut.",
+      "Da der Algorithmus ausschließlich tauscht, muss die Invariante nicht erwähnen, dass A eine Permutation des ursprünglichen Arrays ist."
+    ],
+    "explanation": "Beide Hälften sind nötig ✓, und das Einsetzen des Abbruchwerts i = n−1 ist genau der Schritt, der aus der Invariante „das gesamte Array ist sortiert“ macht ✓. Das Präfix von Insertion Sort enthält die *ursprünglich ersten i* Einträge, umgeordnet — nicht die i global kleinsten ✗; das ist die Standardfalle. Und die Permutations-Hälfte muss *ausgesprochen* werden, um auf eine sortierte Permutation der Eingabe zu schließen, auch wenn das Tauschen sie wahr macht ✗.",
+    "source": "AuD-Zusammenfassung §2"
   }
 ]

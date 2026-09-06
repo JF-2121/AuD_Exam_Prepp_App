@@ -336,5 +336,24 @@
     ],
     "explanation": "The three-step pipeline ✓ and the cost distribution ✓ are the standard summary. Multiplying 2n values pairwise is a single linear pass ✗, and the coefficients — not a list of point values — are the desired output, so the inverse transform is required ✗.",
     "source": "AuD-Zusammenfassung §9, FFT overview"
+  },
+  {
+    "id": "dp-mc-10",
+    "topicId": "dynamic-programming",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "A static list of N integers must answer Q range-count queries (\"how many entries lie between l and h?\"), with Q > N. Which two statements are correct?",
+    "options": [
+      "Sorting the list once in Θ(N log N) and answering each query with two binary searches gives Θ(N log N + Q log N) in total.",
+      "Because Q exceeds N, it pays to shift work into a one-off preprocessing step even when that step costs more than a single query would.",
+      "Scanning the list per query is asymptotically optimal, since every query has to look at every element.",
+      "Preprocessing cannot help here because the queries are not known in advance."
+    ],
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "Sort once, then locate both bounds per query — the count is the difference of the two positions ✓ — and amortising a fixed setup cost over many queries is exactly the right move when Q > N ✓. The naive per-query scan is Θ(Q·N), which the sorted approach beats ✗, and preprocessing works precisely *because* it depends only on the (unchanging) list and not on the queries ✗.",
+    "source": "AuD-Zusammenfassung §9"
   }
 ]

@@ -3,9 +3,9 @@
     "id": "real-bst-1",
     "prompt": "Welche Traversierung eines binären Suchbaums gibt die Elemente aufsteigend sortiert aus?",
     "options": [
-      "Preorder-Traversierung",
-      "Postorder-Traversierung",
-      "Inorder-Traversierung",
+      "Preorder Traversierung",
+      "Postorder Traversierung",
+      "Inorder Traversierung",
       "Jede der oben genannten Traversierungen"
     ],
     "explanation": "Inorder besucht linken Teilbaum → Knoten → rechten Teilbaum. Zusammen mit der BST-Invariante (alles links < Knoten < alles rechts) ergibt das die Schlüssel in aufsteigender Reihenfolge. Preorder und Postorder leisten das nicht.",
@@ -17,8 +17,8 @@
     "options": [
       "In einem BST können Blätter auf jeder Ebene auftreten.",
       "Auf einer Ebene mit Tiefe d gibt es immer weniger als 2^d viele Knoten im BST.",
-      "Die Höhe eines BST kann im Worst Case gleich n sein.",
-      "Im Best Case ist die Höhe eines BST log₁₀ n."
+      "Die Höhe eines BST kann im worst case gleich n sein.",
+      "Im best case ist die Höhe eines BST log₁₀ n."
     ],
     "explanation": "In einem unbalancierten BST können Blätter tatsächlich in jeder Tiefe auftreten ✓. Eine Ebene der Tiefe d fasst *höchstens* 2^d Knoten — eine volle Ebene hat genau 2^d, „immer weniger“ ist also falsch. Die Höhe zählt Kanten, eine entartete Kette aus n Knoten hat also Höhe n−1, nicht n. Die Best-Case-Höhe ist ⌊log₂ n⌋ — die Basis ist 2, nicht 10.",
     "source": "AuD-Zusammenfassung §5.4"
@@ -93,6 +93,30 @@
       "Das Maximum eines BST ist der tiefste Knoten des Baums."
     ],
     "explanation": "Das sind die beiden Standardfälle von TREE-SUCCESSOR ✓✓. Der Nachfolger kann ein Vorfahre statt eines Nachfahren sein ✗, und das Maximum ist der am weitesten rechts liegende Knoten, der nicht der tiefste sein muss ✗.",
+    "source": "AuD-Zusammenfassung §5.4"
+  },
+  {
+    "id": "bst-mc-5",
+    "prompt": "Einen Baum aus Traversierungen rekonstruieren — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Preorder und Inorder gemeinsam bestimmen einen Binärbaum mit paarweise verschiedenen Schlüsseln eindeutig.",
+      "Für einen binären *Suchbaum* genügt die Preorder allein, da die Inorder nur die Schlüssel in sortierter Reihenfolge ist und damit nichts hinzufügt.",
+      "Die Preorder allein bestimmt jeden Binärbaum eindeutig.",
+      "Für einen BST genügt die Inorder allein, gerade weil sie sortiert ist."
+    ],
+    "explanation": "Preorder + Inorder ist die klassische eindeutige Rekonstruktion ✓. In einem BST ist die Inorder zwangsläufig die sortierte Schlüsselfolge, sie trägt also keine Information über die Form, und die Preorder allein genügt ✓ — dasselbe Argument macht auch die Postorder allein ausreichend. Für einen beliebigen Binärbaum ist die Preorder allein mehrdeutig ✗, und die Inorder allein ist für einen BST die *uninformativste* Angabe: Jeder BST über denselben Schlüsseln hat dieselbe Inorder ✗.",
+    "source": "AuD-Zusammenfassung §5.4"
+  },
+  {
+    "id": "bst-mc-6",
+    "prompt": "Welche Einfügungsreihenfolgen erzeugen einen gegebenen binären Suchbaum? Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Wurzel muss zuerst eingefügt worden sein.",
+      "Mehrere verschiedene Einfügungsreihenfolgen können denselben Baum erzeugen — jede Reihenfolge, in der jeder Knoten nach allen seinen Vorfahren kommt.",
+      "Die Einfügungsreihenfolge ist durch den resultierenden Baum eindeutig bestimmt.",
+      "Das Einfügen der Schlüssel in aufsteigender Reihenfolge erzeugt jeden gegebenen BST."
+    ],
+    "explanation": "Ein BST-Einfügen hängt stets nur ein Blatt an, ein Knoten kann also erst platziert werden, wenn sein gesamter Vorfahrenpfad existiert — daher die Wurzel zuerst ✓, und jede Reihenfolge „Vorfahren vor Nachfahren“ funktioniert ✓ (eine ebenenweise Einfügung ist immer eine solche). Die Reihenfolge ist damit im Allgemeinen *nicht* eindeutig ✗, und aufsteigendes Einfügen entartet stets zu einer nach rechts hängenden Kette ✗.",
     "source": "AuD-Zusammenfassung §5.4"
   }
 ]

@@ -70,5 +70,17 @@
     ],
     "explanation": "n−1 Kanten ✓ sowie zusammenhängend und kreisfrei ✓ sind die Definition eines Spannbaums. Ein MST minimiert das *Gesamtgewicht*, nicht die paarweisen Distanzen — der s–t-Pfad im MST kann weit vom kürzesten Pfad abweichen ✗ — und die schwerste Kante ist typischerweise die erste, die ein Greedy-Algorithmus meidet ✗.",
     "source": "AuD-Zusammenfassung §8.5, Definition des MST"
+  },
+  {
+    "id": "mst-mc-5",
+    "prompt": "Ihnen wird eine teilweise hervorgehobene Kantenmenge gezeigt und Sie sollen entscheiden, ob sie durch Kruskal, durch Prim, durch beide oder durch keinen der beiden entsteht. Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Eine hervorgehobene Menge, die einen einzigen zusammenhängenden Baum mit dem Startknoten bildet, ist mit beiden Algorithmen vereinbar.",
+      "Jede von Kruskal bisher akzeptierte Menge besteht aus den günstigsten Kanten, die keinen Kreis geschlossen haben — eine Momentaufnahme mit einer teuren Kante, während eine günstigere, kreisfreie Kante noch nicht hervorgehoben ist, kann also von keinem der beiden stammen.",
+      "Eine Menge aus mehreren getrennten Baumfragmenten ist mit Prim vereinbar.",
+      "Jede Menge von n−1 Kanten ist eine gültige Momentaufnahme eines der beiden Algorithmen."
+    ],
+    "explanation": "Prim lässt stets nur einen zusammenhängenden Baum wachsen, und Kruskal kann zufällig ebenfalls eine zusammenhängende Menge erzeugen — „zusammenhängend und den Startknoten enthaltend“ passt also zu beiden ✓. Kruskals nach Gewicht geordnete Annahmeregel ist es, die eine Momentaufnahme vollständig ausschließt ✓. Getrennte Fragmente sind Kruskals Handschrift und schließen Prim sofort aus ✗, und n−1 beliebige Kanten müssen nicht einmal kreisfrei sein, geschweige denn von einem der beiden erreichbar ✗.",
+    "source": "AuD-Zusammenfassung §8.5"
   }
 ]

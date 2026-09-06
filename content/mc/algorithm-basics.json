@@ -168,5 +168,24 @@
     ],
     "explanation": "Berechenbarkeit splits into Finitheit (finite *description*) ✓, Terminierbarkeit (finite *execution* — that is what option 3 describes) ✗ and Effektivität (each step machine-executable) ✓. Effektivität has nothing to do with being the fastest known algorithm ✗ — that is Effizienz.",
     "source": "AuD-Zusammenfassung §2"
+  },
+  {
+    "id": "algo-mc-8",
+    "topicId": "algorithm-basics",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "`MinSort` sorts ascending with `for i = 0 to n-2: imin = indexOfMin{A[i],…,A[n-1]}; swap(A[i], A[imin])`. Which two statements about its loop invariant are correct?",
+    "options": [
+      "The invariant has two halves: A still contains exactly the entries of the original array, and A[0..i−1] holds the i entries with the smallest keys, sorted ascending.",
+      "At termination the loop stops before the (n−1)-th pass; substituting i = n−1 leaves A[0..n−2] holding the n−1 smallest keys, which forces A[n−1] to be the largest.",
+      "It is the same invariant as Insertion Sort's, since that also builds a sorted prefix.",
+      "Because the algorithm only ever swaps, the invariant need not state that A is a permutation of the original array."
+    ],
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "Both halves are needed ✓, and substituting the exit value i = n−1 is what turns the invariant into \"the whole array is sorted\" ✓. Insertion Sort's prefix holds the *original first i* entries reordered, not the i globally smallest ✗ — that is the standard trap. And the permutation half must be *stated* to conclude the result is a sorted permutation of the input, even though swapping is what makes it true ✗.",
+    "source": "AuD-Zusammenfassung §2"
   }
 ]
