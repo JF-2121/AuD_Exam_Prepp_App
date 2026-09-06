@@ -144,9 +144,14 @@ by `id`. Three consequences worth knowing:
    `difficulty`. Those are inherited, which means **the four options must stay in the same order as
    the English file**, or the inherited `correctIndexes` would point at the wrong statements.
 
+A German topic file must repeat `id`, `category` and `order` verbatim (they are the identity and
+the nav grouping key — `category` stays the English key, and the UI catalogue translates the label)
+and may translate only `title` and the body. Keep the body's structure identical to the English
+one: same headings, same fenced code blocks, same table rows.
+
 Current coverage: UI 100%, visualizer step descriptions 100%, MC compendium 100% (186/186), topic
-titles and exam-template titles 100%. Topic bodies, flashcards and short-answer/trace questions
-still fall back to English.
+titles and bodies 100% (21/21), exam-template titles 100%. Flashcards and short-answer/trace
+questions still fall back to English.
 
 ## Registering a new visualizable algorithm
 

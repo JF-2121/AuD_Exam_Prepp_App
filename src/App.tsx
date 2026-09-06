@@ -5,6 +5,7 @@ import { loadExamTemplates, loadFlashcards, loadMcQuestions, loadQuestions, load
 import { useLocale, useT } from './lib/i18n/locale';
 import type { MessageKey } from './lib/i18n/messages';
 import { LanguageSwitch } from './features/LanguageSwitch';
+import { useHideOnScroll } from './lib/useHideOnScroll';
 
 // Route-level code splitting: each tab's code (and its dependencies, e.g. react-markdown for
 // Topics or every algorithm's generateSteps for Visualize) only loads when actually visited.
@@ -34,6 +35,7 @@ function PageFallback() {
 
 export default function App() {
   const { locale, t } = useLocale();
+  const { hidden: navHidden, reveal: revealNav } = useHideOnScroll();
   // Content is keyed by id across locales, so switching language swaps the prose while every
   // saved attempt, SRS schedule and mastery score keeps pointing at the same items.
   const topics = loadTopics(locale);
@@ -44,7 +46,14 @@ export default function App() {
 
   return (
     <div className="mx-auto flex min-h-screen max-w-6xl flex-col">
-      <header className="nav-bar sticky top-0 z-10 flex items-center gap-3 px-4 sm:gap-6 sm:px-6">
+      {/* The bar slides out of the way on scroll down and returns on scroll up; onFocusCapture
+          brings it back before a tabbed-to link can end up off-screen. */}
+      <header
+        onFocusCapture={revealNav}
+        className={`nav-bar sticky top-0 z-10 flex items-center gap-3 px-4 transition-transform duration-300 ease-out will-change-transform motion-reduce:transition-none sm:gap-6 sm:px-6 ${
+          navHidden ? '-translate-y-full' : 'translate-y-0'
+        }`}
+      >
         <Link
           to="/dashboard"
           className="flex shrink-0 items-center gap-2 text-[15px] font-semibold tracking-tight text-white"
