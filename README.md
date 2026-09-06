@@ -117,12 +117,64 @@ The app is a static build — `npm run build` outputs a self-contained `dist/` f
 
 ## Current content coverage
 
-18 topics across Grundlagen, Sorting, Basic Data Structures, Trees, Graphs, Advanced Design, and Complexity Theory — sourced from the course's typed summaries, the shared Anki deck, exercise sheets, and a past exam + exam memory protocol (including real "choose exactly 2 of 4" multiple-choice questions in their original format). 17 algorithms have interactive step-through visualizers:
+**21 topics** across Grundlagen, Sorting, Basic Data Structures, Trees, Graphs, String Algorithms,
+Advanced Design and Complexity Theory — every one of them written up in both **English and German**
+(switchable from the header). On top of the topic pages:
 
-- **Sorting**: Insertion, Bubble, Selection, Merge Sort, Quicksort
-- **Trees**: BST Insert & Delete, Red-Black Tree Insert & Delete (full fixup with rotations/recoloring), AVL Tree Insert & Delete (height/balance-factor tracking, single & double rotations)
-- **Graphs**: BFS, DFS, Dijkstra's Algorithm, Bellman-Ford, Kruskal's Algorithm (MST), Prim's Algorithm (MST)
+- **Multiple Choice** (its own tab): 186 exam-style questions — 129 in the "exactly 2 of 4" format
+  and 57 in "exactly 1 of 4" — scored all-or-nothing the way the real paper does. Fully bilingual.
+- **208 flashcards** and **68 further questions** (45 short-answer, 23 algorithm-trace) feeding
+  Practice and the timed Mock Exam.
+- **25 interactive visualizers** you can step through:
+  - **Sorting**: Insertion, Bubble, Merge Sort, Quicksort
+  - **Non-comparison sorting**: Radix Sort (bucket-by-bucket, with the FIFO/stability step called out)
+  - **Trees**: BST Insert & Delete, Red-Black Insert & Delete (full fixup with rotations/recolouring),
+    AVL Insert & Delete (height/balance-factor tracking, single & double rotations), Splay Insert &
+    Delete, B-Tree Insert & Delete, Heap Insert & Extract
+  - **Graphs**: BFS, DFS, Dijkstra, Bellman-Ford, Kruskal, Prim
+  - **Strings**: Naive matching, Rabin-Karp
+- Every visualizer's step narration is bilingual too.
 
-Not yet covered by a visualizer (they need a directed-graph example and, for the last one, a flow-network data model — bigger separate additions): Topological Sort, Strongly Connected Components, DAG Shortest Paths, A* Search, Ford-Fulkerson Max Flow. Binary heaps / heap sort (under AVL Trees & Heaps) are also unvisualized.
+Not yet visualized (each needs a data model the current renderers don't cover): Topological Sort,
+Strongly Connected Components, DAG Shortest Paths, A* Search, Ford-Fulkerson Max Flow.
 
-See `content/README.md` for how to extend content as more raw material comes in.
+Still English-only: the 208 flashcards and the 68 short-answer/trace questions.
+
+See `content/README.md` for how to extend or translate content.
+
+## Legal & attribution
+
+**This is a personal study aid, written from my own understanding and my own notes.** Everything in
+`content/` — the topic write-ups, the multiple-choice compendium, the flashcards, the short-answer
+and trace questions, in both English and German — I wrote myself, in my own words, working from what
+I understood of the material and from the notes I took in the lecture and tutorials. It was not
+pasted, transcribed or machine-translated out of the lecture slides, the exercise sheets, the
+official solutions or past exam papers.
+
+The `source:` field on a question (e.g. `AuD-Zusammenfassung §6.2`, `AuD26 Sheet 08`,
+`Gedächtnisprotokoll SoSe 2025 · MC II.5`) is a **revision pointer, not an attribution of copied
+text**: it records which corner of the course a question belongs to, so I can go back to my notes on
+that corner. Read it as "this is the topic", not as "this came from there verbatim".
+
+Two caveats, so that claim isn't stated more broadly than it should be:
+
+- **The 23 questions with `real-*` ids** are reconstructions of questions remembered from a past
+  exam (by way of a shared student memory protocol, itself a reconstruction — not the official
+  paper). I chose the framing and wrote every explanation myself, but the four statements in such a
+  question necessarily track the standard German phrasing of the underlying claim: there is only one
+  natural way to write *"Der Stack arbeitet nach dem LIFO-Prinzip, die Queue nach dem
+  FIFO-Prinzip."* Treat those as paraphrases of a remembered question rather than as original prose.
+- **`extraction/` is not my own writing.** Those six files are my working transcriptions of the
+  course PDFs, made so I could author `content/` without re-opening the sources each time. They
+  reproduce exercise text, official solutions and past-exam tasks close to verbatim. Nothing in
+  `extraction/` is read by the app at runtime — but it *is* committed, so **if you publish this
+  repository, git-ignore `extraction/` the way `AuD26/` already is.**
+
+The underlying course materials — lecture slides, the typed summary, exercise sheets and their
+solutions, past papers — remain © their respective authors (TU Darmstadt, Fachbereich Informatik)
+and are **not redistributed here**: the `AuD26/` folder that holds them locally is git-ignored, so a
+clone of this repo contains none of them.
+
+No affiliation with, sponsorship by or endorsement from TU Darmstadt or the AuD teaching staff is
+claimed or implied. This is not an official course resource. Nothing here is guaranteed correct or
+complete — check it against the actual course material before you rely on it in an exam.

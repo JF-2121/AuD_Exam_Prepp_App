@@ -6,6 +6,22 @@ it's the source a Claude session works from when authoring files here.
 
 Adding content never requires touching app code. Drop a new file, or append to an existing one.
 
+## Provenance rule — read before authoring anything here
+
+Write every prompt, option, explanation, flashcard front/back and topic body **in your own words**,
+from your own understanding and your own notes. Do not paste — or lightly reword — text out of the
+lecture slides, the typed summary, the exercise sheets, the official solutions or past exam papers.
+That applies to `explanation` fields too, not just prompts.
+
+The `source` field is a **revision pointer** ("which corner of the course is this?"), not a licence
+to copy from what it names. Same for a topic's `sourceFiles`.
+
+The raw course PDFs live in `../AuD26/`, which is git-ignored and never read by the app.
+`../extraction/` holds close-to-verbatim transcriptions of those PDFs — it is a personal working
+aid, **not** a source to copy from when authoring here, and not something to publish.
+
+See "Legal & attribution" in the root `README.md` for the full statement.
+
 ## Topics — `content/topics/<id>.md`
 
 One file per topic. Filename (minus `.md`) **must** equal the `id` in the frontmatter.

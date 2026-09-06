@@ -38,4 +38,5 @@ Two things a generic flashcard/quiz app (Anki, Quizlet) doesn't do, held equally
 - One workflow, one history: topics, flashcards, quiz, exam, and dashboard should feel like one connected loop (shared content, shared progress data), not bolted-together tools.
 - On-the-go first: usable well on a phone or tablet, since that's a routine real-world context, not just desktop.
 - Local-first and account-free: no login friction, no network dependency to study.
+- Original-work-only content: every topic write-up, question and flashcard is authored from the student's own understanding and notes, never copied from course slides, exercise sheets, official solutions or past papers. Raw course PDFs stay git-ignored and are never redistributed; a question's `source` field is a revision pointer, not an attribution of copied text. See "Legal & attribution" in `README.md`.
 - Reusable shell: keep course-specific identity (name, terminology, content) separable from the app framework so it can serve future courses.
