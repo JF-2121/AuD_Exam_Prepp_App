@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { AlertTriangle, ArrowDownWideNarrow, Boxes, CaseSensitive, GitBranch, Play, RotateCcw, Share2, type LucideIcon } from 'lucide-react';
+import { AlertTriangle, AlignLeft, ArrowDownWideNarrow, Boxes, CaseSensitive, GitBranch, Play, RotateCcw, Share2, type LucideIcon } from 'lucide-react';
 import { algorithmRegistry, FAMILY_ORDER, getAlgorithm } from './registry';
 import { msg, type AlgorithmFamily, type AlgorithmStep, type StepText } from './core/types';
 import { StepPlayer } from './core/StepPlayer';
+import { describeJsonProblem, excerptAround, type Excerpt } from './core/jsonError';
 import { useT } from '../../lib/i18n/locale';
 import type { MessageKey } from '../../lib/i18n/messages';
 
@@ -87,9 +88,12 @@ export function VisualizerPage() {
    * that last case catchable at all — a throw during a child's render escapes to the boundary.
    */
   let issue: StepText | null = null;
+  let excerpt: Excerpt | null = null;
   let steps: AlgorithmStep<unknown>[] | null = null;
+  let formatted: string | null = null;
   try {
     const parsedInput = hasInput ? JSON.parse(inputText) : undefined;
+    formatted = hasInput ? JSON.stringify(parsedInput, null, 2) : null;
     issue = algorithm.validateInput?.(parsedInput) ?? null;
     if (!issue) {
       try {
@@ -98,8 +102,12 @@ export function VisualizerPage() {
         issue = msg('viz.inputUnusable');
       }
     }
-  } catch {
-    issue = msg('viz.invalidJson');
+  } catch (error) {
+    // A syntax error is the one failure the reader cannot see for themselves in a wall of nested
+    // brackets, so it gets a located sentence and an excerpt with a caret rather than a verdict.
+    const problem = describeJsonProblem(inputText, error);
+    issue = problem.issue;
+    if (problem.position !== null) excerpt = excerptAround(inputText, problem.position);
   }
 
   return (
@@ -128,7 +136,7 @@ export function VisualizerPage() {
           <textarea
             id="viz-input"
             className="input mt-1 w-full"
-            rows={2}
+            rows={Math.min(Math.max(inputText.split('\n').length, 2), 16)}
             spellCheck={false}
             autoCapitalize="off"
             autoCorrect="off"
@@ -141,9 +149,19 @@ export function VisualizerPage() {
                 {t(algorithm.inputHint)}
               </p>
             )}
-            <button className="btn shrink-0" onClick={() => setEdited(null)}>
-              <RotateCcw size={13} /> {t('viz.resetDefault')}
-            </button>
+            <div className="flex shrink-0 gap-2">
+              <button
+                className="btn"
+                disabled={formatted === null || formatted === inputText}
+                title={t('viz.formatHint')}
+                onClick={() => formatted !== null && setInputText(formatted)}
+              >
+                <AlignLeft size={13} /> {t('viz.format')}
+              </button>
+              <button className="btn" onClick={() => setEdited(null)}>
+                <RotateCcw size={13} /> {t('viz.resetDefault')}
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -155,6 +173,13 @@ export function VisualizerPage() {
             <p className="mt-1 text-sm text-[var(--color-text-dim)]">
               {issue ? t(issue.key, issue.vars) : t('viz.inputUnusable')}
             </p>
+            {excerpt && (
+              <pre className="mt-3 overflow-x-auto rounded bg-[var(--color-surface-hover)] p-3 text-xs leading-5">
+                {excerpt.text}
+                {'\n'}
+                <span className="text-[var(--color-bad)]">{`${' '.repeat(excerpt.caret)}^`}</span>
+              </pre>
+            )}
             <button className="btn mt-3" onClick={() => setEdited(null)}>
               <RotateCcw size={13} /> {t('viz.resetDefault')}
             </button>

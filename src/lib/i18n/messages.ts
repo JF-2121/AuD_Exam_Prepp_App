@@ -64,6 +64,8 @@ const uiEn = {
   'viz.subtitle': 'Pick an algorithm to step through interactively.',
   'viz.inputLabel': 'Input (JSON):',
   'viz.resetDefault': 'Reset to default',
+  'viz.format': 'Format',
+  'viz.formatHint': 'Spread the JSON over indented lines, so the nesting is visible while you edit.',
   'viz.invalidJson': 'Invalid JSON input.',
   'viz.inputProblem': 'This input does not fit this algorithm',
   'viz.inputUnusable':
@@ -89,6 +91,17 @@ const uiEn = {
 
   // --- visualizer: what is wrong with a hand-edited input -------------------
   'viz.input.expectedObject': 'Expected an object with the fields {fields}.',
+  'viz.input.jsonAt': 'The input is not valid JSON — the problem starts at line {line}, column {column}.',
+  'viz.input.jsonTrailingComma':
+    'There is a comma here with nothing after it — JSON does not allow one before a closing \u201c{close}\u201d. Delete it, or add the missing value.',
+  'viz.input.jsonEmptySlot': 'There is a comma here with no value before it.',
+  'viz.input.jsonStrayClose':
+    'There is a closing \u201c{char}\u201d here with no bracket left to close. One bracket too many, or one opening bracket missing earlier.',
+  'viz.input.jsonMismatch':
+    'This \u201c{close}\u201d closes a \u201c{open}\u201d that was opened at character {openPosition} — those two do not pair up. A \u201c{\u201d must be closed by \u201c}\u201d and a \u201c[\u201d by \u201c]\u201d.',
+  'viz.input.jsonUnclosed':
+    'The \u201c{open}\u201d opened at character {position} is never closed. Add {missing} to finish it.',
+  'viz.input.jsonUnterminatedString': 'This quoted string is never closed — a \u201d is missing.',
   'viz.input.missingField': 'The field "{field}" is missing. This algorithm needs: {fields}.',
   'viz.input.numberList': '"{field}" must be a list of numbers, e.g. [5, 3, 8].',
   'viz.input.stringList': '"{field}" must be a list of non-empty strings, e.g. ["a", "b"].',
@@ -353,6 +366,8 @@ const uiDe: Record<keyof typeof uiEn, string> = {
   'viz.subtitle': 'Wähle einen Algorithmus, um ihn Schritt für Schritt durchzugehen.',
   'viz.inputLabel': 'Eingabe (JSON):',
   'viz.resetDefault': 'Auf Standard zurücksetzen',
+  'viz.format': 'Formatieren',
+  'viz.formatHint': 'Verteilt das JSON auf einger\u00fcckte Zeilen, damit die Verschachtelung beim Bearbeiten sichtbar ist.',
   'viz.invalidJson': 'Ung\u00fcltige JSON-Eingabe.',
   'viz.inputProblem': 'Diese Eingabe passt nicht zu diesem Algorithmus',
   'viz.inputUnusable':
@@ -380,6 +395,17 @@ const uiDe: Record<keyof typeof uiEn, string> = {
 
   // --- visualizer: was an einer bearbeiteten Eingabe nicht stimmt -----------
   'viz.input.expectedObject': 'Erwartet wird ein Objekt mit den Feldern {fields}.',
+  'viz.input.jsonAt': 'Die Eingabe ist kein g\u00fcltiges JSON \u2014 das Problem beginnt in Zeile {line}, Spalte {column}.',
+  'viz.input.jsonTrailingComma':
+    'Hier steht ein Komma, auf das nichts folgt \u2014 vor einer schlie\u00dfenden \u201e{close}\u201c ist das in JSON nicht erlaubt. L\u00f6sche es oder erg\u00e4nze den fehlenden Wert.',
+  'viz.input.jsonEmptySlot': 'Hier steht ein Komma, vor dem kein Wert steht.',
+  'viz.input.jsonStrayClose':
+    'Hier steht eine schlie\u00dfende \u201e{char}\u201c, aber es ist keine Klammer mehr offen. Eine Klammer zu viel \u2014 oder weiter vorn fehlt eine \u00f6ffnende.',
+  'viz.input.jsonMismatch':
+    'Diese \u201e{close}\u201c schlie\u00dft eine \u201e{open}\u201c, die an Zeichen {openPosition} ge\u00f6ffnet wurde \u2014 die beiden passen nicht zusammen. Eine \u201e{\u201c wird mit \u201e}\u201c geschlossen, eine \u201e[\u201c mit \u201e]\u201c.',
+  'viz.input.jsonUnclosed':
+    'Die \u201e{open}\u201c, die an Zeichen {position} ge\u00f6ffnet wurde, wird nie geschlossen. Erg\u00e4nze {missing}, um sie abzuschlie\u00dfen.',
+  'viz.input.jsonUnterminatedString': 'Diese Zeichenkette in Anf\u00fchrungszeichen wird nie geschlossen \u2014 es fehlt ein \u201d.',
   'viz.input.missingField': 'Das Feld \u201e{field}\u201c fehlt. Dieser Algorithmus braucht: {fields}.',
   'viz.input.numberList': '\u201e{field}\u201c muss eine Liste von Zahlen sein, z.\u202fB. [5, 3, 8].',
   'viz.input.stringList': '\u201e{field}\u201c muss eine Liste nicht-leerer Zeichenketten sein, z.\u202fB. ["a", "b"].',
