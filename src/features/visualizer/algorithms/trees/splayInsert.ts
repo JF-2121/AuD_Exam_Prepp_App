@@ -1,6 +1,7 @@
 import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { TreeRenderer, type TreeState } from './TreeRenderer';
 import { createSplayEngine, performInsert } from './splayEngine';
+import { numberList, shape } from '../../core/inputSchema';
 
 const pseudocode = [
   'insert(T, value):',
@@ -46,5 +47,7 @@ export const splayInsert: AlgorithmDef<SplayInsertInput, TreeState> = {
   defaultInput: { seed: [12, 20, 13, 21, 15], insertions: [14, 18, 17, 11, 16, 19] },
   generateSteps,
   Renderer: TreeRenderer,
+  validateInput: shape({ seed: numberList, insertions: numberList }),
+  inputHint: 'viz.hint.splayInsert',
   extractResult: (state) => (state.rootId ? state.nodes[state.rootId].value : null),
 };

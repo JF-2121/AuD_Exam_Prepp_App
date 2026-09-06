@@ -1,5 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep, type StepText } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
+import { numberList, shape } from '../../core/inputSchema';
 
 const pseudocode = [
   'delete(z):',
@@ -153,5 +154,7 @@ export const bstDelete: AlgorithmDef<BstDeleteInput, TreeState> = {
   defaultInput: { initial: [8, 3, 10, 1, 6, 14, 4, 7, 13], deletions: [1, 3, 8] },
   generateSteps,
   Renderer: TreeRenderer,
+  validateInput: shape({ initial: numberList, deletions: numberList }),
+  inputHint: 'viz.hint.initialDeletions',
   extractResult: (state) => inorderValues(state.nodes, state.rootId),
 };

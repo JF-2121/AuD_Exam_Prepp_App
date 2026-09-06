@@ -1,5 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { BTreeRenderer, type BTreeNode, type BTreeState } from './BTreeRenderer';
+import { normalizeBTreeSpec, validateBTreeInput, type BTreeSpec } from './btreeSpec';
 
 const pseudocode = [
   'insert(T, key):',
@@ -15,14 +16,15 @@ const pseudocode = [
   '  insert key into x at the correct sorted position   // x is guaranteed non-full and a leaf',
 ];
 
-export interface BTreeSpec {
-  keys: number[];
-  children?: BTreeSpec[];
-}
+export type { BTreeSpec };
 
 export interface BTreeInsertInput {
   t: number;
-  initial: BTreeSpec;
+  /**
+   * The starting tree, either spelled out node by node or — as exam exercises state it — as a flat
+   * list of the keys it holds, which is then built by inserting them in order.
+   */
+  initial: BTreeSpec | number[];
   insertions: number[];
 }
 
@@ -43,7 +45,7 @@ function buildFromSpec(spec: BTreeSpec, nodes: Record<string, BTreeNode>): strin
 
 function generateSteps({ t, initial, insertions }: BTreeInsertInput): AlgorithmStep<BTreeState>[] {
   const nodes: Record<string, BTreeNode> = {};
-  let root = buildFromSpec(initial, nodes);
+  let root = buildFromSpec(normalizeBTreeSpec(initial, t), nodes);
   const steps: AlgorithmStep<BTreeState>[] = [];
   const maxKeys = 2 * t - 1;
 
@@ -157,5 +159,7 @@ export const btreeInsert: AlgorithmDef<BTreeInsertInput, BTreeState> = {
   },
   generateSteps,
   Renderer: BTreeRenderer,
+  validateInput: (input) => validateBTreeInput(input, 'insertions'),
+  inputHint: 'viz.hint.btreeInsert',
   extractResult: sortedKeys,
 };

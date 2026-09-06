@@ -1,5 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { StringMatchRenderer, type StringMatchState } from './StringMatchRenderer';
+import { integer, integerList, nonEmpty, shape } from '../../core/inputSchema';
 
 const pseudocode = [
   'RabinKarpMatch(T, P, q):',
@@ -114,5 +115,12 @@ export const rabinKarpMatch: AlgorithmDef<RabinKarpInput, StringMatchState> = {
   defaultInput: { text: [2, 1, 3, 1, 4, 9, 1, 3, 2, 3, 1, 4, 5, 3, 1, 4], pattern: [3, 1, 4], q: 13 },
   generateSteps,
   Renderer: StringMatchRenderer,
+  // The rolling hash is written for the lecture's d = 10, so text and pattern are decimal digits.
+  validateInput: shape({
+    text: integerList(0, 9),
+    pattern: nonEmpty(integerList(0, 9)),
+    q: integer(2, 100000),
+  }),
+  inputHint: 'viz.hint.rabinKarp',
   extractResult: (state) => state.matches,
 };

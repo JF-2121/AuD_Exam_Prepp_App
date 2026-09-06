@@ -37,6 +37,15 @@ export interface AlgorithmDef<TInput, TState> {
   generateSteps: (input: TInput) => AlgorithmStep<TState>[];
   Renderer: ComponentType<{ step: AlgorithmStep<TState> }>;
   InputEditor?: ComponentType<{ value: TInput; onChange: (value: TInput) => void }>;
+  /**
+   * Rejects a hand-edited input *before* `generateSteps` sees it, returning a translatable
+   * sentence that names what is wrong. `generateSteps` is written against one exact shape, so
+   * without this an edited input of the wrong shape throws mid-render and the page falls through
+   * to the error boundary. Returns `null` when the input is usable.
+   */
+  validateInput?: (input: unknown) => StepText | null;
+  /** Catalogue key for a one-line description of the input shape, shown under the edit box. */
+  inputHint?: MessageKey;
   /** Normalizes the final step's state into a plain value comparable to a `trace` question's expectedFinalOutput. Defaults to the raw state. */
   extractResult?: (finalState: TState) => unknown;
 }

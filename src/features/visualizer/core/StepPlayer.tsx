@@ -1,11 +1,22 @@
 import { Code2, Pause, Play, RotateCcw, SkipBack, SkipForward } from 'lucide-react';
-import type { AlgorithmDef } from './types';
+import type { AlgorithmDef, AlgorithmStep } from './types';
 import { useStepPlayback } from './useStepPlayback';
 import { useT } from '../../../lib/i18n/locale';
 
-export function StepPlayer<TInput, TState>({ algorithm, input }: { algorithm: AlgorithmDef<TInput, TState>; input: TInput }) {
+/**
+ * Plays a step list that the caller has already generated. Generation stays outside the player on
+ * purpose: `generateSteps` is the one thing a hand-edited input can still make throw, and a throw
+ * *inside* a child component escapes straight to the error boundary. Producing the steps in the
+ * page lets that failure be caught and shown as an inline message instead.
+ */
+export function StepPlayer<TInput, TState>({
+  algorithm,
+  steps,
+}: {
+  algorithm: AlgorithmDef<TInput, TState>;
+  steps: AlgorithmStep<TState>[];
+}) {
   const t = useT();
-  const steps = algorithm.generateSteps(input);
   const playback = useStepPlayback(steps.length);
   // Editing the input regenerates `steps`, and the playback index only resets in an effect — i.e.
   // one render later. Clamp so a shorter step list can't be indexed past its end in the meantime.

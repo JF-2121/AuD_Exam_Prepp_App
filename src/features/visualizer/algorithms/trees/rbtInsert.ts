@@ -1,5 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep, type StepText } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
+import { numberList, only } from '../../core/inputSchema';
 
 const pseudocode = [
   'insert(z): // BST-insert, then:',
@@ -195,5 +196,7 @@ export const rbtInsert: AlgorithmDef<number[], TreeState> = {
   defaultInput: [10, 18, 7, 15, 16, 30, 25, 40, 60, 2],
   generateSteps,
   Renderer: TreeRenderer,
+  validateInput: only(numberList),
+  inputHint: 'viz.hint.numberList',
   extractResult: (state) => inorderValues(state.nodes, state.rootId),
 };

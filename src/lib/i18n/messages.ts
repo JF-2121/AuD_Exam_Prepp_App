@@ -65,6 +65,51 @@ const uiEn = {
   'viz.inputLabel': 'Input (JSON):',
   'viz.resetDefault': 'Reset to default',
   'viz.invalidJson': 'Invalid JSON input.',
+  'viz.inputProblem': 'This input does not fit this algorithm',
+  'viz.inputUnusable':
+    'This algorithm cannot run on that input. Reset to the default and change it one field at a time.',
+
+  // --- visualizer: what each algorithm's input box expects ------------------
+  'viz.hint.numberList': 'A list of numbers, inserted left to right — e.g. [8, 3, 10, 1, 6].',
+  'viz.hint.initialDeletions':
+    '{"initial": [\u2026], "deletions": [\u2026]} — the tree is built from "initial", then those keys are removed in order.',
+  'viz.hint.heapExtract':
+    '{"initial": [\u2026], "extractCount": n} — heapify "initial", then extract the max n times.',
+  'viz.hint.splayInsert': '{"seed": [\u2026], "insertions": [\u2026]} — "seed" builds the starting tree, then each insertion splays.',
+  'viz.hint.splayDelete':
+    '{"seed": [\u2026], "insertions": [\u2026], "searches": [\u2026], "deletions": [\u2026]} — run in that order.',
+  'viz.hint.radixSort': '{"values": ["54", "24"], "radix": 8} — the numerals are written in that base, so base 8 allows digits 0\u20137.',
+  'viz.hint.stringMatch': '{"text": ["a", "b"], "pattern": ["a"]} — one array entry per symbol.',
+  'viz.hint.rabinKarp': '{"text": [\u2026], "pattern": [\u2026], "q": 13} — digits 0\u20139 only; "q" is the modulus.',
+  'viz.hint.graphSource': 'The start node, as a quoted label — the example graph has A\u2013F, e.g. "A".',
+  'viz.hint.btreeInsert':
+    '{"t": 2, "initial": [5, 20, 25], "insertions": [\u2026]} \u2014 "initial" may be a flat key list (built by inserting in order) or a spelled-out node structure like {"keys": [9, 40], "children": [\u2026]}.',
+  'viz.hint.btreeDelete':
+    '{"t": 2, "initial": [5, 20, 25], "deletions": [\u2026]} \u2014 "initial" may be a flat key list or a spelled-out {"keys": \u2026, "children": \u2026} structure.',
+
+  // --- visualizer: what is wrong with a hand-edited input -------------------
+  'viz.input.expectedObject': 'Expected an object with the fields {fields}.',
+  'viz.input.missingField': 'The field "{field}" is missing. This algorithm needs: {fields}.',
+  'viz.input.numberList': '"{field}" must be a list of numbers, e.g. [5, 3, 8].',
+  'viz.input.stringList': '"{field}" must be a list of non-empty strings, e.g. ["a", "b"].',
+  'viz.input.integerList': '"{field}" must be a list of whole numbers between {min} and {max}.',
+  'viz.input.integerRange': '"{field}" must be a whole number between {min} and {max}.',
+  'viz.input.oneOf': '"{field}" must be one of: {allowed}.',
+  'viz.input.nonEmpty': '"{field}" cannot be empty.',
+  'viz.input.tooLong': '"{field}" holds more than {max} values — shorten it so the animation stays readable.',
+  'viz.input.radixNumeral': '"{value}" is not a numeral in base {radix}. Base {radix} allows only the digits that base has.',
+  'viz.input.btree.node': 'Every B-Tree node must be an object like {"keys": [1, 2]}, optionally with "children".',
+  'viz.input.btree.degree': 'The minimum degree "t" must be a whole number between {min} and {max}.',
+  'viz.input.btree.keyOrder': 'A node\u2019s keys must be strictly ascending, but [{keys}] is not.',
+  'viz.input.btree.tooManyKeys':
+    'The node [{keys}] holds {count} keys, but with t = {t} a node may hold at most 2t\u22121 = {max}.',
+  'viz.input.btree.tooFewKeys':
+    'The node [{keys}] holds {count} keys, but with t = {t} every non-root node needs at least t\u22121 = {min}.',
+  'viz.input.btree.childCount':
+    'The node [{keys}] has {keyCount} keys, so it needs either {expected} children or none at all (a leaf) \u2014 it has {actual}.',
+  'viz.input.btree.keyRange': 'The key {key} sits under a parent that only covers keys between {low} and {high}.',
+  'viz.input.btree.leafDepth': 'All leaves of a B-Tree must sit at the same depth, but these are at depths {depths}.',
+  'viz.input.btree.emptyRoot': 'A root with no keys cannot have children.',
   'viz.pseudocode': 'Pseudocode',
   'viz.noSteps': 'This input produces no steps to show — reset it to the default to continue.',
   'viz.back': 'Back',
@@ -308,7 +353,55 @@ const uiDe: Record<keyof typeof uiEn, string> = {
   'viz.subtitle': 'Wähle einen Algorithmus, um ihn Schritt für Schritt durchzugehen.',
   'viz.inputLabel': 'Eingabe (JSON):',
   'viz.resetDefault': 'Auf Standard zurücksetzen',
-  'viz.invalidJson': 'Ungültige JSON-Eingabe.',
+  'viz.invalidJson': 'Ung\u00fcltige JSON-Eingabe.',
+  'viz.inputProblem': 'Diese Eingabe passt nicht zu diesem Algorithmus',
+  'viz.inputUnusable':
+    'Dieser Algorithmus kann mit dieser Eingabe nicht laufen. Setze sie auf den Standard zur\u00fcck und \u00e4ndere sie Feld f\u00fcr Feld.',
+
+  // --- visualizer: was die Eingabe je Algorithmus erwartet ------------------
+  'viz.hint.numberList': 'Eine Liste von Zahlen, von links nach rechts eingef\u00fcgt \u2014 z.\u202fB. [8, 3, 10, 1, 6].',
+  'viz.hint.initialDeletions':
+    '{"initial": [\u2026], "deletions": [\u2026]} \u2014 der Baum entsteht aus "initial", danach werden diese Schl\u00fcssel der Reihe nach gel\u00f6scht.',
+  'viz.hint.heapExtract':
+    '{"initial": [\u2026], "extractCount": n} \u2014 "initial" wird zum Heap aufgebaut, danach wird n-mal das Maximum entnommen.',
+  'viz.hint.splayInsert':
+    '{"seed": [\u2026], "insertions": [\u2026]} \u2014 "seed" baut den Startbaum, danach spreizt jede Einf\u00fcgung.',
+  'viz.hint.splayDelete':
+    '{"seed": [\u2026], "insertions": [\u2026], "searches": [\u2026], "deletions": [\u2026]} \u2014 wird in dieser Reihenfolge ausgef\u00fchrt.',
+  'viz.hint.radixSort':
+    '{"values": ["54", "24"], "radix": 8} \u2014 die Ziffernfolgen stehen in dieser Basis, Basis 8 erlaubt also die Ziffern 0\u20137.',
+  'viz.hint.stringMatch': '{"text": ["a", "b"], "pattern": ["a"]} \u2014 ein Array-Eintrag pro Zeichen.',
+  'viz.hint.rabinKarp': '{"text": [\u2026], "pattern": [\u2026], "q": 13} \u2014 nur Ziffern 0\u20139; "q" ist der Modulus.',
+  'viz.hint.graphSource': 'Der Startknoten als Zeichenkette \u2014 der Beispielgraph hat A\u2013F, z.\u202fB. "A".',
+  'viz.hint.btreeInsert':
+    '{"t": 2, "initial": [5, 20, 25], "insertions": [\u2026]} \u2014 "initial" darf eine flache Schl\u00fcsselliste sein (wird der Reihe nach eingef\u00fcgt) oder eine ausgeschriebene Knotenstruktur wie {"keys": [9, 40], "children": [\u2026]}.',
+  'viz.hint.btreeDelete':
+    '{"t": 2, "initial": [5, 20, 25], "deletions": [\u2026]} \u2014 "initial" darf eine flache Schl\u00fcsselliste oder eine ausgeschriebene {"keys": \u2026, "children": \u2026}-Struktur sein.',
+
+  // --- visualizer: was an einer bearbeiteten Eingabe nicht stimmt -----------
+  'viz.input.expectedObject': 'Erwartet wird ein Objekt mit den Feldern {fields}.',
+  'viz.input.missingField': 'Das Feld \u201e{field}\u201c fehlt. Dieser Algorithmus braucht: {fields}.',
+  'viz.input.numberList': '\u201e{field}\u201c muss eine Liste von Zahlen sein, z.\u202fB. [5, 3, 8].',
+  'viz.input.stringList': '\u201e{field}\u201c muss eine Liste nicht-leerer Zeichenketten sein, z.\u202fB. ["a", "b"].',
+  'viz.input.integerList': '\u201e{field}\u201c muss eine Liste ganzer Zahlen zwischen {min} und {max} sein.',
+  'viz.input.integerRange': '\u201e{field}\u201c muss eine ganze Zahl zwischen {min} und {max} sein.',
+  'viz.input.oneOf': '\u201e{field}\u201c muss einer dieser Werte sein: {allowed}.',
+  'viz.input.nonEmpty': '\u201e{field}\u201c darf nicht leer sein.',
+  'viz.input.tooLong': '\u201e{field}\u201c enth\u00e4lt mehr als {max} Werte \u2014 k\u00fcrze es, damit die Animation lesbar bleibt.',
+  'viz.input.radixNumeral':
+    '\u201e{value}\u201c ist keine Zahl zur Basis {radix}. Zur Basis {radix} sind nur die Ziffern dieser Basis erlaubt.',
+  'viz.input.btree.node': 'Jeder B-Baum-Knoten muss ein Objekt wie {"keys": [1, 2]} sein, optional mit \u201echildren\u201c.',
+  'viz.input.btree.degree': 'Der Minimalgrad \u201et\u201c muss eine ganze Zahl zwischen {min} und {max} sein.',
+  'viz.input.btree.keyOrder': 'Die Schl\u00fcssel eines Knotens m\u00fcssen streng aufsteigend sein, [{keys}] ist es nicht.',
+  'viz.input.btree.tooManyKeys':
+    'Der Knoten [{keys}] h\u00e4lt {count} Schl\u00fcssel, aber bei t = {t} sind h\u00f6chstens 2t\u22121 = {max} erlaubt.',
+  'viz.input.btree.tooFewKeys':
+    'Der Knoten [{keys}] h\u00e4lt {count} Schl\u00fcssel, aber bei t = {t} braucht jeder Nicht-Wurzelknoten mindestens t\u22121 = {min}.',
+  'viz.input.btree.childCount':
+    'Der Knoten [{keys}] hat {keyCount} Schl\u00fcssel und braucht deshalb entweder {expected} Kinder oder gar keine (ein Blatt) \u2014 er hat {actual}.',
+  'viz.input.btree.keyRange': 'Der Schl\u00fcssel {key} h\u00e4ngt unter einem Elternknoten, der nur Schl\u00fcssel zwischen {low} und {high} abdeckt.',
+  'viz.input.btree.leafDepth': 'Alle Bl\u00e4tter eines B-Baums m\u00fcssen auf derselben Tiefe liegen, diese liegen aber auf den Tiefen {depths}.',
+  'viz.input.btree.emptyRoot': 'Eine Wurzel ohne Schl\u00fcssel kann keine Kinder haben.',
   'viz.pseudocode': 'Pseudocode',
   'viz.noSteps':
     'Diese Eingabe erzeugt keine darstellbaren Schritte — setze sie auf den Standard zurück, um fortzufahren.',

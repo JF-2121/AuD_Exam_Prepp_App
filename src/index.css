@@ -229,6 +229,17 @@ pre {
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
+/* The visualizer's JSON box. A pill-shaped multi-line field reads as a mistake, and hand-edited
+   JSON is far easier to scan — and to keep balanced — in a monospace face. */
+textarea.input {
+  border-radius: var(--radius-sm);
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 10px 14px;
+  resize: vertical;
+}
+
 .input:focus {
   outline: none;
   border-color: var(--color-accent);

@@ -1,5 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
+import { MAX_LIST, integer, numberList, shape } from '../../core/inputSchema';
 
 const pseudocode = [
   'buildHeap(A):                          // bottom-up, first half only',
@@ -107,5 +108,7 @@ export const heapDelete: AlgorithmDef<HeapExtractInput, TreeState> = {
   defaultInput: { initial: [7, 5, 2, 9, 4, 8], extractCount: 6 },
   generateSteps,
   Renderer: TreeRenderer,
+  validateInput: shape({ initial: numberList, extractCount: integer(0, MAX_LIST) }),
+  inputHint: 'viz.hint.heapExtract',
   extractResult: (state) => state.extractedOrder ?? [],
 };

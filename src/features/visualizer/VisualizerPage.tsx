@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowDownWideNarrow, Boxes, CaseSensitive, GitBranch, Play, RotateCcw, Share2, type LucideIcon } from 'lucide-react';
+import { AlertTriangle, ArrowDownWideNarrow, Boxes, CaseSensitive, GitBranch, Play, RotateCcw, Share2, type LucideIcon } from 'lucide-react';
 import { algorithmRegistry, FAMILY_ORDER, getAlgorithm } from './registry';
-import type { AlgorithmFamily } from './core/types';
+import { msg, type AlgorithmFamily, type AlgorithmStep, type StepText } from './core/types';
 import { StepPlayer } from './core/StepPlayer';
 import { useT } from '../../lib/i18n/locale';
 import type { MessageKey } from '../../lib/i18n/messages';
@@ -79,12 +79,27 @@ export function VisualizerPage() {
     );
   }
 
-  let parsedInput: unknown;
-  let parseError: string | null = null;
+  /**
+   * Three things can be wrong with a hand-edited input, and each gets its own sentence rather than
+   * the error boundary: it isn't JSON; it is JSON of a shape this algorithm can't run on (caught by
+   * `validateInput`, which names the offending field); or it slips past validation and still makes
+   * `generateSteps` throw. Generating the steps here rather than inside `StepPlayer` is what makes
+   * that last case catchable at all — a throw during a child's render escapes to the boundary.
+   */
+  let issue: StepText | null = null;
+  let steps: AlgorithmStep<unknown>[] | null = null;
   try {
-    parsedInput = hasInput ? JSON.parse(inputText) : undefined;
+    const parsedInput = hasInput ? JSON.parse(inputText) : undefined;
+    issue = algorithm.validateInput?.(parsedInput) ?? null;
+    if (!issue) {
+      try {
+        steps = algorithm.generateSteps(parsedInput);
+      } catch {
+        issue = msg('viz.inputUnusable');
+      }
+    }
   } catch {
-    parseError = 'viz.invalidJson';
+    issue = msg('viz.invalidJson');
   }
 
   return (
@@ -106,22 +121,47 @@ export function VisualizerPage() {
         </select>
       </div>
       {hasInput && (
-        <div className="mb-4 flex flex-wrap items-center gap-2">
-          <label className="text-sm text-[var(--color-text-dim)]">{t('viz.inputLabel')}</label>
-          <input
-            className="input w-full sm:w-72"
+        <div className="mb-4">
+          <label className="text-sm text-[var(--color-text-dim)]" htmlFor="viz-input">
+            {t('viz.inputLabel')}
+          </label>
+          <textarea
+            id="viz-input"
+            className="input mt-1 w-full"
+            rows={2}
+            spellCheck={false}
+            autoCapitalize="off"
+            autoCorrect="off"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
           />
-          <button className="btn" onClick={() => setEdited(null)}>
-            <RotateCcw size={13} /> {t('viz.resetDefault')}
-          </button>
+          <div className="mt-1.5 flex flex-wrap items-start justify-between gap-2">
+            {algorithm.inputHint && (
+              <p className="min-w-0 flex-1 text-xs leading-relaxed text-[var(--color-text-dim)]">
+                {t(algorithm.inputHint)}
+              </p>
+            )}
+            <button className="btn shrink-0" onClick={() => setEdited(null)}>
+              <RotateCcw size={13} /> {t('viz.resetDefault')}
+            </button>
+          </div>
         </div>
       )}
-      {parseError ? (
-        <p className="text-[var(--color-bad)]">{t(parseError as MessageKey)}</p>
+      {issue || !steps ? (
+        <div className="card flex items-start gap-3 border-[var(--color-bad)] p-4">
+          <AlertTriangle size={18} className="mt-0.5 shrink-0 text-[var(--color-bad)]" />
+          <div className="min-w-0">
+            <p className="font-semibold text-[var(--color-text-h)]">{t('viz.inputProblem')}</p>
+            <p className="mt-1 text-sm text-[var(--color-text-dim)]">
+              {issue ? t(issue.key, issue.vars) : t('viz.inputUnusable')}
+            </p>
+            <button className="btn mt-3" onClick={() => setEdited(null)}>
+              <RotateCcw size={13} /> {t('viz.resetDefault')}
+            </button>
+          </div>
+        </div>
       ) : (
-        <StepPlayer algorithm={algorithm} input={parsedInput} />
+        <StepPlayer algorithm={algorithm} steps={steps} />
       )}
     </div>
   );

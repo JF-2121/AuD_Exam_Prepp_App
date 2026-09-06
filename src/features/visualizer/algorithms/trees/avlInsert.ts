@@ -1,5 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep, type StepText } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
+import { numberList, only } from '../../core/inputSchema';
 
 const pseudocode = [
   'insert(value): // BST-insert, then walk up from the new leaf\'s parent',
@@ -193,5 +194,7 @@ export const avlInsert: AlgorithmDef<number[], TreeState> = {
   defaultInput: [10, 20, 30, 25, 5, 1, 15],
   generateSteps,
   Renderer: TreeRenderer,
+  validateInput: only(numberList),
+  inputHint: 'viz.hint.numberList',
   extractResult: (state) => inorderValues(state.nodes, state.rootId),
 };

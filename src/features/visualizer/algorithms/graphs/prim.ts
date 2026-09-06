@@ -1,6 +1,7 @@
 import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { GraphRenderer, type GraphState } from './GraphRenderer';
-import { exampleNodes, neighborsOf } from './graphData';
+import { exampleNodeIds, exampleNodes, neighborsOf } from './graphData';
+import { only, oneOf } from '../../core/inputSchema';
 
 const pseudocode = [
   'Prim(G, s):',
@@ -95,5 +96,7 @@ export const prim: AlgorithmDef<string, GraphState> = {
   defaultInput: 'A',
   generateSteps,
   Renderer: GraphRenderer,
+  validateInput: only(oneOf(exampleNodeIds), 'source'),
+  inputHint: 'viz.hint.graphSource',
   extractResult: (state) => [...(state.acceptedEdges ?? [])].sort(),
 };

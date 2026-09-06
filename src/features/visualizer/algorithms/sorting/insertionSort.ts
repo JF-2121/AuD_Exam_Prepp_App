@@ -1,5 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { ArrayRenderer, type ArrayState } from './ArrayRenderer';
+import { numberList, only } from '../../core/inputSchema';
 
 const pseudocode = [
   'for i in 1..n-1:',
@@ -60,5 +61,7 @@ export const insertionSort: AlgorithmDef<number[], ArrayState> = {
   defaultInput: [5, 3, 2, 4, 1],
   generateSteps,
   Renderer: ArrayRenderer,
+  validateInput: only(numberList),
+  inputHint: 'viz.hint.numberList',
   extractResult: (state) => state.values,
 };

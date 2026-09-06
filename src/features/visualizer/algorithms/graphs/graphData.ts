@@ -34,6 +34,9 @@ export const exampleEdges: GraphEdgeDef[] = [
   { from: 'E', to: 'F', weight: 3 },
 ];
 
+/** Ids of the shared example graph's nodes — the only valid start nodes for a hand-edited input. */
+export const exampleNodeIds: string[] = exampleNodes.map((n) => n.id);
+
 export function neighborsOf(nodeId: string): { id: string; weight: number }[] {
   const result: { id: string; weight: number }[] = [];
   for (const e of exampleEdges) {

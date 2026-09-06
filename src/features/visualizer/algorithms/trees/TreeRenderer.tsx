@@ -1,4 +1,5 @@
 import type { AlgorithmStep } from '../../core/types';
+import { useT } from '../../../../lib/i18n/locale';
 
 export interface TreeNode {
   id: string;
@@ -53,7 +54,7 @@ export function TreeRenderer({ step }: { step: AlgorithmStep<TreeState> }) {
   const height = (Math.max(0, ...positioned.map((n) => n.y)) + 1) * ySpacing + 30;
 
   if (!rootId) {
-    return <div className="flex h-56 items-center justify-center text-[var(--color-text-dim)]">Empty tree</div>;
+    return <EmptyTree className="h-56" />;
   }
 
   return (
@@ -130,4 +131,10 @@ export function TreeRenderer({ step }: { step: AlgorithmStep<TreeState> }) {
       })}
     </svg>
   );
+}
+
+/** An empty tree is a reachable state (deleting everything, or a hand-edited empty start). */
+function EmptyTree({ className }: { className: string }) {
+  const t = useT();
+  return <div className={`flex ${className} items-center justify-center text-[var(--color-text-dim)]`}>{t('viz.d.emptyTree')}</div>;
 }

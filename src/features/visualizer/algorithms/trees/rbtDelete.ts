@@ -1,5 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep, type StepText } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
+import { numberList, shape } from '../../core/inputSchema';
 
 const pseudocode = [
   'delete(z):',
@@ -314,5 +315,7 @@ export const rbtDelete: AlgorithmDef<RbtDeleteInput, TreeState> = {
   defaultInput: { initial: [10, 18, 7, 15, 16, 30, 25, 40, 60, 2], deletions: [18, 7] },
   generateSteps,
   Renderer: TreeRenderer,
+  validateInput: shape({ initial: numberList, deletions: numberList }),
+  inputHint: 'viz.hint.initialDeletions',
   extractResult: (state) => inorderValues(state.nodes, state.rootId),
 };

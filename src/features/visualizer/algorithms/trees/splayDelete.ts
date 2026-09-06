@@ -1,6 +1,7 @@
 import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { TreeRenderer, type TreeState } from './TreeRenderer';
 import { createSplayEngine, performInsert, performSearch } from './splayEngine';
+import { numberList, shape } from '../../core/inputSchema';
 
 const pseudocode = [
   'find(T, value):                 // plain BST search, then splay the last node visited',
@@ -109,5 +110,7 @@ export const splayDelete: AlgorithmDef<SplayDeleteInput, TreeState> = {
   },
   generateSteps,
   Renderer: TreeRenderer,
+  validateInput: shape({ seed: numberList, insertions: numberList, searches: numberList, deletions: numberList }),
+  inputHint: 'viz.hint.splayDelete',
   extractResult: (state) => (state.rootId ? state.nodes[state.rootId].value : null),
 };

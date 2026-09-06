@@ -1,5 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
+import { numberList, only } from '../../core/inputSchema';
 
 const pseudocode = [
   'insert(H, k):',
@@ -93,5 +94,7 @@ export const heapInsert: AlgorithmDef<number[], TreeState> = {
   defaultInput: [7, 5, 2, 9, 4, 8],
   generateSteps,
   Renderer: TreeRenderer,
+  validateInput: only(numberList),
+  inputHint: 'viz.hint.numberList',
   extractResult: extractArray,
 };

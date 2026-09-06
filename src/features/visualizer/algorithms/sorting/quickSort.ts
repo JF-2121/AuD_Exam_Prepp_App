@@ -1,5 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { ArrayRenderer, type ArrayState } from './ArrayRenderer';
+import { numberList, only } from '../../core/inputSchema';
 
 const pseudocode = [
   'quicksort(a, left, right):',
@@ -72,5 +73,7 @@ export const quickSort: AlgorithmDef<number[], ArrayState> = {
   defaultInput: [4, 3, 2, 5, 1],
   generateSteps,
   Renderer: ArrayRenderer,
+  validateInput: only(numberList),
+  inputHint: 'viz.hint.numberList',
   extractResult: (state) => state.values,
 };

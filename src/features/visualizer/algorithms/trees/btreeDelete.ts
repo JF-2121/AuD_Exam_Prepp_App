@@ -1,6 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { BTreeRenderer, type BTreeNode, type BTreeState } from './BTreeRenderer';
-import type { BTreeSpec } from './btreeInsert';
+import { normalizeBTreeSpec, validateBTreeInput, type BTreeSpec } from './btreeSpec';
 
 const pseudocode = [
   'delete(T, key):',
@@ -23,7 +23,8 @@ const pseudocode = [
 
 export interface BTreeDeleteInput {
   t: number;
-  initial: BTreeSpec;
+  /** Same two accepted forms as B-Tree insert: a spelled-out node structure, or a flat key list. */
+  initial: BTreeSpec | number[];
   deletions: number[];
 }
 
@@ -44,7 +45,7 @@ function buildFromSpec(spec: BTreeSpec, nodes: Record<string, BTreeNode>): strin
 
 function generateSteps({ t, initial, deletions }: BTreeDeleteInput): AlgorithmStep<BTreeState>[] {
   const nodes: Record<string, BTreeNode> = {};
-  let root = buildFromSpec(initial, nodes);
+  let root = buildFromSpec(normalizeBTreeSpec(initial, t), nodes);
   const steps: AlgorithmStep<BTreeState>[] = [];
 
   function snapshot(highlightId?: string, newId?: string): BTreeState {
@@ -239,5 +240,7 @@ export const btreeDelete: AlgorithmDef<BTreeDeleteInput, BTreeState> = {
   },
   generateSteps,
   Renderer: BTreeRenderer,
+  validateInput: (input) => validateBTreeInput(input, 'deletions'),
+  inputHint: 'viz.hint.btreeDelete',
   extractResult: sortedKeys,
 };

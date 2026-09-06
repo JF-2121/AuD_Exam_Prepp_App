@@ -33,9 +33,16 @@ function gradeTrace(q: TraceQuestion, studentAnswer: unknown): GradeResult {
   if (!algorithm) {
     return { correct: false, explanation: `Unknown algorithm "${q.algorithmId}" referenced by this question.` };
   }
-  const steps = algorithm.generateSteps(q.initialInput);
-  const finalState = steps[steps.length - 1].state;
-  const actual = algorithm.extractResult ? algorithm.extractResult(finalState) : finalState;
+  // Ground truth comes from authored content, but a malformed `initialInput` must not take the
+  // whole quiz down with it — an ungradable question is reported as such and the run continues.
+  let actual: unknown;
+  try {
+    const steps = algorithm.generateSteps(q.initialInput);
+    const finalState = steps[steps.length - 1].state;
+    actual = algorithm.extractResult ? algorithm.extractResult(finalState) : finalState;
+  } catch {
+    return { correct: false, explanation: `Could not run "${q.algorithmId}" on this question's input.` };
+  }
   const correct = JSON.stringify(studentAnswer) === JSON.stringify(actual);
   return { correct, explanation: q.explanation };
 }

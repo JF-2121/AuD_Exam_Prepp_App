@@ -1,5 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep, type StepText } from '../../core/types';
 import { BucketRenderer, type RadixState } from './BucketRenderer';
+import { integer, isPlainObject, stringList, type InputIssue } from '../../core/inputSchema';
 
 // The course's pseudocode (AuD-Zusammenfassung §4.6): LSD-first, one stable bucket pass per digit.
 const pseudocode = [
@@ -177,6 +178,26 @@ function generateSteps({ values, radix }: RadixInput): AlgorithmStep<RadixState>
   return steps;
 }
 
+/**
+ * `values` are numerals written *in* `radix`, so a digit the base doesn't have ("9" in base 8) is
+ * an input error rather than something to silently read as zero.
+ */
+function validateInput(input: unknown): InputIssue | null {
+  if (!isPlainObject(input)) return msg('viz.input.expectedObject', { fields: 'values, radix' });
+  const radixIssue = integer(2, 16)(input.radix, 'radix');
+  if (radixIssue) return radixIssue;
+  const valuesIssue = stringList(input.values, 'values');
+  if (valuesIssue) return valuesIssue;
+  const base = input.radix as number;
+  for (const numeral of input.values as string[]) {
+    const trimmed = numeral.trim();
+    if (trimmed.length === 0 || trimmed.length > 8 || [...trimmed].some((ch) => Number.isNaN(Number.parseInt(ch, base)))) {
+      return msg('viz.input.radixNumeral', { value: numeral, radix: base });
+    }
+  }
+  return null;
+}
+
 export const radixSort: AlgorithmDef<RadixInput, RadixState> = {
   id: 'radix-sort',
   title: 'Radix Sort',
@@ -187,5 +208,7 @@ export const radixSort: AlgorithmDef<RadixInput, RadixState> = {
   defaultInput: { values: ['54', '24', '71', '10', '52', '77', '33'], radix: 8 },
   generateSteps,
   Renderer: BucketRenderer,
+  validateInput,
+  inputHint: 'viz.hint.radixSort',
   extractResult: (state) => state.array,
 };

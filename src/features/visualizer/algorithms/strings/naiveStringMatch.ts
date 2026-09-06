@@ -1,5 +1,6 @@
 import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { StringMatchRenderer, type StringMatchState } from './StringMatchRenderer';
+import { nonEmpty, shape, stringList } from '../../core/inputSchema';
 
 const pseudocode = [
   'NaiveStringMatching(T, P):',
@@ -68,5 +69,7 @@ export const naiveStringMatch: AlgorithmDef<StringMatchInput, StringMatchState> 
   defaultInput: { text: ['a', 'a', 'b', 'a', 'a', 'a', 'a', 'a', 'b'], pattern: ['a', 'a', 'b'] },
   generateSteps,
   Renderer: StringMatchRenderer,
+  validateInput: shape({ text: stringList, pattern: nonEmpty(stringList) }),
+  inputHint: 'viz.hint.stringMatch',
   extractResult: (state) => state.matches,
 };

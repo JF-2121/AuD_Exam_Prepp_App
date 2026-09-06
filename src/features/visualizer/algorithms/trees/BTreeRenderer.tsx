@@ -1,4 +1,5 @@
 import type { AlgorithmStep } from '../../core/types';
+import { useT } from '../../../../lib/i18n/locale';
 
 export interface BTreeNode {
   id: string;
@@ -61,7 +62,7 @@ function layout(state: BTreeState): { positioned: Positioned[]; totalWidth: numb
 export function BTreeRenderer({ step }: { step: AlgorithmStep<BTreeState> }) {
   const { rootId, highlightId, newId } = step.state;
   if (!rootId || !step.state.nodes[rootId]) {
-    return <div className="flex h-40 items-center justify-center text-[var(--color-text-dim)]">Empty tree</div>;
+    return <EmptyTree className="h-40" />;
   }
   const { positioned, totalWidth, totalHeight } = layout(step.state);
   const byId = Object.fromEntries(positioned.map((p) => [p.node.id, p]));
@@ -138,4 +139,10 @@ export function BTreeRenderer({ step }: { step: AlgorithmStep<BTreeState> }) {
       })}
     </svg>
   );
+}
+
+/** An empty tree is a reachable state (deleting everything, or a hand-edited empty start). */
+function EmptyTree({ className }: { className: string }) {
+  const t = useT();
+  return <div className={`flex ${className} items-center justify-center text-[var(--color-text-dim)]`}>{t('viz.d.emptyTree')}</div>;
 }
