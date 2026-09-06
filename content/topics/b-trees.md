@@ -4,7 +4,6 @@ title: "B-Trees"
 category: "Trees"
 order: 6
 relatedAlgorithmIds: ["btree-insert", "btree-delete"]
-sourceFiles: ["AuD26_Sheet08-Sol.pdf"]
 ---
 
 ## Definition

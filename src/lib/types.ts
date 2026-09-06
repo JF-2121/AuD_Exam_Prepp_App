@@ -4,7 +4,6 @@ export interface Topic {
   category: string;
   order: number;
   relatedAlgorithmIds: string[];
-  sourceFiles?: string[];
   body: string;
 }
 
@@ -36,7 +35,10 @@ export interface MultipleChoiceQuestion extends QuestionBase {
    * richtig", 2 points, awarded only if *exactly* both are marked).
    */
   correctIndexes: number[];
-  /** Where the question comes from, e.g. "Gedächtnisprotokoll SoSe 2025 · MC II.5". */
+  /**
+   * Revision pointer into the typed course summary, e.g. "AuD-Zusammenfassung §6.2, rotation
+   * table". Never a reference to an exercise sheet, past paper or exam protocol — see content/README.
+   */
   source?: string;
 }
 

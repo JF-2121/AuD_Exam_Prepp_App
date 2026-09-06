@@ -91,7 +91,7 @@ Practice and Mock Exam draw from these questions too. Adding a file here needs n
     "prompt": "Statements about Merge Sort — which two are correct?",
     "options": ["A", "B", "C", "D"], "correctIndexes": [0, 2],
     "explanation": "Why each of the four options is true or false.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.5" }
+    "source": "AuD-Zusammenfassung §6.2, rotation table" }
 ]
 ```
 
@@ -107,9 +107,13 @@ Practice and Mock Exam draw from these questions too. Adding a file here needs n
   toward it (currently 129 of 186 questions).
 - **`explanation` accounts for all four options**, not just the correct ones — the convention is
   ✓ for each true statement and ✗ for each false one.
-- **`source`** attributes the question, e.g. `"Gedächtnisprotokoll SoSe 2025 · MC II.5"`,
-  `"Altklausur WS23/24 · Aufgabe 3.3.2"`, `"AuD-Zusammenfassung §6.2"`. It is shown in the
-  compendium and is searchable.
+- **`source`** is a **revision pointer**, and the only accepted form is a section of the typed
+  course summary plus an optional concept name — `"AuD-Zusammenfassung §6.2"`,
+  `"AuD-Zusammenfassung §6.2, rotation table"`. It is shown in the compendium and is searchable.
+  **Never cite an exercise sheet, a past exam paper, an exam memory protocol or a tutorial deck**
+  (no `AuD26 Sheet …`, `Blatt …`, `Altklausur …`, `Gedächtnisprotokoll …`, `Maxine …`). Leave the
+  field out entirely if no summary section fits — the 9 string-matching questions have no `source`
+  for exactly that reason.
 - **No trace-shaped questions.** Anything whose answer is a produced data structure — a sorted
   array, a tree after an insertion, a traversal output — belongs in `content/questions/` as a
   `trace` question, not here.

@@ -11,7 +11,9 @@
       "Rule 3 — a red node never has a red child",
       "Rule 4 — every path to a nil leaf contains the same number of black nodes"
     ],
-    "correctIndexes": [2],
+    "correctIndexes": [
+      2
+    ],
     "explanation": "Colouring the new node red deliberately preserves rule 4 (the black-height is unchanged). The price is rule 3: if the new node's parent is also red, a red-red pair appears and the fixup routine is triggered. (Rule 2 is only violated in the special case where the new node *is* the root, which is fixed by a single recolouring.)",
     "source": "AuD-Zusammenfassung §6.1"
   },
@@ -27,7 +29,10 @@
       "Every path from the root to a nil leaf contains the same number of *red* nodes.",
       "Both children of a red node must be red."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The black-height rule ✓ directly implies the single-child consequence: a black single child would make that side's black count higher than the missing side's ✓. Red nodes are unconstrained in *count* per path ✗, and rule 3 says the opposite of option 4 — a red node's children must be black ✗.",
     "source": "AuD-Zusammenfassung §6.1"
   },
@@ -43,7 +48,10 @@
       "A Red-Black tree's height bound is tighter than an AVL tree's.",
       "Rebalancing after an insert may require Θ(log n) rotations."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The ≤ 2·log(n+1) bound ✓ is exactly what makes all three operations Θ(log n) in the worst case ✓. AVL's ≈1.44·log(n+2) bound is *tighter*, not looser ✗. Insert fixup needs at most 2 rotations (the recolouring may propagate up, but rotations do not) ✗.",
     "source": "AuD-Zusammenfassung §6.1"
   },
@@ -59,9 +67,12 @@
       "Delete never needs a rotation, since only colours have to be repaired.",
       "Insert fixup starts at the root and works downward."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Two rotations always suffice for insert ✓, and removing a black node produces the double-black deficiency handled by the four sibling cases ✓. Those cases include rotations ✗, and both fixups walk *upward* from the modified node ✗.",
-    "source": "AuD-Zusammenfassung §6.1, AuD26 Maxine RBT Delete"
+    "source": "AuD-Zusammenfassung §6.1"
   },
   {
     "id": "rbt-mc-4",
@@ -75,7 +86,10 @@
       "Each nil leaf needs its own separate sentinel object.",
       "The sentinel is coloured red so that it never affects the black-height."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "One shared black sentinel ✓ gives every node valid left/right/parent references, eliminating the null checks ✓. Sharing a single object is the whole point — per-leaf sentinels would waste Θ(n) memory ✗ — and it must be *black* so the black-height rule counts consistently ✗.",
     "source": "AuD-Zusammenfassung §6.1, sentinel discussion"
   },
@@ -91,7 +105,10 @@
       "A rotation changes the in-order sequence, which is why the keys must be re-sorted afterwards.",
       "rotateLeft and rotateRight each cost Θ(log n), since the subtree heights must be recomputed."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "A rotation relinks a constant number of pointers ✓ and is specifically designed to leave the in-order order untouched ✓ — that is what makes it safe for BSTs, AVL and RB trees alike. Options 3 and 4 contradict both facts ✗✗ (only the two rotated nodes' heights need updating, which is O(1)).",
     "source": "AuD-Zusammenfassung §6.1–6.2"
   }

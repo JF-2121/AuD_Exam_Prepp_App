@@ -9,7 +9,7 @@
       "Die Kantenmenge in einem *ungerichteten* Graphen ist definiert als E := V×V (mit Knotenmenge V), sodass gilt: (u,v) ∈ E ⇔ (v,u) ∈ E."
     ],
     "explanation": "Endlich viele Knoten beschränken die Anzahl möglicher Kanten auf |V|² ✓✗. Die Symmetrie ist genau die definierende Eigenschaft ungerichteter Kanten ✓, während ein gerichteter Graph ausdrücklich (u,v) ∈ E ohne (v,u) ∈ E erlaubt ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.9"
+    "source": "AuD-Zusammenfassung §8.1–8.4"
   },
   {
     "id": "real-graph-3",
@@ -21,7 +21,7 @@
       "Die BFS durchläuft bei jeder Eingabe stets weniger Knoten als die DFS."
     ],
     "explanation": "BFS erkundet in Schichten, ihre Baumdistanzen sind also genau die ungewichteten kürzesten Distanzen ✓. In einem ungerichteten Graphen wird jede Kante von beiden Endpunkten aus gesehen, was Vorwärts- und Querkanten ausschließt ✓. Die DFS verwendet einen *Stack* (explizit oder den Aufrufstack) ✗, und eine vollständige Traversierung besucht so oder so jeden erreichbaren Knoten ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.11"
+    "source": "AuD-Zusammenfassung §8.1–8.4"
   },
   {
     "id": "real-graph-2",
@@ -33,7 +33,7 @@
       "Beim Durchlauf der Tiefensuche (DFS) in einem Directed Acyclic Graph ist es möglich, dass Kreuzkanten entstehen."
     ],
     "explanation": "Zusammenhängend ∧ genau n−1 Kanten ⇔ kreisfrei ⇔ Baum — eine klassische Äquivalenz ✓. Ein DAG hat keine Rückwärtskanten, sehr wohl aber Vorwärts- *und* Kreuzkanten ✓. Die topologische Sortierung terminiert auch auf einem zyklischen Graphen; sie meldet lediglich einen Fehler ✗, und ein Heap hat keine Links-Rechts-Ordnung, Preorder ist also nicht sortiert ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.10"
+    "source": "AuD-Zusammenfassung §8.1–8.4"
   },
   {
     "id": "gt-mc-1",

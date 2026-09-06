@@ -11,9 +11,11 @@
       "Both false negatives and false positives can occur.",
       "Neither false negatives nor false positives can occur."
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "An element that was inserted has all k of its bits set to 1, and bits are never cleared — so a membership test on it can never return \"absent\". Overlapping hashes of *other* elements can, however, set all k bits of a never-inserted element, producing a false positive.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.6"
+    "source": "AuD-Zusammenfassung §7"
   },
   {
     "id": "real-hash-2",
@@ -27,9 +29,12 @@
       "There is no hash function that can completely avoid collisions.",
       "The main purpose of hash functions in hash tables is to encrypt keys for security."
     ],
-    "correctIndexes": [1, 2],
+    "correctIndexes": [
+      1,
+      2
+    ],
     "explanation": "Determinism is what makes lookup possible at all — the same key must always land in the same slot ✓. Once the key universe is larger than the table, the pigeonhole principle makes collisions unavoidable ✓. Hashing is about fast access, not compression ✗ or encryption ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.8"
+    "source": "AuD-Zusammenfassung §7"
   },
   {
     "id": "hash-q-3",
@@ -43,7 +48,9 @@
       "The total memory of the table in bytes",
       "The number of collisions that have occurred so far"
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "α = n/m (n keys, m slots) is the load factor, i.e. the average chain length. The 1 accounts for computing the hash and reaching the slot; the α accounts for walking the chain there.",
     "source": "AuD-Zusammenfassung §7.3"
   },
@@ -59,7 +66,10 @@
       "Open addressing is unaffected by the load factor, since it uses no lists.",
       "Chaining requires the load factor α to stay below 1."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Those are the two standard schemes ✓✓. Open addressing degrades badly as α → 1 through clustering ✗, and chaining is the scheme that tolerates α > 1 fine — the chains just get longer ✗.",
     "source": "AuD-Zusammenfassung §7.3"
   },
@@ -75,9 +85,12 @@
       "The table becomes structurally invalid, since duplicate slots are not allowed.",
       "Search stays O(1), because computing the hash is still constant time."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "A constant hash function is perfectly legal (it maps into range) but useless: every key collides ✓, turning the expected O(1+α) into a Θ(n) linear scan ✓. The structure remains valid ✗, and the cost is dominated by walking the chain, not by computing the hash ✗.",
-    "source": "Altklausur WS23/24 · Aufgabe 3.2.3"
+    "source": "AuD-Zusammenfassung §7"
   },
   {
     "id": "hash-mc-3",
@@ -91,9 +104,12 @@
       "The expected number of empty slots is a − n, since each key fills one slot.",
       "The result requires the emptiness indicators of different slots to be independent."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Every one of the n keys must independently miss the slot ⟹ (1−1/a)ⁿ ✓, and summing that over all a slots by linearity of expectation gives a·(1−1/a)ⁿ ✓. a − n ignores collisions ✗, and linearity of expectation needs *no* independence between slots — only between keys ✗.",
-    "source": "AuD26 Sheet 09 · expected empty slots"
+    "source": "AuD-Zusammenfassung §7, expected empty slots"
   },
   {
     "id": "hash-mc-4",
@@ -107,9 +123,12 @@
       "The average height is not in Ω(log n).",
       "The expected time complexity of deletion is Θ(n)."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Expected O(log n) for all three operations ✓, achieved by random level promotion rather than rotations ✓ — which is exactly why skip lists are so much simpler to implement. The average height *is* Θ(log n), hence in Ω(log n) ✗, and deletion is O(log n), not Θ(n) ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.1"
+    "source": "AuD-Zusammenfassung §7"
   },
   {
     "id": "hash-mc-5",
@@ -123,7 +142,10 @@
       "The level of a new element is chosen before the insert, by a search over the existing levels.",
       "Search starts at the bottom level and climbs upward whenever the next node would overshoot."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Level 1 always ✓, then promote while the check succeeds, stopping at the first failure ✓. The level emerges *from* those coin flips rather than being determined in advance ✗, and search runs the other way — starting at the *top* and dropping down on overshoot ✗.",
     "source": "AuD-Zusammenfassung §7.2, insert mechanics"
   },
@@ -139,7 +161,10 @@
       "A Bloom filter stores the inserted elements themselves, just in compressed form.",
       "Increasing the number of hash functions k always reduces the false-positive rate."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Shared bits make deletion unsafe ✓, and only the bit array is kept, so the set cannot be read back ✓. Nothing of the element itself is stored ✗. And k has an optimum: too many hash functions saturate the bit array with 1s and *increase* the false-positive rate ✗.",
     "source": "AuD-Zusammenfassung §7.4"
   },
@@ -155,7 +180,10 @@
       "Counting Bloom filters eliminate false positives as well.",
       "They use the same amount of memory as a classic Bloom filter."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Counters instead of bits enable genuine deletion ✓ while keeping the no-false-negative guarantee, provided no counter wraps ✓. False positives remain possible — overlapping hashes still collide ✗ — and the memory cost grows by the counter width (e.g. 4×) ✗.",
     "source": "AuD-Zusammenfassung §7.4, counting Bloom filters"
   },
@@ -171,9 +199,11 @@
       "The filter is corrupted and must be rebuilt.",
       "33 must have been inserted earlier without being recorded."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "This is precisely how Bloom-filter false positives arise: the k positions of a never-inserted element can all coincidentally already be 1, and the filter has no way to distinguish that from a genuine membership. The behaviour is fully consistent with the guarantee — only false *negatives* are excluded.",
-    "source": "AuD26 Sheet 09 · Bloom filter worked example"
+    "source": "AuD-Zusammenfassung §7, Bloom filter worked example"
   },
   {
     "id": "hash-mc-8",
@@ -187,8 +217,11 @@
       "At least two elements must have been inserted, because a single element cannot set enough bits.",
       "A wrong answer proves that the k hash functions are not independent."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Only false positives are possible ✓, and a single insertion already suffices whenever h₁(y), …, h_k(y) ⊆ {h₁(x), …, h_k(x)} — e.g. when both elements hash to the same positions ✓. So the \"at least two\" claim is refuted by that counterexample ✗, and independence of the hash functions is unrelated ✗.",
-    "source": "Altklausur WS23/24 · Aufgabe 3.3.2"
+    "source": "AuD-Zusammenfassung §7"
   }
 ]

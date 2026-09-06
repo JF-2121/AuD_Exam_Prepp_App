@@ -21,7 +21,7 @@
       "Es genügt, wenn der letzte Durchlauf (höchstwertige Ziffer) stabil ist."
     ],
     "explanation": "LSD-first-RadixSort setzt darauf, dass jeder Durchlauf die von allen vorherigen (niederwertigeren) Durchläufen hergestellte Ordnung *erhält* ✓ — und genau das ist Stabilität. LIFO-Buckets kehren diese Ordnung um und liefern unbemerkt ein falsches Ergebnis ✓. Stabilität ist also in *jedem* Durchlauf nötig ✗✗, nicht nur im letzten.",
-    "source": "AuD26 Blatt 03 · G3(a)/(d)"
+    "source": "AuD-Zusammenfassung §4.6"
   },
   {
     "id": "rad-q-3",
@@ -45,7 +45,7 @@
       "Die Laufzeit von RadixSort ist unabhängig von der Anzahl der Elemente n."
     ],
     "explanation": "O(d·(n+D)) mit konstantem d und D ergibt O(n), und die Buckets kosten O(n+D) zusätzlichen Speicher ✓. Da die Kosten nur von d, D und n abhängen — nie davon, wie die Eingabe zufällig angeordnet ist — gilt Best = Worst = Average ✓. Jedes Element muss mindestens einmal gelesen werden, sublinear ist also unmöglich ✗, und die Laufzeit ist offensichtlich linear in n ✗.",
-    "source": "AuD26 Blatt 03 · G3(d)/(e)"
+    "source": "AuD-Zusammenfassung §4.6"
   },
   {
     "id": "rad-mc-2",

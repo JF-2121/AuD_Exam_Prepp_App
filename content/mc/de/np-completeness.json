@@ -33,7 +33,7 @@
       "Eine Reduktion überträgt sich nicht auf die Komplemente: L₁ ≤_P L₂ sagt nichts über L̄₁ und L̄₂ aus."
     ],
     "explanation": "Die Definition ✓ und die Transitivität über die Komposition ✓ sind genau das, was „einer für alle, alle für einen“ funktionieren lässt. Die Richtung in Option 3 ist vertauscht — L₂ ist mindestens so schwer wie L₁ ✗ — und das Negieren beider Seiten der Äquivalenz liefert L̄₁ ≤_P L̄₂ mit *demselben* f ✗.",
-    "source": "AuD26 Blatt 13 · Reduktionsbeweise (a)/(d)"
+    "source": "AuD-Zusammenfassung §10"
   },
   {
     "id": "np-mc-3",
@@ -45,7 +45,7 @@
       "SAT ist NP-vollständig, aber jeder weitere NP-Vollständigkeitsbeweis muss ebenfalls direkt über Cook-Levin geführt werden."
     ],
     "explanation": "Die Verkettung einer Polynomialzeit-Reduktion mit einem Polynomialzeit-Löser macht jedes NP-Problem polynomiell ✓, und Option 2 ist genau die Kontraposition dazu ✓. Option 3 übersieht, dass sich *jedes* NP-Problem auf ein NP-vollständiges reduzieren lässt ✗, und nach Cook-Levin knüpfen neue Beweise an ein bereits bekanntes NP-vollständiges Problem an ✗.",
-    "source": "AuD26 Blatt 13 · Reduktionsbeweise (b)/(c)"
+    "source": "AuD-Zusammenfassung §10"
   },
   {
     "id": "np-q-4",
@@ -93,7 +93,7 @@
       "Die Prüfung, dass jedes aufeinanderfolgende Paar (vᵢ, vᵢ₊₁) eine Kante von G ist"
     ],
     "explanation": "Die paarweise Verschiedenheit vergleicht im Worst Case bis zu O(V²) Paare. Die anderen drei sind jeweils ein einzelner O(V)-Durchlauf über das Zertifikat. Da alle vier zusammen genau die Definition eines Hamiltonpfades bilden, ist der Verifizierer korrekt — und polynomiell, was die Zugehörigkeit zu NP verlangt.",
-    "source": "AuD26 Blatt 13 · HAM-PATH ∈ NP"
+    "source": "AuD-Zusammenfassung §10, HAM-PATH ∈ NP"
   },
   {
     "id": "np-q-8",
@@ -105,7 +105,7 @@
       "Das widerspricht der NP-Vollständigkeit des allgemeinen Problems."
     ],
     "explanation": "Ein Pfad kann sich nicht gegen die Kantenrichtungen bewegen, ohne einen Knoten erneut zu besuchen, die topologische Ordnung ist also der einzig möglliche Kandidat ✓, wodurch die Prüfung O(V+E) kostet ✓. DAGs können durchaus Hamiltonpfade haben ✗, und ein leichter Spezialfall widerspricht der Schwere des allgemeinen Falls nie ✗.",
-    "source": "AuD26 Blatt 13 · HAM-PATH auf DAGs"
+    "source": "AuD-Zusammenfassung §10, HAM-PATH auf DAGs"
   },
   {
     "id": "np-mc-5",

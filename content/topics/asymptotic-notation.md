@@ -4,7 +4,6 @@ title: "Asymptotic Notation (O, Ω, Θ) & Master Theorem"
 category: "Grundlagen"
 order: 2
 relatedAlgorithmIds: []
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD26_Sheet01-GrpSol.pdf", "AuD26_Sheet02-Sol.pdf", "AuD26_Sheet04-Sol.pdf"]
 ---
 
 ## The five notations

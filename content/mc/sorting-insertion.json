@@ -11,7 +11,9 @@
       "The worst case is Θ(n²), triggered by already-sorted input.",
       "The best case is Θ(1) because the algorithm can detect sorted input immediately."
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "Reverse-sorted input forces every key to shift past the whole sorted prefix → Θ(n²). Already-sorted input is the *best* case, Θ(n): the while-condition fails immediately for every key — but that still costs one comparison per element, so Θ(n), not Θ(1).",
     "source": "AuD-Zusammenfassung §4.2"
   },
@@ -27,9 +29,12 @@
       "The average case is Θ(n log n).",
       "Insertion Sort is asymptotically faster than Quicksort in the worst case."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Already-sorted input needs one comparison per key ⟹ Θ(n) ✓, and the algorithm only shifts within the array using a strict `>` comparison ⟹ in place and stable ✓. The average case is Θ(n²), not Θ(n log n) ✗. Quicksort's worst case is also Θ(n²), so Insertion Sort is not asymptotically faster ✗.",
-    "source": "AuD26 Sheet 03 · G3(b)"
+    "source": "AuD-Zusammenfassung §4.2"
   },
   {
     "id": "ins-q-4",
@@ -43,7 +48,10 @@
       "Replacing `>` by `≥` would improve the best case to Θ(1).",
       "Stability of Insertion Sort depends on the input containing pairwise distinct keys."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "With `>`, an equal element stops the shift immediately and the earlier occurrence stays in front ⟹ stable ✓. Using `≥` would shift equal elements past each other, destroying stability while leaving Θ(n²)/Θ(n) unchanged ✓. It would *worsen*, not improve, the best case ✗, and stability is a claim precisely about *duplicate* keys ✗.",
     "source": "AuD-Zusammenfassung §4.2, stability discussion"
   },
@@ -59,9 +67,12 @@
       "The invariant asserts that A[0..j−1] contains the j smallest elements of the whole array in sorted order.",
       "The invariant only holds if the input array is already partially sorted."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The sorted prefix consists of the *original first j elements*, re-ordered ✓ — not the j globally smallest elements ✗ (that would be Selection Sort's invariant). Substituting j = n yields the postcondition ✓, and the invariant holds for arbitrary input ✗.",
-    "source": "AuD26 Sheet 01, loop invariants"
+    "source": "AuD-Zusammenfassung §4.2, loop invariants"
   },
   {
     "id": "ins-mc-3",
@@ -75,8 +86,10 @@
       "The condition stays the same; only the outer loop must run backwards.",
       "Descending order is impossible with Insertion Sort without an extra reversal pass."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Only the comparison direction flips: elements *smaller* than the key must now be pushed right. The scan still walks leftwards through the already-built prefix (`i = i − 1`), and the final placement `A[i+1] = key` is unchanged. No extra pass is needed.",
-    "source": "Altklausur WS23/24 · Aufgabe 1.1"
+    "source": "AuD-Zusammenfassung §4.2"
   }
 ]

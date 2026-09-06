@@ -11,9 +11,12 @@
       "Every Red-Black tree is an AVL tree.",
       "Every AVL tree can be coloured as a Red-Black tree."
     ],
-    "correctIndexes": [1, 3],
+    "correctIndexes": [
+      1,
+      3
+    ],
     "explanation": "A Red-Black tree is by definition a BST plus colouring ✓. AVL's stricter height bound (≈1.44·log n) always fits inside the RBT bound (2·log(n+1)), so every AVL tree admits a valid RB colouring ✓ — a classic textbook result. The converse fails: an RBT may be less balanced than AVL permits ✗. And a max-heap is not even a BST, so no colouring can make it one ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.5"
+    "source": "AuD-Zusammenfassung §6.2"
   },
   {
     "id": "real-avl-2",
@@ -27,9 +30,12 @@
       "Binary search trees need no rotation function on insert.",
       "Binary max-heaps need no rotation function on insert."
     ],
-    "correctIndexes": [2, 3],
+    "correctIndexes": [
+      2,
+      3
+    ],
     "explanation": "A plain BST insert just descends and attaches a leaf ✓, and heap insert restores the heap property with sift-up *swaps* along one path, not rotations ✓. Splay trees rotate on every access including insert ✗, and AVL trees rotate to rebalance ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.6"
+    "source": "AuD-Zusammenfassung §6.2"
   },
   {
     "id": "avl-q-1",
@@ -43,7 +49,9 @@
       "This is valid only for the root.",
       "This is valid as long as the tree has fewer than 10 nodes."
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "AVL requires bf(x) = height(x.left) − height(x.right) ∈ {−1, 0, 1} for *every* node. Here bf = 3, so the subtree must be rebalanced by rotation. (In practice AVL never lets |bf| exceed 2, because it repairs imbalance the moment it appears.)",
     "source": "AuD-Zusammenfassung §6.2"
   },
@@ -59,7 +67,10 @@
       "AVL guarantees a height of at most 2·log(n+1), the same bound as a Red-Black tree.",
       "The invariant only has to hold along the path from the root to the deepest leaf."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The definition with height(∅) = −1 ✓ and the |bf| = 2 trigger ✓ are exactly as in the lecture. AVL's bound is the *tighter* ≈1.44·log(n+2) ✗, and the invariant must hold at every single node ✗.",
     "source": "AuD-Zusammenfassung §6.2"
   },
@@ -75,7 +86,9 @@
       "RR case: a single rotateLeft(a)",
       "RL case: rotateRight(a.right), then rotateLeft(a)"
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "bf(a) > 1 means left-heavy; bf(a.left) ≥ 0 (here +1) means the imbalance continues on the *same* side (left-left). A single rotateRight(a) restores balance. The LR case would need bf(a.left) < 0.",
     "source": "AuD-Zusammenfassung §6.2, rotation table"
   },
@@ -91,7 +104,9 @@
       "RL case: rotateRight(a.right), then rotateLeft(a)",
       "LR case: rotateLeft(a.left), then rotateRight(a)"
     ],
-    "correctIndexes": [2],
+    "correctIndexes": [
+      2
+    ],
     "explanation": "bf(a) < −1 means right-heavy; bf(a.right) > 0 means that child is itself left-heavy, so the imbalance zig-zags (right-left). The double rotation rotateRight(a.right) followed by rotateLeft(a) is required — a single rotation would not fix it.",
     "source": "AuD-Zusammenfassung §6.2, rotation table"
   },
@@ -107,7 +122,10 @@
       "Delete, like insert, may stop after the first rotation.",
       "Delete uses a different rotation primitive than insert."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "After an insert rotation the subtree height equals what it was before the insert, so no ancestor can become unbalanced ⟹ break ✓. After a delete rotation the height can decrease, propagating a new imbalance upward ⟹ up to O(log n) rotations, no early break ✓✗. Both use the same rotateLeft/rotateRight primitives ✗.",
     "source": "AuD-Zusammenfassung §6.2, edge cases"
   },
@@ -123,7 +141,10 @@
       "AVL stores a colour bit per node; Red-Black trees store a height per node.",
       "Red-Black trees rebalance on every read access, AVL trees do not."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The read-vs-write trade-off ✓ and the shared Θ(log n) worst case ✓ are the key comparison points. The stored metadata is swapped in option 3 — AVL stores heights/balance factors, RBTs store colours ✗ — and neither rebalances on a pure read; that is the splay tree ✗.",
     "source": "AuD-Zusammenfassung §6.1–6.2"
   },
@@ -139,7 +160,10 @@
       "It requires a dedicated rotateDouble primitive that cannot be expressed via rotateLeft/rotateRight.",
       "In the LR case a is rotated first, and only then a.left."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "A double rotation decomposes into two singles ✓, and the LR fix is rotateLeft(a.left) *then* rotateRight(a) ✓ — the inner (child) rotation converts the zig-zag into a straight line so the outer rotation can finish the job. Reversing that order ✗ or inventing a new primitive ✗ is wrong.",
     "source": "AuD-Zusammenfassung §6.2, edge cases"
   }

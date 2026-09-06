@@ -9,7 +9,7 @@
       "Mit nichts — Kruskal kann konstruktionsbedingt keine Kreise erzeugen."
     ],
     "explanation": "findSet(u) ≠ findSet(v) prüft genau, ob u und v bereits verbunden sind; sind sie es, würde die Kante einen Kreis schließen und wird verworfen. Mit Pfadkompression sind die Operationen amortisiert nahezu O(1), die Gesamtkosten bleiben also vom anfänglichen Sortieren dominiert: O(E log E).",
-    "source": "AuD26 Blatt 10 · Kruskal"
+    "source": "AuD-Zusammenfassung §8.5, Kruskal"
   },
   {
     "id": "mst-mc-1",
@@ -21,7 +21,7 @@
       "Kruskal benötigt einen Startknoten, der den resultierenden MST bestimmt."
     ],
     "explanation": "Beide sind gierig und beweisbar optimal ✓, mit den angegebenen Kosten ✓. Verschiedene Gewichte betreffen nur die *Eindeutigkeit* des MST, nicht Prims Korrektheit ✗, und Kruskal ist kantenzentriert — er hat überhaupt keinen Startknoten ✗.",
-    "source": "AuD26 Blatt 10 · MST"
+    "source": "AuD-Zusammenfassung §8.5, MST"
   },
   {
     "id": "mst-q-5",
@@ -33,7 +33,7 @@
       "Es kann ein Zwischenzustand keines der beiden Algorithmen sein."
     ],
     "explanation": "Prim lässt genau einen Baum von seinem Startknoten aus wachsen, sein Teilergebnis ist also in jedem Schritt zusammenhängend. Kruskal hält dagegen routinemäßig einen Wald aus getrennten Fragmenten, die erst ganz am Ende verschmelzen — eine unzusammenhängende Momentaufnahme ist also Kruskals Handschrift.",
-    "source": "AuD26 Blatt 10 · Prim gegen Kruskal"
+    "source": "AuD-Zusammenfassung §8.5, Prim gegen Kruskal"
   },
   {
     "id": "mst-mc-2",
@@ -45,7 +45,7 @@
       "Jeder Graph hat genau einen MST, da das Gesamtgewicht minimal ist."
     ],
     "explanation": "Beides folgt aus dem Austauschargument ✓✓: Fügt man die ausgeschlossene Kante hinzu, entsteht genau ein Kreis, auf dem jede andere Kante echt schwerer ist — ein Tausch würde den Baum also echt verbessern. Gleiche Gewichte *erlauben* mehrere MSTs, erzwingen sie aber nicht ✗, und dasselbe minimale Gesamtgewicht kann von mehreren verschiedenen Kantenmengen erreicht werden ✗.",
-    "source": "AuD26 Blatt 10 · Eindeutigkeit des MST"
+    "source": "AuD-Zusammenfassung §8.5, Eindeutigkeit des MST"
   },
   {
     "id": "mst-mc-3",
@@ -57,7 +57,7 @@
       "Prim setzt voraus, dass der Graph gerichtet ist."
     ],
     "explanation": "Der −∞-Sentinel ✓ und der Kontrast „Dijkstra, aber auf w(u,v) statt dist(u)+w(u,v) geschlüsselt“ ✓ sind genau die Darstellung der Vorlesung. Option 3 behauptet genau den Unterschied, den sie leugnet ✗, und ein MST ist nur für *ungerichtete* Graphen definiert ✗.",
-    "source": "AuD26 Blatt 10 · Prim"
+    "source": "AuD-Zusammenfassung §8.5, Prim"
   },
   {
     "id": "mst-mc-4",
@@ -69,6 +69,6 @@
       "Er enthält stets die global schwerste Kante, um den Graphen zusammenhängend zu halten."
     ],
     "explanation": "n−1 Kanten ✓ sowie zusammenhängend und kreisfrei ✓ sind die Definition eines Spannbaums. Ein MST minimiert das *Gesamtgewicht*, nicht die paarweisen Distanzen — der s–t-Pfad im MST kann weit vom kürzesten Pfad abweichen ✗ — und die schwerste Kante ist typischerweise die erste, die ein Greedy-Algorithmus meidet ✗.",
-    "source": "AuD26 Blatt 10 · Definition des MST"
+    "source": "AuD-Zusammenfassung §8.5, Definition des MST"
   }
 ]

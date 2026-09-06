@@ -11,6 +11,11 @@ const uiEn = {
   // --- app chrome ---------------------------------------------------------
   'app.name': 'AuD Grind',
   'app.loading': 'Loading…',
+  'error.title': 'Something went wrong on this page.',
+  'error.body':
+    'The rest of the app is unaffected — your progress is safe. This usually means the input for this view was an unexpected shape.',
+  'error.retry': 'Try again',
+  'error.details': 'Technical details',
   'nav.topics': 'Topics',
   'nav.visualize': 'Visualize',
   'nav.flashcards': 'Flashcards',
@@ -61,6 +66,7 @@ const uiEn = {
   'viz.resetDefault': 'Reset to default',
   'viz.invalidJson': 'Invalid JSON input.',
   'viz.pseudocode': 'Pseudocode',
+  'viz.noSteps': 'This input produces no steps to show — reset it to the default to continue.',
   'viz.back': 'Back',
   'viz.play': 'Play',
   'viz.pause': 'Pause',
@@ -249,6 +255,11 @@ const uiDe: Record<keyof typeof uiEn, string> = {
   // --- app chrome ---------------------------------------------------------
   'app.name': 'AuD Grind',
   'app.loading': 'Lädt…',
+  'error.title': 'Auf dieser Seite ist ein Fehler aufgetreten.',
+  'error.body':
+    'Der Rest der App ist davon nicht betroffen — dein Fortschritt ist sicher. Meist liegt es daran, dass die Eingabe für diese Ansicht eine unerwartete Form hatte.',
+  'error.retry': 'Erneut versuchen',
+  'error.details': 'Technische Details',
   'nav.topics': 'Themen',
   'nav.visualize': 'Visualisieren',
   'nav.flashcards': 'Karteikarten',
@@ -299,6 +310,8 @@ const uiDe: Record<keyof typeof uiEn, string> = {
   'viz.resetDefault': 'Auf Standard zurücksetzen',
   'viz.invalidJson': 'Ungültige JSON-Eingabe.',
   'viz.pseudocode': 'Pseudocode',
+  'viz.noSteps':
+    'Diese Eingabe erzeugt keine darstellbaren Schritte — setze sie auf den Standard zurück, um fortzufahren.',
   'viz.back': 'Zurück',
   'viz.play': 'Abspielen',
   'viz.pause': 'Pause',

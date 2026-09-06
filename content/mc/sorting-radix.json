@@ -11,7 +11,9 @@
       "Because Radix Sort only works on already-sorted input.",
       "Because the lower bound applies only to recursive algorithms."
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "The Ω(n log n) bound is derived from a decision tree over pairwise comparisons. Radix Sort distributes elements into buckets by digit *value* and never compares two keys against each other, so the argument simply does not apply to it.",
     "source": "AuD-Zusammenfassung §4.6"
   },
@@ -27,9 +29,12 @@
       "Stability is irrelevant, since each pass only inspects a single digit position.",
       "It suffices that the final (most significant) pass is stable."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "LSD-first Radix Sort relies on each pass *preserving* the order established by all previous (less significant) passes ✓ — which is exactly stability. LIFO buckets reverse that order and silently produce a wrong result ✓. So stability matters in *every* pass ✗✗, not only the last one.",
-    "source": "AuD26 Sheet 03 · G3(a)/(d)"
+    "source": "AuD-Zusammenfassung §4.6"
   },
   {
     "id": "rad-q-3",
@@ -43,7 +48,9 @@
       "r = log n, independently of b.",
       "r has no influence on the runtime in this regime."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "With r = b the runtime becomes O(1·(n + 2ᵇ)), and b ≤ log n gives 2ᵇ ≤ n, so the total is O(n) — a single pass over one full-width digit. Choosing r = log n is the optimum only in the other regime, b > log n, where it yields O(bn / log n).",
     "source": "AuD-Zusammenfassung §4.6, bit-grouping analysis"
   },
@@ -59,9 +66,12 @@
       "Radix Sort can sort n elements in strictly sublinear time.",
       "Radix Sort's runtime is independent of the number of elements n."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "O(d·(n+D)) with constant d and D gives O(n), and the buckets cost O(n+D) extra memory ✓. Because the cost depends only on d, D and n — never on how the input happens to be arranged — best = worst = average ✓. Every element must be read at least once, so sublinear is impossible ✗, and the runtime is manifestly linear in n ✗.",
-    "source": "AuD26 Sheet 03 · G3(d)/(e)"
+    "source": "AuD-Zusammenfassung §4.6"
   },
   {
     "id": "rad-mc-2",
@@ -75,7 +85,10 @@
       "Yes — O(n) always beats O(n log n) for every input size.",
       "Yes — Radix Sort works on arbitrary comparable keys, whereas Quicksort needs numeric keys."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Constant factors ✓ and the extra bucket memory ✓ are the two real caveats. Asymptotic dominance only holds for sufficiently large n, not for every size ✗ — and the key-type requirement is inverted: Quicksort needs only a comparison, Radix Sort needs decomposable digit keys ✗.",
     "source": "AuD-Zusammenfassung §4.6, practice discussion"
   },
@@ -91,7 +104,9 @@
       "The total becomes O(n²), because each pass costs O(n) and there are n passes.",
       "The total becomes O(D), independent of n."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Representing n distinct keys in base D needs d = Θ(log_D n) digits. With D ≈ n the cost is Θ(log_D n · (n + D)) = O(n log n) — it converges to the comparison-sort bound rather than violating it, which is why the linear-time claim always comes with the \"D and d constant\" caveat.",
     "source": "AuD-Zusammenfassung §4.6"
   }

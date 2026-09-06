@@ -4,7 +4,6 @@ title: "Minimum Spanning Trees: Kruskal & Prim"
 category: "Graphs"
 order: 3
 relatedAlgorithmIds: ["kruskal", "prim"]
-sourceFiles: ["AuD_AnkiDeck", "AuD26_Sheet10-Sol.pdf"]
 ---
 
 ## Problem

@@ -4,7 +4,6 @@ title: "Hashing, Skip Lists & Bloom Filters"
 category: "Trees"
 order: 4
 relatedAlgorithmIds: []
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD26 Altklausur/Gedächtnisprotokoll", "AuD26_Sheet09-Sol.pdf"]
 ---
 
 ## Hash Tables

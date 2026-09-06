@@ -19,7 +19,13 @@ export function parseFrontmatter(raw: string): { data: Record<string, unknown>; 
     const rawValue = line.slice(separatorIndex + 1).trim();
 
     if (rawValue.startsWith('[')) {
-      data[key] = JSON.parse(rawValue);
+      // Content globs are eager, so this runs at module-eval time: an unparseable array literal
+      // would take the whole app down before first paint. Degrade to "absent" instead.
+      try {
+        data[key] = JSON.parse(rawValue);
+      } catch {
+        console.warn(`[AuD Grind] frontmatter: ignoring malformed array for "${key}": ${rawValue}`);
+      }
     } else if (/^".*"$/.test(rawValue) || /^'.*'$/.test(rawValue)) {
       data[key] = rawValue.slice(1, -1);
     } else if (/^-?\d+(\.\d+)?$/.test(rawValue)) {

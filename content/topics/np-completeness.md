@@ -4,7 +4,6 @@ title: "Complexity Classes & NP-Completeness"
 category: "Complexity Theory"
 order: 1
 relatedAlgorithmIds: []
-sourceFiles: ["AuD_AnkiDeck", "AuD26_Sheet13-Sol.pdf"]
 ---
 
 ## Decision problems and P vs. NP

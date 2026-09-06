@@ -9,7 +9,7 @@
       "Es kann weder False Negatives noch False Positives geben."
     ],
     "explanation": "Ein eingefügtes Element hat alle seine k Bits auf 1 gesetzt, und Bits werden nie zurückgesetzt — eine Mitgliedschaftsanfrage kann für dieses Element also nie „nicht enthalten“ liefern. Überlappende Hashes *anderer* Elemente können jedoch alle k Bits eines nie eingefügten Elements setzen und so einen False Positive erzeugen.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.6"
+    "source": "AuD-Zusammenfassung §7"
   },
   {
     "id": "real-hash-2",
@@ -21,7 +21,7 @@
       "Das Hauptziel von Hashfunktionen in Hashtabellen ist die Verschlüsselung von Schlüsseln zur Sicherheit."
     ],
     "explanation": "Determinismus ist überhaupt erst die Voraussetzung für das Nachschlagen — derselbe Schlüssel muss stets im selben Slot landen ✓. Sobald das Schlüsseluniversum größer ist als die Tabelle, macht das Schubfachprinzip Kollisionen unvermeidbar ✓. Hashing dient dem schnellen Zugriff, nicht der Kompression ✗ oder Verschlüsselung ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.8"
+    "source": "AuD-Zusammenfassung §7"
   },
   {
     "id": "hash-q-3",
@@ -57,7 +57,7 @@
       "Die Suche bleibt O(1), da das Berechnen des Hashwerts weiterhin konstante Zeit kostet."
     ],
     "explanation": "Eine konstante Hashfunktion ist völlig zulässig (sie bildet in den Bereich ab), aber nutzlos: Jeder Schlüssel kollidiert ✓, wodurch aus dem erwarteten O(1+α) ein linearer Durchlauf mit Θ(n) wird ✓. Die Struktur bleibt gültig ✗, und die Kosten werden vom Durchlaufen der Kette dominiert, nicht vom Berechnen des Hashwerts ✗.",
-    "source": "Altklausur WS23/24 · Aufgabe 3.2.3"
+    "source": "AuD-Zusammenfassung §7"
   },
   {
     "id": "hash-mc-3",
@@ -69,7 +69,7 @@
       "Das Ergebnis setzt voraus, dass die Leer-Indikatoren verschiedener Slots unabhängig sind."
     ],
     "explanation": "Jeder der n Schlüssel muss den Slot unabhängig verfehlen ⟹ (1−1/a)ⁿ ✓, und die Summation über alle a Slots per Linearität des Erwartungswerts liefert a·(1−1/a)ⁿ ✓. a − n ignoriert Kollisionen ✗, und die Linearität des Erwartungswerts braucht *keine* Unabhängigkeit zwischen den Slots — nur zwischen den Schlüsseln ✗.",
-    "source": "AuD26 Blatt 09 · erwartete leere Slots"
+    "source": "AuD-Zusammenfassung §7, erwartete leere Slots"
   },
   {
     "id": "hash-mc-4",
@@ -81,7 +81,7 @@
       "Die erwartete Zeit-Komplexität für das Löschen liegt in Θ(n)."
     ],
     "explanation": "Erwartet O(log n) für alle drei Operationen ✓, erreicht durch zufälliges Hochstufen statt durch Rotationen ✓ — genau deshalb sind Skip-Listen so viel einfacher zu implementieren. Die durchschnittliche Höhe *ist* Θ(log n) und damit in Ω(log n) ✗, und das Löschen ist O(log n), nicht Θ(n) ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.1"
+    "source": "AuD-Zusammenfassung §7"
   },
   {
     "id": "hash-mc-5",
@@ -129,7 +129,7 @@
       "33 muss vorher eingefügt worden sein, ohne dass es festgehalten wurde."
     ],
     "explanation": "Genau so entstehen False Positives im Bloomfilter: Die k Positionen eines nie eingefügten Elements können alle zufällig bereits auf 1 stehen, und der Filter kann das nicht von einer echten Mitgliedschaft unterscheiden. Das Verhalten ist voll mit der Garantie vereinbar — ausgeschlossen sind nur False *Negatives*.",
-    "source": "AuD26 Blatt 09 · durchgerechnetes Bloomfilter-Beispiel"
+    "source": "AuD-Zusammenfassung §7, durchgerechnetes Bloomfilter-Beispiel"
   },
   {
     "id": "hash-mc-8",
@@ -141,6 +141,6 @@
       "Eine falsche Antwort beweist, dass die k Hashfunktionen nicht unabhängig sind."
     ],
     "explanation": "Nur False Positives sind möglich ✓, und ein einziges Einfügen genügt bereits, sobald h₁(y), …, h_k(y) ⊆ {h₁(x), …, h_k(x)} gilt — etwa wenn beide Elemente auf dieselben Positionen hashen ✓. Die Behauptung „mindestens zwei“ wird durch dieses Gegenbeispiel widerlegt ✗, und die Unabhängigkeit der Hashfunktionen spielt hier keine Rolle ✗.",
-    "source": "Altklausur WS23/24 · Aufgabe 3.3.2"
+    "source": "AuD-Zusammenfassung §7"
   }
 ]

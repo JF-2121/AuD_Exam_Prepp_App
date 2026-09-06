@@ -21,7 +21,7 @@
       "Jeder determinierte Algorithmus ist auch deterministisch."
     ],
     "explanation": "Terminierung = endlich viele Schritte und dann eine Ausgabe ✓. Korrektheit betrifft die Übereinstimmung der Ausgabe mit der Spezifikation — Terminierung allein genügt nicht ✗. Determinismus (gleiche Schritte) ist echt stärker als Determiniertheit (gleiche Ausgabe): deterministisch ⇒ determiniert ✓, aber nicht umgekehrt ✗ (zwei verschiedene Schrittfolgen können dieselbe Ausgabe erreichen).",
-    "source": "AuD26 Blatt 01, G2"
+    "source": "AuD-Zusammenfassung §2"
   },
   {
     "id": "algo-mc-2",
@@ -33,7 +33,7 @@
       "Schleifeninvarianten werden nur für rekursive Algorithmen benötigt, nicht für iterative."
     ],
     "explanation": "Das dreiteilige Gerüst lautet Initialisierung / Erhaltung / Terminierung ✓, und die Invariante muss vor der ersten und nach jeder Iteration gelten ✓. Sie beweist *nicht* die Terminierung — das ist ein eigenes Argument, meist über eine streng fallende Größe ✗. Und Schleifeninvarianten sind genau das Werkzeug für *iterative* Algorithmen; Rekursion wird per Induktion bewiesen ✗.",
-    "source": "AuD-Zusammenfassung §2, AuD26 Blatt 01"
+    "source": "AuD-Zusammenfassung §2"
   },
   {
     "id": "algo-mc-3",
@@ -45,7 +45,7 @@
       "Die Invariante gilt nur, wenn A paarweise verschiedene Werte enthält."
     ],
     "explanation": "Das vor Iteration i bereits *verarbeitete* Präfix ist A[0..i-1] ✓ — A[i] wurde noch nicht verglichen, Option 2 ist also um eins verschoben ✗. Einsetzen von i = len liefert genau die Nachbedingung ✓. Duplikate spielen keine Rolle: `<` lässt min bei Gleichstand einfach unverändert ✗.",
-    "source": "AuD26 Blatt 01, Beispiele zu Schleifeninvarianten"
+    "source": "AuD-Zusammenfassung §2, Beispiele zu Schleifeninvarianten"
   },
   {
     "id": "algo-mc-4",
@@ -57,7 +57,7 @@
       "Die Invariante lässt sich allein über idx formulieren, ohne conditionTrue zu erwähnen."
     ],
     "explanation": "Eine einzige Verletzung entwertet *jeden* späteren Index, nicht nur den verletzenden — ohne Einrasten würde also ein späteres Element, das die Bedingung zufällig erfüllt, idx fälschlich überschreiben ✓✗. Genau das Einrasten (dauerhaft falsch bleiben) macht daraus eine echte Invariante ✓, weshalb die Invariante das Flag auch erwähnen muss ✗.",
-    "source": "AuD26 Blatt 01, Schleifeninvariante zu MaxIndex"
+    "source": "AuD-Zusammenfassung §2, Schleifeninvariante zu MaxIndex"
   },
   {
     "id": "algo-q-3",
@@ -81,7 +81,7 @@
       "Zwei Datenstrukturen, die denselben ADT implementieren, müssen dieselben asymptotischen Laufzeiten haben."
     ],
     "explanation": "Ein ADT ist ein rein verhaltensbezogener Vertrag ✓ — er sagt bewusst nichts über Komplexität ✗. Genau deshalb hat ein ADT (z. B. „Liste“) viele Realisierungen ✓ (Array vs. verkettete Liste), deren Laufzeiten sich deutlich unterscheiden ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.4"
+    "source": "AuD-Zusammenfassung §2"
   },
   {
     "id": "algo-mc-6",

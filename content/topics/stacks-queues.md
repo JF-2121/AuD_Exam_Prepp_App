@@ -4,7 +4,6 @@ title: "Stacks & Queues"
 category: "Basic Data Structures"
 order: 1
 relatedAlgorithmIds: []
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD_AnkiDeck", "AuD26_Sheet04-Sol.pdf", "AuD26_Sheet05-GrpSol.pdf"]
 ---
 
 ## Stack — LIFO (Last In, First Out)

@@ -183,7 +183,7 @@ export const radixSort: AlgorithmDef<RadixInput, RadixState> = {
   topicId: 'sorting-radix',
   family: 'Non-Comparison Sorting',
   pseudocode,
-  // The lecture's own worked example (AuD26 Sheet 04, G2a): octal keys, b = 6 bits, r = 3.
+  // Octal keys, b = 6 bits, r = 3 — the standard worked example for this algorithm.
   defaultInput: { values: ['54', '24', '71', '10', '52', '77', '33'], radix: 8 },
   generateSteps,
   Renderer: BucketRenderer,

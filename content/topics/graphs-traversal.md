@@ -4,7 +4,6 @@ title: "Graphs: Representation, BFS & DFS"
 category: "Graphs"
 order: 1
 relatedAlgorithmIds: ["bfs", "dfs"]
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD_AnkiDeck", "AuD26_Sheet09-Sol.pdf"]
 ---
 
 ## Representation

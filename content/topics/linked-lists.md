@@ -4,7 +4,6 @@ title: "Linked Lists"
 category: "Basic Data Structures"
 order: 2
 relatedAlgorithmIds: []
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD26_Sheet05-GrpSol.pdf"]
 ---
 
 ## Structure

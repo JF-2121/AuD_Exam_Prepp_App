@@ -4,7 +4,6 @@ title: "String Matching"
 category: "String Algorithms"
 order: 1
 relatedAlgorithmIds: ["string-match-naive", "string-match-rabin-karp"]
-sourceFiles: ["AuD26_Sheet07-GrpSol.pdf", "AuD26_Sheet09-Sol.pdf"]
 ---
 
 ## Problem statement

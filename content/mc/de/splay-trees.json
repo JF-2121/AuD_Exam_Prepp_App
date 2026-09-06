@@ -9,7 +9,7 @@
       "Keiner — das Splayen endet, wenn der Großvater fehlt"
     ],
     "explanation": "Zig ist der Einzelrotationsfall, der genau dann greift, wenn kein Großvater existiert. Er tritt pro Splay höchstens einmal auf, nämlich als letzter Schritt, der den Knoten in die Wurzelposition hebt.",
-    "source": "AuD26 Blatt 07 · Splay-Bäume"
+    "source": "AuD-Zusammenfassung §6.3, Splay-Bäume"
   },
   {
     "id": "splay-q-3",
@@ -21,7 +21,7 @@
       "Zig: eine einzelne Rotation um p"
     ],
     "explanation": "Gleiche Seite (beide links oder beide rechts) = Zig-Zig. Dabei wird der *entferntere* Knoten — der Großvater — zuerst rotiert, danach der Vater. Genau diese Reihenfolge unterscheidet Zig-Zig von zwei unabhängigen Zig-Schritten, die einen anderen, schlechter balancierten Baum hinterließen.",
-    "source": "AuD26 Blatt 07 · Splay-Bäume"
+    "source": "AuD-Zusammenfassung §6.3, Splay-Bäume"
   },
   {
     "id": "splay-q-4",
@@ -33,7 +33,7 @@
       "Zig: eine einzelne Rotation um g"
     ],
     "explanation": "Gegenüberliegende Seiten = Zig-Zag, und hier wird der *nähere* Knoten (der Vater p) zuerst rotiert, danach der Großvater g. Man beachte, dass die Rotationsreihenfolge spiegelbildlich zu Zig-Zig ist — dieser Kontrast ist das am häufigsten geprüfte Detail des Splayens.",
-    "source": "AuD26 Blatt 07 · Splay-Bäume"
+    "source": "AuD-Zusammenfassung §6.3, Splay-Bäume"
   },
   {
     "id": "splay-mc-1",
@@ -45,7 +45,7 @@
       "Welcher Fall greift, bestimmt der gesuchte Schlüssel, nicht die Position des Knotens."
     ],
     "explanation": "Zig kann nur zünden, wenn der Vater bereits die Wurzel ist, also höchstens einmal und zuletzt ✓, und die unterschiedliche Rotationsreihenfolge ist der definierende Kontrast ✓✗. Der Fall ergibt sich rein aus der geometrischen Lage von Knoten, Vater und Großvater ✗.",
-    "source": "AuD26 Blatt 07 · Splay-Bäume"
+    "source": "AuD-Zusammenfassung §6.3, Splay-Bäume"
   },
   {
     "id": "splay-q-5",
@@ -57,7 +57,7 @@
       "Es wird ein Fehler ausgelöst und der Baum bleibt in einem inkonsistenten Zustand."
     ],
     "explanation": "Gesplayt wird bei *jedem* Zugriff, erfolgreich oder nicht — der zuletzt untersuchte echte Knoten wird zur neuen Wurzel. Genau das macht den Baum selbstanpassend, und genau deshalb beginnt das Splay-Löschen mit einer Suche, die den relevanten Knoten bereits an die Wurzel befördert hat.",
-    "source": "AuD26 Blatt 07 · Splay-Bäume"
+    "source": "AuD-Zusammenfassung §6.3, Splay-Bäume"
   },
   {
     "id": "splay-q-9",
@@ -69,7 +69,7 @@
       "Wiederholter Zugriff auf denselben Schlüssel kostet jedes Mal Θ(log n)."
     ],
     "explanation": "Das Potentialfunktions-Argument liefert amortisiert O(log n) ✓, während ein einzelnes Splay einen ganzen Pfad aus n Knoten durchlaufen kann ⟹ O(n) für eine einzelne Operation ✓✗. Wiederholter Zugriff auf denselben Schlüssel ist amortisiert O(1), da er bereits an der Wurzel steht ✗.",
-    "source": "AuD26 Blatt 07 · Splay-Bäume"
+    "source": "AuD-Zusammenfassung §6.3, Splay-Bäume"
   },
   {
     "id": "splay-mc-2",
@@ -81,7 +81,7 @@
       "Splay-Bäume garantieren eine Höhe von höchstens 2·log(n+1)."
     ],
     "explanation": "Das Fehlen gespeicherter Metadaten ✓ und das Umstrukturieren beim Lesen ✓ sind die beiden definierenden Unterschiede. Die Optionen 3 und 4 beschreiben Garantien, die Splay-Bäume bewusst aufgeben ✗✗ — es gibt keine Worst-Case-Höhenschranke, nur eine amortisierte.",
-    "source": "AuD26 Blatt 07 · Splay-Bäume"
+    "source": "AuD-Zusammenfassung §6.3, Splay-Bäume"
   },
   {
     "id": "splay-mc-3",
@@ -93,6 +93,6 @@
       "Ist L leer, schlägt das Löschen fehl und der Baum muss neu aufgebaut werden."
     ],
     "explanation": "Die Suche splayt immer, das Löschen findet also stets an der Wurzel statt ✓, und das *Maximum* von L hat beweisbar kein rechtes Kind — genau der freie Platz, den R braucht ✓. Das Minimum hätte kein *linkes* Kind, also die falsche Seite ✗, und ein leeres L ist trivial: R wird einfach zum neuen Baum ✗.",
-    "source": "AuD26 Blatt 07 · Splay-Löschen"
+    "source": "AuD-Zusammenfassung §6.3, Splay-Löschen"
   }
 ]

@@ -1,11 +1,13 @@
 import { lazy, Suspense } from 'react';
-import { Link, NavLink, Route, Routes } from 'react-router-dom';
+import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import { BookOpen, CircleCheckBig, LayoutDashboard, ListChecks, Play, SquareStack, Sigma } from 'lucide-react';
 import { loadExamTemplates, loadFlashcards, loadMcQuestions, loadQuestions, loadTopics } from './lib/contentLoader';
 import { useLocale, useT } from './lib/i18n/locale';
 import type { MessageKey } from './lib/i18n/messages';
 import { LanguageSwitch } from './features/LanguageSwitch';
 import { useHideOnScroll } from './lib/useHideOnScroll';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { BrandMark } from './components/BrandMark';
 
 // Route-level code splitting: each tab's code (and its dependencies, e.g. react-markdown for
 // Topics or every algorithm's generateSteps for Visualize) only loads when actually visited.
@@ -36,6 +38,7 @@ function PageFallback() {
 export default function App() {
   const { locale, t } = useLocale();
   const { hidden: navHidden, reveal: revealNav } = useHideOnScroll();
+  const location = useLocation();
   // Content is keyed by id across locales, so switching language swaps the prose while every
   // saved attempt, SRS schedule and mastery score keeps pointing at the same items.
   const topics = loadTopics(locale);
@@ -58,7 +61,7 @@ export default function App() {
           to="/dashboard"
           className="flex shrink-0 items-center gap-2 text-[15px] font-semibold tracking-tight text-white"
         >
-          <Sigma size={17} className="text-[var(--color-accent)]" strokeWidth={2.25} />
+          <BrandMark size={22} />
           {t('app.name')}
         </Link>
         <nav className="flex flex-1 gap-1 overflow-x-auto">
@@ -80,30 +83,42 @@ export default function App() {
         <LanguageSwitch />
       </header>
       <div className="flex flex-1 flex-col gap-6 p-4 sm:p-6 md:flex-row">
-        <Suspense fallback={<PageFallback />}>
-          <Routes>
-            <Route
-              path="/topics/:topicId?"
-              element={
-                <>
-                  <aside className="w-full shrink-0 md:w-56">
-                    <TopicTree topics={topics} />
-                  </aside>
-                  <main className="min-w-0 flex-1">
-                    <TopicPage topics={topics} />
-                  </main>
-                </>
-              }
-            />
-            <Route path="/visualize/:algoId?" element={<main className="min-w-0 flex-1"><VisualizerPage /></main>} />
-            <Route path="/flashcards" element={<main className="min-w-0 flex-1"><FlashcardReview flashcards={flashcards} topics={topics} /></main>} />
-            <Route path="/mc" element={<main className="min-w-0 flex-1"><McPage questions={mcQuestions} topics={topics} /></main>} />
-            <Route path="/quiz" element={<main className="min-w-0 flex-1"><QuizRunner questions={questions} topics={topics} /></main>} />
-            <Route path="/exam" element={<main className="min-w-0 flex-1"><ExamRunner examTemplates={examTemplates} questions={questions} topics={topics} /></main>} />
-            <Route path="/dashboard" element={<main className="min-w-0 flex-1"><Dashboard topics={topics} flashcards={flashcards} /></main>} />
-            <Route path="*" element={<main className="min-w-0 flex-1"><Dashboard topics={topics} flashcards={flashcards} /></main>} />
-          </Routes>
-        </Suspense>
+        {/* A throw inside any route stays contained here instead of blanking the whole app; the
+            key means navigating away also clears it. */}
+        <ErrorBoundary
+          resetKey={location.pathname + location.search}
+          labels={{
+            title: t('error.title'),
+            body: t('error.body'),
+            retry: t('error.retry'),
+            details: t('error.details'),
+          }}
+        >
+          <Suspense fallback={<PageFallback />}>
+            <Routes>
+              <Route
+                path="/topics/:topicId?"
+                element={
+                  <>
+                    <aside className="w-full shrink-0 md:w-56">
+                      <TopicTree topics={topics} />
+                    </aside>
+                    <main className="min-w-0 flex-1">
+                      <TopicPage topics={topics} />
+                    </main>
+                  </>
+                }
+              />
+              <Route path="/visualize/:algoId?" element={<main className="min-w-0 flex-1"><VisualizerPage /></main>} />
+              <Route path="/flashcards" element={<main className="min-w-0 flex-1"><FlashcardReview flashcards={flashcards} topics={topics} /></main>} />
+              <Route path="/mc" element={<main className="min-w-0 flex-1"><McPage questions={mcQuestions} topics={topics} /></main>} />
+              <Route path="/quiz" element={<main className="min-w-0 flex-1"><QuizRunner questions={questions} topics={topics} /></main>} />
+              <Route path="/exam" element={<main className="min-w-0 flex-1"><ExamRunner examTemplates={examTemplates} questions={questions} topics={topics} /></main>} />
+              <Route path="/dashboard" element={<main className="min-w-0 flex-1"><Dashboard topics={topics} flashcards={flashcards} /></main>} />
+              <Route path="*" element={<main className="min-w-0 flex-1"><Dashboard topics={topics} flashcards={flashcards} /></main>} />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </div>
   );

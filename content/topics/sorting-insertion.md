@@ -4,7 +4,6 @@ title: "Insertion Sort"
 category: "Sorting"
 order: 1
 relatedAlgorithmIds: ["insertion-sort"]
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD_AnkiDeck", "AuD26_Sheet01-GrpSol.pdf"]
 ---
 
 ## Idea

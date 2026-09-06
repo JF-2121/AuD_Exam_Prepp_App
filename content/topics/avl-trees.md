@@ -4,7 +4,6 @@ title: "AVL Trees"
 category: "Trees"
 order: 3
 relatedAlgorithmIds: ["avl-insert", "avl-delete"]
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD26_Sheet07-GrpSol.pdf"]
 ---
 
 ## Balance invariant

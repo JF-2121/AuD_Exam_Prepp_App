@@ -11,9 +11,11 @@
       "The runtime is O(n+m), because each character is read only once.",
       "Naive matching finds a different set of valid shifts than Rabin-Karp does."
     ],
-    "correctIndexes": [0, 1],
-    "explanation": "n−m+1 shifts × up to m comparisons ✓, and the absence of any carry-over is exactly the weakness the smarter algorithms fix ✓. O(n+m) is Rabin-Karp's *expected* bound ✗, and all three algorithms return exactly the same set of valid shifts ✗.",
-    "source": "AuD26 Sheet 09 · Naive string matching"
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "n−m+1 shifts × up to m comparisons ✓, and the absence of any carry-over is exactly the weakness the smarter algorithms fix ✓. O(n+m) is Rabin-Karp's *expected* bound ✗, and all three algorithms return exactly the same set of valid shifts ✗."
   },
   {
     "id": "strmatch-q-2",
@@ -27,9 +29,10 @@
       "Sort text and pattern, then binary-search.",
       "Build a suffix tree of the text."
     ],
-    "correctIndexes": [0],
-    "explanation": "Treating P and every length-m window of T as base-d numbers reduces an O(m) character comparison to an O(1) numeric one. The rolling update computes the next window's value from the current one in O(1). Option 2 describes FSM matching, the other two are unrelated.",
-    "source": "AuD26 Sheet 09 · Rabin-Karp"
+    "correctIndexes": [
+      0
+    ],
+    "explanation": "Treating P and every length-m window of T as base-d numbers reduces an O(m) character comparison to an O(1) numeric one. The rolling update computes the next window's value from the current one in O(1). Option 2 describes FSM matching, the other two are unrelated."
   },
   {
     "id": "strmatch-mc-2",
@@ -43,9 +46,11 @@
       "The rolling update costs Θ(m), since the whole window has to be re-read.",
       "The constant 10^{m−1} must be recomputed for every shift."
     ],
-    "correctIndexes": [0, 1],
-    "explanation": "Subtract the leading digit's contribution, shift up, add the new trailing digit — O(1) ✓ — and Horner's rule gives the two initial values in Θ(m) ✓. That O(1) update is the entire point, so options 3 and 4 defeat it ✗✗ (10^{m−1} is precomputed once).",
-    "source": "AuD26 Sheet 09 · rolling update"
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "Subtract the leading digit's contribution, shift up, add the new trailing digit — O(1) ✓ — and Horner's rule gives the two initial values in Θ(m) ✓. That O(1) update is the entire point, so options 3 and 4 defeat it ✗✗ (10^{m−1} is precomputed once)."
   },
   {
     "id": "strmatch-q-3",
@@ -59,9 +64,10 @@
       "sft is definitely not a valid shift.",
       "The algorithm has failed and must restart with a different q."
     ],
-    "correctIndexes": [0],
-    "explanation": "Working modulo q makes the test sound but imprecise: t_sft ≢ p proves a non-match (no false negatives), while t_sft ≡ p may be a spurious hit (\"unechter Treffer\"). Every hash hit therefore needs a character-by-character verification.",
-    "source": "AuD26 Sheet 09 · spurious hits"
+    "correctIndexes": [
+      0
+    ],
+    "explanation": "Working modulo q makes the test sound but imprecise: t_sft ≢ p proves a non-match (no false negatives), while t_sft ≡ p may be a spurious hit (\"unechter Treffer\"). Every hash hit therefore needs a character-by-character verification."
   },
   {
     "id": "strmatch-mc-3",
@@ -75,9 +81,11 @@
       "The modulus removes spurious hits.",
       "The modulus is needed for the rolling update to be computable at all."
     ],
-    "correctIndexes": [0, 1],
-    "explanation": "Keeping the numbers small is the sole motivation ✓, with the 10q word-size condition as the sizing rule ✓. The modulus *introduces* spurious hits rather than removing them ✗, and the rolling update works fine over the integers ✗.",
-    "source": "AuD26 Sheet 09 · Rabin-Karp modulus"
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "Keeping the numbers small is the sole motivation ✓, with the 10q word-size condition as the sizing rule ✓. The modulus *introduces* spurious hits rather than removing them ✗, and the rolling update works fine over the integers ✗."
   },
   {
     "id": "strmatch-q-5",
@@ -91,9 +99,10 @@
       "st is always equal to the current shift sft.",
       "st is the number of mismatches so far."
     ],
-    "correctIndexes": [0],
-    "explanation": "st is the length of the *longest* suffix of the text read so far that is also a prefix of P. Because it is recomputed from scratch at each step, it can also decrease on a mismatch — unlike a naive match counter, which would simply reset to 0.",
-    "source": "AuD26 Sheet 09 · FSM matching"
+    "correctIndexes": [
+      0
+    ],
+    "explanation": "st is the length of the *longest* suffix of the text read so far that is also a prefix of P. Because it is recomputed from scratch at each step, it can also decrease on a mismatch — unlike a naive match counter, which would simply reset to 0."
   },
   {
     "id": "strmatch-mc-4",
@@ -107,9 +116,11 @@
       "δ(st, w) is always st+1 or 0.",
       "Building δ costs Θ(m), independently of the alphabet."
     ],
-    "correctIndexes": [0, 1],
-    "explanation": "The longest-suffix-that-is-a-prefix rule ✓ and the match condition ✓ are the definition. δ can drop to an intermediate value between 0 and st+1, not just those two extremes ✗, and building the table needs one row per state and one column per symbol ⟹ O(m·|Σ|) ✗.",
-    "source": "AuD26 Sheet 09 · transition function"
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "The longest-suffix-that-is-a-prefix rule ✓ and the match condition ✓ are the definition. δ can drop to an intermediate value between 0 and st+1, not just those two extremes ✗, and building the table needs one row per state and one column per symbol ⟹ O(m·|Σ|) ✗."
   },
   {
     "id": "strmatch-q-6",
@@ -123,9 +134,10 @@
       "Rabin-Karp in the worst case",
       "None of the three guarantees O(n)"
     ],
-    "correctIndexes": [0],
-    "explanation": "After O(m·|Σ|) preprocessing the automaton reads T in one pass with no backtracking, and its transitions are exact, so spurious hits cannot arise. Rabin-Karp's O(n+m) is only an *expected* bound; its worst case is O((n−m+1)·m), the same as naive matching.",
-    "source": "AuD26 Sheet 09 · comparison"
+    "correctIndexes": [
+      0
+    ],
+    "explanation": "After O(m·|Σ|) preprocessing the automaton reads T in one pass with no backtracking, and its transitions are exact, so spurious hits cannot arise. Rabin-Karp's O(n+m) is only an *expected* bound; its worst case is O((n−m+1)·m), the same as naive matching."
   },
   {
     "id": "strmatch-q-9",
@@ -139,8 +151,10 @@
       "The three algorithms use different definitions of a valid shift.",
       "Only the FSM supports patterns over an alphabet other than letters and digits."
     ],
-    "correctIndexes": [0, 1],
-    "explanation": "The preprocessing-vs-matching trade-off is exactly the axis they differ on ✓, and a pathological spurious-hit pattern degrades Rabin-Karp to the naive bound ✓. The definition of a valid shift is shared ✗, and all three work over any finite alphabet ✗.",
-    "source": "AuD26 Sheet 09 · comparison table"
+    "correctIndexes": [
+      0,
+      1
+    ],
+    "explanation": "The preprocessing-vs-matching trade-off is exactly the axis they differ on ✓, and a pathological spurious-hit pattern degrades Rabin-Karp to the naive bound ✓. The definition of a valid shift is shared ✗, and all three work over any finite alphabet ✗."
   }
 ]

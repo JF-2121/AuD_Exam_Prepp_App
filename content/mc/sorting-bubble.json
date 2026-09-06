@@ -11,7 +11,9 @@
       "Using a temporary array gives Bubble Sort a Θ(n) best case.",
       "Bubble Sort has a Θ(n) best case even without any optimization."
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "If a complete pass performs no swap, the array is provably sorted and the algorithm may stop — that single pass costs Θ(n). Without the flag the naive version still runs all n−1 passes, giving Θ(n²) even on sorted input. Bubble Sort has no pivot and needs no temp array.",
     "source": "AuD-Zusammenfassung §4.3"
   },
@@ -27,7 +29,10 @@
       "Bubble Sort's worst case is Θ(n log n) on reverse-sorted input.",
       "Bubble Sort needs Θ(n) additional memory for the swap buffer."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Each pass bubbles the largest remaining element to the end, so after i passes the last i slots are final ✓. Only `A[j] > A[j+1]` triggers a swap, so equal elements never cross ⟹ stable ✓. The worst case is Θ(n²) ✗, and swapping needs only Θ(1) extra space ✗.",
     "source": "AuD-Zusammenfassung §4.3"
   },
@@ -43,7 +48,10 @@
       "Bubble Sort is asymptotically faster than Insertion Sort in the average case.",
       "Only Insertion Sort can achieve a Θ(n) best case; Bubble Sort cannot, even when optimized."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "They share the same asymptotic profile and both are stable in-place comparison sorts ✓, but Insertion Sort shifts rather than repeatedly swapping, so its constants are smaller ✓. Neither is asymptotically faster than the other ✗, and optimized Bubble Sort *does* reach Θ(n) on sorted input ✗.",
     "source": "AuD-Zusammenfassung §4.3"
   }

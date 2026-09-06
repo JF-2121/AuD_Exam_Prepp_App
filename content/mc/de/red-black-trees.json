@@ -45,7 +45,7 @@
       "Das Insert-Fixup beginnt an der Wurzel und arbeitet sich nach unten."
     ],
     "explanation": "Zwei Rotationen genügen beim Einfügen immer ✓, und das Entfernen eines schwarzen Knotens erzeugt das Doppelt-Schwarz-Defizit, das über die vier Geschwisterfälle behandelt wird ✓. Diese Fälle enthalten Rotationen ✗, und beide Fixups laufen vom veränderten Knoten *nach oben* ✗.",
-    "source": "AuD-Zusammenfassung §6.1, AuD26 Maxine RBT Delete"
+    "source": "AuD-Zusammenfassung §6.1"
   },
   {
     "id": "rbt-mc-4",

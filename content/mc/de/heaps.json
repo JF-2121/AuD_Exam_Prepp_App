@@ -9,7 +9,7 @@
       "In einem binären Max-Heap befinden sich die größten Elemente in den Blättern."
     ],
     "explanation": "Die Heap-Eigenschaft (Vater ≥ Kinder) zwingt das Maximum in die Wurzel ✓, und „letztes Element an die Wurzel + Sift-down“ ist genau das Standard-Extract-Max ✓. Ein Heap hat keine Links-Rechts-Ordnung und ist damit kein BST ✗, und in den Blättern landen die *kleinsten* Elemente ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.7"
+    "source": "AuD-Zusammenfassung §6.4"
   },
   {
     "id": "heap-mc-1",
@@ -21,7 +21,7 @@
       "Die Array-Darstellung funktioniert nur, wenn die Elementanzahl eine Zweierpotenz ist."
     ],
     "explanation": "Die Indexarithmetik ✓✓ ist genau das, was die Darstellung implizit macht — es werden überhaupt keine Zeiger gespeichert ✗. Gültig ist die Arithmetik durch die Vollständigkeit des Baums (jede Ebene voll außer möglicherweise der letzten, die von links gefüllt wird), und das gilt für jedes n ✗.",
-    "source": "AuD26 Blatt 07 · Heaps"
+    "source": "AuD-Zusammenfassung §6.4, Heaps"
   },
   {
     "id": "heap-q-4",
@@ -33,7 +33,7 @@
       "Nichts — die Heap-Eigenschaft gilt weiterhin."
     ],
     "explanation": "Ein Tausch mit dem kleineren Kind ließe das größere Kind über seinem neuen Vater stehen, die Verletzung bliebe auf dieser Seite also bestehen. Nur das Hochziehen des größeren Kindes stellt lokal Vater ≥ beide Kinder wieder her; die Rekursion repariert anschließend den Teilbaum, in den getauscht wurde.",
-    "source": "AuD26 Blatt 07 · heapify"
+    "source": "AuD-Zusammenfassung §6.4, heapify"
   },
   {
     "id": "heap-q-2",
@@ -45,7 +45,7 @@
       "Von oben nach unten und von unten nach oben liefern beide einen gültigen Heap; nur der konstante Faktor unterscheidet sich."
     ],
     "explanation": "Das Überspringen der Blatthälfte ✓ und die Bottom-up-Anforderung ✓ sind die beiden strukturellen Fakten. Eine schärfere Analyse liefert Θ(n), da die meisten Aufrufe nahe den Blättern stattfinden, wo ein Sift-down nur 1–2 Ebenen zurücklegt ✗. Und Top-down ist nicht bloß langsamer, sondern *falsch*: Ist die Wurzel einmal abgearbeitet, wird sie nie wieder betrachtet, tief liegende große Werte können also nie aufsteigen ✗.",
-    "source": "AuD26 Blatt 07 · BuildHeap"
+    "source": "AuD-Zusammenfassung §6.4, BuildHeap"
   },
   {
     "id": "heap-mc-2",
@@ -57,7 +57,7 @@
       "Der neue Schlüssel wird an der Wurzel eingefügt und nach unten gesichtet."
     ],
     "explanation": "Anhängen und Sift-up ✓ kostet höchstens einen Pfad von der Wurzel zum Blatt ✓. Anhängen + vollständiges BuildHeap ist *korrekt, aber verschwenderisch* — es prüft ⌈(n−1)/2⌉ Knoten erneut, um zu reparieren, was ein einzelner Pfad bereits erledigt ✗. Ein Einfügen an der Wurzel würde das Maximum überschreiben ✗.",
-    "source": "AuD26 Blatt 07 · Heap-Einfügen"
+    "source": "AuD-Zusammenfassung §6.4, Heap-Einfügen"
   },
   {
     "id": "heap-q-8",
@@ -69,7 +69,7 @@
       "Weder stabil noch in-place"
     ],
     "explanation": "Heap Sort arbeitet vollständig im ursprünglichen Array mit O(1) Zusatzspeicher ⟹ in-place. Die weitreichenden Vertauschungen beim Sift-down und beim Tausch von Wurzel und letztem Element können gleiche Schlüssel jedoch umordnen, also nicht stabil.",
-    "source": "AuD26 Blatt 07 · Heap Sort"
+    "source": "AuD-Zusammenfassung §6.4, Heap Sort"
   },
   {
     "id": "heap-mc-3",
@@ -81,7 +81,7 @@
       "In einem Max-Heap liegt das drittgrößte Element garantiert in Tiefe 2."
     ],
     "explanation": "Die Eigenschaft ist rein lokal ✓, und die Vollständigkeit erzwingt Höhe Θ(log n) ✓. Ein aufsteigendes Array ist ein gültiger *Min*-Heap, kein Max-Heap ✗, und für das drittgrößte Element gibt es außer „nicht oberhalb eines größeren Vorfahren“ keine Positionsgarantie ✗.",
-    "source": "AuD26 Blatt 07 · Heap-Invarianten"
+    "source": "AuD-Zusammenfassung §6.4, Heap-Invarianten"
   },
   {
     "id": "heap-mc-4",
@@ -93,6 +93,6 @@
       "Eine Prioritätswarteschlange auf einem sortierten Array liefert ein insert in O(1)."
     ],
     "explanation": "Das Kostenprofil der Prioritätswarteschlange ✓ und das Fehlen von Rotationen ✓ sind beides klausurrelevante Punkte (Letzteres ist genau der Grund, warum Heaps in der Frage „braucht keine Rotationsfunktion“ auftauchen). BuildHeap ist Θ(n) ✗, und ein sortiertes Array braucht Θ(n) pro Einfügen, um die Ordnung zu halten ✗.",
-    "source": "AuD26 Blatt 07 · Prioritätswarteschlangen"
+    "source": "AuD-Zusammenfassung §6.4, Prioritätswarteschlangen"
   }
 ]

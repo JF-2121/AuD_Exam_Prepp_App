@@ -4,7 +4,6 @@ title: "Bubble Sort"
 category: "Sorting"
 order: 2
 relatedAlgorithmIds: ["bubble-sort"]
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD_AnkiDeck", "AuD26_Sheet01-GrpSol.pdf"]
 ---
 
 ## Idea

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowDownWideNarrow, Boxes, CaseSensitive, GitBranch, Play, RotateCcw, Share2, type LucideIcon } from 'lucide-react';
 import { algorithmRegistry, FAMILY_ORDER, getAlgorithm } from './registry';
@@ -21,11 +21,24 @@ export function VisualizerPage() {
   const navigate = useNavigate();
   const algorithm = algoId ? getAlgorithm(algoId) : undefined;
   const hasInput = algorithm ? algorithm.defaultInput !== undefined : false;
-  const [inputText, setInputText] = useState(() => JSON.stringify(algorithm?.defaultInput ?? []));
 
-  useEffect(() => {
-    setInputText(JSON.stringify(algorithm?.defaultInput ?? []));
-  }, [algoId]);
+  /**
+   * Every algorithm takes a differently shaped input (a number array, `{initial, deletions}`,
+   * `{values, radix}`, a bare source-node string, …), so the edit box must never outlive the
+   * algorithm it belongs to. Resetting it in an effect was the bug behind the blank-page crash:
+   * effects run *after* render, so the first render following a navigation handed the newly
+   * selected algorithm the *previous* one's input and `generateSteps` threw mid-render.
+   *
+   * Tagging the edited text with the algorithm it was typed for, and falling back to the default
+   * whenever the tag doesn't match the current route, removes that window entirely — the mismatch
+   * is impossible rather than merely short-lived.
+   */
+  const defaultInputText = JSON.stringify(algorithm?.defaultInput ?? null);
+  const [edited, setEdited] = useState<{ algoId: string; text: string } | null>(null);
+  const inputText = edited && edited.algoId === algoId ? edited.text : defaultInputText;
+  const setInputText = (text: string) => {
+    if (algoId) setEdited({ algoId, text });
+  };
 
   if (!algorithm) {
     return (
@@ -100,7 +113,7 @@ export function VisualizerPage() {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
           />
-          <button className="btn" onClick={() => setInputText(JSON.stringify(algorithm.defaultInput))}>
+          <button className="btn" onClick={() => setEdited(null)}>
             <RotateCcw size={13} /> {t('viz.resetDefault')}
           </button>
         </div>

@@ -3,8 +3,7 @@ import type { Difficulty, McFormat, MultipleChoiceQuestion, Topic } from '../../
 import type { MessageKey } from '../../lib/i18n/messages';
 
 /**
- * Shape of the real exam's MC section (Gedächtnisprotokoll SoSe 2025, Section 1 — 42 of 100
- * points, i.e. the single largest block on the paper):
+ * Shape of the exam's MC section — 42 of 100 points, i.e. the single largest block on the paper:
  *
  *   Part I  — "genau *eine* der vier Aussagen ist richtig"  ·  6 questions × 1 P =  6 P
  *   Part II — "genau *zwei* der vier Aussagen sind richtig" · 18 questions × 2 P = 36 P

@@ -9,7 +9,7 @@
       "Sowohl dynamische Programmierung als auch Greedy-Algorithmen setzen voraus, dass das Problem eine optimale Teilstruktur besitzt."
     ],
     "explanation": "Das Vermeiden mehrfach gelöster Teilprobleme ist die Definition der DP ✓, und die optimale Teilstruktur ist die gemeinsame Voraussetzung beider Paradigmen ✓ (Greedy braucht zusätzlich die Greedy-Choice-Eigenschaft). Das Mastertheorem zeigt, dass die Laufzeit von der Rekursion *und* dem Combine-Schritt abhängt ✗, und 0/1-Rucksack ist das Standardgegenbeispiel zu Option 3 ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.15"
+    "source": "AuD-Zusammenfassung §9"
   },
   {
     "id": "real-dp-3",
@@ -21,7 +21,7 @@
       "Dynamisches Programmieren setzt voraus, dass ein Problem nicht überlappende Teilprobleme besitzt."
     ],
     "explanation": "Dijkstra finalisiert unwiderruflich den aktuell nächstgelegenen Knoten — eine lehrbuchmäßige Greedy-Entscheidung ✓ — und Backtracking dient beiden Problemarten ✓. Gleich große Aufteilungen betreffen die Effizienz, nie die Korrektheit (Quicksort teilt ungleichmäßig) ✗, und DP verlangt *überlappende* Teilprobleme — genau das Gegenteil von Option 4 ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.17"
+    "source": "AuD-Zusammenfassung §9"
   },
   {
     "id": "real-dp-2",
@@ -33,7 +33,7 @@
       "Die Minimum Edit Distance misst, wie viele Operationen nötig sind, um einen String in einen anderen zu überführen."
     ],
     "explanation": "Metaheuristiken sind genau dieser allgemeine Rahmen ✓, und die Definition der Editierdistanz ✓ ist Standard. Das Beschneiden des Suchraums ist der ganze Sinn von Backtracking — es macht im Durchschnitt deutlich weniger Schritte als Brute Force ✗ — und Hill Climbing bleibt in lokalen Optima hängen ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.16"
+    "source": "AuD-Zusammenfassung §9"
   },
   {
     "id": "dp-q-1",
@@ -69,7 +69,7 @@
       "Tabellierung verbraucht immer weniger Speicher als Memoisierung, da kein Rekursionsstack nötig ist."
     ],
     "explanation": "Die beiden Richtungen ✓✓ sind definitorisch. Memoisierung reduziert eine typischerweise *exponentielle* Rekursion auf polynomiell — weit mehr als ein konstanter Faktor ✗ — und obwohl die Tabellierung den Aufrufstack vermeidet, speichern beide meist dieselbe Θ(mn)-Tabelle, „immer weniger“ ist also falsch ✗.",
-    "source": "AuD26 Maxine 12 · Memoisation"
+    "source": "AuD-Zusammenfassung §9, Memoisation"
   },
   {
     "id": "dp-mc-3",
@@ -81,7 +81,7 @@
       "Laufzeit und Speicher sind Θ(m + n), da immer nur eine Zeile gefüllt wird."
     ],
     "explanation": "Der Diagonalterm fasst copy/sub über den booleschen Abweichungsindikator zusammen ✓, und die vertikalen/horizontalen Terme sind del/ins ✓ — die Einfügung ist der *horizontale* Schritt ✗. Die vollständige Tabelle ist (m+1)×(n+1), Laufzeit und Speicher sind also beide Θ(mn) ✗.",
-    "source": "AuD26 Maxine 12 · Minimum Edit Distance"
+    "source": "AuD-Zusammenfassung §9, Minimum Edit Distance"
   },
   {
     "id": "dp-mc-4",
@@ -93,7 +93,7 @@
       "copy, ins, del und sub kosten im Standardmodell alle 1."
     ],
     "explanation": "Das Argument der geteilten Teilprobleme ✓ und der Zusammenbruch von exponentiell auf Θ(mn) ✓ sind genau die erwartete Antwort der Aufgabe. Option 3 ist als Tatsache *ebenfalls* richtig, aber kein Grund für den Einsatz von DP — und copy kostet **0**, nicht 1, was Option 4 schlicht falsch macht ✗✗.",
-    "source": "AuD26 Maxine 12 · G2(a)"
+    "source": "AuD-Zusammenfassung §9"
   },
   {
     "id": "dp-q-2",
@@ -177,7 +177,7 @@
       "Die FFT reduziert die Laufzeit der Multiplikation zweier Polynome vom Grad n−1 von Θ(n²) auf Θ(n·log(n))."
     ],
     "explanation": "Die FFT baut auf den komplexen Einheitswurzeln auf ✓ und liefert genau diese Beschleunigung von Θ(n²) auf Θ(n log n) für die Polynommultiplikation ✓. Sie ist ein *numerischer* Divide-and-Conquer-Algorithmus, keine Metaheuristik ✗, und sie ist grundlegend komplexwertig ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.18"
+    "source": "AuD-Zusammenfassung §9"
   },
   {
     "id": "dp-mc-7",
@@ -189,7 +189,7 @@
       "Der Trick funktioniert mit beliebigen n Auswertungspunkten, nicht speziell mit den Einheitswurzeln."
     ],
     "explanation": "Die Gerade/Ungerade-Aufspaltung ✓ zahlt sich nur aus, weil die gewählten Punkte beim Quadrieren paarweise zusammenfallen ✓ — was aus ω_m^m = 1 folgt. Die Zwischenwerte sind echt komplex ✗, und beliebige Punkte fallen beim Quadrieren *nicht* paarweise zusammen, genau deshalb sind die Einheitswurzeln erforderlich ✗.",
-    "source": "AuD26 Maxine 12 · FFT / Einheitswurzeln"
+    "source": "AuD-Zusammenfassung §9, FFT, Einheitswurzeln"
   },
   {
     "id": "dp-mc-8",
@@ -201,7 +201,7 @@
       "In der Punkt-Wert-Darstellung entsteht das Produkt durch Konvolution der Werte."
     ],
     "explanation": "Der Eindeutigkeitssatz ✓ erzwingt die Anzahl 2n−1 für das Produkt ✓ — weshalb beide Eingaben an 2n−1 (in der Praxis 2n) Punkten ausgewertet werden müssen, was Option 3 zur klassischen Falle macht ✗. In der Punkt-Wert-Form ist das Produkt *punktweise*; die Konvolution passiert auf den *Koeffizienten* ✗.",
-    "source": "AuD26 Maxine 12 · Polynommultiplikation"
+    "source": "AuD-Zusammenfassung §9, Polynommultiplikation"
   },
   {
     "id": "dp-mc-9",
@@ -213,6 +213,6 @@
       "Die inverse FFT kann entfallen, da die Punkt-Wert-Darstellung bereits das Ergebnis ist."
     ],
     "explanation": "Die dreistufige Pipeline ✓ und die Kostenverteilung ✓ sind die Standardzusammenfassung. 2n Werte paarweise zu multiplizieren ist ein einzelner linearer Durchlauf ✗, und gesucht sind die Koeffizienten — nicht eine Liste von Punktwerten —, weshalb die Rücktransformation erforderlich ist ✗.",
-    "source": "AuD26 Maxine 12 · FFT-Überblick"
+    "source": "AuD-Zusammenfassung §9, FFT-Überblick"
   }
 ]

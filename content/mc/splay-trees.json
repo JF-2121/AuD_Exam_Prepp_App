@@ -11,9 +11,11 @@
       "Zig-Zag — rotate around the parent first, then the grandparent",
       "None — splaying stops when the grandparent is missing"
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Zig is the single-rotation case that applies exactly when no grandparent exists. It occurs at most once per splay, as the final step that lifts the node into the root position.",
-    "source": "AuD26 Sheet 07 · Splay trees"
+    "source": "AuD-Zusammenfassung §6.3, Splay trees"
   },
   {
     "id": "splay-q-3",
@@ -27,9 +29,11 @@
       "Zig-Zag: rotate around p first, then around g",
       "Zig: a single rotation around p"
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Same side (both left or both right) = Zig-Zig. The *farther* node — the grandparent — is rotated first, then the parent. That order is exactly what distinguishes Zig-Zig from two independent Zig steps, which would leave a different, less balanced tree.",
-    "source": "AuD26 Sheet 07 · Splay trees"
+    "source": "AuD-Zusammenfassung §6.3, Splay trees"
   },
   {
     "id": "splay-q-4",
@@ -43,9 +47,11 @@
       "Zig-Zag: rotate around g first, then around p",
       "Zig: a single rotation around g"
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Opposite sides = Zig-Zag, and here the *nearer* node (the parent p) is rotated first, then the grandparent g. Note the rotation order is the mirror image of Zig-Zig's — that contrast is the most frequently examined detail of splaying.",
-    "source": "AuD26 Sheet 07 · Splay trees"
+    "source": "AuD-Zusammenfassung §6.3, Splay trees"
   },
   {
     "id": "splay-mc-1",
@@ -59,9 +65,12 @@
       "Zig-Zig and Zig-Zag use the same rotation order; only the sides differ.",
       "Which case applies is determined by the key being searched for, not by the node's position."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Zig can only fire when the parent is already the root, hence at most once and last ✓, and the differing rotation order is the defining contrast ✓✗. The case is chosen purely from the geometric relation of node, parent and grandparent ✗.",
-    "source": "AuD26 Sheet 07 · Splay trees"
+    "source": "AuD-Zusammenfassung §6.3, Splay trees"
   },
   {
     "id": "splay-q-5",
@@ -75,9 +84,11 @@
       "The tree is rebuilt from scratch.",
       "An error is raised and the tree is left in an inconsistent state."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Splaying happens on *every* access, successful or not — the last real node examined becomes the new root. This is exactly what makes the tree self-adjusting, and it is also why splay-tree delete begins with a find that has already moved the relevant node to the root.",
-    "source": "AuD26 Sheet 07 · Splay trees"
+    "source": "AuD-Zusammenfassung §6.3, Splay trees"
   },
   {
     "id": "splay-q-9",
@@ -91,9 +102,12 @@
       "Every single operation is O(log n), worst case included.",
       "Repeated access to the same key costs Θ(log n) each time."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The potential-function argument gives O(log n) amortized ✓, while one splay can traverse an entire n-node path ⟹ O(n) for a single operation ✓✗. Repeated access to the same key is O(1) amortized, since the key is already at the root ✗.",
-    "source": "AuD26 Sheet 07 · Splay trees"
+    "source": "AuD-Zusammenfassung §6.3, Splay trees"
   },
   {
     "id": "splay-mc-2",
@@ -107,9 +121,12 @@
       "Splay trees maintain a balance factor per node, just like AVL trees.",
       "Splay trees guarantee a height of at most 2·log(n+1)."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The absence of stored metadata ✓ and restructuring on read ✓ are the two defining differences. Options 3 and 4 both describe guarantees splay trees deliberately give up ✗✗ — there is no worst-case height bound, only an amortized one.",
-    "source": "AuD26 Sheet 07 · Splay trees"
+    "source": "AuD-Zusammenfassung §6.3, Splay trees"
   },
   {
     "id": "splay-mc-3",
@@ -123,8 +140,11 @@
       "After removing the root, the minimum of the left subtree L is splayed up and R attached as its left child.",
       "If L is empty the delete fails and the tree must be rebuilt."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "find always splays, so deletion always happens at the root ✓, and the *maximum* of L provably has no right child, which is exactly the free slot R needs ✓. The minimum would have no *left* child, which is the wrong side ✗, and an empty L is trivial — R simply becomes the new tree ✗.",
-    "source": "AuD26 Sheet 07 · Splay delete"
+    "source": "AuD-Zusammenfassung §6.3, Splay delete"
   }
 ]

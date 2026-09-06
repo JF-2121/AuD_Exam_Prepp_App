@@ -21,7 +21,7 @@
       "Insertion Sort ist im Worst Case asymptotisch schneller als Quicksort."
     ],
     "explanation": "Sortierte Eingabe braucht einen Vergleich pro Schlüssel ⟹ Θ(n) ✓, und der Algorithmus verschiebt nur innerhalb des Arrays und nutzt einen echten `>`-Vergleich ⟹ in-place und stabil ✓. Der Average Case ist Θ(n²), nicht Θ(n log n) ✗. Quicksorts Worst Case ist ebenfalls Θ(n²), Insertion Sort ist also nicht asymptotisch schneller ✗.",
-    "source": "AuD26 Blatt 03 · G3(b)"
+    "source": "AuD-Zusammenfassung §4.2"
   },
   {
     "id": "ins-q-4",
@@ -45,7 +45,7 @@
       "Die Invariante gilt nur, wenn das Eingabearray bereits teilweise sortiert ist."
     ],
     "explanation": "Das sortierte Präfix besteht aus den *ursprünglich ersten j Elementen*, nur umgeordnet ✓ — nicht aus den global j kleinsten ✗ (das wäre die Invariante von Selection Sort). Einsetzen von j = n liefert die Nachbedingung ✓, und die Invariante gilt für beliebige Eingaben ✗.",
-    "source": "AuD26 Blatt 01, Schleifeninvarianten"
+    "source": "AuD-Zusammenfassung §4.2, Schleifeninvarianten"
   },
   {
     "id": "ins-mc-3",
@@ -57,6 +57,6 @@
       "Absteigendes Sortieren ist mit Insertion Sort ohne einen zusätzlichen Umkehr-Durchlauf nicht möglich."
     ],
     "explanation": "Nur die Vergleichsrichtung kippt: Jetzt müssen *kleinere* Elemente als der Schlüssel nach rechts geschoben werden. Der Scan läuft weiterhin nach links durch das bereits aufgebaute Präfix (`i = i − 1`), und die abschließende Platzierung `A[i+1] = key` bleibt gleich. Ein zusätzlicher Durchlauf ist nicht nötig.",
-    "source": "Altklausur WS23/24 · Aufgabe 1.1"
+    "source": "AuD-Zusammenfassung §4.2"
   }
 ]

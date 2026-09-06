@@ -11,9 +11,12 @@
       "A node with k keys has exactly k children.",
       "The root must hold at least t−1 keys, like every other node."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The key-count bounds ✓ and the equal-depth property ✓ are definitional. A node with k keys has k+1 children — the extra child covers the range beyond the last key ✗ — and the root is the explicit exception, needing only 1 key ✗.",
-    "source": "AuD26 Sheet 08 · B-Trees"
+    "source": "AuD-Zusammenfassung §6.5, B-Trees"
   },
   {
     "id": "btree-mc-2",
@@ -27,9 +30,12 @@
       "B-Trees need fewer comparisons in total than a BST holding the same keys.",
       "B-Trees avoid pointers entirely, so no memory addresses have to be resolved."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Low height ⟹ few fetches ✓, and \"fetch takes longer than compare\" is exactly the architectural argument from the lecture ✓. A B-Tree may well perform *more* comparisons than a BST — it just performs far fewer expensive fetches ✗ — and it still uses child pointers ✗.",
-    "source": "AuD26 Sheet 08 · Warum B-Trees?"
+    "source": "AuD-Zusammenfassung §6.5, Warum B-Trees?"
   },
   {
     "id": "btree-q-2",
@@ -43,9 +49,11 @@
       "Excess keys are kept in a separate overflow list.",
       "Only leaves that were pre-allocated with spare capacity are used."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Checking and splitting a child before descending guarantees that the leaf finally reached is non-full, so no split is ever required on the way back up. This is the exact mirror image of delete's \"ensure ≥ t keys before descending\" rule.",
-    "source": "AuD26 Sheet 08 · B-Tree insert"
+    "source": "AuD-Zusammenfassung §6.5, B-Tree insert"
   },
   {
     "id": "btree-q-3",
@@ -59,9 +67,12 @@
       "The median key is discarded, since it is now represented by the split point.",
       "All 2t−1 keys move into the new sibling, leaving c empty."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Promoting the median ✓ and splitting the remainder evenly into t−1 / t−1 ✓ is the split operation. If c was internal, its 2t children likewise split t / t. Nothing is discarded ✗ and c is never emptied ✗.",
-    "source": "AuD26 Sheet 08 · splitChild"
+    "source": "AuD-Zusammenfassung §6.5, splitChild"
   },
   {
     "id": "btree-q-6",
@@ -75,9 +86,11 @@
       "Nothing — t−1 keys is enough to descend into.",
       "c is removed and its keys are redistributed across the whole level."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Borrowing (a rotation through the parent) gives c a spare key without merging, and is preferred whenever a sibling can afford it. Merging is the fallback used only when *both* siblings have exactly t−1 keys.",
-    "source": "AuD26 Sheet 08 · B-Tree delete, case 3a"
+    "source": "AuD-Zusammenfassung §6.5, B-Tree delete, case 3a"
   },
   {
     "id": "btree-q-5",
@@ -91,9 +104,11 @@
       "A key is borrowed from the grandparent.",
       "This situation cannot occur in a valid B-Tree."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Neither child can spare a key for the predecessor/successor swap (cases 2a/2b), so the only remaining option is case 2c: merge y, k and z into a single legal node of exactly 2t−1 keys and continue the deletion there.",
-    "source": "AuD26 Sheet 08 · B-Tree delete, case 2c"
+    "source": "AuD-Zusammenfassung §6.5, B-Tree delete, case 2c"
   },
   {
     "id": "btree-mc-3",
@@ -107,9 +122,12 @@
       "The height grows whenever any internal node is split.",
       "The height shrinks whenever a leaf becomes empty."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Splitting an internal node pushes its median into an existing parent, so the depth is unchanged — only the root has no parent to absorb it, which is why the root split is the sole way to grow ✓✗. Symmetrically the root merge is the sole way to shrink ✓✗, since all leaves must stay at equal depth.",
-    "source": "AuD26 Sheet 08 · root split / root shrink"
+    "source": "AuD-Zusammenfassung §6.5, root split, root shrink"
   },
   {
     "id": "btree-q-10",
@@ -123,9 +141,11 @@
       "A splay tree",
       "A binary max-heap"
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "With t = 2 every node holds 1–3 keys and therefore has 2, 3 or 4 children — a 2-3-4 tree. The standard correspondence maps a 3-key node onto a black node with two red children, which is exactly a Red-Black tree.",
-    "source": "AuD26 Sheet 08 · B-Trees"
+    "source": "AuD-Zusammenfassung §6.5, B-Trees"
   },
   {
     "id": "btree-mc-4",
@@ -139,8 +159,11 @@
       "A non-root node holds exactly 2t−1 keys.",
       "The root holds only a single key."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "k keys demand exactly k+1 children ✗ and all leaves must share one depth ✗ — both are violations. A node with 2t−1 keys is merely *full*, which is legal ✓, and a single-key root is the explicit root exception ✓.",
-    "source": "AuD26 Sheet 08 · B-Tree invariants"
+    "source": "AuD-Zusammenfassung §6.5, B-Tree invariants"
   }
 ]

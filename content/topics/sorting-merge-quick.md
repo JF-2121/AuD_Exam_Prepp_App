@@ -4,7 +4,6 @@ title: "Merge Sort & Quicksort"
 category: "Sorting"
 order: 4
 relatedAlgorithmIds: ["merge-sort", "quicksort"]
-sourceFiles: ["AuD-Zusammenfassung.pdf"]
 ---
 
 ## Divide and Conquer

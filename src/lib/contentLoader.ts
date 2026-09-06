@@ -68,7 +68,6 @@ function parseTopics(files: Record<string, string>): Topic[] {
       category: data.category as string,
       order: (data.order as number) ?? 0,
       relatedAlgorithmIds: (data.relatedAlgorithmIds as string[]) ?? [],
-      sourceFiles: data.sourceFiles as string[] | undefined,
       body: content.trim(),
     } satisfies Topic;
   });

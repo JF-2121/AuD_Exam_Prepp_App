@@ -11,9 +11,11 @@
       "The stack works by the LIFO principle, the queue by the FIFO principle.",
       "The stack works by the FIFO principle, the queue by the LIFO principle."
     ],
-    "correctIndexes": [2],
+    "correctIndexes": [
+      2
+    ],
     "explanation": "Stack = Last-In-First-Out (the most recently pushed element is popped first). Queue = First-In-First-Out (the element that has waited longest is dequeued first).",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.2"
+    "source": "AuD-Zusammenfassung §5.1–5.2"
   },
   {
     "id": "real-sq-2",
@@ -27,9 +29,12 @@
       "Enqueue and dequeue on a queue typically run in O(n).",
       "Enqueueing and then immediately dequeueing on a queue returns the same element only if the queue was empty beforehand."
     ],
-    "correctIndexes": [1, 3],
+    "correctIndexes": [
+      1,
+      3
+    ],
     "explanation": "Push/pop are O(1) in both the array and the linked implementation ✓. If the queue was non-empty, dequeue returns whatever was already at the front, not the element just enqueued — only an empty queue makes the two coincide ✓. A stack exposes only its top ✗, and enqueue/dequeue are O(1), not O(n) ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.3"
+    "source": "AuD-Zusammenfassung §5.1–5.2"
   },
   {
     "id": "sq-q-1",
@@ -43,7 +48,9 @@
       "It silently degenerates into a stack.",
       "There is no problem; the array simply grows as needed."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Without treating the array as cyclic, the indices only increase and eventually run off the end although the slots that were freed at the beginning are still available. The fix is a ring buffer: rear = (rear + 1) mod size.",
     "source": "AuD-Zusammenfassung §5.2"
   },
@@ -59,7 +66,10 @@
       "The ring buffer makes enqueue O(1) but dequeue O(n).",
       "A ring buffer removes the capacity limit entirely — it can never overflow."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Modulo arithmetic is the mechanism ✓, and once wrapped, index 0 may hold the *newest* element while a higher index holds the oldest ✓. Both operations stay Θ(1) ✗, and the array is still fixed-size — wraparound reuses freed slots but does not remove the capacity bound ✗.",
     "source": "AuD-Zusammenfassung §5.2, worked circular-queue trace"
   },
@@ -75,7 +85,10 @@
       "dequeue is O(1) in the worst case, since only one pop is ever performed.",
       "The construction needs an auxiliary queue as intermediate storage to reverse the order."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "S1 holds the oldest element at the bottom; popping S1 and pushing onto S2 inverts that, putting the oldest on top ✓. A single dequeue can trigger a full drain (O(n)) but every element is moved at most once in its lifetime, giving amortized O(1) ✓. So the worst case is *not* O(1) ✗, and no third structure is needed ✗.",
     "source": "AuD-Zusammenfassung §5, Queue-from-Stacks"
   },
@@ -91,7 +104,10 @@
       "Both push and pop are O(1), mirroring the two-stack queue construction.",
       "The construction is impossible: a LIFO order cannot be simulated with FIFO structures."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "push simply enqueues (O(1)); pop dequeues all-but-one element across to the other queue and returns the last one, costing O(n) ✓✓. Unlike the two-stack queue there is no amortization here — every pop pays the full shuffle ✗. The construction clearly works, it is just expensive ✗.",
     "source": "AuD-Zusammenfassung §5, Stack-from-Queues"
   },
@@ -107,7 +123,10 @@
       "Every push costs Θ(1) in the worst case once resizing is implemented.",
       "Halving at ½ instead of ¼ full would give the same amortized bound."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Doubling/halving spreads the copy cost over many cheap operations ⟹ amortized Θ(1) ✓, but the resizing push itself copies n elements ⟹ Θ(n) worst case ✓✗. Shrinking at ½ is the classic trap: alternating push/pop at the boundary triggers a resize every single time, destroying the amortized bound ✗.",
     "source": "AuD-Zusammenfassung §5.1, array stack with resizing"
   },
@@ -123,7 +142,10 @@
       "Breadth-first search uses a stack to manage the open nodes.",
       "A deque is a queue that can only be read, never written."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Call stack / undo / parsing are the canonical LIFO uses ✓, and a double-ended queue permits both operations at both ends ✓. BFS uses a *queue* (DFS uses a stack) ✗, and a deque is fully mutable ✗.",
     "source": "AuD-Zusammenfassung §5.1–5.2"
   }

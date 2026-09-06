@@ -4,7 +4,6 @@ title: "Binary Heaps & Priority Queues"
 category: "Trees"
 order: 5
 relatedAlgorithmIds: ["heap-insert", "heap-delete"]
-sourceFiles: ["AuD26_Sheet07-GrpSol.pdf"]
 ---
 
 ## Definition

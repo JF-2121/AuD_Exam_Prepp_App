@@ -4,7 +4,6 @@ title: "Dynamic Programming, Backtracking & Greedy"
 category: "Advanced Design"
 order: 1
 relatedAlgorithmIds: []
-sourceFiles: ["AuD_AnkiDeck", "AuD26_Sheet12-Sol.pdf"]
 ---
 
 ## Dynamic Programming (DP)

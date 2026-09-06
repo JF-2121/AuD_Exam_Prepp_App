@@ -4,7 +4,6 @@ title: "What Is an Algorithm?"
 category: "Grundlagen"
 order: 1
 relatedAlgorithmIds: []
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD_AnkiDeck", "AuD26_Sheet01-GrpSol.pdf"]
 ---
 
 ## Definition

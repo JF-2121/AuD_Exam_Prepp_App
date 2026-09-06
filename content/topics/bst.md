@@ -4,7 +4,6 @@ title: "Binary Search Trees"
 category: "Trees"
 order: 1
 relatedAlgorithmIds: ["bst-insert", "bst-delete"]
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD26_Sheet05-GrpSol.pdf"]
 ---
 
 ## Definition

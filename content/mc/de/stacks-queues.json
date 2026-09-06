@@ -9,7 +9,7 @@
       "Der Stack arbeitet nach dem FIFO-Prinzip, die Queue nach dem LIFO-Prinzip."
     ],
     "explanation": "Stack = Last-In-First-Out (das zuletzt abgelegte Element wird zuerst entnommen). Queue = First-In-First-Out (das am längsten wartende Element wird zuerst entnommen).",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.2"
+    "source": "AuD-Zusammenfassung §5.1–5.2"
   },
   {
     "id": "real-sq-2",
@@ -21,7 +21,7 @@
       "Das Enqueue und anschließende Dequeue bei einer Queue gibt nur dann dasselbe Element zurück, wenn die Queue vorher leer war."
     ],
     "explanation": "Push/Pop sind sowohl in der Array- als auch in der verketteten Implementierung O(1) ✓. War die Queue nicht leer, liefert Dequeue das bereits vorne stehende Element und nicht das gerade eingefügte — nur eine leere Queue lässt beide zusammenfallen ✓. Ein Stack legt nur seine Spitze offen ✗, und Enqueue/Dequeue sind O(1), nicht O(n) ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.3"
+    "source": "AuD-Zusammenfassung §5.1–5.2"
   },
   {
     "id": "sq-q-1",

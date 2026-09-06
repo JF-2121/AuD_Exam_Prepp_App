@@ -8,8 +8,7 @@
       "Die Laufzeit ist O(n+m), da jedes Zeichen nur einmal gelesen wird.",
       "Naives Matching findet eine andere Menge gültiger Verschiebungen als Rabin-Karp."
     ],
-    "explanation": "n−m+1 Verschiebungen × bis zu m Vergleiche ✓, und das Fehlen jeder Übertragung ist genau die Schwäche, die die klügeren Algorithmen beheben ✓. O(n+m) ist Rabin-Karps *erwartete* Schranke ✗, und alle drei Algorithmen liefern exakt dieselbe Menge gültiger Verschiebungen ✗.",
-    "source": "AuD26 Blatt 09 · naives String Matching"
+    "explanation": "n−m+1 Verschiebungen × bis zu m Vergleiche ✓, und das Fehlen jeder Übertragung ist genau die Schwäche, die die klügeren Algorithmen beheben ✓. O(n+m) ist Rabin-Karps *erwartete* Schranke ✗, und alle drei Algorithmen liefern exakt dieselbe Menge gültiger Verschiebungen ✗."
   },
   {
     "id": "strmatch-q-2",
@@ -20,8 +19,7 @@
       "Text und Muster sortieren und dann binär suchen.",
       "Einen Suffixbaum des Textes aufbauen."
     ],
-    "explanation": "Behandelt man P und jedes Fenster der Länge m als Zahlen zur Basis d, reduziert sich ein O(m)-Zeichenvergleich auf einen O(1)-Zahlenvergleich. Das rollende Update berechnet den Wert des nächsten Fensters in O(1) aus dem aktuellen. Option 2 beschreibt das FSM-Matching, die anderen beiden haben keinen Bezug.",
-    "source": "AuD26 Blatt 09 · Rabin-Karp"
+    "explanation": "Behandelt man P und jedes Fenster der Länge m als Zahlen zur Basis d, reduziert sich ein O(m)-Zeichenvergleich auf einen O(1)-Zahlenvergleich. Das rollende Update berechnet den Wert des nächsten Fensters in O(1) aus dem aktuellen. Option 2 beschreibt das FSM-Matching, die anderen beiden haben keinen Bezug."
   },
   {
     "id": "strmatch-mc-2",
@@ -32,8 +30,7 @@
       "Das rollende Update kostet Θ(m), da das gesamte Fenster neu gelesen werden muss.",
       "Die Konstante 10^{m−1} muss für jede Verschiebung neu berechnet werden."
     ],
-    "explanation": "Beitrag der führenden Ziffer abziehen, hochschieben, neue letzte Ziffer addieren — O(1) ✓ — und das Horner-Schema liefert die beiden Startwerte in Θ(m) ✓. Genau dieses O(1)-Update ist der ganze Punkt, die Optionen 3 und 4 machen es zunichte ✗✗ (10^{m−1} wird einmal vorberechnet).",
-    "source": "AuD26 Blatt 09 · rollendes Update"
+    "explanation": "Beitrag der führenden Ziffer abziehen, hochschieben, neue letzte Ziffer addieren — O(1) ✓ — und das Horner-Schema liefert die beiden Startwerte in Θ(m) ✓. Genau dieses O(1)-Update ist der ganze Punkt, die Optionen 3 und 4 machen es zunichte ✗✗ (10^{m−1} wird einmal vorberechnet)."
   },
   {
     "id": "strmatch-q-3",
@@ -44,8 +41,7 @@
       "sft ist definitiv keine gültige Verschiebung.",
       "Der Algorithmus ist fehlgeschlagen und muss mit einem anderen q neu starten."
     ],
-    "explanation": "Das Rechnen modulo q macht den Test korrekt, aber unscharf: t_sft ≢ p beweist einen Nichttreffer (keine False Negatives), während t_sft ≡ p ein unechter Treffer sein kann. Jeder Hash-Treffer braucht daher eine zeichenweise Verifikation.",
-    "source": "AuD26 Blatt 09 · unechte Treffer"
+    "explanation": "Das Rechnen modulo q macht den Test korrekt, aber unscharf: t_sft ≢ p beweist einen Nichttreffer (keine False Negatives), während t_sft ≡ p ein unechter Treffer sein kann. Jeder Hash-Treffer braucht daher eine zeichenweise Verifikation."
   },
   {
     "id": "strmatch-mc-3",
@@ -56,8 +52,7 @@
       "Der Modulus beseitigt die unechten Treffer.",
       "Der Modulus ist nötig, damit das rollende Update überhaupt berechenbar ist."
     ],
-    "explanation": "Die Zahlen klein zu halten ist die einzige Motivation ✓, mit der Wortgrößen-Bedingung 10q als Auslegungsregel ✓. Der Modulus *erzeugt* unechte Treffer, statt sie zu beseitigen ✗, und das rollende Update funktioniert über den ganzen Zahlen einwandfrei ✗.",
-    "source": "AuD26 Blatt 09 · Modulus bei Rabin-Karp"
+    "explanation": "Die Zahlen klein zu halten ist die einzige Motivation ✓, mit der Wortgrößen-Bedingung 10q als Auslegungsregel ✓. Der Modulus *erzeugt* unechte Treffer, statt sie zu beseitigen ✗, und das rollende Update funktioniert über den ganzen Zahlen einwandfrei ✗."
   },
   {
     "id": "strmatch-q-5",
@@ -68,8 +63,7 @@
       "st ist stets gleich der aktuellen Verschiebung sft.",
       "st ist die Anzahl der bisherigen Mismatches."
     ],
-    "explanation": "st ist die Länge des *längsten* Suffixes des bisher gelesenen Textes, das gleichzeitig ein Präfix von P ist. Da es in jedem Schritt neu bestimmt wird, kann es bei einem Mismatch auch sinken — anders als ein naiver Trefferzähler, der einfach auf 0 zurückfiele.",
-    "source": "AuD26 Blatt 09 · FSM-Matching"
+    "explanation": "st ist die Länge des *längsten* Suffixes des bisher gelesenen Textes, das gleichzeitig ein Präfix von P ist. Da es in jedem Schritt neu bestimmt wird, kann es bei einem Mismatch auch sinken — anders als ein naiver Trefferzähler, der einfach auf 0 zurückfiele."
   },
   {
     "id": "strmatch-mc-4",
@@ -80,8 +74,7 @@
       "δ(st, w) ist immer st+1 oder 0.",
       "Der Aufbau von δ kostet Θ(m), unabhängig vom Alphabet."
     ],
-    "explanation": "Die Regel „längstes Suffix, das Präfix ist“ ✓ und die Trefferbedingung ✓ sind die Definition. δ kann auf einen Zwischenwert zwischen 0 und st+1 fallen, nicht nur auf diese beiden Extreme ✗, und der Tabellenaufbau braucht eine Zeile pro Zustand und eine Spalte pro Symbol ⟹ O(m·|Σ|) ✗.",
-    "source": "AuD26 Blatt 09 · Übergangsfunktion"
+    "explanation": "Die Regel „längstes Suffix, das Präfix ist“ ✓ und die Trefferbedingung ✓ sind die Definition. δ kann auf einen Zwischenwert zwischen 0 und st+1 fallen, nicht nur auf diese beiden Extreme ✗, und der Tabellenaufbau braucht eine Zeile pro Zustand und eine Spalte pro Symbol ⟹ O(m·|Σ|) ✗."
   },
   {
     "id": "strmatch-q-6",
@@ -92,8 +85,7 @@
       "Rabin-Karp im Worst Case",
       "Keiner der drei garantiert O(n)"
     ],
-    "explanation": "Nach O(m·|Σ|) Vorverarbeitung liest der Automat T in einem Durchlauf ohne Zurücksetzen, und seine Übergänge sind exakt, sodass unechte Treffer nicht entstehen können. Rabin-Karps O(n+m) ist nur eine *erwartete* Schranke; sein Worst Case ist O((n−m+1)·m), genau wie beim naiven Matching.",
-    "source": "AuD26 Blatt 09 · Vergleich"
+    "explanation": "Nach O(m·|Σ|) Vorverarbeitung liest der Automat T in einem Durchlauf ohne Zurücksetzen, und seine Übergänge sind exakt, sodass unechte Treffer nicht entstehen können. Rabin-Karps O(n+m) ist nur eine *erwartete* Schranke; sein Worst Case ist O((n−m+1)·m), genau wie beim naiven Matching."
   },
   {
     "id": "strmatch-q-9",
@@ -104,7 +96,6 @@
       "Die drei Algorithmen verwenden unterschiedliche Definitionen einer gültigen Verschiebung.",
       "Nur der FSM unterstützt Muster über einem anderen Alphabet als Buchstaben und Ziffern."
     ],
-    "explanation": "Der Kompromiss zwischen Vorverarbeitung und Matching ist genau die Achse, auf der sie sich unterscheiden ✓, und ein pathologisches Muster mit vielen unechten Treffern drückt Rabin-Karp auf die naive Schranke ✓. Die Definition der gültigen Verschiebung ist gemeinsam ✗, und alle drei arbeiten über jedem endlichen Alphabet ✗.",
-    "source": "AuD26 Blatt 09 · Vergleichstabelle"
+    "explanation": "Der Kompromiss zwischen Vorverarbeitung und Matching ist genau die Achse, auf der sie sich unterscheiden ✓, und ein pathologisches Muster mit vielen unechten Treffern drückt Rabin-Karp auf die naive Schranke ✓. Die Definition der gültigen Verschiebung ist gemeinsam ✗, und alle drei arbeiten über jedem endlichen Alphabet ✗."
   }
 ]

@@ -4,7 +4,6 @@ title: "Shortest Paths & Maximum Flow"
 category: "Graphs"
 order: 2
 relatedAlgorithmIds: ["dijkstra", "bellman-ford"]
-sourceFiles: ["AuD_AnkiDeck", "AuD26_Sheet11-GrpSol.pdf"]
 ---
 
 ## Single-Source Shortest Paths (SSSP)

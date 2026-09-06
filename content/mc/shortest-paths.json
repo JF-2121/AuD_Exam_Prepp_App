@@ -11,9 +11,12 @@
       "Bellman-Ford only works for non-negative edge weights.",
       "Bellman-Ford also works for graphs whose edge weights are all negative."
     ],
-    "correctIndexes": [0, 3],
+    "correctIndexes": [
+      0,
+      3
+    ],
     "explanation": "Dijkstra's greedy finalisation relies on distances never shrinking, which negative edges would break ✓ — but cycles are perfectly fine, so the DAG restriction is wrong ✗. Bellman-Ford exists precisely to handle negative weights ✗ and works even when every weight is negative, as long as no negative *cycle* is reachable from the source ✓.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.13"
+    "source": "AuD-Zusammenfassung §8.6–8.7"
   },
   {
     "id": "real-sp-3",
@@ -27,9 +30,12 @@
       "Dijkstra's runtime is O(|V|·log|V|).",
       "Dijkstra's runtime is Θ(|V|·log|V| + |E|)."
     ],
-    "correctIndexes": [1, 3],
+    "correctIndexes": [
+      1,
+      3
+    ],
     "explanation": "\"Non-negative\" includes 0, so zero-weight edges are fine ✓, and Θ(V log V + E) is the Fibonacci-heap bound (O(1) amortized decrease-key) ✓. Dijkstra never detects or aborts on cycles — it simply never revisits a finalised vertex ✗ — and O(V log V) alone omits the edge-relaxation term entirely ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.14"
+    "source": "AuD-Zusammenfassung §8.6–8.7"
   },
   {
     "id": "sp-q-1",
@@ -43,7 +49,9 @@
       "BFS, since it always finds the shortest path",
       "Neither — shortest paths are undefined as soon as one weight is negative"
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "Bellman-Ford relaxes every edge |V|−1 times, which suffices for any shortest path (at most |V|−1 edges long), and a further pass detects negative cycles. Dijkstra's early finalisation is exactly what negative edges break. BFS ignores weights entirely, and shortest paths remain well-defined as long as no negative cycle is reachable.",
     "source": "AuD-Zusammenfassung §8.6"
   },
@@ -59,9 +67,12 @@
       "Relax may also increase dist(v), if a longer path is found.",
       "Relax needs the edge weights to be pairwise distinct."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The relaxation test ✓ and the observation that both algorithms are just different relaxation *schedules* ✓ are the core insight. dist(v) is monotonically non-increasing — a longer path is simply ignored ✗ — and ties are irrelevant ✗.",
-    "source": "AuD26 Maxine 11 · Relax"
+    "source": "AuD-Zusammenfassung §8.6–8.7, Relax"
   },
   {
     "id": "sp-mc-2",
@@ -75,7 +86,10 @@
       "Its runtime is Θ(V log V + E), like Dijkstra's.",
       "Bellman-Ford needs a priority queue to select the next vertex."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "A simple path visits at most |V| vertices ⟹ ≤ |V|−1 edges ✓, and any improvement after that many rounds proves a negative cycle ✓. The runtime is Θ(V·E) ✗, and Bellman-Ford deliberately needs no priority queue — it just relaxes *all* edges each round ✗.",
     "source": "AuD-Zusammenfassung §8.6"
   },
@@ -91,7 +105,9 @@
       "Because in a DAG every path has the same length.",
       "It cannot — the DAG algorithm needs a priority queue just like Dijkstra."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Relaxing the vertices in topological order means dist(u) is already final when u's outgoing edges are relaxed — exactly the guarantee Dijkstra buys with a priority queue. This gives Θ(V+E) and works with negative weights too, since a DAG cannot contain a cycle of any sign.",
     "source": "AuD-Zusammenfassung §8.6, DAG shortest paths"
   },
@@ -107,9 +123,12 @@
       "The residual graph always has fewer edges than the original graph.",
       "A node v ∈ V\\{s,t} cannot have more incoming than outgoing flow."
     ],
-    "correctIndexes": [1, 3],
+    "correctIndexes": [
+      1,
+      3
+    ],
     "explanation": "\"No augmenting path left\" is precisely the termination condition ✓, and flow conservation makes incoming flow *equal* outgoing flow at every intermediate node, so it can certainly never exceed it ✓. That capacity sum is merely an upper bound (a cut capacity), not the definition ✗, and the residual graph typically has *more* edges, since each used edge contributes a backward residual edge ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.12"
+    "source": "AuD-Zusammenfassung §8.6–8.7"
   },
   {
     "id": "sp-mc-3",
@@ -123,7 +142,10 @@
       "The residual graph contains only the edges that are not yet saturated.",
       "Once an augmenting path has been chosen, it can never be revised."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The forward/backward capacity split ✓ and the ability to undo earlier routing decisions ✓ are exactly why augmenting paths converge on the true optimum. Backward edges exist precisely for saturated edges too ✗, and revising earlier flow *is* the mechanism ✗.",
     "source": "AuD-Zusammenfassung §8.7"
   },
@@ -139,7 +161,9 @@
       "The augmenting path must always be the shortest path by edge count, otherwise the algorithm does not terminate.",
       "Augmenting paths are searched in the original graph, not in the residual graph."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Ford-Fulkerson is correct for *any* augmenting path choice; the specific rule only affects how fast it converges (choosing the shortest path is the Edmonds-Karp refinement, which bounds the iteration count). Crucially, the search always runs on the *residual* graph — that is where the backward edges live.",
     "source": "AuD-Zusammenfassung §8.7"
   },
@@ -155,8 +179,11 @@
       "Dijkstra computes the shortest path between exactly one fixed pair (s,t) and cannot do more.",
       "Dijkstra needs the graph to be undirected."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Extract-min then finalise ✓ is the greedy step, and never revisiting a finalised vertex ✓ is what makes it greedy — and what non-negative weights are needed to justify. Dijkstra is a *single-source* algorithm computing distances to *all* vertices ✗, and it works on directed and undirected graphs alike ✗.",
-    "source": "AuD-Zusammenfassung §8.6 / Gedächtnisprotokoll MC II.17"
+    "source": "AuD-Zusammenfassung §8.6–8.7"
   }
 ]

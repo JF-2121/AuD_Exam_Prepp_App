@@ -11,9 +11,11 @@
       "f1 < f4 < f2 < f3",
       "f4 < f2 < f1 < f3"
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "n^(log n) = 2^(log²n), which eventually outgrows n² = 2^(2·log n) because log²n > 2·log n for large n, but still grows slower than 2ⁿ. So n log n < n² < n^(log n) < 2ⁿ.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.1"
+    "source": "AuD-Zusammenfassung §3"
   },
   {
     "id": "real-asym-2",
@@ -27,9 +29,12 @@
       "f(n) ∈ Θ(n·log(n))",
       "f(n) ∈ Θ(n²)"
     ],
-    "correctIndexes": [1, 2],
+    "correctIndexes": [
+      1,
+      2
+    ],
     "explanation": "The inner loop doubles j from 1 until j ≥ i, so it runs ⌈log₂ i⌉ times. Summing over i = 1..n gives Θ(n log n) ✓. Θ(n log n) ⊆ O(n²), so the (non-tight but valid) upper bound O(n²) also holds ✓. It is not O(n) ✗ and not Θ(n²) ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.2"
+    "source": "AuD-Zusammenfassung §3"
   },
   {
     "id": "asym-q-3",
@@ -37,8 +42,15 @@
     "type": "multiple-choice",
     "difficulty": "easy",
     "prompt": "Which notation is the one used to state a worst-case running time?",
-    "options": ["Ω", "O", "ω", "Θ, because worst case is always tight"],
-    "correctIndexes": [1],
+    "options": [
+      "Ω",
+      "O",
+      "ω",
+      "Θ, because worst case is always tight"
+    ],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "O gives an upper bound — \"never slower than\" — which is exactly what a worst-case bound asserts. Ω/ω are lower bounds (best case), and a worst case need not be tight, so Θ is not the general answer.",
     "source": "AuD-Zusammenfassung §3"
   },
@@ -54,7 +66,10 @@
       "o(g) ∩ Ω(g) = Θ(g).",
       "Θ(g) ⊆ o(g)."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "O/Ω duality holds by swapping the constant (C′ = 1/C) ✓, and Θ is by definition exactly the intersection of the two non-strict bounds ✓. A function cannot grow strictly slower and simultaneously never slower, so o(g) ∩ Ω(g) = ∅ ✗, and Θ(g) ∩ o(g) = ∅ as well ✗.",
     "source": "AuD-Zusammenfassung §3.1–3.3"
   },
@@ -70,7 +85,10 @@
       "f₁ ∈ O(g₁) and f₂ ∈ O(g₂) ⟹ f₁ · f₂ ∈ O(max{g₁, g₂}).",
       "f ∈ O(g) and g ∈ O(h) ⟹ h ∈ O(f)."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The sum rule (C = C₁+C₂) ✓ and scalar multiplication (constants vanish into C) ✓ are standard. Products multiply the bounds: f₁·f₂ ∈ O(g₁·g₂), not the max ✗. O is transitive, giving f ∈ O(h) — not the reversed h ∈ O(f) ✗.",
     "source": "AuD-Zusammenfassung §3.1"
   },
@@ -86,7 +104,9 @@
       "Both are equivalence relations.",
       "≤_O is a total order on functions."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "f(n)=n and g(n)=2n satisfy both f ∈ O(g) and g ∈ O(f) although f ≠ g, so ≤_O fails antisymmetry and is not even a partial order. =_Θ is reflexive, symmetric (O/Ω duality) and transitive — a genuine equivalence relation. Even the induced order on Θ-classes is only partial, not total (n vs. n^(1+sin n)).",
     "source": "AuD-Zusammenfassung §3, order-relation discussion"
   },
@@ -102,7 +122,9 @@
       "f(n) = n^log(c), g(n) = c^log(n)",
       "f(n) = nʳ, g(n) = nˢ"
     ],
-    "correctIndexes": [2],
+    "correctIndexes": [
+      2
+    ],
     "explanation": "n^log(c) = 2^(log n · log c) = c^log(n) — the two functions are *exactly equal*, so f ∈ Θ(g). The other three are strict relations: logᵏn ∈ o(n^ε), 2ⁿ ∈ ω(2^(n/2)), nʳ ∈ o(nˢ).",
     "source": "AuD-Zusammenfassung §3, classification table"
   },
@@ -118,7 +140,10 @@
       "f ∈ Θ(g) ⟺ lim(n→∞) f(n)/g(n) = 0.",
       "If lim(n→∞) f(n)/g(n) does not exist, then f ∉ O(g)."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The null-sequence characterisation of o ✓ and the boundedness characterisation of O ✓ are the standard shortcuts. f ∈ Θ(g) means the ratio stays between two positive constants, not that it goes to 0 ✗. And a non-existent limit does not preclude O: f(n)/g(n) can oscillate while staying bounded ✗.",
     "source": "AuD-Zusammenfassung §3, alternative definitions"
   },
@@ -134,7 +159,9 @@
       "Case 3, T(n) = Θ(n²)",
       "The Master Theorem is not applicable"
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "a = 2, b = 2, so n^(log_b a) = n¹ = n. f(n) = Θ(n) matches n^(log_b a) exactly → Case 2 → T(n) = Θ(n log n). This is Merge Sort's recurrence.",
     "source": "AuD-Zusammenfassung §3.4"
   },
@@ -150,7 +177,10 @@
       "The Master Theorem applies to every recurrence of the form T(n) = T(n−1) + f(n).",
       "In Case 2 the combine step dominates, so T(n) = Θ(f(n))."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Case 1 (recursion dominates, polynomially smaller f) ✓ and Case 3's regularity side condition ✓ are exactly as stated. T(n) = T(n−1) + f(n) has no n/b division, so the theorem does not apply — use substitution instead ✗. In Case 2 the two costs *tie*, giving Θ(n^(log_b a) · log n) ✗.",
     "source": "AuD-Zusammenfassung §3.4"
   },
@@ -166,9 +196,12 @@
       "Case 2 applies and T(n) = Θ(n² log n).",
       "The Master Theorem is not applicable because a is not a power of b."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "a = 2, b = 4 ⟹ log₄2 = 1/2, so n^(log_b a) = √n ✓, and n² = Ω(n^(1/2+ε)) ✓. Regularity holds: 2·(n/4)² = n²/8 ≤ c·n² with c = 1/8 < 1. So Case 3 ⟹ Θ(n²) ✓. Case 2 would require f(n) = Θ(√n) ✗, and a need not be a power of b ✗.",
-    "source": "Altklausur WS23/24 · Aufgabe 8.2a"
+    "source": "AuD-Zusammenfassung §3"
   },
   {
     "id": "asym-mc-6",
@@ -182,9 +215,12 @@
       "Case 3 applies and T(n) = Θ(n³).",
       "Case 2 applies and T(n) = Θ(n³ log n)."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "a = 16, b = 2 ⟹ log₂16 = 4, so n^(log_b a) = n⁴ ✓. f(n) = n³ = O(n^(4−ε)) with ε = 1, i.e. polynomially *smaller*, so the recursion dominates → Case 1 → Θ(n⁴) ✓. Case 3 would need f above n⁴ ✗ and Case 2 would need f = Θ(n⁴) ✗.",
-    "source": "Altklausur WS23/24 · Aufgabe 8.2b"
+    "source": "AuD-Zusammenfassung §3"
   },
   {
     "id": "asym-mc-7",
@@ -198,7 +234,10 @@
       "Hanoi is an efficient algorithm because the recurrence only subtracts 1 from n per level.",
       "The Master Theorem yields M(n) = Θ(n log n)."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "P(n) = M(n)+1 gives P(n) = 2P(n−1), P(0) = 1 ⟹ P(n) = 2ⁿ ⟹ M(n) = 2ⁿ − 1 ✓✓. That is exponential, hence *not* efficient (not polynomial) ✗ — and provably optimal. The Master Theorem does not apply to an n−1 recurrence at all ✗.",
     "source": "AuD-Zusammenfassung §3.4, Towers of Hanoi"
   },
@@ -214,7 +253,10 @@
       "It always produces a tight Θ-bound, never merely an O-bound.",
       "It requires the recursion tree to be perfectly balanced."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Substitution = guess + inductive verification with a freely chosen constant ✓, and it is exactly what you fall back to when the Master Theorem's shape requirement fails (e.g. R(n) = R(n−1) + n) ✓. It proves whatever bound you guessed — typically an O-bound ✗ — and imposes no balance requirement ✗.",
     "source": "AuD-Zusammenfassung §3.4, substitution examples"
   },
@@ -230,7 +272,10 @@
       "log(n!) ∈ o(n log n).",
       "log(n!) ∈ Θ(n), because the factorial only multiplies n factors."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "n! ≤ nⁿ gives the upper bound log(n!) ≤ n log n ✓; splitting the sum Σ log i at n/2 gives log(n!) ≥ (1/3)·n log n for n ≥ 9, so together log(n!) ∈ Θ(n log n) ✓. Being Θ rules out the strict o ✗, and Θ(n) is far too small ✗ — this bound is exactly why comparison sorting costs Ω(n log n).",
     "source": "AuD-Zusammenfassung §3, classification table"
   }

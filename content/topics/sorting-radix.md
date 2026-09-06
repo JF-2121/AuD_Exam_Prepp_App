@@ -4,7 +4,6 @@ title: "Radix Sort (Non-Comparison Sorting)"
 category: "Sorting"
 order: 5
 relatedAlgorithmIds: ["radix-sort"]
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD26_Sheet04-Sol.pdf"]
 ---
 
 ## Idea

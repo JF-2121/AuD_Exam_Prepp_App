@@ -9,7 +9,7 @@
       "Jeder AVL-Baum kann als ein Rot-Schwarz-Baum gefärbt werden."
     ],
     "explanation": "Ein Rot-Schwarz-Baum ist per Definition ein BST samt Färbung ✓. Die schärfere Höhenschranke von AVL (≈1,44·log n) passt stets in die RBT-Schranke (2·log(n+1)), jeder AVL-Baum lässt also eine gültige RB-Färbung zu ✓ — ein klassisches Lehrbuchresultat. Die Umkehrung gilt nicht: Ein RBT darf unbalancierter sein, als AVL erlaubt ✗. Und ein Max-Heap ist nicht einmal ein BST, keine Färbung macht ihn dazu ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.5"
+    "source": "AuD-Zusammenfassung §6.2"
   },
   {
     "id": "real-avl-2",
@@ -21,7 +21,7 @@
       "Binäre Max-Heaps brauchen beim Einfügen keine Rotationsfunktion."
     ],
     "explanation": "Ein reines BST-Einfügen steigt nur ab und hängt ein Blatt an ✓, und das Heap-Einfügen stellt die Heap-Eigenschaft durch Sift-up-*Vertauschungen* entlang eines Pfades her, nicht durch Rotationen ✓. Splay-Bäume rotieren bei jedem Zugriff, also auch beim Einfügen ✗, und AVL-Bäume rotieren zum Rebalancieren ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.6"
+    "source": "AuD-Zusammenfassung §6.2"
   },
   {
     "id": "avl-q-1",

@@ -4,7 +4,6 @@ title: "Splay Trees"
 category: "Trees"
 order: 4
 relatedAlgorithmIds: ["splay-insert", "splay-delete"]
-sourceFiles: ["AuD26_Sheet07-GrpSol.pdf"]
 ---
 
 ## Idea

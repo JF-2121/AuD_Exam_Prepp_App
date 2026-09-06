@@ -4,7 +4,6 @@ title: "Red-Black Trees"
 category: "Trees"
 order: 2
 relatedAlgorithmIds: ["rbt-insert", "rbt-delete"]
-sourceFiles: ["AuD-Zusammenfassung.pdf", "AuD26 Maxine RBT Delete"]
 ---
 
 ## Why

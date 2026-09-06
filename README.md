@@ -151,10 +151,11 @@ I understood of the material and from the notes I took in the lecture and tutori
 pasted, transcribed or machine-translated out of the lecture slides, the exercise sheets, the
 official solutions or past exam papers.
 
-The `source:` field on a question (e.g. `AuD-Zusammenfassung §6.2`, `AuD26 Sheet 08`,
-`Gedächtnisprotokoll SoSe 2025 · MC II.5`) is a **revision pointer, not an attribution of copied
-text**: it records which corner of the course a question belongs to, so I can go back to my notes on
-that corner. Read it as "this is the topic", not as "this came from there verbatim".
+The `source:` field on a question is a **revision pointer, not an attribution of copied text**: it
+names a section of the typed course summary (e.g. `AuD-Zusammenfassung §6.2, rotation table`) so I
+can find my notes on that corner of the material again. Read it as "this is the topic", not as
+"this came from there verbatim". Nothing in the bank cites an exercise sheet, a past paper or an
+exam memory protocol, and topic files carry no source list at all.
 
 Two caveats, so that claim isn't stated more broadly than it should be:
 

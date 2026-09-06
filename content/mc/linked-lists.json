@@ -11,9 +11,11 @@
       "Singly linked lists allow direct access to an arbitrary element by index.",
       "In a singly linked list one can iterate backwards through the list."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Without a tail pointer each append walks from the head to the end — one traversal per insert, hence at most two for two inserts. A singly linked node holds exactly one pointer (next), there is no index access, and without prev pointers backward iteration is impossible.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.3"
+    "source": "AuD-Zusammenfassung §5.3"
   },
   {
     "id": "real-ll-2",
@@ -27,9 +29,12 @@
       "An ADT describes the possible values, operations and behaviour of a data type, but not its concrete implementation.",
       "The ADT description specifies the time complexity of the operations on linked lists."
     ],
-    "correctIndexes": [0, 2],
+    "correctIndexes": [
+      0,
+      2
+    ],
     "explanation": "No shifting is exactly the structural advantage over arrays ✓, and an ADT is an implementation-agnostic contract ✓. A doubly linked node holds *both* next and prev ✗, and complexity follows from the chosen implementation, not from the ADT ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.4"
+    "source": "AuD-Zusammenfassung §5.3"
   },
   {
     "id": "ll-q-1",
@@ -43,7 +48,9 @@
       "Singly linked lists do not support deletion at all.",
       "In a singly linked list the successor pointer must be recomputed for every remaining node."
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "With prev available you can directly relink predecessor and successor in constant time. Without it, the predecessor — whose next pointer must be redirected — can only be found by scanning from the head, which costs Θ(n).",
     "source": "AuD-Zusammenfassung §5.3"
   },
@@ -59,7 +66,10 @@
       "A linked list uses less memory per element than an array, because it needs no contiguous block.",
       "Searching for a value is Θ(log n) in an unsorted linked list."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "These are the two defining trade-offs ✓✓. A linked list uses *more* memory per element — each node carries pointer overhead on top of the value ✗ — and unsorted search is Θ(n), since binary search needs random access ✗.",
     "source": "AuD-Zusammenfassung §5.3, comparison table"
   },
@@ -75,7 +85,10 @@
       "A sentinel reduces the asymptotic cost of search from Θ(n) to Θ(log n).",
       "A sentinel stores the length of the list so that size queries become Θ(1)."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The sentinel's purpose is purely to eliminate boundary special cases ✓✓ — it trades slightly more complex initialization for simpler insert/delete code. It changes no asymptotics ✗ and is not a length counter ✗.",
     "source": "AuD-Zusammenfassung §5.3, Sentinels"
   },
@@ -91,9 +104,12 @@
       "The algorithm needs an auxiliary hash set to remember which values have been seen.",
       "The runtime is O(n), because each node is visited exactly once."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Splicing past the duplicate is the O(1) removal step ✓, and fixing each reference against everything ahead of it gives the arithmetic series ⟹ Θ(n²) ✓. Avoiding a hash set is precisely what forces the quadratic scan ✗✗.",
-    "source": "AuD26 Sheet 05 · RemoveDuplicates"
+    "source": "AuD-Zusammenfassung §5.3, RemoveDuplicates"
   },
   {
     "id": "ll-mc-3",
@@ -107,8 +123,11 @@
       "The invariant guarantees that the list is sorted after each outer iteration.",
       "Initialization fails, because a one-element sublist cannot be shown to be duplicate-free."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The duplicate-free-prefix invariant ✓ combined with the exit condition yields the postcondition ✓. The algorithm never reorders anything, so sortedness is not claimed ✗, and a single-element sublist is trivially duplicate-free, so initialization holds ✗.",
-    "source": "AuD26 Sheet 05 · RemoveDuplicates loop invariant"
+    "source": "AuD-Zusammenfassung §5.3, RemoveDuplicates loop invariant"
   }
 ]

@@ -9,7 +9,7 @@
       "In einer einfach verketteten Liste kann man rückwärts durch die Liste iterieren."
     ],
     "explanation": "Ohne Tail-Zeiger läuft jedes Anhängen vom Kopf bis ans Ende — eine Traversierung pro Einfügen, für zwei Einfügungen also höchstens zwei. Ein einfach verketteter Knoten hält genau einen Zeiger (next), einen Indexzugriff gibt es nicht, und ohne prev-Zeiger ist Rückwärtsiteration unmöglich.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.3"
+    "source": "AuD-Zusammenfassung §5.3"
   },
   {
     "id": "real-ll-2",
@@ -21,7 +21,7 @@
       "Die ADT-Beschreibung gibt die Zeit-Komplexität für Operationen an verketteten Listen an."
     ],
     "explanation": "Kein Verschieben zu müssen ist genau der strukturelle Vorteil gegenüber Arrays ✓, und ein ADT ist ein implementierungsunabhängiger Vertrag ✓. Ein doppelt verketteter Knoten hält *beide* Zeiger, next und prev ✗, und die Komplexität folgt aus der gewählten Implementierung, nicht aus dem ADT ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.4"
+    "source": "AuD-Zusammenfassung §5.3"
   },
   {
     "id": "ll-q-1",
@@ -69,7 +69,7 @@
       "Die Laufzeit ist O(n), da jeder Knoten genau einmal besucht wird."
     ],
     "explanation": "Das Übergehen des Duplikats ist der O(1)-Entfernungsschritt ✓, und das Abgleichen jeder Referenz gegen alles Nachfolgende ergibt die arithmetische Reihe ⟹ Θ(n²) ✓. Gerade der Verzicht auf ein Hash-Set erzwingt diese quadratische Suche ✗✗.",
-    "source": "AuD26 Blatt 05 · RemoveDuplicates"
+    "source": "AuD-Zusammenfassung §5.3, RemoveDuplicates"
   },
   {
     "id": "ll-mc-3",
@@ -81,6 +81,6 @@
       "Die Initialisierung scheitert, weil sich für eine einelementige Teilliste keine Duplikatfreiheit zeigen lässt."
     ],
     "explanation": "Die Invariante des duplikatfreien Präfixes ✓ liefert zusammen mit der Abbruchbedingung die Nachbedingung ✓. Der Algorithmus ordnet nichts um, Sortiertheit wird also gar nicht behauptet ✗, und eine einelementige Teilliste ist trivialerweise duplikatfrei, die Initialisierung gilt also ✗.",
-    "source": "AuD26 Blatt 05 · Schleifeninvariante zu RemoveDuplicates"
+    "source": "AuD-Zusammenfassung §5.3, Schleifeninvariante zu RemoveDuplicates"
   }
 ]

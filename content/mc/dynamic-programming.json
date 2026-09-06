@@ -11,9 +11,12 @@
       "If a problem can be solved optimally with dynamic programming, then a greedy algorithm always finds the optimal solution for it too.",
       "Both dynamic programming and greedy algorithms require the problem to have optimal substructure."
     ],
-    "correctIndexes": [1, 3],
+    "correctIndexes": [
+      1,
+      3
+    ],
     "explanation": "Avoiding repeated subproblem solutions is the definition of DP ✓, and optimal substructure is the shared prerequisite of both paradigms ✓ (greedy additionally needs the greedy-choice property). The Master Theorem shows the runtime depends on the recursion *and* the combine step ✗, and 0/1 Knapsack is the standard counterexample to option 3 ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.15"
+    "source": "AuD-Zusammenfassung §9"
   },
   {
     "id": "real-dp-3",
@@ -27,9 +30,12 @@
       "Backtracking can be applied to both decision problems and optimisation problems.",
       "Dynamic programming presupposes that a problem has non-overlapping subproblems."
     ],
-    "correctIndexes": [1, 2],
+    "correctIndexes": [
+      1,
+      2
+    ],
     "explanation": "Dijkstra irrevocably finalises the currently closest vertex — a textbook greedy choice ✓ — and backtracking serves both problem kinds ✓. Equal-size splits affect efficiency, never correctness (Quicksort splits unevenly) ✗, and DP requires *overlapping* subproblems — the exact opposite of option 4 ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.17"
+    "source": "AuD-Zusammenfassung §9"
   },
   {
     "id": "real-dp-2",
@@ -43,9 +49,12 @@
       "Hill climbing always finds the best solution.",
       "The minimum edit distance measures how many operations are needed to transform one string into another."
     ],
-    "correctIndexes": [1, 3],
+    "correctIndexes": [
+      1,
+      3
+    ],
     "explanation": "Metaheuristics are exactly that general framework ✓, and the edit-distance definition ✓ is standard. Pruning is the whole point of backtracking — it takes far fewer steps than brute force on average ✗ — and hill climbing gets trapped in local optima ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.16"
+    "source": "AuD-Zusammenfassung §9"
   },
   {
     "id": "dp-q-1",
@@ -59,7 +68,9 @@
       "DP is faster than D&C in every case.",
       "D&C cannot be implemented recursively."
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "Overlapping subproblems are exactly what memoisation exploits — each is solved once and looked up thereafter. D&C splits into disjoint subproblems where there is nothing to cache. DP can be written recursively (top-down memoisation) or iteratively (bottom-up tabulation).",
     "source": "AuD-Zusammenfassung §9.1/9.3"
   },
@@ -75,7 +86,10 @@
       "The problem must be a decision problem with a 0/1 answer.",
       "All subproblems must have the same size."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Optimal substructure ✓ plus overlapping subproblems ✓ are the two standard conditions. DP handles optimisation and counting problems just as well as decision problems ✗, and subproblem sizes routinely differ (e.g. the (i,j) grid of edit distance) ✗.",
     "source": "AuD-Zusammenfassung §9.3"
   },
@@ -91,9 +105,12 @@
       "Memoisation changes the asymptotic runtime of a naive recursion only by a constant factor.",
       "Tabulation always uses less memory than memoisation, since no recursion stack is needed."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The two directions ✓✓ are definitional. Memoisation typically collapses an *exponential* recursion to polynomial — far more than a constant factor ✗ — and while tabulation avoids the call stack, both usually store the same Θ(mn) table, so \"always less\" is wrong ✗.",
-    "source": "AuD26 Maxine 12 · Memoisation"
+    "source": "AuD-Zusammenfassung §9, memoisation"
   },
   {
     "id": "dp-mc-3",
@@ -107,9 +124,12 @@
       "The first term corresponds to an insertion, since a character is added.",
       "Runtime and space are Θ(m + n), because only one row is filled at a time."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The diagonal term merges copy/sub via the boolean mismatch indicator ✓, and the vertical/horizontal terms are del/ins ✓ — insertion is the *horizontal* step ✗. The full table is (m+1)×(n+1), so both runtime and space are Θ(mn) ✗.",
-    "source": "AuD26 Maxine 12 · Minimum Edit Distance"
+    "source": "AuD-Zusammenfassung §9, minimum edit distance"
   },
   {
     "id": "dp-mc-4",
@@ -123,9 +143,12 @@
       "Row 0 and column 0 are initialised to 0, 1, 2, … because they represent the distance to the empty string.",
       "Copy, insert, delete and substitute all cost 1 in the standard model."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The shared-subproblem argument ✓ and the exponential-to-Θ(mn) collapse ✓ are exactly the exercise's expected answer. Option 3 is *also* true as a fact but is not a reason for using DP — and note copy costs **0**, not 1, which makes option 4 outright false ✗✗.",
-    "source": "AuD26 Maxine 12 · G2(a)"
+    "source": "AuD-Zusammenfassung §9"
   },
   {
     "id": "dp-q-2",
@@ -139,7 +162,9 @@
       "Longest common subsequence",
       "Minimum edit distance"
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "Fractional Knapsack has the greedy-choice property: sorting by value/weight ratio and filling greedily (splitting the last item) is provably optimal. The other three lack it — 0/1 Knapsack cannot split an item, so an early commitment can foreclose the optimum, and both string problems need the full DP table.",
     "source": "AuD-Zusammenfassung §9.4"
   },
@@ -155,7 +180,9 @@
       "280, using items 1+2+3",
       "120, using item 3 alone"
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Items 2+3 fill the capacity exactly (20+30 = 50) for value 100+120 = 220, beating greedy's 160. All three items weigh 60 > 50, so option 3 is infeasible. Greedy's early commitment to the best-ratio item 1 forecloses the better pairing — precisely why 0/1 Knapsack needs DP.",
     "source": "AuD-Zusammenfassung §9.4, greedy counterexample"
   },
@@ -171,7 +198,9 @@
       "Greedy yields six 1-coins and is optimal.",
       "Greedy yields 4+1+1 = 3 coins and is optimal."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Greedy takes 4, then 1, then 1 — three coins. The optimum 3+3 needs only two. For arbitrary denominations the greedy-choice property simply does not hold, which is why coin change is a DP problem in general (it does hold for the Euro/Dollar system, which is what makes the failure counterintuitive).",
     "source": "AuD-Zusammenfassung §9.4, coin change"
   },
@@ -187,7 +216,10 @@
       "Greedy algorithms are always faster *and* always at least as good as dynamic programming.",
       "Kruskal and Prim are dynamic-programming algorithms."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Irrevocable local choices ✓ plus the greedy-choice property ✓ define the paradigm. Greedy is usually faster but frequently *worse* — 0/1 Knapsack again ✗ — and Kruskal and Prim are the canonical *greedy* MST algorithms ✗.",
     "source": "AuD-Zusammenfassung §9.4"
   },
@@ -203,7 +235,10 @@
       "Backtracking explores the entire search space, exactly like brute force.",
       "Backtracking only works for problems with optimal substructure."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Those three conditions are exactly WordSearchBTR's invalidity tests ✓, and un-marking on the way back out is what makes the search correct rather than merely fast ✓. Pruning is precisely what distinguishes backtracking from brute force ✗, and it needs no optimal substructure — it applies to pure decision/constraint problems ✗.",
     "source": "AuD-Zusammenfassung §9.2, Word Search"
   },
@@ -219,7 +254,10 @@
       "Metaheuristics guarantee the globally optimal solution, just more slowly.",
       "Hill climbing is a metaheuristic that provably always finds the global optimum."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The general-purpose framing ✓ and the annealing mechanism ✓ are the lecture's definitions. Metaheuristics give up optimality guarantees in exchange for speed ✗, and pure hill climbing is the standard example of getting stuck in a local optimum ✗.",
     "source": "AuD-Zusammenfassung §9.5"
   },
@@ -235,9 +273,12 @@
       "The FFT uses the n-th primitive root of unity e^(2πi/n) to make the computation more efficient.",
       "The FFT reduces the runtime of multiplying two polynomials of degree n−1 from Θ(n²) to Θ(n·log n)."
     ],
-    "correctIndexes": [2, 3],
+    "correctIndexes": [
+      2,
+      3
+    ],
     "explanation": "The FFT is built on the complex roots of unity ✓ and delivers exactly that Θ(n²) → Θ(n log n) speed-up for polynomial multiplication ✓. It is a Divide-and-Conquer *numerical* algorithm, not a metaheuristic ✗, and it is fundamentally complex-valued ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.18"
+    "source": "AuD-Zusammenfassung §9"
   },
   {
     "id": "dp-mc-7",
@@ -251,9 +292,12 @@
       "The roots of unity ensure that all intermediate results stay real-valued.",
       "The trick works with any n arbitrary evaluation points, not specifically the roots of unity."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The even/odd split ✓ only pays off because the chosen points collapse pairwise under squaring ✓ — which follows from ω_m^m = 1. Intermediate values are genuinely complex ✗, and arbitrary points do *not* pair up under squaring, which is exactly why the roots of unity are required ✗.",
-    "source": "AuD26 Maxine 12 · FFT / Einheitswurzeln"
+    "source": "AuD-Zusammenfassung §9, FFT and roots of unity"
   },
   {
     "id": "dp-mc-8",
@@ -267,9 +311,12 @@
       "n point/value pairs of p and q suffice to reconstruct the product uniquely.",
       "In the point-value representation the product is formed by convolving the values."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The uniqueness theorem ✓ forces the 2n−1 count for the product ✓ — which is why both inputs must be evaluated at 2n−1 (in practice 2n) points, making option 3 the classic trap ✗. In point-value form the product is *pointwise*; the convolution is what happens on the *coefficients* ✗.",
-    "source": "AuD26 Maxine 12 · Polynommultiplikation"
+    "source": "AuD-Zusammenfassung §9, polynomial multiplication"
   },
   {
     "id": "dp-mc-9",
@@ -283,8 +330,11 @@
       "The pointwise multiplication is the expensive step, at Θ(n log n).",
       "The inverse FFT can be skipped, since the point-value representation is already the result."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The three-step pipeline ✓ and the cost distribution ✓ are the standard summary. Multiplying 2n values pairwise is a single linear pass ✗, and the coefficients — not a list of point values — are the desired output, so the inverse transform is required ✗.",
-    "source": "AuD26 Maxine 12 · FFT overview"
+    "source": "AuD-Zusammenfassung §9, FFT overview"
   }
 ]

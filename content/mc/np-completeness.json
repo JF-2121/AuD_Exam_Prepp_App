@@ -11,7 +11,10 @@
       "NP is defined as the class of problems that provably cannot be solved in polynomial time.",
       "P = NP has been proven, which is why NP-complete problems are considered hard."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The definition of P ✓ and the trivial inclusion P ⊆ NP ✓ (just ignore the certificate and solve it yourself) are standard. NP is about *verifiability*, not about proven hardness ✗, and P vs. NP is famously still open — a Millennium Problem ✗.",
     "source": "AuD-Zusammenfassung §10.3–10.4"
   },
@@ -27,7 +30,9 @@
       "It has already been proven unsolvable.",
       "It is automatically also in P."
     ],
-    "correctIndexes": [1],
+    "correctIndexes": [
+      1
+    ],
     "explanation": "NP-hard means only \"at least as hard as everything in NP\" via polynomial reduction — membership in NP is a separate requirement. NP-complete = NP-hard *and* in NP, so an NP-hard problem outside NP is at least as hard as, never easier than, the NP-complete ones.",
     "source": "AuD-Zusammenfassung §10.5"
   },
@@ -43,9 +48,12 @@
       "L₁ ≤_P L₂ means L₁ is at least as hard as L₂.",
       "A reduction does not carry over to the complements: L₁ ≤_P L₂ says nothing about L̄₁ and L̄₂."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "The definition ✓ and transitivity via composition ✓ are what make \"one for all, all for one\" work. The direction in option 3 is inverted — L₂ is at least as hard as L₁ ✗ — and negating both sides of the equivalence gives L̄₁ ≤_P L̄₂ with the *same* f ✗.",
-    "source": "AuD26 Sheet 13 · reduction proofs (a)/(d)"
+    "source": "AuD-Zusammenfassung §10"
   },
   {
     "id": "np-mc-3",
@@ -59,9 +67,12 @@
       "If a single NP-complete problem lies in P, only the problems reducible to it become efficient.",
       "SAT is NP-complete, but every other NP-completeness proof must likewise be carried out directly via Cook-Levin."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Chaining a poly-time reduction with a poly-time solver makes every NP problem poly-time ✓, and option 2 is exactly its contrapositive ✓. Option 3 misses that *every* NP problem reduces to an NP-complete one ✗, and after Cook-Levin, new proofs chain off an already-known NP-complete problem ✗.",
-    "source": "AuD26 Sheet 13 · reduction proofs (b)/(c)"
+    "source": "AuD-Zusammenfassung §10"
   },
   {
     "id": "np-q-4",
@@ -75,7 +86,9 @@
       "Both are in P.",
       "3-SAT is in P; 2-SAT is NP-complete."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "A 2-literal clause (a ∨ b) is equivalent to the implications ¬a → b and ¬b → a, so satisfiability reduces to a strongly-connected-components check on the implication graph — polynomial. Three literals per clause interlink variables in a way that resists this local shortcut; 3-SAT is the canonical NP-complete problem.",
     "source": "AuD-Zusammenfassung §10.5, problem pairs"
   },
@@ -91,7 +104,9 @@
       "Both are in P.",
       "Both are NP-complete."
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "With two colours, colouring one vertex deterministically forces all its neighbours, so a single BFS/DFS decides it in O(V+E). With three colours each neighbour retains two open options, producing a genuinely exponential branching search. 3-colourability is one of Karp's original 21 NP-complete problems.",
     "source": "AuD-Zusammenfassung §10.5, problem pairs"
   },
@@ -107,7 +122,10 @@
       "Both problems are in P, since both can be solved with the same relaxation technique.",
       "The longest simple path is in P, because one can simply negate all edge weights and run Dijkstra."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Shortest paths have optimal substructure that DP and greedy exploit ✓; the longest *simple* path must reason about exponentially many vertex subsets to avoid revisits, which breaks that substructure ✓. Negating weights produces negative edges Dijkstra cannot handle, and negative cycles for Bellman-Ford ✗✗.",
     "source": "AuD-Zusammenfassung §10.5, problem pairs"
   },
@@ -123,9 +141,11 @@
       "Checking that every vᵢ is a vertex of G",
       "Checking that every consecutive pair (vᵢ, vᵢ₊₁) is an edge of G"
     ],
-    "correctIndexes": [0],
+    "correctIndexes": [
+      0
+    ],
     "explanation": "Pairwise distinctness compares up to O(V²) pairs in the worst case. The other three are each a single O(V) pass over the certificate. Since all four together are exactly the definition of a Hamiltonian path, the verifier is correct — and polynomial, which is what membership in NP requires.",
-    "source": "AuD26 Sheet 13 · HAM-PATH ∈ NP"
+    "source": "AuD-Zusammenfassung §10, HAM-PATH ∈ NP"
   },
   {
     "id": "np-q-8",
@@ -139,9 +159,12 @@
       "DAGs never have a Hamiltonian path, so the answer is trivially always \"no\".",
       "This contradicts the NP-completeness of the general problem."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "A path cannot move against the edge directions without revisiting a vertex, so the topological order is the only possible candidate ✓, making the check O(V+E) ✓. DAGs certainly can have Hamiltonian paths ✗, and a restricted special case being easy never contradicts general-case hardness ✗.",
-    "source": "AuD26 Sheet 13 · HAM-PATH on DAGs"
+    "source": "AuD-Zusammenfassung §10, HAM-PATH on DAGs"
   },
   {
     "id": "np-mc-5",
@@ -155,7 +178,10 @@
       "Keep searching for an exact polynomial algorithm — one is simply not known yet for the specific instance.",
       "Since no algorithm exists at all, the problem is undecidable."
     ],
-    "correctIndexes": [0, 1],
+    "correctIndexes": [
+      0,
+      1
+    ],
     "explanation": "Approximation ✓ and exploiting structural special cases ✓ are two of the four standard escapes (heuristics and pruned exponential search are the others). Finding an exact poly-time algorithm would prove P = NP ✗, and NP-complete problems are perfectly decidable — just not known to be efficiently so ✗.",
     "source": "AuD-Zusammenfassung §10.5, practical takeaway"
   }

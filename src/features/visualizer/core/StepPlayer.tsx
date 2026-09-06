@@ -9,7 +9,13 @@ export function StepPlayer<TInput, TState>({ algorithm, input }: { algorithm: Al
   const playback = useStepPlayback(steps.length);
   // Editing the input regenerates `steps`, and the playback index only resets in an effect — i.e.
   // one render later. Clamp so a shorter step list can't be indexed past its end in the meantime.
-  const step = steps[Math.min(playback.index, steps.length - 1)];
+  const step = steps.length > 0 ? steps[Math.min(playback.index, steps.length - 1)] : undefined;
+
+  // An algorithm that produces no steps at all (only reachable via a hand-edited input) would
+  // otherwise be read as steps[-1] and throw on the first property access.
+  if (!step) {
+    return <p className="text-sm text-[var(--color-text-dim)]">{t('viz.noSteps')}</p>;
+  }
 
   return (
     <div className="flex flex-col gap-4 md:flex-row">

@@ -21,7 +21,7 @@
       "Quicksort benötigt Θ(n) zusätzlichen Speicher, während Merge Sort in-place sortiert."
     ],
     "explanation": "Die Asymmetrie zwischen Teilen und Zusammenführen ist der definierende Kontrast ✓, und das Verschmelzen kostet unabhängig von der Eingabereihenfolge immer Θ(n), Merge Sort hat also keine schlechte Eingabe ✓. Die Stabilität hängt allein vom Tie-Break im Merge-Schritt (linkes Element bevorzugen) ab, nicht von der Parität ✗. Die Speicheraussage ist vertauscht: Quicksort ist in-place, Merge Sort braucht das Θ(n)-Hilfsarray ✗.",
-    "source": "AuD26 Blatt 03 · G3(a)"
+    "source": "AuD-Zusammenfassung §4.4–4.5"
   },
   {
     "id": "mq-mc-2",
@@ -33,7 +33,7 @@
       "Quicksorts Worst Case verschwindet vollständig, sobald das Pivot zufällig gewählt wird."
     ],
     "explanation": "Maximal unbalancierte Aufteilungen ergeben Θ(n²) ✓, und die Randomisierung macht diesen Ausgang nur unwahrscheinlich — eine unglückliche Zufallsfolge kann ihn weiterhin erzeugen ✓. Merge Sort ist auf jeder Eingabe Θ(n log n) ✗, und keine Pivot-Regel entfernt den Worst Case aus der *Worst-Case*-Analyse ✗.",
-    "source": "AuD26 Blatt 03 · G3(e)"
+    "source": "AuD-Zusammenfassung §4.4–4.5"
   },
   {
     "id": "mq-mc-3",
@@ -45,7 +45,7 @@
       "Ein vergleichsbasierter Algorithmus kann im Worst Case in O(n) sortieren, indem er zuerst einen binären Suchbaum aufbaut."
     ],
     "explanation": "Die informationstheoretische Schranke gilt für jeden vergleichsbasierten Sortierer ✓ und ergibt sich aus der Tiefe des Entscheidungsbaums ✓. Stabilität ist dafür irrelevant ✗. Ein BST umgeht die Schranke nicht — ein unbalancierter BST degeneriert zu Höhe n und liefert insgesamt Θ(n²) ✗.",
-    "source": "AuD26 Blatt 03 · G3(c)"
+    "source": "AuD-Zusammenfassung §4.4–4.5"
   },
   {
     "id": "mq-mc-4",
@@ -69,7 +69,7 @@
       "Ein D&C-Algorithmus muss jedes Problem in gleich große Teilprobleme zerlegen, um korrekt zu sein."
     ],
     "explanation": "Die Definition ✓ und die Standard-Rekursionsgleichung ✓ stimmen. Die Laufzeit hängt von Anzahl und Größe der Teilprobleme *und* den Teil-/Combine-Kosten ab — genau deren Vergleich ist der Kern des Mastertheorems ✗. Gleich große Aufteilungen betreffen die Effizienz, nie die Korrektheit (Quicksort teilt ungleichmäßig und ist trotzdem korrekt) ✗.",
-    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.15/17"
+    "source": "AuD-Zusammenfassung §4.4–4.5"
   },
   {
     "id": "mq-mc-6",
@@ -81,7 +81,7 @@
       "Merge Sort und Quicksort sind im Worst Case bei Θ(n log n) gleichauf."
     ],
     "explanation": "Worst Cases: Merge Sort Θ(n log n), Quicksort Θ(n²), Insertion Sort Θ(n²) ✓ — die letzten beiden sind also gleichauf, und der Stichentscheid erfolgt über die *erwartete* Laufzeit, wo Quicksort mit Θ(n log n) gewinnt ✓. Die Optionen 3 und 4 widersprechen beide Quicksorts Θ(n²)-Worst-Case ✗.",
-    "source": "Altklausur WS23/24 · Aufgabe 1.5"
+    "source": "AuD-Zusammenfassung §4.4–4.5"
   },
   {
     "id": "mq-mc-7",
