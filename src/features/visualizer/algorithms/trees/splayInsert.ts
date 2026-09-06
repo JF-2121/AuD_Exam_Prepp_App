@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { TreeRenderer, type TreeState } from './TreeRenderer';
 import { createSplayEngine, performInsert } from './splayEngine';
 
@@ -27,13 +27,13 @@ function generateSteps({ seed, insertions }: SplayInsertInput): AlgorithmStep<Tr
   const steps: AlgorithmStep<TreeState>[] = [];
 
   for (const v of seed) engine.insertPlain(v);
-  steps.push({ state: engine.snapshot(), description: `Starting tree (given), built from [${seed.join(', ')}].`, highlightLine: 0 });
+  steps.push({ state: engine.snapshot(), description: msg('viz.d.startingTreeGiven', { values: seed.join(', ') }), highlightLine: 0 });
 
   for (const value of insertions) {
     performInsert(engine, steps, value, LINES);
   }
 
-  steps.push({ state: engine.snapshot(), description: 'All values inserted.', highlightLine: 0 });
+  steps.push({ state: engine.snapshot(), description: msg('viz.d.allInserted'), highlightLine: 0 });
   return steps;
 }
 

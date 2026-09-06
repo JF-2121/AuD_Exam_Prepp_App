@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep, type StepText } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
 
 const pseudocode = [
@@ -46,10 +46,10 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
   const nodes: Record<string, AvlNode> = {};
   let root: string | null = null;
   const steps: AlgorithmStep<TreeState>[] = [
-    { state: { nodes: {}, rootId: null }, description: 'Empty tree.', highlightLine: 0 },
+    { state: { nodes: {}, rootId: null }, description: msg('viz.d.emptyTree'), highlightLine: 0 },
   ];
 
-  function pushStep(description: string, highlightLine: number, extra?: Partial<TreeState>) {
+  function pushStep(description: StepText, highlightLine: number, extra?: Partial<TreeState>) {
     steps.push({ state: { nodes: cloneNodes(nodes), rootId: root, ...extra }, description, highlightLine });
   }
 
@@ -101,14 +101,14 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
 
     if (!root) {
       root = id;
-      pushStep(`Insert ${value}: tree was empty, becomes root.`, 0, { newId: id });
+      pushStep(msg('viz.d.insertBecomesRoot', { value }), 0, { newId: id });
       continue;
     }
 
     let cursor = root;
     while (true) {
       const cur = nodes[cursor];
-      pushStep(`Insert ${value}: compare with ${cur.value}.`, 0, { highlightId: cursor });
+      pushStep(msg('viz.bst.compare', { value, node: cur.value }), 0, { highlightId: cursor });
       if (value < cur.value) {
         if (!cur.left) {
           cur.left = id;
@@ -125,49 +125,49 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
         cursor = cur.right;
       }
     }
-    pushStep(`${value} inserted as a leaf (plain BST insert so far).`, 1, { newId: id });
+    pushStep(msg('viz.avl.insertLeaf', { value }), 1, { newId: id });
 
     let a: string | null = nodes[id].parent;
     while (a) {
       updateHeight(a);
       const bf = balanceFactor(a);
-      pushStep(`Walk up to ${nodes[a].value}: height=${nodes[a].height}, balance factor=${bfLabel(bf)}.`, 3, { highlightId: a });
+      pushStep(msg('viz.avl.walkUp', { node: nodes[a].value, height: nodes[a].height, bf: bfLabel(bf) }), 3, { highlightId: a });
 
       if (bf > 1) {
         const leftChild = nodes[a].left!;
         if (balanceFactor(leftChild) < 0) {
           pushStep(
-            `${nodes[a].value} is left-heavy (bf=${bfLabel(bf)}) and its left child ${nodes[leftChild].value} is right-heavy: rotate left at ${nodes[leftChild].value} first (LR case).`,
+            msg('viz.avl.lrCase', { node: nodes[a].value, bf: bfLabel(bf), child: nodes[leftChild].value }),
             6,
           );
           rotateLeft(leftChild);
         } else {
-          pushStep(`${nodes[a].value} is left-heavy (bf=${bfLabel(bf)}): rotate right at ${nodes[a].value} (LL case).`, 7);
+          pushStep(msg('viz.avl.llCase', { node: nodes[a].value, bf: bfLabel(bf) }), 7);
         }
         rotateRight(a);
-        pushStep(`Rebalanced. AVL insert needs at most one rotation, so no ancestor above this point needs checking.`, 7);
+        pushStep(msg('viz.avl.rebalanced'), 7);
         break;
       }
       if (bf < -1) {
         const rightChild = nodes[a].right!;
         if (balanceFactor(rightChild) > 0) {
           pushStep(
-            `${nodes[a].value} is right-heavy (bf=${bfLabel(bf)}) and its right child ${nodes[rightChild].value} is left-heavy: rotate right at ${nodes[rightChild].value} first (RL case).`,
+            msg('viz.avl.rlCase', { node: nodes[a].value, bf: bfLabel(bf), child: nodes[rightChild].value }),
             9,
           );
           rotateRight(rightChild);
         } else {
-          pushStep(`${nodes[a].value} is right-heavy (bf=${bfLabel(bf)}): rotate left at ${nodes[a].value} (RR case).`, 10);
+          pushStep(msg('viz.avl.rrCase', { node: nodes[a].value, bf: bfLabel(bf) }), 10);
         }
         rotateLeft(a);
-        pushStep(`Rebalanced. AVL insert needs at most one rotation, so no ancestor above this point needs checking.`, 10);
+        pushStep(msg('viz.avl.rebalanced'), 10);
         break;
       }
       a = nodes[a].parent;
     }
   }
 
-  pushStep('All values inserted. Every node satisfies |balance factor| ≤ 1.', 0);
+  pushStep(msg('viz.avl.doneInsert'), 0);
   return steps;
 }
 

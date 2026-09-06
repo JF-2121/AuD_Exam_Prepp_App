@@ -2,6 +2,9 @@ import { lazy, Suspense } from 'react';
 import { Link, NavLink, Route, Routes } from 'react-router-dom';
 import { BookOpen, CircleCheckBig, LayoutDashboard, ListChecks, Play, SquareStack, Sigma } from 'lucide-react';
 import { loadExamTemplates, loadFlashcards, loadMcQuestions, loadQuestions, loadTopics } from './lib/contentLoader';
+import { useLocale, useT } from './lib/i18n/locale';
+import type { MessageKey } from './lib/i18n/messages';
+import { LanguageSwitch } from './features/LanguageSwitch';
 
 // Route-level code splitting: each tab's code (and its dependencies, e.g. react-markdown for
 // Topics or every algorithm's generateSteps for Visualize) only loads when actually visited.
@@ -14,26 +17,30 @@ const McPage = lazy(() => import('./features/mc/McPage').then((m) => ({ default:
 const ExamRunner = lazy(() => import('./features/exam/ExamRunner').then((m) => ({ default: m.ExamRunner })));
 const Dashboard = lazy(() => import('./features/dashboard/Dashboard').then((m) => ({ default: m.Dashboard })));
 
-const navItems = [
-  { to: '/topics', label: 'Topics', icon: BookOpen },
-  { to: '/visualize', label: 'Visualize', icon: Play },
-  { to: '/flashcards', label: 'Flashcards', icon: SquareStack },
-  { to: '/mc', label: 'Multiple Choice', icon: CircleCheckBig },
-  { to: '/quiz', label: 'Practice', icon: ListChecks },
-  { to: '/exam', label: 'Mock Exam', icon: Sigma },
-  { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+const navItems: { to: string; labelKey: MessageKey; icon: typeof BookOpen }[] = [
+  { to: '/topics', labelKey: 'nav.topics', icon: BookOpen },
+  { to: '/visualize', labelKey: 'nav.visualize', icon: Play },
+  { to: '/flashcards', labelKey: 'nav.flashcards', icon: SquareStack },
+  { to: '/mc', labelKey: 'nav.mc', icon: CircleCheckBig },
+  { to: '/quiz', labelKey: 'nav.practice', icon: ListChecks },
+  { to: '/exam', labelKey: 'nav.exam', icon: Sigma },
+  { to: '/dashboard', labelKey: 'nav.dashboard', icon: LayoutDashboard },
 ];
 
 function PageFallback() {
-  return <p className="text-sm text-[var(--color-text-dim)]">Loading…</p>;
+  const t = useT();
+  return <p className="text-sm text-[var(--color-text-dim)]">{t('app.loading')}</p>;
 }
 
 export default function App() {
-  const topics = loadTopics();
-  const flashcards = loadFlashcards();
-  const questions = loadQuestions();
-  const mcQuestions = loadMcQuestions();
-  const examTemplates = loadExamTemplates();
+  const { locale, t } = useLocale();
+  // Content is keyed by id across locales, so switching language swaps the prose while every
+  // saved attempt, SRS schedule and mastery score keeps pointing at the same items.
+  const topics = loadTopics(locale);
+  const flashcards = loadFlashcards(locale);
+  const questions = loadQuestions(locale);
+  const mcQuestions = loadMcQuestions(locale);
+  const examTemplates = loadExamTemplates(locale);
 
   return (
     <div className="mx-auto flex min-h-screen max-w-6xl flex-col">
@@ -43,7 +50,7 @@ export default function App() {
           className="flex shrink-0 items-center gap-2 text-[15px] font-semibold tracking-tight text-white"
         >
           <Sigma size={17} className="text-[var(--color-accent)]" strokeWidth={2.25} />
-          AuD Grind
+          {t('app.name')}
         </Link>
         <nav className="flex flex-1 gap-1 overflow-x-auto">
           {navItems.map((item) => (
@@ -57,10 +64,11 @@ export default function App() {
               }
             >
               <item.icon size={14} />
-              {item.label}
+              {t(item.labelKey)}
             </NavLink>
           ))}
         </nav>
+        <LanguageSwitch />
       </header>
       <div className="flex flex-1 flex-col gap-6 p-4 sm:p-6 md:flex-row">
         <Suspense fallback={<PageFallback />}>

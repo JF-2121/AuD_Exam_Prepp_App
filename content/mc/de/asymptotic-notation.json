@@ -1,0 +1,162 @@
+[
+  {
+    "id": "real-asym-1",
+    "prompt": "Ordnen Sie die folgenden Funktionen nach wachsender Komplexität: f₁(n) = n log n, f₂(n) = n², f₃(n) = 2ⁿ, f₄(n) = n^(log n).",
+    "options": ["f1 < f2 < f3 < f4", "f1 < f2 < f4 < f3", "f1 < f4 < f2 < f3", "f4 < f2 < f1 < f3"],
+    "explanation": "n^(log n) = 2^(log²n) wächst irgendwann schneller als n² = 2^(2·log n), weil log²n für große n größer als 2·log n ist — bleibt aber langsamer als 2ⁿ. Also n log n < n² < n^(log n) < 2ⁿ.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.1"
+  },
+  {
+    "id": "real-asym-2",
+    "prompt": "Sei f die Laufzeit von Alg(n). Welche zwei Aussagen sind korrekt?\n\n```\nAlg(n)\n  c = 0\n  for i = 1 to n do\n      j = 1\n      while j < i do\n          j = 2 * j\n          c = c + j\n      done\n  done\n  return c\n```",
+    "options": ["f(n) ∈ O(n)", "f(n) ∈ O(n²)", "f(n) ∈ Θ(n·log(n))", "f(n) ∈ Θ(n²)"],
+    "explanation": "Die innere Schleife verdoppelt j von 1 an, bis j ≥ i, läuft also ⌈log₂ i⌉ mal. Summiert über i = 1..n ergibt das Θ(n log n) ✓. Wegen Θ(n log n) ⊆ O(n²) gilt auch die (nicht scharfe, aber gültige) obere Schranke O(n²) ✓. Es ist weder O(n) ✗ noch Θ(n²) ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.2"
+  },
+  {
+    "id": "asym-q-3",
+    "prompt": "Welche Notation wird verwendet, um eine Worst-Case-Laufzeit anzugeben?",
+    "options": ["Ω", "O", "ω", "Θ, denn der Worst Case ist immer scharf"],
+    "explanation": "O liefert eine obere Schranke — „nie langsamer als“ —, und genau das behauptet eine Worst-Case-Schranke. Ω/ω sind untere Schranken (Best Case), und ein Worst Case muss nicht scharf sein, Θ ist also nicht die allgemeine Antwort.",
+    "source": "AuD-Zusammenfassung §3"
+  },
+  {
+    "id": "asym-mc-1",
+    "prompt": "Beziehungen zwischen den fünf asymptotischen Notationen — welche zwei Aussagen sind korrekt?",
+    "options": ["f ∈ O(g) ⟺ g ∈ Ω(f).", "O(g) ∩ Ω(g) = Θ(g).", "o(g) ∩ Ω(g) = Θ(g).", "Θ(g) ⊆ o(g)."],
+    "explanation": "Die O/Ω-Dualität gilt durch Vertauschen der Konstanten (C′ = 1/C) ✓, und Θ ist per Definition genau der Schnitt der beiden nicht-strikten Schranken ✓. Eine Funktion kann nicht gleichzeitig echt langsamer und nie langsamer wachsen, also ist o(g) ∩ Ω(g) = ∅ ✗, und ebenso Θ(g) ∩ o(g) = ∅ ✗.",
+    "source": "AuD-Zusammenfassung §3.1–3.3"
+  },
+  {
+    "id": "asym-mc-2",
+    "prompt": "Rechenregeln für die O-Notation — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "f₁ ∈ O(g₁) und f₂ ∈ O(g₂) ⟹ f₁ + f₂ ∈ O(max{g₁, g₂}).",
+      "f ∈ O(g) ⟹ a·f ∈ O(g) für jede Konstante a > 0.",
+      "f₁ ∈ O(g₁) und f₂ ∈ O(g₂) ⟹ f₁ · f₂ ∈ O(max{g₁, g₂}).",
+      "f ∈ O(g) und g ∈ O(h) ⟹ h ∈ O(f)."
+    ],
+    "explanation": "Die Summenregel (C = C₁+C₂) ✓ und die Skalarmultiplikation (Konstanten verschwinden in C) ✓ sind Standard. Bei Produkten multiplizieren sich die Schranken: f₁·f₂ ∈ O(g₁·g₂), nicht das Maximum ✗. O ist transitiv und liefert f ∈ O(h) — nicht das umgedrehte h ∈ O(f) ✗.",
+    "source": "AuD-Zusammenfassung §3.1"
+  },
+  {
+    "id": "asym-q-4",
+    "prompt": "Definiere f ≤_O g :⟺ f ∈ O(g) und f =_Θ g :⟺ f ∈ Θ(g). Welche Aussage ist korrekt?",
+    "options": [
+      "=_Θ ist eine Äquivalenzrelation; ≤_O ist nicht einmal antisymmetrisch.",
+      "≤_O ist eine Äquivalenzrelation; =_Θ nicht.",
+      "Beide sind Äquivalenzrelationen.",
+      "≤_O ist eine totale Ordnung auf Funktionen."
+    ],
+    "explanation": "f(n)=n und g(n)=2n erfüllen sowohl f ∈ O(g) als auch g ∈ O(f), obwohl f ≠ g — ≤_O ist also nicht antisymmetrisch und damit nicht einmal eine Halbordnung. =_Θ ist reflexiv, symmetrisch (O/Ω-Dualität) und transitiv, also eine echte Äquivalenzrelation. Selbst die induzierte Ordnung auf den Θ-Klassen ist nur partiell, nicht total (n gegen n^(1+sin n)).",
+    "source": "AuD-Zusammenfassung §3, Diskussion der Ordnungsrelation"
+  },
+  {
+    "id": "asym-q-6",
+    "prompt": "Für welches Paar (f, g) gilt f ∈ Θ(g)? (k ≥ 1, ε > 0, c > 1, r < s)",
+    "options": [
+      "f(n) = logᵏ(n), g(n) = n^ε",
+      "f(n) = 2ⁿ, g(n) = 2^(n/2)",
+      "f(n) = n^log(c), g(n) = c^log(n)",
+      "f(n) = nʳ, g(n) = nˢ"
+    ],
+    "explanation": "n^log(c) = 2^(log n · log c) = c^log(n) — die beiden Funktionen sind *exakt gleich*, also f ∈ Θ(g). Die anderen drei sind strikte Beziehungen: logᵏn ∈ o(n^ε), 2ⁿ ∈ ω(2^(n/2)), nʳ ∈ o(nˢ).",
+    "source": "AuD-Zusammenfassung §3, Klassifikationstabelle"
+  },
+  {
+    "id": "asym-mc-3",
+    "prompt": "Charakterisierungen der Notationen über Grenzwerte — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "f ∈ o(g) ⟺ lim(n→∞) f(n)/g(n) = 0.",
+      "f ∈ O(g) ⟺ die Folge (f(n)/g(n))ₙ ist beschränkt.",
+      "f ∈ Θ(g) ⟺ lim(n→∞) f(n)/g(n) = 0.",
+      "Existiert lim(n→∞) f(n)/g(n) nicht, so gilt f ∉ O(g)."
+    ],
+    "explanation": "Die Nullfolgen-Charakterisierung von o ✓ und die Beschränktheits-Charakterisierung von O ✓ sind die üblichen Abkürzungen. f ∈ Θ(g) heißt, dass der Quotient zwischen zwei positiven Konstanten bleibt, nicht dass er gegen 0 geht ✗. Und ein nicht existierender Grenzwert schließt O nicht aus: f(n)/g(n) kann oszillieren und trotzdem beschränkt bleiben ✗.",
+    "source": "AuD-Zusammenfassung §3, alternative Definitionen"
+  },
+  {
+    "id": "asym-q-2",
+    "prompt": "T(n) = 2T(n/2) + Θ(n). Welcher Fall des Mastertheorems greift, und wie lautet T(n)?",
+    "options": [
+      "Fall 1, T(n) = Θ(n)",
+      "Fall 2, T(n) = Θ(n log n)",
+      "Fall 3, T(n) = Θ(n²)",
+      "Das Mastertheorem ist nicht anwendbar"
+    ],
+    "explanation": "a = 2, b = 2, also n^(log_b a) = n¹ = n. f(n) = Θ(n) trifft n^(log_b a) genau → Fall 2 → T(n) = Θ(n log n). Das ist die Rekursionsgleichung von Merge Sort.",
+    "source": "AuD-Zusammenfassung §3.4"
+  },
+  {
+    "id": "asym-mc-4",
+    "prompt": "Mastertheorem für T(n) = a·T(n/b) + f(n) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Fall 1 verlangt f(n) ∈ O(n^(log_b a − ε)) für ein ε > 0 und liefert T(n) = Θ(n^(log_b a)).",
+      "Fall 3 verlangt zusätzlich die Regularitätsbedingung a·f(n/b) ≤ c·f(n) für ein c < 1.",
+      "Das Mastertheorem gilt für jede Rekursionsgleichung der Form T(n) = T(n−1) + f(n).",
+      "In Fall 2 dominiert der Combine-Schritt, also T(n) = Θ(f(n))."
+    ],
+    "explanation": "Fall 1 (Rekursion dominiert, f polynomiell kleiner) ✓ und die Regularitäts-Nebenbedingung von Fall 3 ✓ stimmen genau so. T(n) = T(n−1) + f(n) enthält keine Division n/b, das Theorem ist also nicht anwendbar — hier hilft die Substitutionsmethode ✗. In Fall 2 sind beide Kosten *gleich stark*, was Θ(n^(log_b a) · log n) ergibt ✗.",
+    "source": "AuD-Zusammenfassung §3.4"
+  },
+  {
+    "id": "asym-mc-5",
+    "prompt": "T(n) = 2T(n/4) + n². Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "n^(log_b a) = n^(1/2), f(n) = n² ist also polynomiell größer.",
+      "Fall 3 greift und T(n) = Θ(n²).",
+      "Fall 2 greift und T(n) = Θ(n² log n).",
+      "Das Mastertheorem ist nicht anwendbar, weil a keine Potenz von b ist."
+    ],
+    "explanation": "a = 2, b = 4 ⟹ log₄2 = 1/2, also n^(log_b a) = √n ✓, und n² = Ω(n^(1/2+ε)) ✓. Die Regularität gilt: 2·(n/4)² = n²/8 ≤ c·n² mit c = 1/8 < 1. Also Fall 3 ⟹ Θ(n²) ✓. Fall 2 verlangte f(n) = Θ(√n) ✗, und a muss keine Potenz von b sein ✗.",
+    "source": "Altklausur WS23/24 · Aufgabe 8.2a"
+  },
+  {
+    "id": "asym-mc-6",
+    "prompt": "T(n) = 16·T(n/2) + n³. Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "n^(log_b a) = n⁴.",
+      "Fall 1 greift und T(n) = Θ(n⁴).",
+      "Fall 3 greift und T(n) = Θ(n³).",
+      "Fall 2 greift und T(n) = Θ(n³ log n)."
+    ],
+    "explanation": "a = 16, b = 2 ⟹ log₂16 = 4, also n^(log_b a) = n⁴ ✓. f(n) = n³ = O(n^(4−ε)) mit ε = 1, ist also polynomiell *kleiner*, womit die Rekursion dominiert → Fall 1 → Θ(n⁴) ✓. Fall 3 bräuchte ein f oberhalb von n⁴ ✗, Fall 2 ein f = Θ(n⁴) ✗.",
+    "source": "Altklausur WS23/24 · Aufgabe 8.2b"
+  },
+  {
+    "id": "asym-mc-7",
+    "prompt": "Türme von Hanoi mit Zuganzahl M(n) = 2·M(n−1) + 1, M(0) = 0. Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die geschlossene Form lautet M(n) = 2ⁿ − 1.",
+      "Die Substitution P(n) = M(n) + 1 überführt die Rekursion in P(n) = 2·P(n−1).",
+      "Hanoi ist ein effizienter Algorithmus, weil die Rekursion pro Ebene nur 1 von n abzieht.",
+      "Das Mastertheorem liefert M(n) = Θ(n log n)."
+    ],
+    "explanation": "P(n) = M(n)+1 ergibt P(n) = 2P(n−1), P(0) = 1 ⟹ P(n) = 2ⁿ ⟹ M(n) = 2ⁿ − 1 ✓✓. Das ist exponentiell und damit *nicht* effizient (nicht polynomiell) ✗ — und beweisbar optimal. Auf eine n−1-Rekursion ist das Mastertheorem überhaupt nicht anwendbar ✗.",
+    "source": "AuD-Zusammenfassung §3.4, Türme von Hanoi"
+  },
+  {
+    "id": "asym-mc-8",
+    "prompt": "Die Substitutionsmethode — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Sie beweist eine geratene Schranke T(n) ≤ C·g(n) per (starker) Induktion und passt C nach Bedarf an.",
+      "Sie ist das Mittel der Wahl, wenn die Rekursion nicht die Form a·T(n/b) + f(n) hat.",
+      "Sie liefert immer eine scharfe Θ-Schranke, nie bloß eine O-Schranke.",
+      "Sie setzt voraus, dass der Rekursionsbaum perfekt balanciert ist."
+    ],
+    "explanation": "Substitution = Raten + induktive Verifikation mit frei wählbarer Konstante ✓, und genau darauf weicht man aus, wenn die Formvoraussetzung des Mastertheorems scheitert (z. B. R(n) = R(n−1) + n) ✓. Bewiesen wird die geratene Schranke — typischerweise eine O-Schranke ✗ — und eine Balancierung wird nicht vorausgesetzt ✗.",
+    "source": "AuD-Zusammenfassung §3.4, Substitutionsbeispiele"
+  },
+  {
+    "id": "asym-mc-9",
+    "prompt": "Welche zwei Aussagen über log(n!) sind korrekt?",
+    "options": [
+      "log(n!) ∈ Θ(n log n).",
+      "log(n!) ≤ n·log n, weil n! ≤ nⁿ.",
+      "log(n!) ∈ o(n log n).",
+      "log(n!) ∈ Θ(n), weil die Fakultät nur n Faktoren multipliziert."
+    ],
+    "explanation": "n! ≤ nⁿ liefert die obere Schranke log(n!) ≤ n log n ✓; das Aufspalten der Summe Σ log i bei n/2 liefert log(n!) ≥ (1/3)·n log n für n ≥ 9, zusammen also log(n!) ∈ Θ(n log n) ✓. Θ schließt das strikte o aus ✗, und Θ(n) ist viel zu klein ✗ — genau diese Schranke ist der Grund, warum vergleichsbasiertes Sortieren Ω(n log n) kostet.",
+    "source": "AuD-Zusammenfassung §3, Klassifikationstabelle"
+  }
+]

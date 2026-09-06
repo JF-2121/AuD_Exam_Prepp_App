@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { BTreeRenderer, type BTreeNode, type BTreeState } from './BTreeRenderer';
 import type { BTreeSpec } from './btreeInsert';
 
@@ -51,7 +51,7 @@ function generateSteps({ t, initial, deletions }: BTreeDeleteInput): AlgorithmSt
     return { nodes: cloneNodes(nodes), rootId: root, highlightId, newId };
   }
 
-  steps.push({ state: snapshot(), description: `Starting B-Tree (degree t = ${t}, so ${t - 1}–${2 * t - 1} keys per non-root node).`, highlightLine: 0 });
+  steps.push({ state: snapshot(), description: msg('viz.btree.starting', { t, min: t - 1, max: 2 * t - 1 }), highlightLine: 0 });
 
   function descendIndexFor(node: BTreeNode, key: number): number {
     let i = 0;
@@ -84,7 +84,7 @@ function generateSteps({ t, initial, deletions }: BTreeDeleteInput): AlgorithmSt
     delete nodes[rightId];
     steps.push({
       state: snapshot(xId, leftId),
-      description: `Both neighboring children have exactly t−1 keys — merge them together with separator ${sep} from the parent into one node of ${left.keys.length} keys.`,
+      description: msg('viz.btree.mergeChildren', { sep, count: left.keys.length }),
       highlightLine: line,
     });
   }
@@ -99,7 +99,7 @@ function generateSteps({ t, initial, deletions }: BTreeDeleteInput): AlgorithmSt
     if (leftSib.children.length) c.children.unshift(leftSib.children.pop()!);
     steps.push({
       state: snapshot(xId, c.id),
-      description: `Left sibling has ≥ t keys: rotate through the parent — ${downKey} moves down into the deficient child, ${x.keys[i - 1]} moves up to replace it.`,
+      description: msg('viz.btree.borrowLeft', { down: downKey, up: x.keys[i - 1] }),
       highlightLine: 13,
     });
   }
@@ -113,7 +113,7 @@ function generateSteps({ t, initial, deletions }: BTreeDeleteInput): AlgorithmSt
     if (rightSib.children.length) c.children.push(rightSib.children.shift()!);
     steps.push({
       state: snapshot(xId, c.id),
-      description: `Right sibling has ≥ t keys: rotate through the parent — ${downKey} moves down into the deficient child, ${x.keys[i]} moves up to replace it.`,
+      description: msg('viz.btree.borrowRight', { down: downKey, up: x.keys[i] }),
       highlightLine: 13,
     });
   }
@@ -125,7 +125,7 @@ function generateSteps({ t, initial, deletions }: BTreeDeleteInput): AlgorithmSt
     if (idx !== -1) {
       if (x.children.length === 0) {
         x.keys.splice(idx, 1);
-        steps.push({ state: snapshot(xId), description: `${key} found in a leaf with keys to spare — remove it directly.`, highlightLine: 4 });
+        steps.push({ state: snapshot(xId), description: msg('viz.btree.removeLeaf', { key }), highlightLine: 4 });
         return;
       }
       const leftChildId = x.children[idx];
@@ -135,12 +135,12 @@ function generateSteps({ t, initial, deletions }: BTreeDeleteInput): AlgorithmSt
       if (leftChild.keys.length >= t) {
         const pred = findMax(leftChildId);
         x.keys[idx] = pred;
-        steps.push({ state: snapshot(xId, leftChildId), description: `${key} is internal; its predecessor child has ≥ t keys — replace ${key} with predecessor ${pred}, then delete ${pred} from that child.`, highlightLine: 6 });
+        steps.push({ state: snapshot(xId, leftChildId), description: msg('viz.btree.usePredecessor', { key, pred }), highlightLine: 6 });
         deleteKey(leftChildId, pred);
       } else if (rightChild.keys.length >= t) {
         const succ = findMin(rightChildId);
         x.keys[idx] = succ;
-        steps.push({ state: snapshot(xId, rightChildId), description: `${key} is internal; predecessor child only has t−1 keys, but the successor child has ≥ t — replace ${key} with successor ${succ}, then delete ${succ} from that child.`, highlightLine: 8 });
+        steps.push({ state: snapshot(xId, rightChildId), description: msg('viz.btree.useSuccessor', { key, succ }), highlightLine: 8 });
         deleteKey(rightChildId, succ);
       } else {
         mergeChildren(xId, idx);
@@ -150,7 +150,7 @@ function generateSteps({ t, initial, deletions }: BTreeDeleteInput): AlgorithmSt
     }
 
     if (x.children.length === 0) {
-      steps.push({ state: snapshot(xId), description: `${key} is not in the tree.`, highlightLine: 0 });
+      steps.push({ state: snapshot(xId), description: msg('viz.btree.keyAbsent', { key }), highlightLine: 0 });
       return;
     }
 
@@ -171,16 +171,16 @@ function generateSteps({ t, initial, deletions }: BTreeDeleteInput): AlgorithmSt
       }
     }
     const nextId = x.children[i];
-    steps.push({ state: snapshot(nextId), description: `Descend into the child covering ${key} (now guaranteed ≥ t keys).`, highlightLine: 11 });
+    steps.push({ state: snapshot(nextId), description: msg('viz.btree.descendDelete', { key }), highlightLine: 11 });
     deleteKey(nextId, key);
   }
 
   for (const key of deletions) {
     if (!nodes[root] || (nodes[root].keys.length === 0 && nodes[root].children.length === 0)) {
-      steps.push({ state: snapshot(), description: `Delete ${key}: tree is empty.`, highlightLine: 0 });
+      steps.push({ state: snapshot(), description: msg('viz.btree.deleteEmpty', { key }), highlightLine: 0 });
       continue;
     }
-    steps.push({ state: snapshot(root), description: `Delete ${key}: start at the root.`, highlightLine: 1 });
+    steps.push({ state: snapshot(root), description: msg('viz.btree.deleteStart', { key }), highlightLine: 1 });
     deleteKey(root, key);
 
     if (nodes[root].keys.length === 0) {
@@ -188,15 +188,15 @@ function generateSteps({ t, initial, deletions }: BTreeDeleteInput): AlgorithmSt
         const newRoot = nodes[root].children[0];
         delete nodes[root];
         root = newRoot;
-        steps.push({ state: snapshot(undefined, root), description: `Root became empty after a merge — its only remaining child becomes the new root. Tree height decreases by one.`, highlightLine: 0 });
+        steps.push({ state: snapshot(undefined, root), description: msg('viz.btree.rootShrank'), highlightLine: 0 });
       } else {
         delete nodes[root];
-        steps.push({ state: { nodes: {}, rootId: null }, description: 'The tree is now empty.', highlightLine: 0 });
+        steps.push({ state: { nodes: {}, rootId: null }, description: msg('viz.btree.nowEmpty'), highlightLine: 0 });
       }
     }
   }
 
-  steps.push({ state: snapshot(), description: 'All deletions complete. Every non-root node still has between t−1 and 2t−1 keys.', highlightLine: 0 });
+  steps.push({ state: snapshot(), description: msg('viz.btree.doneDelete'), highlightLine: 0 });
   return steps;
 }
 

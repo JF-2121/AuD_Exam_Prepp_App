@@ -6,6 +6,7 @@ import { DifficultyBadge } from '../../components/DifficultyBadge';
 import { McFormatBadge } from './McFormatBadge';
 import { McOptions } from './McOptions';
 import { McPrompt } from './McPrompt';
+import { plural, useT } from '../../lib/i18n/locale';
 import { filterMc, groupByTopic, mcStats } from './mcBank';
 
 /**
@@ -20,6 +21,7 @@ export function McCompendium({
   questions: MultipleChoiceQuestion[];
   topics: Topic[];
 }) {
+  const t = useT();
   const [query, setQuery] = useState('');
   const [format, setFormat] = useState<McFormat | ''>('');
   const [open, setOpen] = useState<Set<string>>(new Set());
@@ -60,7 +62,7 @@ export function McCompendium({
           />
           <input
             className="input w-full pl-10"
-            placeholder="Search prompts, options, explanations, sources…"
+            placeholder={t('mc.searchPlaceholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -70,25 +72,27 @@ export function McCompendium({
           value={format}
           onChange={(e) => setFormat(e.target.value as McFormat | '')}
         >
-          <option value="">Both formats</option>
-          <option value="double">2 of 4 only</option>
-          <option value="single">1 of 4 only</option>
+          <option value="">{t('mc.filterBothFormats')}</option>
+          <option value="double">{t('mc.filterDoubleOnly')}</option>
+          <option value="single">{t('mc.filterSingleOnly')}</option>
         </select>
         <button className="btn" onClick={() => setRevealAll((v) => !v)}>
           {revealAll ? <EyeOff size={14} /> : <Eye size={14} />}
-          {revealAll ? 'Hide answers' : 'Show answers'}
+          {revealAll ? t('mc.hideAnswers') : t('mc.showAnswers')}
         </button>
       </div>
 
       <p className="mb-3 text-sm text-[var(--color-text-dim)]">
-        {matched.length} question{matched.length === 1 ? '' : 's'} across {groups.length} topic
-        {groups.length === 1 ? '' : 's'}
-        {searching && ' matching your search'}.
+        {t(searching ? 'mc.compendiumCountSearch' : 'mc.compendiumCount', {
+          questions: plural(t, 'mc.questionCount', matched.length),
+          topics: plural(t, 'mc.topicCount', groups.length),
+        })}
+        .
       </p>
 
       {groups.length === 0 && (
         <div className="card p-8 text-center">
-          <p className="text-[var(--color-text-dim)]">Nothing matches that search.</p>
+          <p className="text-[var(--color-text-dim)]">{t('mc.noSearchMatch')}</p>
         </div>
       )}
 
@@ -111,7 +115,11 @@ export function McCompendium({
                   {topic.title}
                 </span>
                 <span className="shrink-0 text-xs text-[var(--color-text-dim)]">
-                  {stats.double} × 2/4 · {stats.single} × 1/4 · {stats.totalPoints} P
+                  {t('mc.topicSummary', {
+                    double: stats.double,
+                    single: stats.single,
+                    points: stats.totalPoints,
+                  })}
                 </span>
               </button>
 
@@ -139,6 +147,7 @@ function CompendiumEntry({
   index: number;
   forceReveal: boolean;
 }) {
+  const t = useT();
   const [reveal, setReveal] = useState(false);
   const shown = forceReveal || reveal;
 
@@ -165,7 +174,7 @@ function CompendiumEntry({
           className="mt-2 text-xs font-semibold text-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
           onClick={() => setReveal(true)}
         >
-          Reveal {mcFormat(question) === 'double' ? 'both answers' : 'the answer'}
+          {t(mcFormat(question) === 'double' ? 'mc.revealBoth' : 'mc.revealOne')}
         </button>
       )}
     </li>

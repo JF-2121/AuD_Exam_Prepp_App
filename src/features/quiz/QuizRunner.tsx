@@ -8,6 +8,7 @@ import { gradeQuestion, type GradeResult } from './grading';
 import { MultipleChoice } from './MultipleChoice';
 import { ShortAnswer } from './ShortAnswer';
 import { TraceAlgorithm } from './TraceAlgorithm';
+import { useT } from '../../lib/i18n/locale';
 
 function shuffle<T>(arr: T[]): T[] {
   const copy = [...arr];
@@ -19,6 +20,7 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 export function QuizRunner({ questions, topics }: { questions: Question[]; topics: Topic[] }) {
+  const t = useT();
   const [params, setParams] = useSearchParams();
   const topicId = params.get('topic') ?? undefined;
   const difficulty = (params.get('difficulty') as Difficulty | null) ?? undefined;
@@ -56,16 +58,16 @@ export function QuizRunner({ questions, topics }: { questions: Question[]; topic
   return (
     <div>
       <div className="mb-4 flex flex-wrap items-center gap-2">
-        <h1 className="text-2xl font-semibold tracking-tight text-[var(--color-text-h)]">Practice</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-[var(--color-text-h)]">{t('quiz.title')}</h1>
         <select
           className="input ml-auto"
           value={topicId ?? ''}
           onChange={(e) => setParams((p) => new URLSearchParams({ ...Object.fromEntries(p), topic: e.target.value || '' }))}
         >
-          <option value="">All topics</option>
-          {topics.map((t) => (
-            <option key={t.id} value={t.id}>
-              {t.title}
+          <option value="">{t('common.allTopics')}</option>
+          {topics.map((topic) => (
+            <option key={topic.id} value={topic.id}>
+              {topic.title}
             </option>
           ))}
         </select>
@@ -74,19 +76,19 @@ export function QuizRunner({ questions, topics }: { questions: Question[]; topic
           value={difficulty ?? ''}
           onChange={(e) => setParams((p) => new URLSearchParams({ ...Object.fromEntries(p), difficulty: e.target.value || '' }))}
         >
-          <option value="">Any difficulty</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
+          <option value="">{t('common.anyDifficulty')}</option>
+          <option value="easy">{t('common.easy')}</option>
+          <option value="medium">{t('common.medium')}</option>
+          <option value="hard">{t('common.hard')}</option>
         </select>
       </div>
 
       <p className="mb-3 text-sm text-[var(--color-text-dim)]">
-        Score this session: <span className="font-semibold text-[var(--color-text)]">{score.correct}/{score.total}</span>
+        {t('quiz.sessionScore')} <span className="font-semibold text-[var(--color-text)]">{score.correct}/{score.total}</span>
       </p>
 
       {!question ? (
-        <p className="text-[var(--color-text-dim)]">No questions match this filter (or you've been through them all).</p>
+        <p className="text-[var(--color-text-dim)]">{t('quiz.noMatch')}</p>
       ) : (
         <div className="card p-5">
           <div className="mb-3 flex items-center gap-2">
@@ -100,11 +102,11 @@ export function QuizRunner({ questions, topics }: { questions: Question[]; topic
             <div>
               <p className={`flex items-center gap-1.5 font-semibold ${result.correct ? 'text-[var(--color-good)]' : 'text-[var(--color-bad)]'}`}>
                 {result.correct ? <CheckCircle2 size={16} /> : <XCircle size={16} />}
-                {result.correct ? 'Correct!' : 'Not quite.'}
+                {result.correct ? t('quiz.correct') : t('quiz.notQuite')}
               </p>
               <p className="mt-1 text-sm text-[var(--color-text-dim)]">{result.explanation}</p>
               <button className="btn btn-primary mt-3" onClick={next}>
-                Next question
+                {t('quiz.nextQuestion')}
               </button>
             </div>
           )}

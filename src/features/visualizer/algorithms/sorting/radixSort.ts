@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep, type StepText } from '../../core/types';
 import { BucketRenderer, type RadixState } from './BucketRenderer';
 
 // The course's pseudocode (AuD-Zusammenfassung §4.6): LSD-first, one stable bucket pass per digit.
@@ -36,13 +36,13 @@ function generateSteps({ values, radix }: RadixInput): AlgorithmStep<RadixState>
   const steps: AlgorithmStep<RadixState>[] = [];
 
   const emptyBuckets = () => Array.from({ length: base }, (): string[] => []);
-  const push = (state: RadixState, description: string, highlightLine: number) =>
+  const push = (state: RadixState, description: StepText, highlightLine: number) =>
     steps.push({ state, description, highlightLine });
 
   if (n === 0) {
     push(
       { array: [], output: [], buckets: emptyBuckets(), radix: base, digitCount, digitPos: 0, phase: 'done' },
-      'Nothing to sort.',
+      msg('viz.radix.nothing'),
       0,
     );
     return steps;
@@ -58,7 +58,7 @@ function generateSteps({ values, radix }: RadixInput): AlgorithmStep<RadixState>
       digitPos: 0,
       phase: 'distribute',
     },
-    `${n} keys of at most ${digitCount} digit${digitCount === 1 ? '' : 's'} in base ${base}. Radix Sort makes ${digitCount} pass${digitCount === 1 ? '' : 'es'}, one per digit position, starting with the least significant — and never compares two keys with each other.`,
+    msg('viz.radix.intro', { n, digits: digitCount, base }),
     0,
   );
 
@@ -76,7 +76,7 @@ function generateSteps({ values, radix }: RadixInput): AlgorithmStep<RadixState>
         digitPos: pos,
         phase: 'distribute',
       },
-      `Pass i = ${pos}: distribute every key into the bucket given by its digit at position ${pos}.`,
+      msg('viz.radix.passStart', { pos }),
       1,
     );
 
@@ -98,7 +98,7 @@ function generateSteps({ values, radix }: RadixInput): AlgorithmStep<RadixState>
           activeIndex: j,
           activeBucket: d,
         },
-        `A[${j}] = ${value}${base === 10 ? '' : ` (base ${base})`} — digit at position ${pos} is ${d}${padded ? ' (implicit padding 0: the numeral is shorter than that)' : ''} → append to the back of bucket ${d}.`,
+        msg(padded ? 'viz.radix.placePadded' : 'viz.radix.place', { j, value, pos, digit: d }),
         3,
       );
     }
@@ -118,7 +118,7 @@ function generateSteps({ values, radix }: RadixInput): AlgorithmStep<RadixState>
         digitPos: pos,
         phase: 'collect',
       },
-      `All ${n} keys are bucketed. Now read the buckets back in index order 0..${base - 1}, each one front-to-back.`,
+      msg('viz.radix.bucketed', { n, last: base - 1 }),
       4,
     );
 
@@ -138,7 +138,7 @@ function generateSteps({ values, radix }: RadixInput): AlgorithmStep<RadixState>
             phase: 'collect',
             activeBucket: k,
           },
-          `Take ${value} from the front of bucket ${k} → A[${written - 1}]. Taking from the front (FIFO) is what makes the pass stable, and stability is what stops this pass from undoing the previous one.`,
+          msg('viz.radix.collect', { value, bucket: k, index: written - 1 }),
           4,
         );
       }
@@ -155,7 +155,7 @@ function generateSteps({ values, radix }: RadixInput): AlgorithmStep<RadixState>
         digitPos: pos,
         phase: 'collect',
       },
-      `End of pass i = ${pos}: the array is now sorted by digit positions 0..${pos}.`,
+      msg('viz.radix.passEnd', { pos }),
       1,
     );
   }
@@ -170,7 +170,7 @@ function generateSteps({ values, radix }: RadixInput): AlgorithmStep<RadixState>
       digitPos: digitCount - 1,
       phase: 'done',
     },
-    `Sorted after ${digitCount} pass${digitCount === 1 ? '' : 'es'} — O(d·(n+D)) with d = ${digitCount} and D = ${base}, and not a single key-to-key comparison. The Ω(n log n) comparison-sort lower bound simply does not apply.`,
+    msg('viz.radix.done', { digits: digitCount, base }),
     0,
   );
 

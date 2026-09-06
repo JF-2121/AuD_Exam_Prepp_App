@@ -117,6 +117,37 @@ more questions get added.
 ]
 ```
 
+## Localization — `de/` subfolders
+
+The app is bilingual (DE/EN, switched in the header). UI text lives in `src/lib/i18n/`; **content**
+is localized here, by dropping a German file alongside the English one:
+
+| English | German |
+|---|---|
+| `content/topics/<id>.md` | `content/topics/de/<id>.md` |
+| `content/mc/<topicId>.json` | `content/mc/de/<topicId>.json` |
+| `content/flashcards/<topicId>.json` | `content/flashcards/de/<topicId>.json` |
+| `content/questions/<topicId>.json` | `content/questions/de/<topicId>.json` |
+| `content/examTemplates.json` | `content/examTemplates.de.json` |
+
+`contentLoader.ts` **overlays the German file onto the English one field by field**, matching items
+by `id`. Three consequences worth knowing:
+
+1. **Same `id` = same item.** SRS schedules, quiz attempts and mastery scores are keyed by id, so
+   switching language swaps the prose while every bit of saved progress keeps pointing at the same
+   questions. Never renumber ids when translating.
+2. **Omitted or empty fields fall back to English.** A German file may carry only the fields that
+   have actually been translated — which is what makes partial translation safe. The German topic
+   files, for instance, carry only frontmatter; their bodies fall back to the English prose.
+3. **Never translate the answer key.** A German MC file must contain `id`, `prompt`, `options`,
+   `explanation` and `source` — and must *not* contain `correctIndexes`, `type`, `topicId` or
+   `difficulty`. Those are inherited, which means **the four options must stay in the same order as
+   the English file**, or the inherited `correctIndexes` would point at the wrong statements.
+
+Current coverage: UI 100%, visualizer step descriptions 100%, MC compendium 100% (186/186), topic
+titles and exam-template titles 100%. Topic bodies, flashcards and short-answer/trace questions
+still fall back to English.
+
 ## Registering a new visualizable algorithm
 
 Adding an algorithm (not just content) does require code: a `generateSteps` function under

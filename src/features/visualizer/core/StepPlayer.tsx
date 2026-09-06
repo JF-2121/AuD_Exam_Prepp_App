@@ -1,8 +1,10 @@
 import { Code2, Pause, Play, RotateCcw, SkipBack, SkipForward } from 'lucide-react';
 import type { AlgorithmDef } from './types';
 import { useStepPlayback } from './useStepPlayback';
+import { useT } from '../../../lib/i18n/locale';
 
 export function StepPlayer<TInput, TState>({ algorithm, input }: { algorithm: AlgorithmDef<TInput, TState>; input: TInput }) {
+  const t = useT();
   const steps = algorithm.generateSteps(input);
   const playback = useStepPlayback(steps.length);
   // Editing the input regenerates `steps`, and the playback index only resets in an effect — i.e.
@@ -15,25 +17,25 @@ export function StepPlayer<TInput, TState>({ algorithm, input }: { algorithm: Al
         <div className="overflow-x-auto">
           <algorithm.Renderer step={step} />
         </div>
-        <p className="mt-4 text-sm text-[var(--color-text-dim)]">{step.description}</p>
+        <p className="mt-4 text-sm text-[var(--color-text-dim)]">{t(step.description.key, step.description.vars)}</p>
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <button className="btn" onClick={playback.stepBack} disabled={playback.index === 0}>
-            <SkipBack size={13} /> Back
+            <SkipBack size={13} /> {t('viz.back')}
           </button>
           {playback.isPlaying ? (
             <button className="btn btn-primary" onClick={playback.pause}>
-              <Pause size={13} /> Pause
+              <Pause size={13} /> {t('viz.pause')}
             </button>
           ) : (
             <button className="btn btn-primary" onClick={playback.play} disabled={playback.index >= steps.length - 1}>
-              <Play size={13} /> Play
+              <Play size={13} /> {t('viz.play')}
             </button>
           )}
           <button className="btn" onClick={playback.stepForward} disabled={playback.index >= steps.length - 1}>
-            Next <SkipForward size={13} />
+            {t('common.next')} <SkipForward size={13} />
           </button>
           <button className="btn" onClick={playback.reset}>
-            <RotateCcw size={13} /> Reset
+            <RotateCcw size={13} /> {t('viz.reset')}
           </button>
           <select
             className="input ml-auto"
@@ -55,12 +57,12 @@ export function StepPlayer<TInput, TState>({ algorithm, input }: { algorithm: Al
           onChange={(e) => playback.scrubTo(Number(e.target.value))}
         />
         <p className="mt-1 text-xs text-[var(--color-text-dim)]">
-          Step {playback.index + 1} / {steps.length}
+          {t('viz.step', { current: playback.index + 1, total: steps.length })}
         </p>
       </div>
       <div className="card w-full p-4 md:w-72">
         <h3 className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-[var(--color-text-h)]">
-          <Code2 size={14} className="text-[var(--color-accent)]" /> Pseudocode
+          <Code2 size={14} className="text-[var(--color-accent)]" /> {t('viz.pseudocode')}
         </h3>
         <pre className="overflow-x-auto text-xs leading-6">
           {algorithm.pseudocode.map((line, i) => (

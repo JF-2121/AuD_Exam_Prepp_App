@@ -1,0 +1,110 @@
+[
+  {
+    "id": "algo-q-1",
+    "prompt": "Eigenschaften von Algorithmen — welche Aussage ist korrekt?",
+    "options": [
+      "Determiniertheit fordert, dass dieselbe Eingabe stets dieselbe Folge von Zwischenzuständen erzeugt.",
+      "Determinismus fordert, dass dieselbe Eingabe stets dieselbe Folge von Zwischenzuständen erzeugt.",
+      "Terminierbarkeit fordert, dass die Beschreibung des Algorithmus selbst endliche Länge hat.",
+      "Effektivität fordert, dass ein Algorithmus für eine ganze Klasse von Eingaben funktioniert, nicht nur für einen Spezialfall."
+    ],
+    "explanation": "Determinismus ist die verschärfte Form: gleiche Eingabe ⇒ gleiche *Schritte*. Determiniertheit verlangt nur die gleiche *Ausgabe*. Terminierbarkeit ist das Anhalten in endlicher Zeit (die endliche *Beschreibung* ist die Finitheit), und das Funktionieren für eine ganze Eingabeklasse ist die Allgemeinheit (Effektivität = jeder Schritt ist maschinell ausführbar).",
+    "source": "AuD-Zusammenfassung §2"
+  },
+  {
+    "id": "algo-mc-1",
+    "prompt": "Definitionen der Algorithmus-Eigenschaften — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein Algorithmus terminiert, wenn er für jede Eingabe nur endlich viele Schritte durchläuft und dann eine Ausgabe produziert.",
+      "Ein Algorithmus ist korrekt, wenn er für jede Eingabe terminiert — unabhängig davon, was er ausgibt.",
+      "Jeder deterministische Algorithmus ist auch determiniert.",
+      "Jeder determinierte Algorithmus ist auch deterministisch."
+    ],
+    "explanation": "Terminierung = endlich viele Schritte und dann eine Ausgabe ✓. Korrektheit betrifft die Übereinstimmung der Ausgabe mit der Spezifikation — Terminierung allein genügt nicht ✗. Determinismus (gleiche Schritte) ist echt stärker als Determiniertheit (gleiche Ausgabe): deterministisch ⇒ determiniert ✓, aber nicht umgekehrt ✗ (zwei verschiedene Schrittfolgen können dieselbe Ausgabe erreichen).",
+    "source": "AuD26 Blatt 01, G2"
+  },
+  {
+    "id": "algo-mc-2",
+    "prompt": "Schleifeninvarianten — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein Beweis über eine Schleifeninvariante besteht aus Initialisierung, Erhaltung und Terminierung.",
+      "Eine Schleifeninvariante muss vor der ersten Iteration und nach jeder Iteration der Schleife gelten.",
+      "Eine gültige Schleifeninvariante beweist für sich genommen bereits, dass die Schleife terminiert.",
+      "Schleifeninvarianten werden nur für rekursive Algorithmen benötigt, nicht für iterative."
+    ],
+    "explanation": "Das dreiteilige Gerüst lautet Initialisierung / Erhaltung / Terminierung ✓, und die Invariante muss vor der ersten und nach jeder Iteration gelten ✓. Sie beweist *nicht* die Terminierung — das ist ein eigenes Argument, meist über eine streng fallende Größe ✗. Und Schleifeninvarianten sind genau das Werkzeug für *iterative* Algorithmen; Rekursion wird per Induktion bewiesen ✗.",
+    "source": "AuD-Zusammenfassung §2, AuD26 Blatt 01"
+  },
+  {
+    "id": "algo-mc-3",
+    "prompt": "Betrachte `Minimum(A)`: `min = A[0]; for i = 1 to len-1: if A[i] < min then min = A[i]; return min`. Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Invariante „vor Iteration i ist min das Minimum von A[0..i-1]“ gilt.",
+      "Die Invariante „vor Iteration i ist min das Minimum von A[0..i]“ gilt.",
+      "Beim Schleifenende (i = len) impliziert die Invariante, dass min das Minimum des gesamten Arrays ist.",
+      "Die Invariante gilt nur, wenn A paarweise verschiedene Werte enthält."
+    ],
+    "explanation": "Das vor Iteration i bereits *verarbeitete* Präfix ist A[0..i-1] ✓ — A[i] wurde noch nicht verglichen, Option 2 ist also um eins verschoben ✗. Einsetzen von i = len liefert genau die Nachbedingung ✓. Duplikate spielen keine Rolle: `<` lässt min bei Gleichstand einfach unverändert ✗.",
+    "source": "AuD26 Blatt 01, Beispiele zu Schleifeninvarianten"
+  },
+  {
+    "id": "algo-mc-4",
+    "prompt": "`MaxIndex(A)` liefert den größten Index idx, sodass jedes Element von A[1..idx] kleiner als das Doppelte seines Vorgängers ist, und nutzt dafür ein einrastendes Flag `conditionTrue`. Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ohne das einrastende Flag könnte der Algorithmus einen Index zurückgeben, der nach einer Verletzung der Bedingung liegt.",
+      "Das Flag ist nur eine Optimierung der Laufzeit; sein Weglassen ändert den Rückgabewert nie.",
+      "Sobald die Bedingung einmal verletzt ist, muss das Flag für alle weiteren Iterationen falsch bleiben.",
+      "Die Invariante lässt sich allein über idx formulieren, ohne conditionTrue zu erwähnen."
+    ],
+    "explanation": "Eine einzige Verletzung entwertet *jeden* späteren Index, nicht nur den verletzenden — ohne Einrasten würde also ein späteres Element, das die Bedingung zufällig erfüllt, idx fälschlich überschreiben ✓✗. Genau das Einrasten (dauerhaft falsch bleiben) macht daraus eine echte Invariante ✓, weshalb die Invariante das Flag auch erwähnen muss ✗.",
+    "source": "AuD26 Blatt 01, Schleifeninvariante zu MaxIndex"
+  },
+  {
+    "id": "algo-q-3",
+    "prompt": "Gründe, bewusst einen *weniger* effizienten Algorithmus zu wählen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein Algorithmus mit konstanter Laufzeit kann vorzuziehen sein, weil die Laufzeit selbst über einen Timing-Seitenkanal geheime Informationen preisgeben kann.",
+      "Ein einfacherer, aber langsamerer Algorithmus kann vorzuziehen sein, weil er leichter formal zu verifizieren ist.",
+      "Es ist nie legitim — der asymptotisch schnellste Algorithmus ist immer die richtige Wahl.",
+      "Compiler schreiben ineffizienten Code automatisch in effizienten um, die Wahl ist also belanglos."
+    ],
+    "explanation": "Sowohl Timing-Seitenkanäle ✓ als auch die leichtere formale Verifikation ✓ werden in der Vorlesung als legitime Gründe genannt. Parallelisierbarkeit und Code-/Chipfläche sind zwei weitere. Die Optionen 3 und 4 sind schlicht falsch — Asymptotik ist nur eine Ressource unter mehreren (Laufzeitvarianz, Speicher, Energie, Größe, Art der Operationen), und kein Compiler ändert für dich die asymptotische Klasse.",
+    "source": "AuD-Zusammenfassung §2, Reflexionsfrage"
+  },
+  {
+    "id": "algo-mc-5",
+    "prompt": "Abstrakte Datentypen (ADTs) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein ADT beschreibt mögliche Werte, Operationen und das Verhalten eines Datentyps, nicht aber dessen konkrete Implementierung.",
+      "Die ADT-Beschreibung gibt die Zeitkomplexität der Operationen an.",
+      "Derselbe ADT lässt sich durch mehrere verschiedene Datenstrukturen mit unterschiedlichen Laufzeiten realisieren.",
+      "Zwei Datenstrukturen, die denselben ADT implementieren, müssen dieselben asymptotischen Laufzeiten haben."
+    ],
+    "explanation": "Ein ADT ist ein rein verhaltensbezogener Vertrag ✓ — er sagt bewusst nichts über Komplexität ✗. Genau deshalb hat ein ADT (z. B. „Liste“) viele Realisierungen ✓ (Array vs. verkettete Liste), deren Laufzeiten sich deutlich unterscheiden ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.4"
+  },
+  {
+    "id": "algo-mc-6",
+    "prompt": "Korrektheitsbeweis eines In-place-Sortieralgorithmus — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Neben der Sortiertheit muss die Permutationseigenschaft gezeigt werden: Der Algorithmus ordnet Werte nur um, erfindet oder verliert aber keinen.",
+      "Die Sortiertheit der Ausgabe allein genügt, um einen Sortieralgorithmus als korrekt zu beweisen.",
+      "Die Terminierung ist separat zu zeigen, z. B. über eine Größe, die streng gegen eine Schranke fällt.",
+      "Bei einem In-place-Algorithmus folgt die Permutationseigenschaft automatisch aus der Terminierung."
+    ],
+    "explanation": "Das dreiteilige Standardargument besteht aus Terminierung ✓, Sortiertheit und Permutationseigenschaft ✓. Sortiertheit allein genügt nicht ✗ — ein „Algorithmus“, der [0,0,…,0] ausgibt, ist sortiert und trotzdem falsch. Und aus dem Anhalten folgt nichts über die Erhaltung der Werte ✗.",
+    "source": "AuD-Zusammenfassung §2 / §4.1"
+  },
+  {
+    "id": "algo-mc-7",
+    "prompt": "Kriterien der Berechenbarkeit — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Finitheit: Die Beschreibung des Algorithmus hat endliche Länge.",
+      "Effektivität: Jeder einzelne Schritt ist tatsächlich auf einer Maschine ausführbar.",
+      "Finitheit: Der Algorithmus hält bei jeder Eingabe nach endlich vielen Schritten an.",
+      "Effektivität: Der Algorithmus ist die schnellste bekannte Lösung des Problems."
+    ],
+    "explanation": "Die Berechenbarkeit zerfällt in Finitheit (endliche *Beschreibung*) ✓, Terminierbarkeit (endliche *Ausführung* — das beschreibt Option 3) ✗ und Effektivität (jeder Schritt maschinell ausführbar) ✓. Effektivität hat nichts damit zu tun, der schnellste bekannte Algorithmus zu sein ✗ — das wäre Effizienz.",
+    "source": "AuD-Zusammenfassung §2"
+  }
+]

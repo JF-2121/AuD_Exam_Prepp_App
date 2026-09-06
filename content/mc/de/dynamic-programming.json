@@ -1,0 +1,218 @@
+[
+  {
+    "id": "real-dp-1",
+    "prompt": "Entwurfsmethoden für Algorithmen (D&C, DP, Greedy) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Laufzeit eines Divide-and-Conquer-Algorithmus hängt nur von der Komplexität des Combine-Schritts ab.",
+      "Dynamische Programmierung ist eine effiziente Methode für Probleme, bei denen ein naiver rekursiver Algorithmus dieselben Teilprobleme mehrfach lösen würde.",
+      "Wenn ein Problem mit dynamischer Programmierung optimal gelöst werden kann, dann findet auch ein Greedy-Algorithmus immer die optimale Lösung für dasselbe Problem.",
+      "Sowohl dynamische Programmierung als auch Greedy-Algorithmen setzen voraus, dass das Problem eine optimale Teilstruktur besitzt."
+    ],
+    "explanation": "Das Vermeiden mehrfach gelöster Teilprobleme ist die Definition der DP ✓, und die optimale Teilstruktur ist die gemeinsame Voraussetzung beider Paradigmen ✓ (Greedy braucht zusätzlich die Greedy-Choice-Eigenschaft). Das Mastertheorem zeigt, dass die Laufzeit von der Rekursion *und* dem Combine-Schritt abhängt ✗, und 0/1-Rucksack ist das Standardgegenbeispiel zu Option 3 ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.15"
+  },
+  {
+    "id": "real-dp-3",
+    "prompt": "Entwurfsmethoden für Algorithmen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Beim Divide-&-Conquer-Verfahren muss jeder Zerlegungsschritt das Problem in gleich große Teilprobleme aufteilen, damit der Algorithmus korrekt arbeitet.",
+      "Dijkstras Algorithmus ist ein Beispiel für einen Greedy-Algorithmus.",
+      "Backtracking kann für Entscheidungsprobleme und für Optimierungsprobleme angewendet werden.",
+      "Dynamisches Programmieren setzt voraus, dass ein Problem nicht überlappende Teilprobleme besitzt."
+    ],
+    "explanation": "Dijkstra finalisiert unwiderruflich den aktuell nächstgelegenen Knoten — eine lehrbuchmäßige Greedy-Entscheidung ✓ — und Backtracking dient beiden Problemarten ✓. Gleich große Aufteilungen betreffen die Effizienz, nie die Korrektheit (Quicksort teilt ungleichmäßig) ✗, und DP verlangt *überlappende* Teilprobleme — genau das Gegenteil von Option 4 ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.17"
+  },
+  {
+    "id": "real-dp-2",
+    "prompt": "Entwurfsmethoden (Backtracking, Metaheuristiken, Hill Climbing, Editierdistanz) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Backtracking macht im Durchschnitt gleich viele Schritte wie Brute Force.",
+      "Metaheuristiken sind eine allgemeine Vorgehensweise, um Optimierungsprobleme zu lösen.",
+      "Hill Climbing findet immer die beste Lösung.",
+      "Die Minimum Edit Distance misst, wie viele Operationen nötig sind, um einen String in einen anderen zu überführen."
+    ],
+    "explanation": "Metaheuristiken sind genau dieser allgemeine Rahmen ✓, und die Definition der Editierdistanz ✓ ist Standard. Das Beschneiden des Suchraums ist der ganze Sinn von Backtracking — es macht im Durchschnitt deutlich weniger Schritte als Brute Force ✗ — und Hill Climbing bleibt in lokalen Optima hängen ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.16"
+  },
+  {
+    "id": "dp-q-1",
+    "prompt": "Was unterscheidet dynamische Programmierung von reinem Divide-and-Conquer?",
+    "options": [
+      "DP verwendet niemals Rekursion.",
+      "Die Teilprobleme der DP überlappen sich und werden memoisiert; die Teilprobleme von D&C sind unabhängig.",
+      "DP ist in jedem Fall schneller als D&C.",
+      "D&C lässt sich nicht rekursiv implementieren."
+    ],
+    "explanation": "Überlappende Teilprobleme sind genau das, was die Memoisierung ausnutzt — jedes wird einmal gelöst und danach nur nachgeschlagen. D&C zerlegt in disjunkte Teilprobleme, bei denen es nichts zu cachen gibt. DP kann rekursiv (Top-down-Memoisierung) oder iterativ (Bottom-up-Tabellierung) geschrieben werden.",
+    "source": "AuD-Zusammenfassung §9.1/9.3"
+  },
+  {
+    "id": "dp-mc-1",
+    "prompt": "Voraussetzungen für dynamische Programmierung — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Das Problem muss eine optimale Teilstruktur haben: Eine optimale Lösung setzt sich aus optimalen Lösungen ihrer Teilprobleme zusammen.",
+      "Die Teilprobleme müssen sich überlappen, sonst bringt die Memoisierung nichts.",
+      "Das Problem muss ein Entscheidungsproblem mit 0/1-Antwort sein.",
+      "Alle Teilprobleme müssen dieselbe Größe haben."
+    ],
+    "explanation": "Optimale Teilstruktur ✓ und überlappende Teilprobleme ✓ sind die beiden Standardbedingungen. DP bewältigt Optimierungs- und Zählprobleme genauso gut wie Entscheidungsprobleme ✗, und die Teilproblemgrößen unterscheiden sich regelmäßig (z. B. das (i,j)-Gitter der Editierdistanz) ✗.",
+    "source": "AuD-Zusammenfassung §9.3"
+  },
+  {
+    "id": "dp-mc-2",
+    "prompt": "Memoisierung und Tabellierung — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Memoisierung ist die Top-down-Variante: rekursiv arbeiten, aber jedes Teilproblemergebnis beim ersten Berechnen zwischenspeichern.",
+      "Tabellierung ist die Bottom-up-Variante: eine Tabelle in einer Reihenfolge füllen, die garantiert, dass jede Abhängigkeit bereits berechnet ist.",
+      "Memoisierung verändert die asymptotische Laufzeit einer naiven Rekursion nur um einen konstanten Faktor.",
+      "Tabellierung verbraucht immer weniger Speicher als Memoisierung, da kein Rekursionsstack nötig ist."
+    ],
+    "explanation": "Die beiden Richtungen ✓✓ sind definitorisch. Memoisierung reduziert eine typischerweise *exponentielle* Rekursion auf polynomiell — weit mehr als ein konstanter Faktor ✗ — und obwohl die Tabellierung den Aufrufstack vermeidet, speichern beide meist dieselbe Θ(mn)-Tabelle, „immer weniger“ ist also falsch ✗.",
+    "source": "AuD26 Maxine 12 · Memoisation"
+  },
+  {
+    "id": "dp-mc-3",
+    "prompt": "Die Rekursionsgleichung der minimalen Editierdistanz D[i][j] = min{ D[i−1][j−1] + (X[i] ≠ Y[j]), D[i−1][j] + 1, D[i][j−1] + 1 } — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Der erste Term fasst copy (Kosten 0 bei Übereinstimmung) und sub (Kosten 1 bei Abweichung) zusammen.",
+      "Der Term D[i−1][j] + 1 entspricht einer Löschung, D[i][j−1] + 1 einer Einfügung.",
+      "Der erste Term entspricht einer Einfügung, da ein Zeichen hinzugefügt wird.",
+      "Laufzeit und Speicher sind Θ(m + n), da immer nur eine Zeile gefüllt wird."
+    ],
+    "explanation": "Der Diagonalterm fasst copy/sub über den booleschen Abweichungsindikator zusammen ✓, und die vertikalen/horizontalen Terme sind del/ins ✓ — die Einfügung ist der *horizontale* Schritt ✗. Die vollständige Tabelle ist (m+1)×(n+1), Laufzeit und Speicher sind also beide Θ(mn) ✗.",
+    "source": "AuD26 Maxine 12 · Minimum Edit Distance"
+  },
+  {
+    "id": "dp-mc-4",
+    "prompt": "Warum eignet sich die minimale Editierdistanz gut für dynamische Programmierung? Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "D[i−1][j−1] wird sowohl direkt für D[i][j] als auch innerhalb der Berechnungen von D[i−1][j] und D[i][j−1] benötigt — die Teilprobleme überlappen sich.",
+      "Eine naive rekursive Lösung bräuchte exponentielle Zeit; die Tabelle reduziert das auf Θ(mn).",
+      "Zeile 0 und Spalte 0 werden mit 0, 1, 2, … initialisiert, weil sie die Distanz zum leeren String darstellen.",
+      "copy, ins, del und sub kosten im Standardmodell alle 1."
+    ],
+    "explanation": "Das Argument der geteilten Teilprobleme ✓ und der Zusammenbruch von exponentiell auf Θ(mn) ✓ sind genau die erwartete Antwort der Aufgabe. Option 3 ist als Tatsache *ebenfalls* richtig, aber kein Grund für den Einsatz von DP — und copy kostet **0**, nicht 1, was Option 4 schlicht falsch macht ✗✗.",
+    "source": "AuD26 Maxine 12 · G2(a)"
+  },
+  {
+    "id": "dp-q-2",
+    "prompt": "Welches dieser Probleme wird korrekt von einem Greedy-Algorithmus gelöst?",
+    "options": [
+      "0/1-Rucksackproblem",
+      "Fraktionales Rucksackproblem",
+      "Längste gemeinsame Teilfolge",
+      "Minimale Editierdistanz"
+    ],
+    "explanation": "Das fraktionale Rucksackproblem besitzt die Greedy-Choice-Eigenschaft: Nach Wert/Gewicht-Verhältnis zu sortieren und gierig zu füllen (das letzte Objekt geteilt) ist beweisbar optimal. Den anderen drei fehlt sie — beim 0/1-Rucksack lässt sich ein Objekt nicht teilen, sodass eine frühe Festlegung das Optimum verbauen kann, und beide String-Probleme brauchen die vollständige DP-Tabelle.",
+    "source": "AuD-Zusammenfassung §9.4"
+  },
+  {
+    "id": "dp-q-7",
+    "prompt": "0/1-Rucksack, Kapazität 50, Objekte (Wert, Gewicht): (60,10), (100,20), (120,30). Greedy nach Wert/Gewicht wählt Objekte 1+2 mit Wert 160. Wie lautet das echte Optimum?",
+    "options": [
+      "220, mit den Objekten 2+3 (Gewicht 20+30 = 50, exakt voll)",
+      "160 — Greedy ist hier bereits optimal",
+      "280, mit den Objekten 1+2+3",
+      "120, mit Objekt 3 allein"
+    ],
+    "explanation": "Die Objekte 2+3 füllen die Kapazität genau aus (20+30 = 50) und liefern Wert 100+120 = 220, womit sie Greedys 160 schlagen. Alle drei Objekte wiegen 60 > 50, Option 3 ist also unzulässig. Greedys frühe Festlegung auf das Objekt mit dem besten Verhältnis verbaut die bessere Kombination — genau deshalb braucht der 0/1-Rucksack DP.",
+    "source": "AuD-Zusammenfassung §9.4, Greedy-Gegenbeispiel"
+  },
+  {
+    "id": "dp-q-6",
+    "prompt": "Münzwechsel mit den Nennwerten {1, 3, 4} und Zielbetrag 6. Welche Aussage über den Greedy-Algorithmus (immer die größte passende Münze nehmen) ist korrekt?",
+    "options": [
+      "Greedy liefert 4+1+1 = 3 Münzen und ist nicht optimal — 3+3 = 2 Münzen ist besser.",
+      "Greedy liefert 3+3 = 2 Münzen und ist optimal.",
+      "Greedy liefert sechs 1er-Münzen und ist optimal.",
+      "Greedy liefert 4+1+1 = 3 Münzen und ist optimal."
+    ],
+    "explanation": "Greedy nimmt 4, dann 1, dann 1 — drei Münzen. Das Optimum 3+3 braucht nur zwei. Für beliebige Nennwerte gilt die Greedy-Choice-Eigenschaft einfach nicht, weshalb der Münzwechsel im Allgemeinen ein DP-Problem ist (für das Euro-/Dollar-System gilt sie, was das Scheitern so kontraintuitiv macht).",
+    "source": "AuD-Zusammenfassung §9.4, Münzwechsel"
+  },
+  {
+    "id": "dp-mc-5",
+    "prompt": "Greedy-Algorithmen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein Greedy-Algorithmus trifft in jedem Schritt die lokal beste Entscheidung und revidiert sie nie.",
+      "Neben der optimalen Teilstruktur braucht Greedy die Greedy-Choice-Eigenschaft: Eine lokal optimale Entscheidung ist Teil irgendeiner global optimalen Lösung.",
+      "Greedy-Algorithmen sind stets schneller *und* mindestens so gut wie dynamische Programmierung.",
+      "Kruskal und Prim sind Algorithmen der dynamischen Programmierung."
+    ],
+    "explanation": "Unwiderrufliche lokale Entscheidungen ✓ und die Greedy-Choice-Eigenschaft ✓ definieren das Paradigma. Greedy ist meist schneller, aber häufig *schlechter* — wieder der 0/1-Rucksack ✗ — und Kruskal und Prim sind die kanonischen *Greedy*-MST-Algorithmen ✗.",
+    "source": "AuD-Zusammenfassung §9.4"
+  },
+  {
+    "id": "dp-q-8",
+    "prompt": "Backtracking, z. B. bei Word Search (ein Wort entlang benachbarter Gitterzellen finden, jede höchstens einmal genutzt) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein Zweig wird sofort abgeschnitten, wenn die Kandidatenzelle außerhalb des Gitters liegt, den falschen Buchstaben trägt oder bereits Teil des aktuellen Pfads ist.",
+      "Beim Zurückverfolgen muss die „benutzt“-Markierung der Zelle aufgehoben werden, damit sie auf anderen Pfaden verfügbar bleibt.",
+      "Backtracking durchsucht den gesamten Suchraum, genau wie Brute Force.",
+      "Backtracking funktioniert nur bei Problemen mit optimaler Teilstruktur."
+    ],
+    "explanation": "Genau diese drei Bedingungen sind die Ungültigkeitstests von WordSearchBTR ✓, und das Aufheben der Markierung auf dem Rückweg ist es, was die Suche korrekt und nicht bloß schnell macht ✓. Das Beschneiden ist genau der Unterschied zu Brute Force ✗, und optimale Teilstruktur wird nicht gebraucht — Backtracking greift auch bei reinen Entscheidungs-/Constraint-Problemen ✗.",
+    "source": "AuD-Zusammenfassung §9.2, Word Search"
+  },
+  {
+    "id": "dp-mc-6",
+    "prompt": "Metaheuristiken — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Sie sind allgemeine Strategien für schwere Such- und Optimierungsprobleme, bei denen exakte Algorithmen zu langsam sind.",
+      "Simulated Annealing akzeptiert gelegentlich einen *schlechteren* Schritt, mit über die Zeit fallender Wahrscheinlichkeit, um lokalen Optima zu entkommen.",
+      "Metaheuristiken garantieren die global optimale Lösung, nur langsamer.",
+      "Hill Climbing ist eine Metaheuristik, die beweisbar stets das globale Optimum findet."
+    ],
+    "explanation": "Die allgemeine Rahmensetzung ✓ und der Mechanismus des Annealing ✓ sind die Definitionen der Vorlesung. Metaheuristiken geben Optimalitätsgarantien im Tausch gegen Geschwindigkeit auf ✗, und reines Hill Climbing ist das Standardbeispiel dafür, in einem lokalen Optimum hängen zu bleiben ✗.",
+    "source": "AuD-Zusammenfassung §9.5"
+  },
+  {
+    "id": "real-dp-4",
+    "prompt": "Die Fast Fourier Transform (FFT) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die FFT ist eine Metaheuristik-Methode zur Lösung von Optimierungsproblemen.",
+      "Die FFT verwendet ausschließlich reelle Zahlen und keine komplexen Zahlen.",
+      "Die FFT nutzt die n-te primitive Einheitswurzel e^(2πi/n), um die Berechnung effizienter zu gestalten.",
+      "Die FFT reduziert die Laufzeit der Multiplikation zweier Polynome vom Grad n−1 von Θ(n²) auf Θ(n·log(n))."
+    ],
+    "explanation": "Die FFT baut auf den komplexen Einheitswurzeln auf ✓ und liefert genau diese Beschleunigung von Θ(n²) auf Θ(n log n) für die Polynommultiplikation ✓. Sie ist ein *numerischer* Divide-and-Conquer-Algorithmus, keine Metaheuristik ✗, und sie ist grundlegend komplexwertig ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.18"
+  },
+  {
+    "id": "dp-mc-7",
+    "prompt": "Warum machen die Einheitswurzeln die FFT-Auswertung schnell? Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Aufspaltung p(x) = p_even(x²) + x·p_odd(x²) reduziert die Auswertung an n Punkten auf zwei halb so große Polynome an je n/2 Punkten.",
+      "Für gerades m gilt die Identität (ω_m^j)² = (ω_m^{j+m/2})², sodass ein quadrierter Wert zwei Auswertungspunkte bedient.",
+      "Die Einheitswurzeln stellen sicher, dass alle Zwischenergebnisse reell bleiben.",
+      "Der Trick funktioniert mit beliebigen n Auswertungspunkten, nicht speziell mit den Einheitswurzeln."
+    ],
+    "explanation": "Die Gerade/Ungerade-Aufspaltung ✓ zahlt sich nur aus, weil die gewählten Punkte beim Quadrieren paarweise zusammenfallen ✓ — was aus ω_m^m = 1 folgt. Die Zwischenwerte sind echt komplex ✗, und beliebige Punkte fallen beim Quadrieren *nicht* paarweise zusammen, genau deshalb sind die Einheitswurzeln erforderlich ✗.",
+    "source": "AuD26 Maxine 12 · FFT / Einheitswurzeln"
+  },
+  {
+    "id": "dp-mc-8",
+    "prompt": "Polynommultiplikation über die Punkt-Wert-Darstellung — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein Polynom vom Grad ≤ n−1 ist durch n Punkt/Wert-Paare an verschiedenen x-Stellen eindeutig bestimmt.",
+      "Das Produkt zweier Polynome vom Grad n−1 hat Grad 2n−2 und benötigt daher 2n−1 Punkt/Wert-Paare.",
+      "n Punkt/Wert-Paare von p und q genügen, um das Produkt eindeutig zu rekonstruieren.",
+      "In der Punkt-Wert-Darstellung entsteht das Produkt durch Konvolution der Werte."
+    ],
+    "explanation": "Der Eindeutigkeitssatz ✓ erzwingt die Anzahl 2n−1 für das Produkt ✓ — weshalb beide Eingaben an 2n−1 (in der Praxis 2n) Punkten ausgewertet werden müssen, was Option 3 zur klassischen Falle macht ✗. In der Punkt-Wert-Form ist das Produkt *punktweise*; die Konvolution passiert auf den *Koeffizienten* ✗.",
+    "source": "AuD26 Maxine 12 · Polynommultiplikation"
+  },
+  {
+    "id": "dp-mc-9",
+    "prompt": "Die drei Schritte der FFT-basierten Polynommultiplikation — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Koeffizienten → Punkt-Wert (die FFT selbst), dann punktweise Multiplikation, dann Punkt-Wert → Koeffizienten (die inverse FFT).",
+      "Die punktweise Multiplikation kostet nur Θ(n); das Θ(n log n) stammt von den beiden Transformationen.",
+      "Die punktweise Multiplikation ist der teure Schritt, mit Θ(n log n).",
+      "Die inverse FFT kann entfallen, da die Punkt-Wert-Darstellung bereits das Ergebnis ist."
+    ],
+    "explanation": "Die dreistufige Pipeline ✓ und die Kostenverteilung ✓ sind die Standardzusammenfassung. 2n Werte paarweise zu multiplizieren ist ein einzelner linearer Durchlauf ✗, und gesucht sind die Koeffizienten — nicht eine Liste von Punktwerten —, weshalb die Rücktransformation erforderlich ist ✗.",
+    "source": "AuD26 Maxine 12 · FFT-Überblick"
+  }
+]

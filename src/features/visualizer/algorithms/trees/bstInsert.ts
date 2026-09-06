@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
 
 const pseudocode = [
@@ -19,7 +19,7 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
   const nodes: Record<string, TreeNode> = {};
   let rootId: string | null = null;
   const steps: AlgorithmStep<TreeState>[] = [
-    { state: { nodes: {}, rootId: null }, description: 'Empty tree.', highlightLine: 0 },
+    { state: { nodes: {}, rootId: null }, description: msg('viz.d.emptyTree'), highlightLine: 0 },
   ];
 
   for (const value of input) {
@@ -29,7 +29,7 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
       rootId = newId;
       steps.push({
         state: { nodes: cloneNodes(nodes), rootId, newId },
-        description: `Insert ${value}: tree was empty, becomes root.`,
+        description: msg('viz.d.insertBecomesRoot', { value }),
         highlightLine: 1,
       });
       continue;
@@ -40,7 +40,7 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
       const cursor = nodes[cursorId];
       steps.push({
         state: { nodes: cloneNodes(nodes), rootId, highlightId: cursorId },
-        description: `Insert ${value}: compare with ${cursor.value}.`,
+        description: msg('viz.bst.compare', { value, node: cursor.value }),
         highlightLine: 2,
       });
       if (value < cursor.value) {
@@ -49,7 +49,7 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
           cursor.left = newId;
           steps.push({
             state: { nodes: cloneNodes(nodes), rootId, newId },
-            description: `${value} < ${cursor.value}: insert as left child.`,
+            description: msg('viz.bst.insertLeft', { value, node: cursor.value }),
             highlightLine: 3,
           });
           break;
@@ -61,7 +61,7 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
           cursor.right = newId;
           steps.push({
             state: { nodes: cloneNodes(nodes), rootId, newId },
-            description: `${value} >= ${cursor.value}: insert as right child.`,
+            description: msg('viz.bst.insertRight', { value, node: cursor.value }),
             highlightLine: 5,
           });
           break;
@@ -71,7 +71,7 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
     }
   }
 
-  steps.push({ state: { nodes: cloneNodes(nodes), rootId }, description: 'All values inserted.', highlightLine: 6 });
+  steps.push({ state: { nodes: cloneNodes(nodes), rootId }, description: msg('viz.d.allInserted'), highlightLine: 6 });
   return steps;
 }
 

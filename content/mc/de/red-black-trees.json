@@ -1,0 +1,74 @@
+[
+  {
+    "id": "rbt-q-1",
+    "prompt": "Ein neu eingefügter Knoten in einem Rot-Schwarz-Baum wird rot gefärbt. Welche der vier Regeln verletzt er am ehesten?",
+    "options": [
+      "Regel 1 — jeder Knoten ist rot oder schwarz",
+      "Regel 2 — die Wurzel ist schwarz",
+      "Regel 3 — ein roter Knoten hat nie ein rotes Kind",
+      "Regel 4 — jeder Pfad zu einem nil-Blatt enthält gleich viele schwarze Knoten"
+    ],
+    "explanation": "Den neuen Knoten rot zu färben erhält bewusst Regel 4 (die Schwarzhöhe bleibt unverändert). Der Preis dafür ist Regel 3: Ist der Vater ebenfalls rot, entsteht ein Rot-Rot-Paar und die Fixup-Routine wird ausgelöst. (Regel 2 wird nur im Sonderfall verletzt, dass der neue Knoten selbst die Wurzel ist — behoben durch ein einziges Umfärben.)",
+    "source": "AuD-Zusammenfassung §6.1"
+  },
+  {
+    "id": "rbt-mc-1",
+    "prompt": "Die Regeln des Rot-Schwarz-Baums — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Jeder Pfad von einem Knoten zu einem seiner nil-Blätter enthält gleich viele schwarze Knoten.",
+      "Hat ein Knoten genau ein echtes Kind, so muss dieses Kind rot sein.",
+      "Jeder Pfad von der Wurzel zu einem nil-Blatt enthält gleich viele *rote* Knoten.",
+      "Beide Kinder eines roten Knotens müssen rot sein."
+    ],
+    "explanation": "Die Schwarzhöhen-Regel ✓ impliziert direkt die Folgerung für das einzelne Kind: Ein schwarzes Einzelkind ergäbe auf dieser Seite mehr schwarze Knoten als auf der fehlenden ✓. Die *Anzahl* roter Knoten pro Pfad ist unbeschränkt ✗, und Regel 3 sagt das Gegenteil von Option 4 — die Kinder eines roten Knotens müssen schwarz sein ✗.",
+    "source": "AuD-Zusammenfassung §6.1"
+  },
+  {
+    "id": "rbt-mc-2",
+    "prompt": "Höhe und Komplexität von Rot-Schwarz-Bäumen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die vier Regeln garantieren eine Höhe von höchstens 2·log(n+1).",
+      "Suchen, Einfügen und Löschen sind im Worst Case alle Θ(log n).",
+      "Die Höhenschranke eines Rot-Schwarz-Baums ist schärfer als die eines AVL-Baums.",
+      "Das Rebalancieren nach einem Einfügen kann Θ(log n) Rotationen erfordern."
+    ],
+    "explanation": "Die Schranke ≤ 2·log(n+1) ✓ ist genau das, was alle drei Operationen im Worst Case zu Θ(log n) macht ✓. Die AVL-Schranke von ≈1,44·log(n+2) ist *schärfer*, nicht lockerer ✗. Das Insert-Fixup braucht höchstens 2 Rotationen (das Umfärben kann nach oben propagieren, die Rotationen nicht) ✗.",
+    "source": "AuD-Zusammenfassung §6.1"
+  },
+  {
+    "id": "rbt-mc-3",
+    "prompt": "Einfügen und Löschen im Rot-Schwarz-Baum — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Das Insert-Fixup braucht höchstens zwei Rotationen, egal wie weit das Umfärben nach oben propagiert.",
+      "Das Löschen kann ein „doppelt schwarzes“ Defizit erzeugen, das das Delete-Fixup in einem von vier Standardfällen auflöst.",
+      "Das Löschen braucht nie eine Rotation, da nur Farben repariert werden müssen.",
+      "Das Insert-Fixup beginnt an der Wurzel und arbeitet sich nach unten."
+    ],
+    "explanation": "Zwei Rotationen genügen beim Einfügen immer ✓, und das Entfernen eines schwarzen Knotens erzeugt das Doppelt-Schwarz-Defizit, das über die vier Geschwisterfälle behandelt wird ✓. Diese Fälle enthalten Rotationen ✗, und beide Fixups laufen vom veränderten Knoten *nach oben* ✗.",
+    "source": "AuD-Zusammenfassung §6.1, AuD26 Maxine RBT Delete"
+  },
+  {
+    "id": "rbt-mc-4",
+    "prompt": "Der T.nil-Wächter in Implementierungen von Rot-Schwarz-Bäumen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein einziger gemeinsamer, schwarz gefärbter Wächterknoten ersetzt sämtliche nil-Zeiger.",
+      "Er beseitigt nahezu alle Nullzeiger-Sonderfälle aus Einfügen und Löschen.",
+      "Jedes nil-Blatt braucht sein eigenes separates Wächterobjekt.",
+      "Der Wächter wird rot gefärbt, damit er die Schwarzhöhe nicht beeinflusst."
+    ],
+    "explanation": "Ein gemeinsamer schwarzer Wächter ✓ gibt jedem Knoten gültige left/right/parent-Referenzen und beseitigt damit die Nullprüfungen ✓. Genau die gemeinsame Nutzung eines einzigen Objekts ist der Sinn — Wächter pro Blatt verschwendeten Θ(n) Speicher ✗ — und er muss *schwarz* sein, damit die Schwarzhöhen-Regel konsistent zählt ✗.",
+    "source": "AuD-Zusammenfassung §6.1, Diskussion des Wächters"
+  },
+  {
+    "id": "rbt-mc-5",
+    "prompt": "Rotationen als Rebalancierungs-Primitive — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Eine Rotation ist eine lokale O(1)-Umstrukturierung, die ändert, welcher von zwei benachbarten Knoten oben steht.",
+      "Eine Rotation erhält die Inorder-Reihenfolge der Schlüssel und damit die BST-Eigenschaft.",
+      "Eine Rotation ändert die Inorder-Reihenfolge, weshalb die Schlüssel anschließend neu sortiert werden müssen.",
+      "rotateLeft und rotateRight kosten jeweils Θ(log n), da die Teilbaumhöhen neu berechnet werden müssen."
+    ],
+    "explanation": "Eine Rotation verknüpft eine konstante Anzahl von Zeigern neu ✓ und ist gerade so konstruiert, dass die Inorder-Reihenfolge unangetastet bleibt ✓ — genau das macht sie für BSTs, AVL- und RB-Bäume gleichermaßen sicher. Die Optionen 3 und 4 widersprechen beiden Tatsachen ✗✗ (es müssen nur die Höhen der zwei rotierten Knoten aktualisiert werden, was O(1) ist).",
+    "source": "AuD-Zusammenfassung §6.1–6.2"
+  }
+]

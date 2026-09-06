@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ins-q-1",
+    "prompt": "Welche Aussage über die Laufzeit von Insertion Sort ist korrekt?",
+    "options": [
+      "Best, Worst und Average Case liegen alle in Θ(n log n).",
+      "Der Worst Case ist Θ(n²) und tritt bei umgekehrt sortierter Eingabe auf.",
+      "Der Worst Case ist Θ(n²) und tritt bei bereits sortierter Eingabe auf.",
+      "Der Best Case ist Θ(1), weil der Algorithmus sortierte Eingaben sofort erkennt."
+    ],
+    "explanation": "Umgekehrt sortierte Eingabe zwingt jeden Schlüssel, am gesamten sortierten Präfix vorbeizuwandern → Θ(n²). Bereits sortierte Eingabe ist der *Best Case*, Θ(n): Die While-Bedingung scheitert bei jedem Schlüssel sofort — das kostet aber immer noch einen Vergleich pro Element, also Θ(n), nicht Θ(1).",
+    "source": "AuD-Zusammenfassung §4.2"
+  },
+  {
+    "id": "ins-mc-1",
+    "prompt": "Insertion Sort — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Der Best Case ist Θ(n) und tritt ein, wenn die Eingabe bereits sortiert ist.",
+      "Insertion Sort ist stabil und sortiert in-place.",
+      "Der Average Case liegt in Θ(n log n).",
+      "Insertion Sort ist im Worst Case asymptotisch schneller als Quicksort."
+    ],
+    "explanation": "Sortierte Eingabe braucht einen Vergleich pro Schlüssel ⟹ Θ(n) ✓, und der Algorithmus verschiebt nur innerhalb des Arrays und nutzt einen echten `>`-Vergleich ⟹ in-place und stabil ✓. Der Average Case ist Θ(n²), nicht Θ(n log n) ✗. Quicksorts Worst Case ist ebenfalls Θ(n²), Insertion Sort ist also nicht asymptotisch schneller ✗.",
+    "source": "AuD26 Blatt 03 · G3(b)"
+  },
+  {
+    "id": "ins-q-4",
+    "prompt": "Die innere Schleife von Insertion Sort nutzt den echten Vergleich `while i ≥ 0 and A[i] > key`. Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Das echte `>` bewirkt, dass gleiche Elemente nie eine Verschiebung auslösen — genau das macht Insertion Sort stabil.",
+      "Ein Ersetzen von `>` durch `≥` würde die Stabilität zerstören, ohne die asymptotische Laufzeit zu ändern.",
+      "Ein Ersetzen von `>` durch `≥` würde den Best Case auf Θ(1) verbessern.",
+      "Die Stabilität von Insertion Sort hängt davon ab, dass die Eingabe paarweise verschiedene Schlüssel enthält."
+    ],
+    "explanation": "Mit `>` stoppt ein gleiches Element die Verschiebung sofort und das frühere Vorkommen bleibt vorne ⟹ stabil ✓. Mit `≥` würden gleiche Elemente aneinander vorbeigeschoben, die Stabilität ginge verloren, während Θ(n²)/Θ(n) unverändert bleiben ✓. Der Best Case würde dadurch *schlechter*, nicht besser ✗, und Stabilität ist gerade eine Aussage über *doppelte* Schlüssel ✗.",
+    "source": "AuD-Zusammenfassung §4.2, Diskussion der Stabilität"
+  },
+  {
+    "id": "ins-mc-2",
+    "prompt": "Die Schleifeninvariante von Insertion Sort — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Vor jeder Iteration der äußeren for-Schleife mit Index j enthält das Teilarray A[0..j−1] die ursprünglichen Elemente von A[0..j−1] in sortierter Reihenfolge.",
+      "Beim Abbruch (j = n) besagt die Invariante, dass das gesamte Array sortiert und eine Permutation der Eingabe ist.",
+      "Die Invariante besagt, dass A[0..j−1] die j kleinsten Elemente des gesamten Arrays in sortierter Reihenfolge enthält.",
+      "Die Invariante gilt nur, wenn das Eingabearray bereits teilweise sortiert ist."
+    ],
+    "explanation": "Das sortierte Präfix besteht aus den *ursprünglich ersten j Elementen*, nur umgeordnet ✓ — nicht aus den global j kleinsten ✗ (das wäre die Invariante von Selection Sort). Einsetzen von j = n liefert die Nachbedingung ✓, und die Invariante gilt für beliebige Eingaben ✗.",
+    "source": "AuD26 Blatt 01, Schleifeninvarianten"
+  },
+  {
+    "id": "ins-mc-3",
+    "prompt": "Um *absteigend* zu sortieren, muss die While-Bedingung `A[i] > key` von INSERTION-SORT geändert werden. Welche Aussage ist korrekt?",
+    "options": [
+      "Sie wird zu `A[i] < key`, während die Verschiebung `A[i+1] = A[i]` und das Dekrement `i = i − 1` unverändert bleiben.",
+      "Sie wird zu `A[i] < key`, und das Dekrement muss zu `i = i + 1` geändert werden.",
+      "Die Bedingung bleibt gleich; nur die äußere Schleife muss rückwärts laufen.",
+      "Absteigendes Sortieren ist mit Insertion Sort ohne einen zusätzlichen Umkehr-Durchlauf nicht möglich."
+    ],
+    "explanation": "Nur die Vergleichsrichtung kippt: Jetzt müssen *kleinere* Elemente als der Schlüssel nach rechts geschoben werden. Der Scan läuft weiterhin nach links durch das bereits aufgebaute Präfix (`i = i − 1`), und die abschließende Platzierung `A[i+1] = key` bleibt gleich. Ein zusätzlicher Durchlauf ist nicht nötig.",
+    "source": "Altklausur WS23/24 · Aufgabe 1.1"
+  }
+]

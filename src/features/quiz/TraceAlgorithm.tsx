@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getAlgorithm } from '../visualizer/registry';
 import type { TraceQuestion } from '../../lib/types';
+import { useT } from '../../lib/i18n/locale';
 
 export function TraceAlgorithm({
   question,
@@ -9,6 +10,7 @@ export function TraceAlgorithm({
   question: TraceQuestion;
   onSubmit: (answer: unknown) => void;
 }) {
+  const t = useT();
   const algorithm = getAlgorithm(question.algorithmId);
   const [answerText, setAnswerText] = useState('');
 
@@ -16,14 +18,14 @@ export function TraceAlgorithm({
     <div>
       <p className="mb-2">{question.prompt}</p>
       <p className="mb-3 text-xs text-[var(--color-text-dim)]">
-        Input: <code>{JSON.stringify(question.initialInput)}</code>
-        {algorithm ? ` — for ${algorithm.title}` : ''}
+        {t('quiz.traceInput')} <code>{JSON.stringify(question.initialInput)}</code>
+        {algorithm ? t('quiz.traceFor', { algorithm: algorithm.title }) : ''}
       </p>
       <input
         className="w-full rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm"
         value={answerText}
         onChange={(e) => setAnswerText(e.target.value)}
-        placeholder="Predicted result, as JSON e.g. [1,3,4,5,8]"
+        placeholder={t('quiz.tracePlaceholder')}
       />
       <button
         className="btn btn-primary mt-3"
@@ -36,7 +38,7 @@ export function TraceAlgorithm({
           }
         }}
       >
-        Submit
+        {t('common.submit')}
       </button>
     </div>
   );

@@ -1,0 +1,93 @@
+[
+  {
+    "id": "real-bst-1",
+    "prompt": "Welche Traversierung eines binären Suchbaums gibt die Elemente aufsteigend sortiert aus?",
+    "options": ["Preorder-Traversierung", "Postorder-Traversierung", "Inorder-Traversierung", "Jede der oben genannten Traversierungen"],
+    "explanation": "Inorder besucht linken Teilbaum → Knoten → rechten Teilbaum. Zusammen mit der BST-Invariante (alles links < Knoten < alles rechts) ergibt das die Schlüssel in aufsteigender Reihenfolge. Preorder und Postorder leisten das nicht.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.5"
+  },
+  {
+    "id": "real-bst-2",
+    "prompt": "Binäre Suchbäume (BST) mit n Elementen — welche Aussage ist korrekt?",
+    "options": [
+      "In einem BST können Blätter auf jeder Ebene auftreten.",
+      "Auf einer Ebene mit Tiefe d gibt es immer weniger als 2^d viele Knoten im BST.",
+      "Die Höhe eines BST kann im Worst Case gleich n sein.",
+      "Im Best Case ist die Höhe eines BST log₁₀ n."
+    ],
+    "explanation": "In einem unbalancierten BST können Blätter tatsächlich in jeder Tiefe auftreten ✓. Eine Ebene der Tiefe d fasst *höchstens* 2^d Knoten — eine volle Ebene hat genau 2^d, „immer weniger“ ist also falsch. Die Höhe zählt Kanten, eine entartete Kette aus n Knoten hat also Höhe n−1, nicht n. Die Best-Case-Höhe ist ⌊log₂ n⌋ — die Basis ist 2, nicht 10.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.4"
+  },
+  {
+    "id": "bst-q-4",
+    "prompt": "Ein BST-Knoten mit zwei Kindern wird gelöscht. Welcher Knoten nimmt seinen Platz ein?",
+    "options": [
+      "Sein Vater",
+      "Die Wurzel des Baums",
+      "Sein Inorder-Nachfolger — der kleinste Schlüssel in seinem rechten Teilbaum",
+      "Ein beliebig gewählter Nachfahre"
+    ],
+    "explanation": "Der Nachfolger ist der kleinste Schlüssel, der noch größer als alles im linken Teilbaum des gelöschten Knotens ist; setzt man ihn in die Lücke, bleibt die BST-Invariante auf beiden Seiten erhalten. (Der Inorder-Vorgänger — das Maximum des linken Teilbaums — funktioniert symmetrisch; die Vorlesung verwendet den Nachfolger.)",
+    "source": "AuD-Zusammenfassung §5.4"
+  },
+  {
+    "id": "bst-mc-1",
+    "prompt": "BST-Löschen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die drei Fälle lauten: kein Kind, genau ein Kind und zwei Kinder.",
+      "Im Ein-Kind-Fall wird das Kind einfach an die Position des entfernten Knotens gesetzt.",
+      "Im Zwei-Kinder-Fall rückt der Vater des gelöschten Knotens nach unten an dessen Stelle.",
+      "Das Löschen eines Blattes erfordert eine Rotation, um die BST-Eigenschaft wiederherzustellen."
+    ],
+    "explanation": "Die übliche Fallunterscheidung ist 0 / 1 / 2 Kinder ✓, und ein einzelnes Kind wird direkt hochgezogen ✓. Zwei Kinder werden über den Nachfolger behandelt, nie über den Vater ✗, und reine BSTs rotieren überhaupt nicht ✗.",
+    "source": "AuD-Zusammenfassung §5.4"
+  },
+  {
+    "id": "bst-mc-2",
+    "prompt": "Komplexität der BST-Operationen bei n Elementen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Suchen, Einfügen und Löschen kosten jeweils Θ(h), wobei h die Höhe des Baums ist.",
+      "Das Einfügen bereits sortierter Schlüssel in einen leeren BST erzeugt einen entarteten Baum mit Suchkosten Θ(n).",
+      "Die Suche ist in einem BST unabhängig von der Einfügereihenfolge Θ(log n).",
+      "Eine Inorder-Traversierung eines BST kostet Θ(log n)."
+    ],
+    "explanation": "Alle drei Operationen folgen genau einem Pfad von der Wurzel zum Knoten ⟹ Θ(h) ✓, und sortierte Eingabe entartet den BST zu einer verketteten Liste mit h = n−1 ✓. Θ(log n) gilt nur für *balancierte* Bäume ✗, und eine Traversierung muss jeden Knoten besuchen ⟹ Θ(n) ✗.",
+    "source": "AuD-Zusammenfassung §5.4"
+  },
+  {
+    "id": "bst-mc-3",
+    "prompt": "Baumtraversierungen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Preorder besucht Knoten → links → rechts, Postorder besucht links → rechts → Knoten.",
+      "Jede Traversierung eines Baums mit n Knoten kostet Θ(n), da jeder Knoten genau einmal besucht wird.",
+      "Eine Preorder-Traversierung eines Min-Heaps gibt die Elemente sortiert aus.",
+      "Die Postorder-Traversierung eines BST gibt die Elemente absteigend sortiert aus."
+    ],
+    "explanation": "Die Besuchsreihenfolgen ✓ und die Kosten von Θ(n) ✓ sind definitorisch. Ein Min-Heap garantiert nur Vater ≤ Kinder, die Preorder-Ausgabe ist also nicht sortiert ✗ (z. B. Wurzel 1 mit Kindern 3 und 2 → 1,3,…,2). Absteigende Reihenfolge liefert die *umgekehrte Inorder*, nicht Postorder ✗.",
+    "source": "AuD-Zusammenfassung §5.4 / Gedächtnisprotokoll MC II.10"
+  },
+  {
+    "id": "bst-q-7",
+    "prompt": "Für eine der folgenden Zahlenfolgen existiert kein binärer Suchbaum, in dem sie ein gültiger Suchpfad ist. Welche Folge ist das?",
+    "options": [
+      "124, 153, 131, 148, 142, 156",
+      "47, 19, 41, 26, 33, 38",
+      "312, 814, 421, 715, 523, 618, 594",
+      "Keine — alle drei sind gültige Suchpfade"
+    ],
+    "explanation": "Ein Suchpfad hält ein sich verengendes Intervall ein. Nach dem Rechtsschritt von 124 auf 153 und dem anschließenden Linksschritt von 153 auf 131 muss jeder weitere Schlüssel unter 153 bleiben. Der letzte Wert 156 > 153 verletzt diese Schranke, kein BST kann diesen Pfad also erzeugen. Die beiden anderen Folgen halten ihre Intervalle durchgehend ein.",
+    "source": "Altklausur WS23/24 · Aufgabe 2.4"
+  },
+  {
+    "id": "bst-mc-4",
+    "prompt": "Nachfolger und Vorgänger in einem BST — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Hat ein Knoten einen rechten Teilbaum, so ist sein Nachfolger das Minimum dieses rechten Teilbaums.",
+      "Hat ein Knoten keinen rechten Teilbaum, so ist sein Nachfolger der niedrigste Vorfahre, in dessen linkem Teilbaum der Knoten liegt.",
+      "Der Nachfolger eines Knotens ist stets eines seiner eigenen Kinder.",
+      "Das Maximum eines BST ist der tiefste Knoten des Baums."
+    ],
+    "explanation": "Das sind die beiden Standardfälle von TREE-SUCCESSOR ✓✓. Der Nachfolger kann ein Vorfahre statt eines Nachfahren sein ✗, und das Maximum ist der am weitesten rechts liegende Knoten, der nicht der tiefste sein muss ✗.",
+    "source": "AuD-Zusammenfassung §5.4"
+  }
+]

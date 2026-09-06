@@ -1,0 +1,98 @@
+[
+  {
+    "id": "splay-q-2",
+    "prompt": "Der zu splayende Knoten hat keinen Großvater — sein Vater ist die Wurzel. Welcher Fall liegt vor?",
+    "options": [
+      "Zig — eine einzelne Rotation um den Vater",
+      "Zig-Zig — zuerst um den Großvater rotieren, dann um den Vater",
+      "Zig-Zag — zuerst um den Vater rotieren, dann um den Großvater",
+      "Keiner — das Splayen endet, wenn der Großvater fehlt"
+    ],
+    "explanation": "Zig ist der Einzelrotationsfall, der genau dann greift, wenn kein Großvater existiert. Er tritt pro Splay höchstens einmal auf, nämlich als letzter Schritt, der den Knoten in die Wurzelposition hebt.",
+    "source": "AuD26 Blatt 07 · Splay-Bäume"
+  },
+  {
+    "id": "splay-q-3",
+    "prompt": "Knoten w und sein Vater p sind beide linke Kinder ihrer jeweiligen Väter. Welcher Fall liegt vor, und in welcher Reihenfolge wird rotiert?",
+    "options": [
+      "Zig-Zig: zuerst um den Großvater g rotieren, dann um p",
+      "Zig-Zig: zuerst um p rotieren, dann um g",
+      "Zig-Zag: zuerst um p rotieren, dann um g",
+      "Zig: eine einzelne Rotation um p"
+    ],
+    "explanation": "Gleiche Seite (beide links oder beide rechts) = Zig-Zig. Dabei wird der *entferntere* Knoten — der Großvater — zuerst rotiert, danach der Vater. Genau diese Reihenfolge unterscheidet Zig-Zig von zwei unabhängigen Zig-Schritten, die einen anderen, schlechter balancierten Baum hinterließen.",
+    "source": "AuD26 Blatt 07 · Splay-Bäume"
+  },
+  {
+    "id": "splay-q-4",
+    "prompt": "Knoten w ist ein linkes Kind von p, und p ist ein rechtes Kind von g. Welcher Fall liegt vor, und in welcher Reihenfolge wird rotiert?",
+    "options": [
+      "Zig-Zag: zuerst um p rotieren, dann um g",
+      "Zig-Zig: zuerst um g rotieren, dann um p",
+      "Zig-Zag: zuerst um g rotieren, dann um p",
+      "Zig: eine einzelne Rotation um g"
+    ],
+    "explanation": "Gegenüberliegende Seiten = Zig-Zag, und hier wird der *nähere* Knoten (der Vater p) zuerst rotiert, danach der Großvater g. Man beachte, dass die Rotationsreihenfolge spiegelbildlich zu Zig-Zig ist — dieser Kontrast ist das am häufigsten geprüfte Detail des Splayens.",
+    "source": "AuD26 Blatt 07 · Splay-Bäume"
+  },
+  {
+    "id": "splay-mc-1",
+    "prompt": "Die drei Splay-Fälle — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Zig tritt pro Splay höchstens einmal auf, nämlich als letzter Schritt.",
+      "Zig-Zig rotiert zuerst den entfernteren Knoten (g), Zig-Zag zuerst den näheren (p).",
+      "Zig-Zig und Zig-Zag verwenden dieselbe Rotationsreihenfolge; nur die Seiten unterscheiden sich.",
+      "Welcher Fall greift, bestimmt der gesuchte Schlüssel, nicht die Position des Knotens."
+    ],
+    "explanation": "Zig kann nur zünden, wenn der Vater bereits die Wurzel ist, also höchstens einmal und zuletzt ✓, und die unterschiedliche Rotationsreihenfolge ist der definierende Kontrast ✓✗. Der Fall ergibt sich rein aus der geometrischen Lage von Knoten, Vater und Großvater ✗.",
+    "source": "AuD26 Blatt 07 · Splay-Bäume"
+  },
+  {
+    "id": "splay-q-5",
+    "prompt": "Eine Suche im Splay-Baum findet den Schlüssel nicht. Welche Aussage ist korrekt?",
+    "options": [
+      "Der zuletzt besuchte Knoten vor dem Herausfallen aus dem Baum wird trotzdem zur Wurzel gesplayt.",
+      "Es passiert nichts — nur erfolgreiche Suchen lösen ein Splay aus.",
+      "Der Baum wird von Grund auf neu aufgebaut.",
+      "Es wird ein Fehler ausgelöst und der Baum bleibt in einem inkonsistenten Zustand."
+    ],
+    "explanation": "Gesplayt wird bei *jedem* Zugriff, erfolgreich oder nicht — der zuletzt untersuchte echte Knoten wird zur neuen Wurzel. Genau das macht den Baum selbstanpassend, und genau deshalb beginnt das Splay-Löschen mit einer Suche, die den relevanten Knoten bereits an die Wurzel befördert hat.",
+    "source": "AuD26 Blatt 07 · Splay-Bäume"
+  },
+  {
+    "id": "splay-q-9",
+    "prompt": "Komplexität von Splay-Bäumen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Einfügen, Suchen und Löschen sind amortisiert O(log n).",
+      "Eine einzelne Operation kann im Worst Case dennoch O(n) kosten.",
+      "Jede einzelne Operation ist O(log n), auch im Worst Case.",
+      "Wiederholter Zugriff auf denselben Schlüssel kostet jedes Mal Θ(log n)."
+    ],
+    "explanation": "Das Potentialfunktions-Argument liefert amortisiert O(log n) ✓, während ein einzelnes Splay einen ganzen Pfad aus n Knoten durchlaufen kann ⟹ O(n) für eine einzelne Operation ✓✗. Wiederholter Zugriff auf denselben Schlüssel ist amortisiert O(1), da er bereits an der Wurzel steht ✗.",
+    "source": "AuD26 Blatt 07 · Splay-Bäume"
+  },
+  {
+    "id": "splay-mc-2",
+    "prompt": "Splay-Bäume im Vergleich mit AVL- und Rot-Schwarz-Bäumen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Splay-Bäume speichern überhaupt keine Balance-Metadaten — keine Höhen, keine Farben, keine Balancefaktoren.",
+      "Splay-Bäume strukturieren den Baum selbst bei einem reinen Lesezugriff um, was AVL- und RB-Bäume nicht tun.",
+      "Splay-Bäume führen wie AVL-Bäume einen Balancefaktor pro Knoten.",
+      "Splay-Bäume garantieren eine Höhe von höchstens 2·log(n+1)."
+    ],
+    "explanation": "Das Fehlen gespeicherter Metadaten ✓ und das Umstrukturieren beim Lesen ✓ sind die beiden definierenden Unterschiede. Die Optionen 3 und 4 beschreiben Garantien, die Splay-Bäume bewusst aufgeben ✗✗ — es gibt keine Worst-Case-Höhenschranke, nur eine amortisierte.",
+    "source": "AuD26 Blatt 07 · Splay-Bäume"
+  },
+  {
+    "id": "splay-mc-3",
+    "prompt": "Das Splay-Löschen eines vorhandenen Schlüssels — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die einleitende Suche splayt den Knoten zur Wurzel, sodass der zu löschende Knoten beim Entfernen die Wurzel ist.",
+      "Nach dem Entfernen der Wurzel wird das Maximum des linken Teilbaums L zur Wurzel von L gesplayt; da es kein rechtes Kind hat, kann R dort direkt angehängt werden.",
+      "Nach dem Entfernen der Wurzel wird das Minimum von L hochgesplayt und R als dessen linkes Kind angehängt.",
+      "Ist L leer, schlägt das Löschen fehl und der Baum muss neu aufgebaut werden."
+    ],
+    "explanation": "Die Suche splayt immer, das Löschen findet also stets an der Wurzel statt ✓, und das *Maximum* von L hat beweisbar kein rechtes Kind — genau der freie Platz, den R braucht ✓. Das Minimum hätte kein *linkes* Kind, also die falsche Seite ✗, und ein leeres L ist trivial: R wird einfach zum neuen Baum ✗.",
+    "source": "AuD26 Blatt 07 · Splay-Löschen"
+  }
+]

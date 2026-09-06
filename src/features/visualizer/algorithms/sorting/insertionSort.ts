@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { ArrayRenderer, type ArrayState } from './ArrayRenderer';
 
 const pseudocode = [
@@ -15,7 +15,7 @@ function generateSteps(input: number[]): AlgorithmStep<ArrayState>[] {
   const a = [...input];
   const n = a.length;
   const steps: AlgorithmStep<ArrayState>[] = [
-    { state: { values: [...a], sortedFrom: n - Math.min(1, n) }, description: 'Initial array. A[0] counts as sorted.', highlightLine: 0 },
+    { state: { values: [...a], sortedFrom: n - Math.min(1, n) }, description: msg('viz.ins.initial'), highlightLine: 0 },
   ];
 
   for (let i = 1; i < n; i++) {
@@ -23,31 +23,31 @@ function generateSteps(input: number[]): AlgorithmStep<ArrayState>[] {
     let j = i - 1;
     steps.push({
       state: { values: [...a], comparing: [i, i], sortedFrom: i },
-      description: `Take key = a[${i}] = ${key}.`,
+      description: msg('viz.ins.takeKey', { i, key }),
       highlightLine: 1,
     });
     while (j >= 0 && a[j] > key) {
       steps.push({
         state: { values: [...a], comparing: [j, i], sortedFrom: i },
-        description: `a[${j}]=${a[j]} > key=${key}: shift right.`,
+        description: msg('viz.ins.shift', { j, aj: a[j], key }),
         highlightLine: 3,
       });
       a[j + 1] = a[j];
       j = j - 1;
       steps.push({
         state: { values: [...a], swapping: [j + 1, j + 2 <= n - 1 ? j + 2 : j + 1], sortedFrom: i },
-        description: `Shifted. Continue looking left.`,
+        description: msg('viz.ins.shifted'),
         highlightLine: 4,
       });
     }
     a[j + 1] = key;
     steps.push({
       state: { values: [...a], sortedFrom: i + 1 },
-      description: `Insert key=${key} at position ${j + 1}.`,
+      description: msg('viz.ins.insertAt', { key, pos: j + 1 }),
       highlightLine: 6,
     });
   }
-  steps.push({ state: { values: [...a], sortedFrom: 0 }, description: 'Array is sorted.', highlightLine: 0 });
+  steps.push({ state: { values: [...a], sortedFrom: 0 }, description: msg('viz.d.arraySorted'), highlightLine: 0 });
   return steps;
 }
 

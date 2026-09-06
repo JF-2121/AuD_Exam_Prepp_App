@@ -1,0 +1,38 @@
+[
+  {
+    "id": "bub-q-1",
+    "prompt": "Welche Aussage über Bubble Sort ist korrekt?",
+    "options": [
+      "Eine zufällige Pivot-Wahl verschafft Bubble Sort einen Best Case von Θ(n).",
+      "Ein Abbruch-Flag, das stoppt, sobald ein vollständiger Durchlauf keinen Tausch mehr macht, verschafft Bubble Sort einen Best Case von Θ(n).",
+      "Ein temporäres Array verschafft Bubble Sort einen Best Case von Θ(n).",
+      "Bubble Sort hat auch ohne jede Optimierung einen Best Case von Θ(n)."
+    ],
+    "explanation": "Führt ein vollständiger Durchlauf keinen Tausch aus, ist das Array nachweislich sortiert und der Algorithmus darf abbrechen — dieser eine Durchlauf kostet Θ(n). Ohne das Flag läuft die naive Variante auch bei sortierter Eingabe alle n−1 Durchläufe und bleibt damit bei Θ(n²). Bubble Sort hat kein Pivot und braucht kein temporäres Array.",
+    "source": "AuD-Zusammenfassung §4.3"
+  },
+  {
+    "id": "bub-mc-1",
+    "prompt": "Bubble Sort — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Nach dem i-ten Durchlauf stehen die i größten Elemente garantiert an ihren endgültigen Positionen am Ende des Arrays.",
+      "Bubble Sort ist stabil, weil er nur echt fehlgeordnete benachbarte Paare vertauscht.",
+      "Der Worst Case von Bubble Sort ist Θ(n log n) bei umgekehrt sortierter Eingabe.",
+      "Bubble Sort benötigt Θ(n) zusätzlichen Speicher für den Tauschpuffer."
+    ],
+    "explanation": "Jeder Durchlauf befördert das größte verbleibende Element ans Ende, nach i Durchläufen sind die letzten i Plätze also endgültig ✓. Nur `A[j] > A[j+1]` löst einen Tausch aus, gleiche Elemente überholen sich also nie ⟹ stabil ✓. Der Worst Case ist Θ(n²) ✗, und ein Tausch braucht nur Θ(1) Zusatzspeicher ✗.",
+    "source": "AuD-Zusammenfassung §4.3"
+  },
+  {
+    "id": "bub-mc-2",
+    "prompt": "Bubble Sort im Vergleich mit Insertion Sort — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Beide haben Θ(n²) im Average und Worst Case, und beide sind stabil und in-place.",
+      "Insertion Sort ist in der Praxis meist schneller, weil er pro Element weniger tatsächliche Operationen ausführt.",
+      "Bubble Sort ist im Average Case asymptotisch schneller als Insertion Sort.",
+      "Nur Insertion Sort erreicht einen Best Case von Θ(n); Bubble Sort kann das auch optimiert nicht."
+    ],
+    "explanation": "Beide teilen dasselbe asymptotische Profil und sind stabile In-place-Vergleichssortierer ✓, aber Insertion Sort verschiebt, statt wiederholt zu tauschen, und hat damit kleinere Konstanten ✓. Keiner ist asymptotisch schneller als der andere ✗, und optimierter Bubble Sort erreicht bei sortierter Eingabe sehr wohl Θ(n) ✗.",
+    "source": "AuD-Zusammenfassung §4.3"
+  }
+]

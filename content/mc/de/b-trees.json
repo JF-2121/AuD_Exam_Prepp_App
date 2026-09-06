@@ -1,0 +1,110 @@
+[
+  {
+    "id": "btree-mc-1",
+    "prompt": "B-Baum mit Minimalgrad t — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Jeder Knoten außer der Wurzel enthält zwischen t−1 und 2t−1 Schlüsseln.",
+      "Alle Blätter liegen auf derselben Tiefe, ein B-Baum ist also konstruktionsbedingt höhenbalanciert.",
+      "Ein Knoten mit k Schlüsseln hat genau k Kinder.",
+      "Die Wurzel muss wie jeder andere Knoten mindestens t−1 Schlüssel enthalten."
+    ],
+    "explanation": "Die Schranken für die Schlüsselanzahl ✓ und die gleiche Blatttiefe ✓ sind definitorisch. Ein Knoten mit k Schlüsseln hat k+1 Kinder — das zusätzliche Kind deckt den Bereich jenseits des letzten Schlüssels ab ✗ — und die Wurzel ist die ausdrückliche Ausnahme mit nur 1 Schlüssel ✗.",
+    "source": "AuD26 Blatt 08 · B-Bäume"
+  },
+  {
+    "id": "btree-mc-2",
+    "prompt": "Warum werden B-Bäume für plattengestützte Speicherung verwendet? Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Viele Schlüssel pro Knoten halten den Baum sehr flach, sodass wenige Plattenzugriffe nötig sind.",
+      "Ein Fetch aus dem Speicher dauert deutlich länger als ein Vergleich, sodass das Vergleichen vieler bereits geladener Schlüssel in einem Knoten billig ist.",
+      "B-Bäume benötigen insgesamt weniger Vergleiche als ein BST mit denselben Schlüsseln.",
+      "B-Bäume kommen vollständig ohne Zeiger aus, es müssen also keine Speicheradressen aufgelöst werden."
+    ],
+    "explanation": "Geringe Höhe ⟹ wenige Fetches ✓, und „Fetch dauert länger als Compare“ ist genau das Architekturargument aus der Vorlesung ✓. Ein B-Baum führt womöglich sogar *mehr* Vergleiche aus als ein BST — er führt nur weit weniger teure Fetches aus ✗ — und er nutzt weiterhin Kindzeiger ✗.",
+    "source": "AuD26 Blatt 08 · Warum B-Trees?"
+  },
+  {
+    "id": "btree-q-2",
+    "prompt": "Welche Idee erlaubt es, dass das B-Baum-Einfügen ein einziger Durchlauf von oben nach unten ohne Zurückverfolgen ist?",
+    "options": [
+      "Jeder angetroffene volle Knoten wird vorsorglich gespalten, *bevor* der Algorithmus in ihn absteigt.",
+      "Eingefügt wird immer an der Wurzel, und ein Hintergrundprozess rebalanciert später.",
+      "Überzählige Schlüssel werden in einer separaten Überlaufliste gehalten.",
+      "Es werden nur Blätter verwendet, die vorab mit Reservekapazität angelegt wurden."
+    ],
+    "explanation": "Ein Kind vor dem Absteigen zu prüfen und ggf. zu spalten garantiert, dass das schließlich erreichte Blatt nicht voll ist — auf dem Rückweg ist also nie eine Spaltung nötig. Das ist das exakte Spiegelbild der Regel „vor dem Absteigen ≥ t Schlüssel sicherstellen“ beim Löschen.",
+    "source": "AuD26 Blatt 08 · B-Baum-Einfügen"
+  },
+  {
+    "id": "btree-q-3",
+    "prompt": "Ein voller Knoten c (2t−1 Schlüssel) mit Vater x wird gespalten. Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Der Median — der t-te Schlüssel von c — wandert an seine korrekte sortierte Position nach oben in x.",
+      "Die verbleibenden 2t−2 Schlüssel teilen sich gleichmäßig: t−1 bleiben in c, t−1 wandern in einen neuen rechten Bruder.",
+      "Der Median wird verworfen, da er nun durch die Trennstelle repräsentiert wird.",
+      "Alle 2t−1 Schlüssel wandern in den neuen Bruder und lassen c leer zurück."
+    ],
+    "explanation": "Das Hochziehen des Medians ✓ und das gleichmäßige Aufteilen des Rests in t−1 / t−1 ✓ bilden die Spaltoperation. War c ein innerer Knoten, teilen sich seine 2t Kinder ebenso t / t auf. Nichts wird verworfen ✗ und c wird nie geleert ✗.",
+    "source": "AuD26 Blatt 08 · splitChild"
+  },
+  {
+    "id": "btree-q-6",
+    "prompt": "B-Baum-Löschen: Beim Absteigen hat das Kind c, in das eingetreten werden muss, genau t−1 Schlüssel, und ein unmittelbarer Bruder hat ≥ t Schlüssel. Was geschieht vor dem Absteigen?",
+    "options": [
+      "Ausleihen: Der Trennschlüssel rotiert vom Vater hinunter in c, und der angrenzende Extremschlüssel des Bruders wandert hinauf in den Vater.",
+      "c wird unabhängig von der Schlüsselanzahl mit diesem Bruder verschmolzen.",
+      "Nichts — t−1 Schlüssel genügen, um abzusteigen.",
+      "c wird entfernt und seine Schlüssel werden über die ganze Ebene verteilt."
+    ],
+    "explanation": "Das Ausleihen (eine Rotation über den Vater) verschafft c einen Schlüssel zum Abgeben, ohne verschmelzen zu müssen, und ist immer dann vorzuziehen, wenn ein Bruder es sich leisten kann. Das Verschmelzen ist der Rückfall, der nur greift, wenn *beide* Brüder genau t−1 Schlüssel haben.",
+    "source": "AuD26 Blatt 08 · B-Baum-Löschen, Fall 3a"
+  },
+  {
+    "id": "btree-q-5",
+    "prompt": "B-Baum-Löschen: Schlüssel k liegt im inneren Knoten x, und sowohl das Kind vor k als auch das Kind nach k haben genau t−1 Schlüssel. Was geschieht?",
+    "options": [
+      "Linkes Kind, k und rechtes Kind werden zu einem Knoten mit 2t−1 Schlüsseln verschmolzen, aus dem k anschließend rekursiv gelöscht wird.",
+      "k wird direkt aus x entfernt und hinterlässt eine Lücke.",
+      "Vom Großvater wird ein Schlüssel ausgeliehen.",
+      "Diese Situation kann in einem gültigen B-Baum nicht auftreten."
+    ],
+    "explanation": "Keines der beiden Kinder kann einen Schlüssel für den Vorgänger-/Nachfolgertausch abgeben (Fälle 2a/2b), also bleibt nur Fall 2c: y, k und z zu einem gültigen Knoten mit genau 2t−1 Schlüsseln verschmelzen und die Löschung dort fortsetzen.",
+    "source": "AuD26 Blatt 08 · B-Baum-Löschen, Fall 2c"
+  },
+  {
+    "id": "btree-mc-3",
+    "prompt": "Wie ändert sich die Höhe eines B-Baums? Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Höhe wächst nur durch das Spalten der Wurzel, wodurch eine neue Wurzel mit einem einzigen Schlüssel entsteht.",
+      "Die Höhe schrumpft nur, wenn eine Verschmelzung den letzten verbliebenen Schlüssel der Wurzel aufbraucht.",
+      "Die Höhe wächst, sobald irgendein innerer Knoten gespalten wird.",
+      "Die Höhe schrumpft, sobald ein Blatt leer wird."
+    ],
+    "explanation": "Beim Spalten eines inneren Knotens wandert dessen Median in einen bereits vorhandenen Vater, die Tiefe bleibt also unverändert — nur die Wurzel hat keinen Vater, der ihn aufnehmen könnte, weshalb die Wurzelspaltung der einzige Weg zu wachsen ist ✓✗. Symmetrisch ist die Wurzelverschmelzung der einzige Weg zu schrumpfen ✓✗, da alle Blätter auf gleicher Tiefe bleiben müssen.",
+    "source": "AuD26 Blatt 08 · Wurzelspaltung / Wurzelschrumpfung"
+  },
+  {
+    "id": "btree-q-10",
+    "prompt": "Ein B-Baum mit Minimalgrad t = 2 entspricht strukturell welcher klassischen Struktur?",
+    "options": [
+      "Einem 2-3-4-Baum, der strukturell einem Rot-Schwarz-Baum entspricht",
+      "Einem AVL-Baum",
+      "Einem Splay-Baum",
+      "Einem binären Max-Heap"
+    ],
+    "explanation": "Mit t = 2 hält jeder Knoten 1–3 Schlüssel und hat damit 2, 3 oder 4 Kinder — ein 2-3-4-Baum. Die übliche Korrespondenz bildet einen Knoten mit 3 Schlüsseln auf einen schwarzen Knoten mit zwei roten Kindern ab, also genau auf einen Rot-Schwarz-Baum.",
+    "source": "AuD26 Blatt 08 · B-Bäume"
+  },
+  {
+    "id": "btree-mc-4",
+    "prompt": "Welche zwei Bedingungen würden einen Kandidatenbaum als B-Baum strukturell *ungültig* machen?",
+    "options": [
+      "Ein Nicht-Wurzelknoten hat k Schlüssel, aber nur k Kinder.",
+      "Zwei Blätter liegen auf unterschiedlicher Tiefe.",
+      "Ein Nicht-Wurzelknoten enthält genau 2t−1 Schlüssel.",
+      "Die Wurzel enthält nur einen einzigen Schlüssel."
+    ],
+    "explanation": "k Schlüssel verlangen genau k+1 Kinder ✗, und alle Blätter müssen dieselbe Tiefe teilen ✗ — beides sind Verletzungen. Ein Knoten mit 2t−1 Schlüsseln ist lediglich *voll*, was zulässig ist ✓, und eine Wurzel mit einem Schlüssel ist die ausdrückliche Wurzelausnahme ✓.",
+    "source": "AuD26 Blatt 08 · B-Baum-Invarianten"
+  }
+]

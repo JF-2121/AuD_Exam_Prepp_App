@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { CheckCircle2, XCircle, AlertTriangle } from 'lucide-react';
 import type { MultipleChoiceQuestion } from '../../lib/types';
 import { DifficultyBadge } from '../../components/DifficultyBadge';
+import { useT } from '../../lib/i18n/locale';
 import { McFormatBadge } from './McFormatBadge';
 import { McOptions, McSelectionHint } from './McOptions';
 import { McPrompt } from './McPrompt';
@@ -65,10 +66,16 @@ export function McCard({
  * it is the one students most often assume is worth partial credit.
  */
 export function McVerdict({ grade }: { grade: McGrade }) {
+  const t = useT();
+
   if (grade.correct) {
     return (
       <p className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-[var(--color-good)]">
-        <CheckCircle2 size={15} /> Correct · +{grade.awarded} {grade.awarded === 1 ? 'point' : 'points'}
+        <CheckCircle2 size={15} />{' '}
+        {t('mc.verdictCorrect', {
+          points: grade.awarded,
+          unit: t(grade.awarded === 1 ? 'common.point' : 'common.points'),
+        })}
       </p>
     );
   }
@@ -76,16 +83,17 @@ export function McVerdict({ grade }: { grade: McGrade }) {
     return (
       <p className="mt-3 flex items-start gap-1.5 text-sm font-semibold text-[var(--color-warn)]">
         <AlertTriangle size={15} className="mt-0.5 shrink-0" />
-        <span>
-          One of two — 0 of {grade.possible} points. The exam gives no partial credit: both correct
-          statements must be marked, and nothing else.
-        </span>
+        <span>{t('mc.verdictHalf', { possible: grade.possible })}</span>
       </p>
     );
   }
   return (
     <p className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-[var(--color-bad)]">
-      <XCircle size={15} /> Incorrect · 0 of {grade.possible} {grade.possible === 1 ? 'point' : 'points'}
+      <XCircle size={15} />{' '}
+      {t('mc.verdictWrong', {
+        possible: grade.possible,
+        unit: t(grade.possible === 1 ? 'common.point' : 'common.points'),
+      })}
     </p>
   );
 }

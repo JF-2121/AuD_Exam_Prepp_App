@@ -73,19 +73,23 @@ function isBackupFile(value: unknown): value is BackupFile {
   );
 }
 
+/**
+ * Import failures throw a *message key* rather than prose, so the panel that catches them can
+ * render the reason in whichever language the user is currently reading.
+ */
 export async function parseBackupFile(file: File): Promise<BackupFile> {
   const text = await file.text();
   let parsed: unknown;
   try {
     parsed = JSON.parse(text);
   } catch {
-    throw new Error('That file is not valid JSON.');
+    throw new Error('backup.notJson');
   }
   if (!isBackupFile(parsed)) {
-    throw new Error('That file does not look like an AuD Grind progress export.');
+    throw new Error('backup.notExport');
   }
   if (parsed.schemaVersion > SCHEMA_VERSION) {
-    throw new Error('That export was made by a newer version of the app — update the app before importing it.');
+    throw new Error('backup.newerVersion');
   }
   return parsed;
 }

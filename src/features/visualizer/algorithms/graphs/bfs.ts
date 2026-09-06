@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { GraphRenderer, type GraphState } from './GraphRenderer';
 import { exampleNodes, neighborsOf } from './graphData';
 
@@ -42,7 +42,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
   const steps: AlgorithmStep<GraphState>[] = [
     {
       state: { labels: labelsOf(), visited: [], current: source },
-      description: `Start BFS at ${source}: dist[${source}]=0, enqueue it.`,
+      description: msg('viz.bfs.start', { source }),
       highlightLine: 2,
     },
   ];
@@ -51,14 +51,14 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
     const u = queue.shift()!;
     steps.push({
       state: { labels: labelsOf(), visited: [...visited], current: u, acceptedEdges: acceptedOf() },
-      description: `Dequeue ${u} (dist=${dist[u]}). Examine its neighbors.`,
+      description: msg('viz.bfs.dequeue', { u, dist: dist[u] }),
       highlightLine: 4,
     });
 
     for (const { id: v } of neighborsOf(u)) {
       steps.push({
         state: { labels: labelsOf(), visited: [...visited], current: u, activeEdge: edgeKey(u, v), acceptedEdges: acceptedOf() },
-        description: `Look at neighbor ${v}: ${discovered.has(v) ? 'already discovered, skip.' : 'undiscovered.'}`,
+        description: msg(discovered.has(v) ? 'viz.bfs.lookKnown' : 'viz.bfs.lookNew', { v }),
         highlightLine: 6,
       });
       if (!discovered.has(v)) {
@@ -68,7 +68,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
         queue.push(v);
         steps.push({
           state: { labels: labelsOf(), visited: [...visited], current: u, activeEdge: edgeKey(u, v), acceptedEdges: acceptedOf() },
-          description: `Discover ${v}: dist[${v}]=${dist[v]}, parent[${v}]=${u}. Enqueue ${v}.`,
+          description: msg('viz.bfs.discover', { v, dist: dist[v], u }),
           highlightLine: 7,
         });
       }
@@ -76,7 +76,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
     visited.add(u);
     steps.push({
       state: { labels: labelsOf(), visited: [...visited], acceptedEdges: acceptedOf() },
-      description: `${u} finished (all neighbors examined).`,
+      description: msg('viz.bfs.finished', { u }),
       highlightLine: 9,
     });
   }
@@ -86,8 +86,8 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
     state: { labels: labelsOf(), visited: [...visited], acceptedEdges: acceptedOf() },
     description:
       unreached.length === 0
-        ? 'BFS complete. Highlighted edges form the shortest-path tree by edge count from the source.'
-        : `BFS complete. ${unreached.map((n) => n.id).join(', ')} unreachable from ${source}.`,
+        ? msg('viz.bfs.done')
+        : msg('viz.bfs.doneUnreachable', { nodes: unreached.map((n) => n.id).join(', '), source }),
     highlightLine: 0,
   });
   return steps;

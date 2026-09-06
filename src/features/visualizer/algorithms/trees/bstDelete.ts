@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep, type StepText } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
 
 const pseudocode = [
@@ -40,7 +40,7 @@ function generateSteps({ initial, deletions }: BstDeleteInput): AlgorithmStep<Tr
   let root: string | null = null;
   const steps: AlgorithmStep<TreeState>[] = [];
 
-  function pushStep(description: string, highlightLine: number, extra?: Partial<TreeState>) {
+  function pushStep(description: StepText, highlightLine: number, extra?: Partial<TreeState>) {
     steps.push({ state: { nodes: cloneNodes(nodes), rootId: root, ...extra }, description, highlightLine });
   }
 
@@ -90,44 +90,44 @@ function generateSteps({ initial, deletions }: BstDeleteInput): AlgorithmStep<Tr
       }
     }
   }
-  pushStep(`Starting tree, built from [${initial.join(', ')}].`, 0);
+  pushStep(msg('viz.d.startingTree', { values: initial.join(', ') }), 0);
 
   for (const value of deletions) {
     const zId = findId(value);
     if (!zId) {
-      pushStep(`${value} is not in the tree — nothing to delete.`, 0);
+      pushStep(msg('viz.d.notInTree', { value }), 0);
       continue;
     }
     const z = nodes[zId];
-    pushStep(`Delete ${value}.`, 0, { highlightId: zId });
+    pushStep(msg('viz.d.deleteValue', { value }), 0, { highlightId: zId });
 
     if (!z.left) {
-      pushStep(`${value} has no left child (leaf or half-leaf): transplant its right child into its place.`, 2);
+      pushStep(msg('viz.bst.noLeftChild', { value }), 2);
       transplant(zId, z.right);
     } else if (!z.right) {
-      pushStep(`${value} has no right child (half-leaf): transplant its left child into its place.`, 4);
+      pushStep(msg('viz.bst.noRightChild', { value }), 4);
       transplant(zId, z.left);
     } else {
       let yId = z.right;
       while (nodes[yId].left) yId = nodes[yId].left!;
       const y = nodes[yId];
-      pushStep(`${value} has two children: its successor is ${y.value} (leftmost node of its right subtree).`, 6, {
+      pushStep(msg('viz.bst.twoChildren', { value, succ: y.value }), 6, {
         highlightId: yId,
       });
       if (y.parent !== zId) {
         transplant(yId, y.right);
         y.right = z.right;
         if (y.right) nodes[y.right].parent = yId;
-        pushStep(`Detach ${y.value} from its old spot and give it ${value}'s right subtree.`, 9);
+        pushStep(msg('viz.bst.detachSucc', { succ: y.value, value }), 9);
       }
       transplant(zId, yId);
       y.left = z.left;
       if (y.left) nodes[y.left].parent = yId;
-      pushStep(`${y.value} takes ${value}'s place, inheriting its left subtree too.`, 11, { newId: yId });
+      pushStep(msg('viz.bst.succTakesPlace', { succ: y.value, value }), 11, { newId: yId });
     }
   }
 
-  pushStep('All deletions complete.', 0);
+  pushStep(msg('viz.d.allDeleted'), 0);
   return steps;
 }
 

@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { StringMatchRenderer, type StringMatchState } from './StringMatchRenderer';
 
 const pseudocode = [
@@ -41,7 +41,7 @@ function generateSteps({ text, pattern, q }: RabinKarpInput): AlgorithmStep<Stri
   }
   steps.push({
     state: { text, pattern, matches: [], info: [{ label: 'p (pattern hash)', value: String(p) }, { label: 't_0 (first window hash)', value: String(t) }] },
-    description: `Preprocess in Θ(m): compute p = value of P mod ${q} = ${p}, and t_0 = value of T[0..${m - 1}] mod ${q} = ${t}.`,
+    description: msg('viz.rk.preprocess', { q, p, last: m - 1, t }),
     highlightLine: 3,
   });
 
@@ -59,9 +59,7 @@ function generateSteps({ text, pattern, q }: RabinKarpInput): AlgorithmStep<Stri
           { label: `t_${sft} == p ?`, value: modMatch ? 'true' : 'false', ok: modMatch },
         ],
       },
-      description: modMatch
-        ? `Shift ${sft}: t_${sft} = p (mod ${q}) — fast test passes, but this could be a spurious hit. Verify character by character.`
-        : `Shift ${sft}: t_${sft} ≠ p (mod ${q}) — guaranteed not a match, skip the explicit check entirely.`,
+      description: msg(modMatch ? 'viz.rk.hashHit' : 'viz.rk.hashMiss', { sft, q }),
       highlightLine: 8,
     });
 
@@ -73,7 +71,7 @@ function generateSteps({ text, pattern, q }: RabinKarpInput): AlgorithmStep<Stri
           real = false;
           steps.push({
             state: { text, pattern, matches: [...matches], sft, matchedUpTo, mismatchIndex: j, info: [{ label: 'verifying', value: `P[${j}] ≠ T[${sft + j}]` }] },
-            description: `Explicit check: P[${j}] ≠ T[${sft + j}] — spurious hit ("unechter Treffer"), sft = ${sft} is not actually valid.`,
+            description: msg('viz.rk.spurious', { j, ti: sft + j, sft }),
             highlightLine: 11,
           });
           break;
@@ -84,7 +82,7 @@ function generateSteps({ text, pattern, q }: RabinKarpInput): AlgorithmStep<Stri
         matches.push(sft);
         steps.push({
           state: { text, pattern, matches: [...matches], sft, matchedUpTo: m, info: [{ label: 'verifying', value: 'all characters equal' }] },
-          description: `Explicit check passes: sft = ${sft} is a real, confirmed match.`,
+          description: msg('viz.rk.confirmed', { sft }),
           highlightLine: 12,
         });
       }
@@ -96,14 +94,14 @@ function generateSteps({ text, pattern, q }: RabinKarpInput): AlgorithmStep<Stri
       if (next < 0) next += q;
       steps.push({
         state: { text, pattern, matches: [...matches], sft, info: [{ label: `t_${sft + 1}`, value: `${next}  (rolled from t_${sft} in O(1))` }] },
-        description: `Roll the hash: t_${sft + 1} = 10·(t_${sft} − T[${sft}]·h) + T[${sft + m}], mod ${q} = ${next}.`,
+        description: msg('viz.rk.roll', { next: sft + 1, sft, tail: sft + m, q, value: next }),
         highlightLine: 13,
       });
       t = next;
     }
   }
 
-  steps.push({ state: { text, pattern, matches: [...matches] }, description: `Done. Valid shifts: [${matches.join(', ')}].`, highlightLine: 15 });
+  steps.push({ state: { text, pattern, matches: [...matches] }, description: msg('viz.d.validShifts', { shifts: matches.join(', ') }), highlightLine: 15 });
   return steps;
 }
 

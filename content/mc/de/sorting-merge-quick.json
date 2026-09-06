@@ -1,0 +1,98 @@
+[
+  {
+    "id": "mq-q-1",
+    "prompt": "Warum degeneriert Quicksort bei bereits sortierter Eingabe zu Θ(n²), wenn das erste Element als Pivot dient?",
+    "options": [
+      "Weil Vergleiche auf sortierten Daten teurer sind.",
+      "Weil das Pivot immer das Minimum ist, was maximal unbalancierte Partitionen und Rekursionstiefe n erzeugt.",
+      "Weil Quicksort sortierte Eingaben gar nicht verarbeiten kann und auf Merge Sort zurückfallen muss.",
+      "Weil der Partitionsschritt selbst bei sortierter Eingabe Θ(n²) kostet."
+    ],
+    "explanation": "Bei sortierter Eingabe und Pivot = erstes Element zerfällt jede Partition in eine leere Seite und eine der Größe n−1. Die Rekursionstiefe wird n, und die Partitionskosten summieren sich zu n + (n−1) + … = Θ(n²). Jeder einzelne Partitionsaufruf bleibt dabei Θ(n).",
+    "source": "AuD-Zusammenfassung §4.5"
+  },
+  {
+    "id": "mq-mc-1",
+    "prompt": "Merge Sort und Quicksort — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Merge Sort leistet beim Teilen triviale und beim Zusammenführen die eigentliche Arbeit; bei Quicksort ist es umgekehrt.",
+      "Merge Sort liegt im Best, Worst und Average Case in Θ(n log n).",
+      "Merge Sort verliert seine Stabilität, wenn die zu verschmelzenden Teillisten eine ungerade Anzahl an Elementen haben.",
+      "Quicksort benötigt Θ(n) zusätzlichen Speicher, während Merge Sort in-place sortiert."
+    ],
+    "explanation": "Die Asymmetrie zwischen Teilen und Zusammenführen ist der definierende Kontrast ✓, und das Verschmelzen kostet unabhängig von der Eingabereihenfolge immer Θ(n), Merge Sort hat also keine schlechte Eingabe ✓. Die Stabilität hängt allein vom Tie-Break im Merge-Schritt (linkes Element bevorzugen) ab, nicht von der Parität ✗. Die Speicheraussage ist vertauscht: Quicksort ist in-place, Merge Sort braucht das Θ(n)-Hilfsarray ✗.",
+    "source": "AuD26 Blatt 03 · G3(a)"
+  },
+  {
+    "id": "mq-mc-2",
+    "prompt": "Worst-Case-Verhalten der Sortieralgorithmen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Quicksort hat einen Worst Case von Θ(n²), der durch eine ungünstige Pivot-Wahl ausgelöst werden kann, z. B. immer das kleinste Element.",
+      "Merge Sort hat einen Worst Case von Θ(n²), wenn die Liste umgekehrt sortiert ist.",
+      "Eine zufällige Pivot-Wahl macht Quicksorts Θ(n²)-Worst-Case unwahrscheinlich, beseitigt ihn aber nicht.",
+      "Quicksorts Worst Case verschwindet vollständig, sobald das Pivot zufällig gewählt wird."
+    ],
+    "explanation": "Maximal unbalancierte Aufteilungen ergeben Θ(n²) ✓, und die Randomisierung macht diesen Ausgang nur unwahrscheinlich — eine unglückliche Zufallsfolge kann ihn weiterhin erzeugen ✓. Merge Sort ist auf jeder Eingabe Θ(n log n) ✗, und keine Pivot-Regel entfernt den Worst Case aus der *Worst-Case*-Analyse ✗.",
+    "source": "AuD26 Blatt 03 · G3(e)"
+  },
+  {
+    "id": "mq-mc-3",
+    "prompt": "Die untere Schranke Ω(n log n) für vergleichsbasiertes Sortieren — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Jeder korrekte vergleichsbasierte Sortieralgorithmus benötigt im Worst Case Ω(n log n) Vergleiche.",
+      "Die Schranke folgt aus einem Entscheidungsbaum-Argument: n! Anordnungen erfordern einen Baum der Tiefe ≥ log₂(n!) = Θ(n log n).",
+      "Die Schranke gilt nur für instabile Sortieralgorithmen.",
+      "Ein vergleichsbasierter Algorithmus kann im Worst Case in O(n) sortieren, indem er zuerst einen binären Suchbaum aufbaut."
+    ],
+    "explanation": "Die informationstheoretische Schranke gilt für jeden vergleichsbasierten Sortierer ✓ und ergibt sich aus der Tiefe des Entscheidungsbaums ✓. Stabilität ist dafür irrelevant ✗. Ein BST umgeht die Schranke nicht — ein unbalancierter BST degeneriert zu Höhe n und liefert insgesamt Θ(n²) ✗.",
+    "source": "AuD26 Blatt 03 · G3(c)"
+  },
+  {
+    "id": "mq-mc-4",
+    "prompt": "Quicksorts `partition(A, left, right)` mit `pivot = A[left]` — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Der zurückgegebene Index q ist die Trennstelle, und die rekursiven Aufrufe lauten quicksort(A, left, q) und quicksort(A, q+1, right).",
+      "Nach dem Partitionieren ist jedes Element in A[left..q] ≤ Pivot und jedes Element in A[q+1..right] ≥ Pivot.",
+      "Nach dem Partitionieren steht das Pivot garantiert genau an Index q, an seiner endgültigen sortierten Position.",
+      "Partition läuft für ein Teilarray der Länge n in Θ(n log n)."
+    ],
+    "explanation": "Das ist die in der Vorlesung verwendete Hoare-Partitionierung: Sie liefert q und rekursiert auf [left..q] und [q+1..right] ✓ und garantiert die zweiseitige ≤/≥-Eigenschaft ✓. Anders als bei Lomuto landet das Pivot dabei *nicht* an seiner endgültigen Position ✗. Partition ist ein einzelner Durchlauf, also Θ(n) ✗.",
+    "source": "AuD-Zusammenfassung §4.5, Pseudocode partition"
+  },
+  {
+    "id": "mq-mc-5",
+    "prompt": "Divide and Conquer — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Laufzeit eines D&C-Algorithmus hängt nur von der Komplexität des Combine-Schritts ab.",
+      "D&C zerlegt ein Problem in kleinere Instanzen desselben Problems, löst diese rekursiv und fügt die Teillösungen zusammen.",
+      "Die Rekursionsgleichung T(n) = a·T(n/b) + f(n) beschreibt die Kosten eines D&C-Algorithmus, wobei f(n) die Kosten für Teilen und Zusammenfügen sind.",
+      "Ein D&C-Algorithmus muss jedes Problem in gleich große Teilprobleme zerlegen, um korrekt zu sein."
+    ],
+    "explanation": "Die Definition ✓ und die Standard-Rekursionsgleichung ✓ stimmen. Die Laufzeit hängt von Anzahl und Größe der Teilprobleme *und* den Teil-/Combine-Kosten ab — genau deren Vergleich ist der Kern des Mastertheorems ✗. Gleich große Aufteilungen betreffen die Effizienz, nie die Korrektheit (Quicksort teilt ungleichmäßig und ist trotzdem korrekt) ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.15/17"
+  },
+  {
+    "id": "mq-mc-6",
+    "prompt": "Die drei Sortierverfahren nach Worst-Case-Komplexität geordnet — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Merge Sort Θ(n log n) < Quicksort Θ(n²) = Insertion Sort Θ(n²) ist die korrekte aufsteigende Worst-Case-Reihenfolge.",
+      "Quicksort und Insertion Sort sind im Worst Case gleichauf, aber Quicksorts erwartete Laufzeit Θ(n log n) schlägt Insertion Sorts Θ(n²).",
+      "Quicksort hat einen echt besseren Worst Case als Insertion Sort.",
+      "Merge Sort und Quicksort sind im Worst Case bei Θ(n log n) gleichauf."
+    ],
+    "explanation": "Worst Cases: Merge Sort Θ(n log n), Quicksort Θ(n²), Insertion Sort Θ(n²) ✓ — die letzten beiden sind also gleichauf, und der Stichentscheid erfolgt über die *erwartete* Laufzeit, wo Quicksort mit Θ(n log n) gewinnt ✓. Die Optionen 3 und 4 widersprechen beide Quicksorts Θ(n²)-Worst-Case ✗.",
+    "source": "Altklausur WS23/24 · Aufgabe 1.5"
+  },
+  {
+    "id": "mq-mc-7",
+    "prompt": "Warum schlägt Quicksort in der Praxis meist Merge Sort, obwohl beide dieselbe Average-Case-Komplexität haben? Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Quicksort sortiert in-place und vermeidet damit das Kopieren in ein temporäres Array und zurück.",
+      "Quicksort hat kleinere konstante Faktoren, die die Θ-Notation verbirgt.",
+      "Quicksort führt im Mittel asymptotisch weniger Vergleiche durch.",
+      "Quicksorts Rekursionstiefe ist im Worst Case Θ(log n), anders als Merge Sorts Θ(n)."
+    ],
+    "explanation": "In-place-Arbeitsweise ✓ und kleinere Konstanten ✓ sind die praktischen Gründe. Beide führen im Mittel Θ(n log n) Vergleiche durch, keiner also asymptotisch weniger ✗. Bei der Rekursionstiefe ist es umgekehrt: Merge Sort ist immer Θ(log n), Quicksort kann im Worst Case Θ(n) erreichen ✗.",
+    "source": "AuD-Zusammenfassung §4.5"
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "rad-q-1",
+    "prompt": "Warum gilt die untere Schranke Ω(n log n) für vergleichsbasiertes Sortieren nicht für RadixSort?",
+    "options": [
+      "Weil RadixSort tatsächlich ebenfalls in Ω(n log n) liegt und die Frage damit hinfällig ist.",
+      "Weil RadixSort nie zwei Elemente direkt miteinander vergleicht.",
+      "Weil RadixSort nur auf bereits sortierten Eingaben funktioniert.",
+      "Weil die Schranke nur für rekursive Algorithmen gilt."
+    ],
+    "explanation": "Die Schranke Ω(n log n) wird über einen Entscheidungsbaum paarweiser Vergleiche hergeleitet. RadixSort verteilt Elemente anhand des Ziffern*werts* in Buckets und vergleicht nie zwei Schlüssel miteinander — das Argument ist auf ihn also gar nicht anwendbar.",
+    "source": "AuD-Zusammenfassung §4.6"
+  },
+  {
+    "id": "rad-q-4",
+    "prompt": "Stabilität und RadixSort — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "RadixSort ist nur dann korrekt, wenn das zugrunde liegende Sortierverfahren für die einzelnen Stellen stabil ist.",
+      "Verwendet man LIFO-Stacks statt FIFO-Queues als Buckets, geht die Korrektheit verloren, weil Stacks die relative Reihenfolge umkehren.",
+      "Stabilität ist irrelevant, da jeder Durchlauf nur eine einzelne Ziffernstelle betrachtet.",
+      "Es genügt, wenn der letzte Durchlauf (höchstwertige Ziffer) stabil ist."
+    ],
+    "explanation": "LSD-first-RadixSort setzt darauf, dass jeder Durchlauf die von allen vorherigen (niederwertigeren) Durchläufen hergestellte Ordnung *erhält* ✓ — und genau das ist Stabilität. LIFO-Buckets kehren diese Ordnung um und liefern unbemerkt ein falsches Ergebnis ✓. Stabilität ist also in *jedem* Durchlauf nötig ✗✗, nicht nur im letzten.",
+    "source": "AuD26 Blatt 03 · G3(a)/(d)"
+  },
+  {
+    "id": "rad-q-3",
+    "prompt": "Das Sortieren von n Zahlen mit je b Bit in r-Bit-Zifferngruppen kostet O((b/r)·(n + 2ʳ)). Welche Wahl von r ist optimal, wenn b ≤ log n gilt?",
+    "options": [
+      "r = b — eine einzige Ziffer, die die ganze Zahl abdeckt.",
+      "r = 1 — Ziffern von einem einzelnen Bit.",
+      "r = log n, unabhängig von b.",
+      "r hat in diesem Bereich keinen Einfluss auf die Laufzeit."
+    ],
+    "explanation": "Mit r = b wird die Laufzeit zu O(1·(n + 2ᵇ)), und b ≤ log n liefert 2ᵇ ≤ n, insgesamt also O(n) — ein einziger Durchlauf über eine Ziffer voller Breite. r = log n ist nur im anderen Bereich, b > log n, optimal und ergibt dort O(bn / log n).",
+    "source": "AuD-Zusammenfassung §4.6, Analyse der Bit-Gruppierung"
+  },
+  {
+    "id": "rad-mc-1",
+    "prompt": "Eigenschaften von RadixSort — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Bei fester Schlüssellänge d läuft RadixSort in O(n), ist aber nicht in-place und benötigt zusätzlichen Speicher.",
+      "Die Laufzeit von RadixSort ist im Best, Worst und Average Case gleich — sie hängt nicht von der Eingabereihenfolge ab.",
+      "RadixSort kann n Elemente in echt sublinearer Zeit sortieren.",
+      "Die Laufzeit von RadixSort ist unabhängig von der Anzahl der Elemente n."
+    ],
+    "explanation": "O(d·(n+D)) mit konstantem d und D ergibt O(n), und die Buckets kosten O(n+D) zusätzlichen Speicher ✓. Da die Kosten nur von d, D und n abhängen — nie davon, wie die Eingabe zufällig angeordnet ist — gilt Best = Worst = Average ✓. Jedes Element muss mindestens einmal gelesen werden, sublinear ist also unmöglich ✗, und die Laufzeit ist offensichtlich linear in n ✗.",
+    "source": "AuD26 Blatt 03 · G3(d)/(e)"
+  },
+  {
+    "id": "rad-mc-2",
+    "prompt": "Ist RadixSort in der Praxis immer die bessere Wahl als Quicksort? Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Nein — die Θ-Notation verbirgt konstante Faktoren, und die Bucket-Verwaltung pro Durchlauf hat eine große Konstante.",
+      "Nein — RadixSort braucht O(n + D) zusätzlichen Speicher, während Quicksort in-place sortiert.",
+      "Ja — O(n) schlägt O(n log n) für jede Eingabegröße.",
+      "Ja — RadixSort funktioniert auf beliebigen vergleichbaren Schlüsseln, während Quicksort numerische Schlüssel benötigt."
+    ],
+    "explanation": "Konstante Faktoren ✓ und der zusätzliche Bucket-Speicher ✓ sind die beiden echten Einschränkungen. Asymptotische Dominanz gilt erst ab hinreichend großem n, nicht für jede Größe ✗ — und die Anforderung an den Schlüsseltyp ist vertauscht: Quicksort braucht nur einen Vergleich, RadixSort zerlegbare Ziffernschlüssel ✗.",
+    "source": "AuD-Zusammenfassung §4.6, Diskussion zur Praxis"
+  },
+  {
+    "id": "rad-mc-3",
+    "prompt": "Wie verhalten sich RadixSorts Kosten O(d·(n+D)), wenn die Größe des Ziffernalphabets D sich n annähert? Welche Aussage ist korrekt?",
+    "options": [
+      "d = Θ(log_D n), insgesamt also O(n log n) — RadixSort verliert seinen Linearzeit-Vorteil.",
+      "d wird konstant, insgesamt bleibt es also für jedes D bei O(n).",
+      "Insgesamt wird es O(n²), da jeder Durchlauf O(n) kostet und es n Durchläufe gibt.",
+      "Insgesamt wird es O(D), unabhängig von n."
+    ],
+    "explanation": "Um n verschiedene Schlüssel zur Basis D darzustellen, braucht man d = Θ(log_D n) Ziffern. Mit D ≈ n ergeben sich Kosten von Θ(log_D n · (n + D)) = O(n log n) — RadixSort nähert sich also der Vergleichsschranke an, statt sie zu verletzen. Genau deshalb steht bei der Linearzeit-Aussage immer der Zusatz „D und d konstant“.",
+    "source": "AuD-Zusammenfassung §4.6"
+  }
+]

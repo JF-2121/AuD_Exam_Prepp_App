@@ -4,6 +4,8 @@ import { ArrowDownWideNarrow, Boxes, CaseSensitive, GitBranch, Play, RotateCcw, 
 import { algorithmRegistry, FAMILY_ORDER, getAlgorithm } from './registry';
 import type { AlgorithmFamily } from './core/types';
 import { StepPlayer } from './core/StepPlayer';
+import { useT } from '../../lib/i18n/locale';
+import type { MessageKey } from '../../lib/i18n/messages';
 
 const FAMILY_ICON: Record<AlgorithmFamily, LucideIcon> = {
   Sorting: ArrowDownWideNarrow,
@@ -14,6 +16,7 @@ const FAMILY_ICON: Record<AlgorithmFamily, LucideIcon> = {
 };
 
 export function VisualizerPage() {
+  const t = useT();
   const { algoId } = useParams();
   const navigate = useNavigate();
   const algorithm = algoId ? getAlgorithm(algoId) : undefined;
@@ -28,9 +31,9 @@ export function VisualizerPage() {
     return (
       <div>
         <h1 className="mb-1 flex items-center gap-2 text-2xl font-semibold tracking-tight text-[var(--color-text-h)]">
-          <Play size={22} className="text-[var(--color-accent)]" /> Visualize
+          <Play size={22} className="text-[var(--color-accent)]" /> {t('viz.title')}
         </h1>
-        <p className="mb-5 text-sm text-[var(--color-text-dim)]">Pick an algorithm to step through interactively.</p>
+        <p className="mb-5 text-sm text-[var(--color-text-dim)]">{t('viz.subtitle')}</p>
         <div className="flex flex-col gap-6">
           {FAMILY_ORDER.map((family) => {
             const algos = algorithmRegistry.filter((a) => a.family === family);
@@ -39,7 +42,7 @@ export function VisualizerPage() {
             return (
               <div key={family}>
                 <h2 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-dim)]">
-                  <Icon size={13} /> {family}
+                  <Icon size={13} /> {t(`family.${family}` as MessageKey)}
                 </h2>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
                   {algos.map((a) => (
@@ -68,7 +71,7 @@ export function VisualizerPage() {
   try {
     parsedInput = hasInput ? JSON.parse(inputText) : undefined;
   } catch {
-    parseError = 'Invalid JSON input.';
+    parseError = 'viz.invalidJson';
   }
 
   return (
@@ -77,7 +80,7 @@ export function VisualizerPage() {
         <h1 className="text-2xl font-semibold tracking-tight text-[var(--color-text-h)]">{algorithm.title}</h1>
         <select className="input" value={algorithm.id} onChange={(e) => navigate(`/visualize/${e.target.value}`)}>
           {FAMILY_ORDER.map((family) => (
-            <optgroup key={family} label={family}>
+            <optgroup key={family} label={t(`family.${family}` as MessageKey)}>
               {algorithmRegistry
                 .filter((a) => a.family === family)
                 .map((a) => (
@@ -91,19 +94,19 @@ export function VisualizerPage() {
       </div>
       {hasInput && (
         <div className="mb-4 flex flex-wrap items-center gap-2">
-          <label className="text-sm text-[var(--color-text-dim)]">Input (JSON):</label>
+          <label className="text-sm text-[var(--color-text-dim)]">{t('viz.inputLabel')}</label>
           <input
             className="input w-full sm:w-72"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
           />
           <button className="btn" onClick={() => setInputText(JSON.stringify(algorithm.defaultInput))}>
-            <RotateCcw size={13} /> Reset to default
+            <RotateCcw size={13} /> {t('viz.resetDefault')}
           </button>
         </div>
       )}
       {parseError ? (
-        <p className="text-[var(--color-bad)]">{parseError}</p>
+        <p className="text-[var(--color-bad)]">{t(parseError as MessageKey)}</p>
       ) : (
         <StepPlayer algorithm={algorithm} input={parsedInput} />
       )}

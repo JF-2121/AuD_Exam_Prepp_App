@@ -1,9 +1,27 @@
 import type { ComponentType } from 'react';
+import type { Vars } from '../../../lib/i18n/locale';
+import type { MessageKey } from '../../../lib/i18n/messages';
+
+/**
+ * A step's narration, as a catalogue key plus its interpolation values rather than a finished
+ * sentence. This keeps `generateSteps` free of any locale dependency — it stays a pure function of
+ * its input, which is what lets `gradeTrace` re-run it as ground truth — while the player renders
+ * the sentence in whichever language is active.
+ */
+export interface StepText {
+  key: MessageKey;
+  vars?: Vars;
+}
+
+/** Shorthand for building a `StepText` inline. */
+export function msg(key: MessageKey, vars?: Vars): StepText {
+  return vars ? { key, vars } : { key };
+}
 
 export interface AlgorithmStep<TState> {
   state: TState;
   highlightLine?: number;
-  description: string;
+  description: StepText;
   meta?: Record<string, unknown>;
 }
 

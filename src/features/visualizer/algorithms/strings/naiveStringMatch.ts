@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { StringMatchRenderer, type StringMatchState } from './StringMatchRenderer';
 
 const pseudocode = [
@@ -25,19 +25,19 @@ function generateSteps({ text, pattern }: StringMatchInput): AlgorithmStep<Strin
   const m = pattern.length;
   const matches: number[] = [];
   const steps: AlgorithmStep<StringMatchState>[] = [
-    { state: { text, pattern, matches: [] }, description: `Text T of length ${n}, pattern P of length ${m}. Try every shift 0..${n - m}.`, highlightLine: 1 },
+    { state: { text, pattern, matches: [] }, description: msg('viz.naive.intro', { n, m, last: n - m }), highlightLine: 1 },
   ];
 
   for (let sft = 0; sft <= n - m; sft++) {
     let isValid = true;
     let matchedUpTo = 0;
-    steps.push({ state: { text, pattern, matches: [...matches], sft, matchedUpTo: 0 }, description: `Try shift sft = ${sft}: align P under T[${sft}, …, ${sft + m - 1}].`, highlightLine: 3 });
+    steps.push({ state: { text, pattern, matches: [...matches], sft, matchedUpTo: 0 }, description: msg('viz.naive.tryShift', { sft, end: sft + m - 1 }), highlightLine: 3 });
     for (let j = 0; j < m; j++) {
       if (pattern[j] !== text[sft + j]) {
         isValid = false;
         steps.push({
           state: { text, pattern, matches: [...matches], sft, matchedUpTo, mismatchIndex: j },
-          description: `P[${j}] = '${pattern[j]}' ≠ T[${sft + j}] = '${text[sft + j]}' — shift ${sft} is invalid.`,
+          description: msg('viz.naive.mismatch', { j, pj: pattern[j], ti: sft + j, tc: text[sft + j], sft }),
           highlightLine: 7,
         });
         break;
@@ -45,17 +45,17 @@ function generateSteps({ text, pattern }: StringMatchInput): AlgorithmStep<Strin
       matchedUpTo = j + 1;
       steps.push({
         state: { text, pattern, matches: [...matches], sft, matchedUpTo },
-        description: `P[${j}] = '${pattern[j]}' = T[${sft + j}] — matches so far.`,
+        description: msg('viz.naive.match', { j, pj: pattern[j], ti: sft + j }),
         highlightLine: 6,
       });
     }
     if (isValid) {
       matches.push(sft);
-      steps.push({ state: { text, pattern, matches: [...matches], sft, matchedUpTo: m }, description: `All ${m} characters matched — sft = ${sft} is a valid shift.`, highlightLine: 9 });
+      steps.push({ state: { text, pattern, matches: [...matches], sft, matchedUpTo: m }, description: msg('viz.naive.valid', { m, sft }), highlightLine: 9 });
     }
   }
 
-  steps.push({ state: { text, pattern, matches: [...matches] }, description: `Done. Valid shifts: [${matches.join(', ')}].`, highlightLine: 10 });
+  steps.push({ state: { text, pattern, matches: [...matches] }, description: msg('viz.d.validShifts', { shifts: matches.join(', ') }), highlightLine: 10 });
   return steps;
 }
 

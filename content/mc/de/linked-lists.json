@@ -1,0 +1,86 @@
+[
+  {
+    "id": "real-ll-1",
+    "prompt": "Aussagen über verkettete Listen — welche ist korrekt?",
+    "options": [
+      "Das Einfügen von zwei Elementen nacheinander am Ende einer einfach verketteten Liste erfordert höchstens zwei Traversierungen der Liste.",
+      "Jedes Element in einer einfach verketteten Liste enthält mindestens zwei Zeiger.",
+      "Einfach verkettete Listen erlauben direkten Zugriff auf ein beliebiges Element per Index.",
+      "In einer einfach verketteten Liste kann man rückwärts durch die Liste iterieren."
+    ],
+    "explanation": "Ohne Tail-Zeiger läuft jedes Anhängen vom Kopf bis ans Ende — eine Traversierung pro Einfügen, für zwei Einfügungen also höchstens zwei. Ein einfach verketteter Knoten hält genau einen Zeiger (next), einen Indexzugriff gibt es nicht, und ohne prev-Zeiger ist Rückwärtsiteration unmöglich.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.3"
+  },
+  {
+    "id": "real-ll-2",
+    "prompt": "Verkettete Listen und abstrakte Datentypen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein Vorteil verketteter Listen ist, dass Einfügen und Löschen durch einfaches Anpassen von Zeigern erfolgen können, ohne dass die restlichen Elemente verschoben werden müssen.",
+      "Bei einer doppelt verketteten Liste enthält jedes Element neben dem Wert einen Zeiger nur auf das nächste Element.",
+      "Ein abstrakter Datentyp (ADT) beschreibt die möglichen Werte, Operationen und das Verhalten eines Datentyps, nicht aber dessen konkrete Implementierung.",
+      "Die ADT-Beschreibung gibt die Zeit-Komplexität für Operationen an verketteten Listen an."
+    ],
+    "explanation": "Kein Verschieben zu müssen ist genau der strukturelle Vorteil gegenüber Arrays ✓, und ein ADT ist ein implementierungsunabhängiger Vertrag ✓. Ein doppelt verketteter Knoten hält *beide* Zeiger, next und prev ✗, und die Komplexität folgt aus der gewählten Implementierung, nicht aus dem ADT ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.4"
+  },
+  {
+    "id": "ll-q-1",
+    "prompt": "Ist nur ein Zeiger auf den zu entfernenden Knoten gegeben, so ist das Löschen in einer doppelt verketteten Liste Θ(1), in einer einfach verketteten aber Θ(n). Welche Aussage nennt den Grund?",
+    "options": [
+      "Doppelt verkettete Listen sind stets kürzer als einfach verkettete.",
+      "Der prev-Zeiger macht es überflüssig, vom Kopf aus den Vorgänger zu suchen.",
+      "Einfach verkettete Listen unterstützen das Löschen überhaupt nicht.",
+      "In einer einfach verketteten Liste muss der Nachfolgerzeiger für alle übrigen Knoten neu berechnet werden."
+    ],
+    "explanation": "Mit verfügbarem prev-Zeiger lassen sich Vorgänger und Nachfolger in konstanter Zeit direkt neu verknüpfen. Ohne ihn findet man den Vorgänger — dessen next-Zeiger umgebogen werden muss — nur durch Absuchen ab dem Kopf, was Θ(n) kostet.",
+    "source": "AuD-Zusammenfassung §5.3"
+  },
+  {
+    "id": "ll-mc-1",
+    "prompt": "Array gegen verkettete Liste — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Der wahlfreie Zugriff A[i] ist im Array Θ(1) und in der verketteten Liste Θ(n).",
+      "Das Einfügen an bekannter Position ist im Array Θ(n) (Verschieben) und in der verketteten Liste Θ(1).",
+      "Eine verkettete Liste verbraucht pro Element weniger Speicher als ein Array, da sie keinen zusammenhängenden Block braucht.",
+      "Die Suche nach einem Wert ist in einer unsortierten verketteten Liste Θ(log n)."
+    ],
+    "explanation": "Das sind die beiden definierenden Trade-offs ✓✓. Eine verkettete Liste verbraucht pro Element *mehr* Speicher — jeder Knoten trägt zusätzlich einen Zeiger ✗ — und die unsortierte Suche ist Θ(n), da die binäre Suche wahlfreien Zugriff bräuchte ✗.",
+    "source": "AuD-Zusammenfassung §5.3, Vergleichstabelle"
+  },
+  {
+    "id": "ll-mc-2",
+    "prompt": "Wächter (Sentinels) in verketteten Listen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein Wächter ist ein permanenter Dummy-Knoten, der Sonderfälle für die leere Liste und die Listenränder überflüssig macht.",
+      "Mit einem Wächter hat jeder echte Knoten stets ein gültiges prev/next, an das er sich hängen kann.",
+      "Ein Wächter senkt die asymptotischen Kosten der Suche von Θ(n) auf Θ(log n).",
+      "Ein Wächter speichert die Länge der Liste, sodass Größenabfragen Θ(1) werden."
+    ],
+    "explanation": "Der Zweck des Wächters ist ausschließlich das Beseitigen von Randfällen ✓✓ — er tauscht eine etwas aufwendigere Initialisierung gegen einfacheren Einfüge-/Löschcode. An den Asymptotiken ändert er nichts ✗, und ein Längenzähler ist er nicht ✗.",
+    "source": "AuD-Zusammenfassung §5.3, Sentinels"
+  },
+  {
+    "id": "ll-q-4",
+    "prompt": "`RemoveDuplicates` auf einer einfach verketteten Liste nutzt einen Referenzzeiger a und einen Suchzeiger b bei O(1) Zusatzspeicher. Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Wenn b.next.key == a.key gilt, wird das Duplikat per b.next = b.next.next herausgetrennt.",
+      "Die Laufzeit ist O(n²), da die innere Suche im Worst Case (n−1) + (n−2) + … + 1 mal läuft.",
+      "Der Algorithmus benötigt ein Hash-Set, um sich die bereits gesehenen Werte zu merken.",
+      "Die Laufzeit ist O(n), da jeder Knoten genau einmal besucht wird."
+    ],
+    "explanation": "Das Übergehen des Duplikats ist der O(1)-Entfernungsschritt ✓, und das Abgleichen jeder Referenz gegen alles Nachfolgende ergibt die arithmetische Reihe ⟹ Θ(n²) ✓. Gerade der Verzicht auf ein Hash-Set erzwingt diese quadratische Suche ✗✗.",
+    "source": "AuD26 Blatt 05 · RemoveDuplicates"
+  },
+  {
+    "id": "ll-mc-3",
+    "prompt": "Die Schleifeninvariante von `RemoveDuplicates` (äußere Schleife über a) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Vor der i-ten äußeren Iteration enthält die Teilliste vom Kopf bis einschließlich a keine Duplikate.",
+      "Beim Abbruch (a = nil) hat jeder Knoten einmal als Referenzpunkt gedient, die Liste enthält also nur noch eindeutige Werte.",
+      "Die Invariante garantiert, dass die Liste nach jeder äußeren Iteration sortiert ist.",
+      "Die Initialisierung scheitert, weil sich für eine einelementige Teilliste keine Duplikatfreiheit zeigen lässt."
+    ],
+    "explanation": "Die Invariante des duplikatfreien Präfixes ✓ liefert zusammen mit der Abbruchbedingung die Nachbedingung ✓. Der Algorithmus ordnet nichts um, Sortiertheit wird also gar nicht behauptet ✗, und eine einelementige Teilliste ist trivialerweise duplikatfrei, die Initialisierung gilt also ✗.",
+    "source": "AuD26 Blatt 05 · Schleifeninvariante zu RemoveDuplicates"
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "real-avl-1",
+    "prompt": "Äquivalenz fortgeschrittener Datenstrukturen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Jeder binäre Max-Heap kann als ein Rot-Schwarz-Baum gefärbt werden.",
+      "Jeder Rot-Schwarz-Baum ist ein binärer Suchbaum.",
+      "Jeder Rot-Schwarz-Baum ist ein AVL-Baum.",
+      "Jeder AVL-Baum kann als ein Rot-Schwarz-Baum gefärbt werden."
+    ],
+    "explanation": "Ein Rot-Schwarz-Baum ist per Definition ein BST samt Färbung ✓. Die schärfere Höhenschranke von AVL (≈1,44·log n) passt stets in die RBT-Schranke (2·log(n+1)), jeder AVL-Baum lässt also eine gültige RB-Färbung zu ✓ — ein klassisches Lehrbuchresultat. Die Umkehrung gilt nicht: Ein RBT darf unbalancierter sein, als AVL erlaubt ✗. Und ein Max-Heap ist nicht einmal ein BST, keine Färbung macht ihn dazu ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.5"
+  },
+  {
+    "id": "real-avl-2",
+    "prompt": "Rotationen (rotateLeft() / rotateRight()) in Bäumen — welche zwei Strukturen brauchen beim Einfügen *keine* Rotationsfunktion?",
+    "options": [
+      "Splay-Bäume brauchen beim Einfügen keine Rotationsfunktion.",
+      "AVL-Bäume brauchen beim Einfügen keine Rotationsfunktion.",
+      "Binäre Suchbäume brauchen beim Einfügen keine Rotationsfunktion.",
+      "Binäre Max-Heaps brauchen beim Einfügen keine Rotationsfunktion."
+    ],
+    "explanation": "Ein reines BST-Einfügen steigt nur ab und hängt ein Blatt an ✓, und das Heap-Einfügen stellt die Heap-Eigenschaft durch Sift-up-*Vertauschungen* entlang eines Pfades her, nicht durch Rotationen ✓. Splay-Bäume rotieren bei jedem Zugriff, also auch beim Einfügen ✗, und AVL-Bäume rotieren zum Rebalancieren ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.6"
+  },
+  {
+    "id": "avl-q-1",
+    "prompt": "Ein Knoten in einem AVL-Baum hat einen linken Teilbaum der Höhe 4 und einen rechten der Höhe 1. Welche Aussage ist korrekt?",
+    "options": [
+      "Das ist immer gültig — AVL schränkt nur die Wurzel ein.",
+      "Das ist ungültig: Der Balancefaktor 3 verletzt die Invariante |bf| ≤ 1.",
+      "Das ist nur für die Wurzel gültig.",
+      "Das ist gültig, solange der Baum weniger als 10 Knoten hat."
+    ],
+    "explanation": "AVL fordert bf(x) = höhe(x.links) − höhe(x.rechts) ∈ {−1, 0, 1} für *jeden* Knoten. Hier ist bf = 3, der Teilbaum muss also per Rotation rebalanciert werden. (In der Praxis lässt AVL |bf| nie über 2 steigen, weil jede Unwucht sofort behoben wird.)",
+    "source": "AuD-Zusammenfassung §6.2"
+  },
+  {
+    "id": "avl-mc-1",
+    "prompt": "Die AVL-Balance-Invariante — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "bf(x) = höhe(x.links) − höhe(x.rechts), und per Konvention hat ein leerer Teilbaum die Höhe −1, ein Blatt also die Höhe 0.",
+      "|bf(x)| = 2 ist der einzige Auslöser für eine Rotation; bf ∈ {−1, 0, 1} ist gültig.",
+      "AVL garantiert eine Höhe von höchstens 2·log(n+1), dieselbe Schranke wie ein Rot-Schwarz-Baum.",
+      "Die Invariante muss nur entlang des Pfades von der Wurzel zum tiefsten Blatt gelten."
+    ],
+    "explanation": "Die Definition mit höhe(∅) = −1 ✓ und der Auslöser |bf| = 2 ✓ sind genau wie in der Vorlesung. Die AVL-Schranke ist das *schärfere* ≈1,44·log(n+2) ✗, und die Invariante muss an jedem einzelnen Knoten gelten ✗.",
+    "source": "AuD-Zusammenfassung §6.2"
+  },
+  {
+    "id": "avl-q-3",
+    "prompt": "Während eines AVL-Einfügens hat Knoten a bf(a) = 2 und bf(a.links) = 1. Welcher Fall liegt vor und wie wird er behoben?",
+    "options": [
+      "LL-Fall: eine einzelne rotateRight(a)",
+      "LR-Fall: rotateLeft(a.links), dann rotateRight(a)",
+      "RR-Fall: eine einzelne rotateLeft(a)",
+      "RL-Fall: rotateRight(a.rechts), dann rotateLeft(a)"
+    ],
+    "explanation": "bf(a) > 1 bedeutet linkslastig; bf(a.links) ≥ 0 (hier +1) bedeutet, dass die Unwucht auf *derselben* Seite weiterläuft (links-links). Eine einzelne rotateRight(a) stellt die Balance wieder her. Der LR-Fall würde bf(a.links) < 0 erfordern.",
+    "source": "AuD-Zusammenfassung §6.2, Rotationstabelle"
+  },
+  {
+    "id": "avl-q-4",
+    "prompt": "Während eines AVL-Einfügens hat Knoten a bf(a) = −2 und bf(a.rechts) = 1. Welcher Fall liegt vor und wie wird er behoben?",
+    "options": [
+      "RR-Fall: eine einzelne rotateLeft(a)",
+      "LL-Fall: eine einzelne rotateRight(a)",
+      "RL-Fall: rotateRight(a.rechts), dann rotateLeft(a)",
+      "LR-Fall: rotateLeft(a.links), dann rotateRight(a)"
+    ],
+    "explanation": "bf(a) < −1 bedeutet rechtslastig; bf(a.rechts) > 0 bedeutet, dass dieses Kind selbst linkslastig ist, die Unwucht also im Zickzack verläuft (rechts-links). Nötig ist die Doppelrotation rotateRight(a.rechts) gefolgt von rotateLeft(a) — eine einzelne Rotation würde es nicht beheben.",
+    "source": "AuD-Zusammenfassung §6.2, Rotationstabelle"
+  },
+  {
+    "id": "avl-q-6",
+    "prompt": "AVL-Einfügen gegenüber AVL-Löschen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Das Einfügen braucht insgesamt höchstens eine einfache oder doppelte Rotation, weil die Rotation die Höhe des Teilbaums von vor dem Einfügen wiederherstellt.",
+      "Das Löschen kann auf jeder Ebene bis zur Wurzel eine Rebalancierung erfordern, weil eine Rotation dort die Höhe des Teilbaums *verkleinern* kann.",
+      "Das Löschen darf wie das Einfügen nach der ersten Rotation abbrechen.",
+      "Das Löschen verwendet ein anderes Rotations-Primitiv als das Einfügen."
+    ],
+    "explanation": "Nach einer Einfüge-Rotation entspricht die Teilbaumhöhe der vor dem Einfügen, kein Vorfahre kann also unbalanciert werden ⟹ break ✓. Nach einer Lösch-Rotation kann die Höhe sinken und eine neue Unwucht nach oben propagieren ⟹ bis zu O(log n) Rotationen, kein vorzeitiger Abbruch ✓✗. Beide nutzen dieselben rotateLeft/rotateRight-Primitive ✗.",
+    "source": "AuD-Zusammenfassung §6.2, Randfälle"
+  },
+  {
+    "id": "avl-mc-2",
+    "prompt": "AVL gegen Rot-Schwarz-Bäume als Entwurfs-Kompromiss — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die strengere Balance von AVL macht Lesezugriffe etwas schneller, das Rebalancieren beim Schreiben aber häufiger.",
+      "Beide garantieren im Worst Case Θ(log n) für Suchen, Einfügen und Löschen.",
+      "AVL speichert ein Farbbit pro Knoten; Rot-Schwarz-Bäume speichern eine Höhe pro Knoten.",
+      "Rot-Schwarz-Bäume rebalancieren bei jedem Lesezugriff, AVL-Bäume nicht."
+    ],
+    "explanation": "Der Lese-Schreib-Kompromiss ✓ und der gemeinsame Worst Case von Θ(log n) ✓ sind die zentralen Vergleichspunkte. In Option 3 sind die gespeicherten Metadaten vertauscht — AVL speichert Höhen/Balancefaktoren, RBTs Farben ✗ — und keiner von beiden rebalanciert bei reinem Lesen; das tut der Splay-Baum ✗.",
+    "source": "AuD-Zusammenfassung §6.1–6.2"
+  },
+  {
+    "id": "avl-mc-3",
+    "prompt": "Die LR-/RL-Doppelrotation — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Sie besteht aus zwei einfachen Rotationen hintereinander um verschiedene Drehpunkte; ein eigenes Primitiv ist nicht nötig.",
+      "Im LR-Fall wird zuerst die innere Rotation auf a.links angewendet und erst danach a selbst rotiert.",
+      "Sie erfordert ein eigenes rotateDouble-Primitiv, das sich nicht über rotateLeft/rotateRight ausdrücken lässt.",
+      "Im LR-Fall wird zuerst a rotiert und erst danach a.links."
+    ],
+    "explanation": "Eine Doppelrotation zerfällt in zwei einfache ✓, und die LR-Behebung lautet rotateLeft(a.links) *dann* rotateRight(a) ✓ — die innere (Kind-)Rotation richtet den Zickzack zu einer Geraden aus, damit die äußere Rotation ihn beheben kann. Diese Reihenfolge umzudrehen ✗ oder ein neues Primitiv zu erfinden ✗ ist falsch.",
+    "source": "AuD-Zusammenfassung §6.2, Randfälle"
+  }
+]

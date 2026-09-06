@@ -1,5 +1,6 @@
 import { Check, X } from 'lucide-react';
 import type { MultipleChoiceQuestion } from '../../lib/types';
+import { useT } from '../../lib/i18n/locale';
 import { OPTION_LETTERS } from './mcBank';
 
 interface McOptionsProps {
@@ -73,13 +74,13 @@ export function McOptions({ question, selected, onToggle, revealed = false }: Mc
 
 /** The "n/N chosen" line under a 2-of-4 prompt — the format's defining constraint, stated up front. */
 export function McSelectionHint({ question, selected }: { question: MultipleChoiceQuestion; selected: number[] }) {
+  const t = useT();
   const required = question.correctIndexes.length;
   if (required < 2) return null;
   const complete = selected.length === required;
   return (
     <p className={`mb-3 text-xs ${complete ? 'text-[var(--color-accent)]' : 'text-[var(--color-text-dim)]'}`}>
-      Select exactly {required} — {selected.length}/{required} chosen. Both must be right, or the
-      question scores 0.
+      {t('mc.selectHint', { count: required, chosen: selected.length })}
     </p>
   );
 }

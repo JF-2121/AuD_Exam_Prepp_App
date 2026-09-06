@@ -1,6 +1,8 @@
 import { Link, useParams } from 'react-router-dom';
 import { ArrowDownWideNarrow, CaseSensitive, Compass, GitBranch, Infinity as InfinityIcon, Layers, Puzzle, Share2, type LucideIcon } from 'lucide-react';
 import type { Topic } from '../../lib/types';
+import { useT } from '../../lib/i18n/locale';
+import type { MessageKey } from '../../lib/i18n/messages';
 
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
   Grundlagen: Compass,
@@ -14,6 +16,7 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
 };
 
 export function TopicTree({ topics }: { topics: Topic[] }) {
+  const t = useT();
   const { topicId } = useParams();
   const categories = [...new Set(topics.map((t) => t.category))];
 
@@ -25,7 +28,9 @@ export function TopicTree({ topics }: { topics: Topic[] }) {
           <div key={category}>
             <h3 className="mb-1 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-dim)]">
               <Icon size={13} />
-              {category}
+              {/* Categories are authored in the content frontmatter; the tree shows a translated
+                  label while the raw value stays the grouping key. */}
+              {t(`category.${category}` as MessageKey)}
             </h3>
             <ul className="flex flex-col gap-0.5">
               {topics

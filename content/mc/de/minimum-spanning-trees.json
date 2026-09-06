@@ -1,0 +1,74 @@
+[
+  {
+    "id": "mst-q-1",
+    "prompt": "Womit vermeidet der Algorithmus von Kruskal, beim Hinzufügen einer Kante einen Kreis zu erzeugen?",
+    "options": [
+      "Mit einer Union-Find-Struktur (Disjoint Set): Eine Kante wird nur akzeptiert, wenn ihre Endpunkte in verschiedenen Mengen liegen.",
+      "Mit einer Prioritätswarteschlange, geordnet nach den Distanzen der Knoten.",
+      "Mit einer DFS vor jedem einzelnen Kanteneinfügen.",
+      "Mit nichts — Kruskal kann konstruktionsbedingt keine Kreise erzeugen."
+    ],
+    "explanation": "findSet(u) ≠ findSet(v) prüft genau, ob u und v bereits verbunden sind; sind sie es, würde die Kante einen Kreis schließen und wird verworfen. Mit Pfadkompression sind die Operationen amortisiert nahezu O(1), die Gesamtkosten bleiben also vom anfänglichen Sortieren dominiert: O(E log E).",
+    "source": "AuD26 Blatt 10 · Kruskal"
+  },
+  {
+    "id": "mst-mc-1",
+    "prompt": "Kruskal und Prim — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Beide sind Greedy-Algorithmen und beide liefern beweisbar einen optimalen MST.",
+      "Kruskal kostet O(E log E), dominiert vom Sortieren der Kanten; Prim kostet O(E log V) mit einem Binärheap.",
+      "Prim funktioniert nur auf Graphen mit paarweise verschiedenen Kantengewichten.",
+      "Kruskal benötigt einen Startknoten, der den resultierenden MST bestimmt."
+    ],
+    "explanation": "Beide sind gierig und beweisbar optimal ✓, mit den angegebenen Kosten ✓. Verschiedene Gewichte betreffen nur die *Eindeutigkeit* des MST, nicht Prims Korrektheit ✗, und Kruskal ist kantenzentriert — er hat überhaupt keinen Startknoten ✗.",
+    "source": "AuD26 Blatt 10 · MST"
+  },
+  {
+    "id": "mst-q-5",
+    "prompt": "Ihnen wird eine Teilmenge der Kanten eines gewichteten Graphen als möglicher Zwischenzustand gezeigt, und sie besteht aus mehreren getrennten Baumfragmenten. Welche Aussage ist korrekt?",
+    "options": [
+      "Das schließt Prim sofort aus, da Prims Zwischenergebnis stets ein einziger zusammenhängender Baum ist.",
+      "Das schließt Kruskal sofort aus, da Kruskal stets einen zusammenhängenden Baum hält.",
+      "Es kann ein Zwischenzustand beider Algorithmen sein.",
+      "Es kann ein Zwischenzustand keines der beiden Algorithmen sein."
+    ],
+    "explanation": "Prim lässt genau einen Baum von seinem Startknoten aus wachsen, sein Teilergebnis ist also in jedem Schritt zusammenhängend. Kruskal hält dagegen routinemäßig einen Wald aus getrennten Fragmenten, die erst ganz am Ende verschmelzen — eine unzusammenhängende Momentaufnahme ist also Kruskals Handschrift.",
+    "source": "AuD26 Blatt 10 · Prim gegen Kruskal"
+  },
+  {
+    "id": "mst-mc-2",
+    "prompt": "Eindeutigkeit des MST — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Sind alle Kantengewichte paarweise verschieden, so ist der MST eindeutig.",
+      "Eine Kante, die die eindeutig leichteste Kante des Graphen ist, liegt in jedem MST.",
+      "Haben zwei Kanten dasselbe Gewicht, so ist der MST nie eindeutig.",
+      "Jeder Graph hat genau einen MST, da das Gesamtgewicht minimal ist."
+    ],
+    "explanation": "Beides folgt aus dem Austauschargument ✓✓: Fügt man die ausgeschlossene Kante hinzu, entsteht genau ein Kreis, auf dem jede andere Kante echt schwerer ist — ein Tausch würde den Baum also echt verbessern. Gleiche Gewichte *erlauben* mehrere MSTs, erzwingen sie aber nicht ✗, und dasselbe minimale Gesamtgewicht kann von mehreren verschiedenen Kantenmengen erreicht werden ✗.",
+    "source": "AuD26 Blatt 10 · Eindeutigkeit des MST"
+  },
+  {
+    "id": "mst-mc-3",
+    "prompt": "Der Algorithmus von Prim in der Fassung dieser Vorlesung — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Der Schlüssel des Startknotens wird als Sentinel auf −∞ gesetzt, was garantiert, dass er zuerst entnommen wird.",
+      "Prim ähnelt strukturell Dijkstra, verwendet als Schlüssel aber das Kantengewicht statt einer kumulierten Distanz.",
+      "Prim verwendet als Schlüssel die kumulierte Distanz zum Startknoten, genau wie Dijkstra.",
+      "Prim setzt voraus, dass der Graph gerichtet ist."
+    ],
+    "explanation": "Der −∞-Sentinel ✓ und der Kontrast „Dijkstra, aber auf w(u,v) statt dist(u)+w(u,v) geschlüsselt“ ✓ sind genau die Darstellung der Vorlesung. Option 3 behauptet genau den Unterschied, den sie leugnet ✗, und ein MST ist nur für *ungerichtete* Graphen definiert ✗.",
+    "source": "AuD26 Blatt 10 · Prim"
+  },
+  {
+    "id": "mst-mc-4",
+    "prompt": "Eigenschaften eines minimalen Spannbaums eines zusammenhängenden Graphen mit n Knoten — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Er enthält genau n−1 Kanten.",
+      "Er ist zusammenhängend und kreisfrei, also ein Baum, der alle Knoten aufspannt.",
+      "Er enthält den kürzesten Pfad zwischen jedem Knotenpaar.",
+      "Er enthält stets die global schwerste Kante, um den Graphen zusammenhängend zu halten."
+    ],
+    "explanation": "n−1 Kanten ✓ sowie zusammenhängend und kreisfrei ✓ sind die Definition eines Spannbaums. Ein MST minimiert das *Gesamtgewicht*, nicht die paarweisen Distanzen — der s–t-Pfad im MST kann weit vom kürzesten Pfad abweichen ✗ — und die schwerste Kante ist typischerweise die erste, die ein Greedy-Algorithmus meidet ✗.",
+    "source": "AuD26 Blatt 10 · Definition des MST"
+  }
+]

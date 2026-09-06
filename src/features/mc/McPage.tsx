@@ -6,11 +6,12 @@ import { McCompendium } from './McCompendium';
 import { McDrill } from './McDrill';
 import { McExam } from './McExam';
 import { EXAM_MAX_POINTS, EXAM_MINUTES, mcStats } from './mcBank';
+import { useT, type Translate } from '../../lib/i18n/locale';
 
 const MODES = [
-  { id: 'drill', label: 'Drill', icon: ListChecks, blurb: 'One at a time, instant feedback' },
-  { id: 'exam', label: 'Exam simulation', icon: Timer, blurb: `${EXAM_MAX_POINTS} P in ${EXAM_MINUTES} min` },
-  { id: 'compendium', label: 'Compendium', icon: BookMarked, blurb: 'Every question, by topic' },
+  { id: 'drill', labelKey: 'mc.modeDrill', blurbKey: 'mc.modeDrillBlurb', icon: ListChecks },
+  { id: 'exam', labelKey: 'mc.modeExam', blurbKey: 'mc.modeExamBlurb', icon: Timer },
+  { id: 'compendium', labelKey: 'mc.modeCompendium', blurbKey: 'mc.modeCompendiumBlurb', icon: BookMarked },
 ] as const;
 
 type Mode = (typeof MODES)[number]['id'];
@@ -22,6 +23,7 @@ export function McPage({
   questions: MultipleChoiceQuestion[];
   topics: Topic[];
 }) {
+  const t = useT();
   const [params, setParams] = useSearchParams();
   const mode = (MODES.some((m) => m.id === params.get('mode')) ? params.get('mode') : 'drill') as Mode;
   const stats = useMemo(() => mcStats(questions), [questions]);
@@ -36,7 +38,7 @@ export function McPage({
 
   return (
     <div>
-      <McHero stats={stats} />
+      <McHero stats={stats} t={t} />
 
       <nav className="mb-6 grid gap-2 sm:grid-cols-3">
         {MODES.map((m) => {
@@ -60,9 +62,11 @@ export function McPage({
                 <span
                   className={`block text-sm font-semibold ${active ? 'text-[var(--color-text-h)]' : 'text-[var(--color-text)]'}`}
                 >
-                  {m.label}
+                  {t(m.labelKey)}
                 </span>
-                <span className="block text-[11px] text-[var(--color-text-dim)]">{m.blurb}</span>
+                <span className="block text-[11px] text-[var(--color-text-dim)]">
+                  {t(m.blurbKey, { points: EXAM_MAX_POINTS, minutes: EXAM_MINUTES })}
+                </span>
               </span>
             </button>
           );
@@ -80,15 +84,16 @@ export function McPage({
  * The header exists to make one thing unmissable: 42 of the exam's 100 points are MC, and 36 of
  * those 42 come from 2-of-4 questions that pay nothing unless *both* marks are right.
  */
-function McHero({ stats }: { stats: ReturnType<typeof mcStats> }) {
+function McHero({ stats, t }: { stats: ReturnType<typeof mcStats>; t: Translate }) {
   return (
     <header className="mb-6">
       <h1 className="mb-1 text-2xl font-semibold tracking-tight text-[var(--color-text-h)]">
-        Multiple Choice
+        {t('mc.title')}
       </h1>
+      {/* The lead sentence emphasises one clause, so it carries a <b> in the catalogue and is
+          split around it rather than being assembled from fragments that don't reorder well. */}
       <p className="mb-4 text-sm text-[var(--color-text-dim)]">
-        The biggest single block on the paper: {EXAM_MAX_POINTS} of 100 points, and{' '}
-        <span className="text-[var(--color-text)]">36 of those 42 are 2-of-4 questions</span>.
+        <Emphasised text={t('mc.heroLead', { points: EXAM_MAX_POINTS })} />
       </p>
 
       <div className="card overflow-hidden">
@@ -96,26 +101,39 @@ function McHero({ stats }: { stats: ReturnType<typeof mcStats> }) {
           <div
             className="h-1.5 bg-[var(--color-accent-fill)]"
             style={{ width: '36%' }}
-            title="18 × 2-of-4 = 36 points"
+            title={t('mc.barDouble')}
           />
-          <div className="h-1.5 bg-[var(--color-accent)]" style={{ width: '6%' }} title="6 × 1-of-4 = 6 points" />
-          <div className="h-1.5 flex-1 bg-[var(--color-border)]" title="The other 58 points of the exam" />
+          <div className="h-1.5 bg-[var(--color-accent)]" style={{ width: '6%' }} title={t('mc.barSingle')} />
+          <div className="h-1.5 flex-1 bg-[var(--color-border)]" title={t('mc.barRest')} />
         </div>
 
         <div className="grid grid-cols-2 divide-x divide-[var(--color-border)] sm:grid-cols-4">
-          <Stat value={stats.total} label="questions in the bank" />
-          <Stat value={stats.double} label="× 2 of 4 · 2 P each" emphasis />
-          <Stat value={stats.single} label="× 1 of 4 · 1 P each" />
-          <Stat value={stats.totalPoints} label="points if you cleared it all" />
+          <Stat value={stats.total} label={t('mc.statQuestions')} />
+          <Stat value={stats.double} label={t('mc.statDouble')} emphasis />
+          <Stat value={stats.single} label={t('mc.statSingle')} />
+          <Stat value={stats.totalPoints} label={t('mc.statPoints')} />
         </div>
 
         <p className="border-t border-[var(--color-border)] px-4 py-3 text-xs leading-relaxed text-[var(--color-text-dim)]">
-          <span className="font-semibold text-[var(--color-warn)]">All or nothing.</span> On a
-          2-of-4, points are awarded only if exactly both correct statements are marked — one right
-          and one wrong scores 0, not 1.
+          <span className="font-semibold text-[var(--color-warn)]">{t('mc.allOrNothingLabel')}</span>{' '}
+          {t('mc.allOrNothingBody')}
         </p>
       </div>
     </header>
+  );
+}
+
+/** Renders a translated string that marks one clause with `<b>…</b>`. */
+function Emphasised({ text }: { text: string }) {
+  const [before, rest] = text.split('<b>');
+  const [bold, after] = (rest ?? '').split('</b>');
+  if (rest === undefined) return <>{text}</>;
+  return (
+    <>
+      {before}
+      <span className="text-[var(--color-text)]">{bold}</span>
+      {after}
+    </>
   );
 }
 

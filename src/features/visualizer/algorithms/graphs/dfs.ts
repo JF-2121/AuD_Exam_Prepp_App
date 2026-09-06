@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { GraphRenderer, type GraphState } from './GraphRenderer';
 import { exampleNodes, neighborsOf } from './graphData';
 
@@ -43,7 +43,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
   const visitedOf = () => exampleNodes.filter((n) => color[n.id] === 'black').map((n) => n.id);
 
   const steps: AlgorithmStep<GraphState>[] = [
-    { state: { labels: labelsOf(), visited: [] }, description: 'All vertices start WHITE (undiscovered).', highlightLine: 1 },
+    { state: { labels: labelsOf(), visited: [] }, description: msg('viz.dfs.start'), highlightLine: 1 },
   ];
 
   function visit(u: string) {
@@ -52,14 +52,14 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
     disc[u] = time;
     steps.push({
       state: { labels: labelsOf(), visited: visitedOf(), current: u, acceptedEdges: acceptedOf() },
-      description: `Discover ${u}: disc[${u}]=${time}.`,
+      description: msg('viz.dfs.discover', { u, time }),
       highlightLine: 5,
     });
 
     for (const { id: v } of neighborsOf(u)) {
       steps.push({
         state: { labels: labelsOf(), visited: visitedOf(), current: u, activeEdge: edgeKey(u, v), acceptedEdges: acceptedOf() },
-        description: `Examine edge ${u}-${v}: ${v} is ${color[v].toUpperCase()}.`,
+        description: msg('viz.dfs.examine', { u, v, color: color[v].toUpperCase() }),
         highlightLine: 7,
       });
       if (color[v] === 'white') {
@@ -67,7 +67,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
         visit(v);
         steps.push({
           state: { labels: labelsOf(), visited: visitedOf(), current: u, acceptedEdges: acceptedOf() },
-          description: `Back to ${u} after fully exploring ${v}.`,
+          description: msg('viz.dfs.backtrack', { u, v }),
           highlightLine: 7,
         });
       }
@@ -78,7 +78,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
     finish[u] = time;
     steps.push({
       state: { labels: labelsOf(), visited: visitedOf(), acceptedEdges: acceptedOf() },
-      description: `${u} finished: finish[${u}]=${time}.`,
+      description: msg('viz.dfs.finish', { u, time }),
       highlightLine: 9,
     });
   }
@@ -88,7 +88,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
   for (const n of rest) {
     steps.push({
       state: { labels: labelsOf(), visited: visitedOf(), acceptedEdges: acceptedOf() },
-      description: `${n.id} still WHITE and not reachable from ${source}: start a new DFS tree there.`,
+      description: msg('viz.dfs.newTree', { node: n.id, source }),
       highlightLine: 3,
     });
     visit(n.id);
@@ -96,7 +96,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
 
   steps.push({
     state: { labels: labelsOf(), visited: visitedOf(), acceptedEdges: acceptedOf() },
-    description: `DFS complete. Labels show disc/finish times; highlighted edges are the DFS tree${rest.length ? '(s)' : ''}.`,
+    description: msg(rest.length ? 'viz.dfs.doneForest' : 'viz.dfs.done'),
     highlightLine: 0,
   });
   return steps;

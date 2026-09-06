@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { BTreeRenderer, type BTreeNode, type BTreeState } from './BTreeRenderer';
 
 const pseudocode = [
@@ -51,7 +51,7 @@ function generateSteps({ t, initial, insertions }: BTreeInsertInput): AlgorithmS
     return { nodes: cloneNodes(nodes), rootId: root, highlightId, newId };
   }
 
-  steps.push({ state: snapshot(), description: `Starting B-Tree (degree t = ${t}, so ${t - 1}–${maxKeys} keys per non-root node).`, highlightLine: 0 });
+  steps.push({ state: snapshot(), description: msg('viz.btree.starting', { t, min: t - 1, max: maxKeys }), highlightLine: 0 });
 
   function childIndexFor(node: BTreeNode, key: number): number {
     let i = 0;
@@ -77,7 +77,7 @@ function generateSteps({ t, initial, insertions }: BTreeInsertInput): AlgorithmS
     x.children.splice(i + 1, 0, rightId);
     steps.push({
       state: snapshot(xId, rightId),
-      description: `${c.keys.length + 1 === t ? 'Child' : 'Node'} was full (${maxKeys} keys): median ${median} moves up into the parent; the remaining keys split into two nodes of ${t - 1} keys each.`,
+      description: msg(c.keys.length + 1 === t ? 'viz.btree.splitChild' : 'viz.btree.splitNode', { max: maxKeys, median }),
       highlightLine: 7,
     });
   }
@@ -88,12 +88,12 @@ function generateSteps({ t, initial, insertions }: BTreeInsertInput): AlgorithmS
       const newRoot = freshId();
       nodes[newRoot] = { id: newRoot, keys: [], children: [oldRoot] };
       root = newRoot;
-      steps.push({ state: snapshot(root), description: `Insert ${key}: root is full — split it first. Tree height grows by one.`, highlightLine: 2 });
+      steps.push({ state: snapshot(root), description: msg('viz.btree.splitRoot', { key }), highlightLine: 2 });
       splitChild(root, 0);
     }
 
     let xId = root;
-    steps.push({ state: snapshot(xId), description: `Insert ${key}: start at the root.`, highlightLine: 3 });
+    steps.push({ state: snapshot(xId), description: msg('viz.btree.insertStart', { key }), highlightLine: 3 });
     while (nodes[xId].children.length > 0) {
       const x = nodes[xId];
       const i = childIndexFor(x, key);
@@ -105,7 +105,11 @@ function generateSteps({ t, initial, insertions }: BTreeInsertInput): AlgorithmS
       const finalIdx = nodes[xId].children.indexOf(cId);
       steps.push({
         state: snapshot(cId),
-        description: `${key} descends into the child containing keys between ${nodes[xId].keys[finalIdx - 1] ?? '-∞'} and ${nodes[xId].keys[finalIdx] ?? '+∞'}.`,
+        description: msg('viz.btree.descend', {
+        key,
+        low: nodes[xId].keys[finalIdx - 1] ?? '-∞',
+        high: nodes[xId].keys[finalIdx] ?? '+∞',
+      }),
         highlightLine: 5,
       });
       xId = cId;
@@ -114,10 +118,10 @@ function generateSteps({ t, initial, insertions }: BTreeInsertInput): AlgorithmS
     const leaf = nodes[xId];
     const pos = childIndexFor(leaf, key);
     leaf.keys.splice(pos, 0, key);
-    steps.push({ state: snapshot(undefined, xId), description: `${key} inserted into leaf at sorted position (leaf now has ${leaf.keys.length} key${leaf.keys.length === 1 ? '' : 's'}).`, highlightLine: 10 });
+    steps.push({ state: snapshot(undefined, xId), description: msg('viz.btree.insertedLeaf', { key, count: leaf.keys.length }), highlightLine: 10 });
   }
 
-  steps.push({ state: snapshot(), description: 'All insertions complete. Every non-root node has between t−1 and 2t−1 keys.', highlightLine: 0 });
+  steps.push({ state: snapshot(), description: msg('viz.btree.doneInsert'), highlightLine: 0 });
   return steps;
 }
 

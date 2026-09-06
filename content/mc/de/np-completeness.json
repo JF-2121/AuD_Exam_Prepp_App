@@ -1,0 +1,122 @@
+[
+  {
+    "id": "np-mc-1",
+    "prompt": "Die Komplexitätsklassen P und NP — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein Problem liegt in P, wenn ein deterministischer Algorithmus es in polynomieller Worst-Case-Zeit löst.",
+      "P ⊆ NP gilt immer, da ein Polynomialzeit-Löser auch als Polynomialzeit-Verifizierer dient.",
+      "NP ist definiert als die Klasse der Probleme, die beweisbar nicht in polynomieller Zeit lösbar sind.",
+      "P = NP ist bewiesen, weshalb NP-vollständige Probleme als schwer gelten."
+    ],
+    "explanation": "Die Definition von P ✓ und die triviale Inklusion P ⊆ NP ✓ (man ignoriert das Zertifikat und löst selbst) sind Standard. NP betrifft die *Verifizierbarkeit*, nicht bewiesene Schwere ✗, und P gegen NP ist berühmt offen — ein Millennium-Problem ✗.",
+    "source": "AuD-Zusammenfassung §10.3–10.4"
+  },
+  {
+    "id": "np-q-1",
+    "prompt": "Was bedeutet es, dass ein Problem NP-hart ist, ohne notwendigerweise in NP zu liegen?",
+    "options": [
+      "Es ist leichter als die NP-vollständigen Probleme.",
+      "Jedes Problem in NP lässt sich in polynomieller Zeit darauf reduzieren, aber seine eigenen Lösungen müssen nicht in polynomieller Zeit verifizierbar sein.",
+      "Es ist bereits als unlösbar bewiesen.",
+      "Es liegt automatisch auch in P."
+    ],
+    "explanation": "NP-hart bedeutet nur „mindestens so schwer wie alles in NP“ über polynomielle Reduktion — die Zugehörigkeit zu NP ist eine separate Forderung. NP-vollständig = NP-hart *und* in NP; ein NP-hartes Problem außerhalb von NP ist also mindestens so schwer wie die NP-vollständigen, nie leichter.",
+    "source": "AuD-Zusammenfassung §10.5"
+  },
+  {
+    "id": "np-mc-2",
+    "prompt": "Polynomielle Reduktion L₁ ≤_P L₂ — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Es existiert ein in polynomieller Zeit berechenbares f mit x ∈ L₁ ⟺ f(x) ∈ L₂.",
+      "≤_P ist transitiv: Aus L₁ ≤_P L₂ und L₂ ≤_P L₃ folgt L₁ ≤_P L₃ über die Komposition f₂ ∘ f₁.",
+      "L₁ ≤_P L₂ bedeutet, dass L₁ mindestens so schwer wie L₂ ist.",
+      "Eine Reduktion überträgt sich nicht auf die Komplemente: L₁ ≤_P L₂ sagt nichts über L̄₁ und L̄₂ aus."
+    ],
+    "explanation": "Die Definition ✓ und die Transitivität über die Komposition ✓ sind genau das, was „einer für alle, alle für einen“ funktionieren lässt. Die Richtung in Option 3 ist vertauscht — L₂ ist mindestens so schwer wie L₁ ✗ — und das Negieren beider Seiten der Äquivalenz liefert L̄₁ ≤_P L̄₂ mit *demselben* f ✗.",
+    "source": "AuD26 Blatt 13 · Reduktionsbeweise (a)/(d)"
+  },
+  {
+    "id": "np-mc-3",
+    "prompt": "Konsequenzen der NP-Vollständigkeit — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Liegt ein einziges NP-vollständiges Problem in P, so gilt P = NP.",
+      "Ist irgendein Problem in NP nicht in polynomieller Zeit lösbar, so ist kein NP-vollständiges Problem es.",
+      "Liegt ein einziges NP-vollständiges Problem in P, werden nur die darauf reduzierbaren Probleme effizient.",
+      "SAT ist NP-vollständig, aber jeder weitere NP-Vollständigkeitsbeweis muss ebenfalls direkt über Cook-Levin geführt werden."
+    ],
+    "explanation": "Die Verkettung einer Polynomialzeit-Reduktion mit einem Polynomialzeit-Löser macht jedes NP-Problem polynomiell ✓, und Option 2 ist genau die Kontraposition dazu ✓. Option 3 übersieht, dass sich *jedes* NP-Problem auf ein NP-vollständiges reduzieren lässt ✗, und nach Cook-Levin knüpfen neue Beweise an ein bereits bekanntes NP-vollständiges Problem an ✗.",
+    "source": "AuD26 Blatt 13 · Reduktionsbeweise (b)/(c)"
+  },
+  {
+    "id": "np-q-4",
+    "prompt": "2-SAT gegenüber 3-SAT — welche Aussage ist korrekt?",
+    "options": [
+      "2-SAT liegt in P (über Implikationsgraphen und SCCs); 3-SAT ist NP-vollständig.",
+      "Beide sind NP-vollständig.",
+      "Beide liegen in P.",
+      "3-SAT liegt in P; 2-SAT ist NP-vollständig."
+    ],
+    "explanation": "Eine Klausel mit zwei Literalen (a ∨ b) ist äquivalent zu den Implikationen ¬a → b und ¬b → a, sodass die Erfüllbarkeit auf eine Prüfung starker Zusammenhangskomponenten im Implikationsgraphen zurückgeführt werden kann — polynomiell. Drei Literale pro Klausel verzahnen die Variablen so, dass diese lokale Abkürzung scheitert; 3-SAT ist das kanonische NP-vollständige Problem.",
+    "source": "AuD-Zusammenfassung §10.5, Problempaare"
+  },
+  {
+    "id": "np-q-3",
+    "prompt": "Welches Paar ordnet (polynomielles Problem, NP-vollständiges Problem) korrekt zu?",
+    "options": [
+      "2-Färbbarkeit (Bipartitheit) liegt in P; 3-Färbbarkeit ist NP-vollständig.",
+      "3-Färbbarkeit liegt in P; 2-Färbbarkeit ist NP-vollständig.",
+      "Beide liegen in P.",
+      "Beide sind NP-vollständig."
+    ],
+    "explanation": "Bei zwei Farben legt das Färben eines Knotens alle seine Nachbarn zwingend fest, sodass eine einzige BFS/DFS die Frage in O(V+E) entscheidet. Bei drei Farben bleiben jedem Nachbarn zwei Möglichkeiten, was einen echt exponentiellen Verzweigungsbaum erzeugt. Die 3-Färbbarkeit ist eines der 21 ursprünglichen NP-vollständigen Probleme von Karp.",
+    "source": "AuD-Zusammenfassung §10.5, Problempaare"
+  },
+  {
+    "id": "np-mc-4",
+    "prompt": "Kürzester gegenüber längstem einfachem Pfad — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Der kürzeste einfache Pfad liegt in P, z. B. über Dijkstra oder Bellman-Ford.",
+      "Der längste einfache Pfad ist NP-vollständig, weil das Vermeiden von Wiederbesuchen die optimale Teilstruktur zerstört.",
+      "Beide Probleme liegen in P, da beide mit derselben Relaxationstechnik gelöst werden können.",
+      "Der längste einfache Pfad liegt in P, weil man einfach alle Kantengewichte negieren und Dijkstra ausführen kann."
+    ],
+    "explanation": "Kürzeste Pfade besitzen eine optimale Teilstruktur, die DP und Greedy ausnutzen ✓; der längste *einfache* Pfad muss über exponentiell viele Knotenteilmengen argumentieren, um Wiederbesuche zu vermeiden, was diese Teilstruktur bricht ✓. Das Negieren der Gewichte erzeugt negative Kanten, die Dijkstra nicht verarbeiten kann, und negative Kreise für Bellman-Ford ✗✗.",
+    "source": "AuD-Zusammenfassung §10.5, Problempaare"
+  },
+  {
+    "id": "np-q-7",
+    "prompt": "Beim Nachweis HAM-PATH ∈ NP mit dem Zertifikat p = (v₁, …, vₙ): Welche der vier Verifizierer-Bedingungen dominiert die Gesamtverifikationszeit von O(V²)?",
+    "options": [
+      "Die Prüfung, dass alle Knoten in p paarweise verschieden sind",
+      "Die Prüfung, dass p die richtige Anzahl an Knoten enthält",
+      "Die Prüfung, dass jedes vᵢ ein Knoten von G ist",
+      "Die Prüfung, dass jedes aufeinanderfolgende Paar (vᵢ, vᵢ₊₁) eine Kante von G ist"
+    ],
+    "explanation": "Die paarweise Verschiedenheit vergleicht im Worst Case bis zu O(V²) Paare. Die anderen drei sind jeweils ein einzelner O(V)-Durchlauf über das Zertifikat. Da alle vier zusammen genau die Definition eines Hamiltonpfades bilden, ist der Verifizierer korrekt — und polynomiell, was die Zugehörigkeit zu NP verlangt.",
+    "source": "AuD26 Blatt 13 · HAM-PATH ∈ NP"
+  },
+  {
+    "id": "np-q-8",
+    "prompt": "Das Hamiltonpfad-Problem eingeschränkt auf gerichtete kreisfreie Graphen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "In einem DAG muss ein Hamiltonpfad der topologischen Ordnung folgen, es gibt also genau einen zu prüfenden Kandidaten.",
+      "Die Entscheidung kostet daher O(V+E): topologisch sortieren und dann prüfen, ob jedes aufeinanderfolgende Paar eine Kante ist.",
+      "DAGs haben nie einen Hamiltonpfad, die Antwort ist also trivial immer „nein“.",
+      "Das widerspricht der NP-Vollständigkeit des allgemeinen Problems."
+    ],
+    "explanation": "Ein Pfad kann sich nicht gegen die Kantenrichtungen bewegen, ohne einen Knoten erneut zu besuchen, die topologische Ordnung ist also der einzig möglliche Kandidat ✓, wodurch die Prüfung O(V+E) kostet ✓. DAGs können durchaus Hamiltonpfade haben ✗, und ein leichter Spezialfall widerspricht der Schwere des allgemeinen Falls nie ✗.",
+    "source": "AuD26 Blatt 13 · HAM-PATH auf DAGs"
+  },
+  {
+    "id": "np-mc-5",
+    "prompt": "Wie sollte man mit einem als NP-vollständig nachgewiesenen Problem umgehen? Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Approximationsalgorithmen nutzen — z. B. erfüllt eine zufällige Belegung erwartet ≥ ½ aller 3SAT-Klauseln.",
+      "Prüfen, ob die konkrete Instanz in einen polynomiellen Spezialfall fällt, etwa Hamiltonpfad auf einem DAG.",
+      "Weiter nach einem exakten polynomiellen Algorithmus suchen — für die konkrete Instanz ist einer nur noch nicht bekannt.",
+      "Da überhaupt kein Algorithmus existiert, ist das Problem unentscheidbar."
+    ],
+    "explanation": "Approximation ✓ und das Ausnutzen struktureller Spezialfälle ✓ sind zwei der vier üblichen Ausweichwege (Heuristiken und beschnittene exponentielle Suche sind die anderen). Einen exakten Polynomialzeit-Algorithmus zu finden würde P = NP beweisen ✗, und NP-vollständige Probleme sind sehr wohl entscheidbar — nur eben nicht bekanntermaßen effizient ✗.",
+    "source": "AuD-Zusammenfassung §10.5, praktisches Fazit"
+  }
+]

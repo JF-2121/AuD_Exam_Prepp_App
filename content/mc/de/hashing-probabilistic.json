@@ -1,0 +1,146 @@
+[
+  {
+    "id": "real-hash-1",
+    "prompt": "Suchen in einem Bloomfilter — welche Aussage ist korrekt?",
+    "options": [
+      "Es kann nur False Negatives geben.",
+      "Es kann nur False Positives geben.",
+      "Es kann sowohl False Negatives als auch False Positives geben.",
+      "Es kann weder False Negatives noch False Positives geben."
+    ],
+    "explanation": "Ein eingefügtes Element hat alle seine k Bits auf 1 gesetzt, und Bits werden nie zurückgesetzt — eine Mitgliedschaftsanfrage kann für dieses Element also nie „nicht enthalten“ liefern. Überlappende Hashes *anderer* Elemente können jedoch alle k Bits eines nie eingefügten Elements setzen und so einen False Positive erzeugen.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.6"
+  },
+  {
+    "id": "real-hash-2",
+    "prompt": "Aussagen über Hashtabellen und Hashfunktionen — welche zwei sind korrekt?",
+    "options": [
+      "Hashtabellen werden verwendet, um Daten komprimiert zu speichern.",
+      "Eine Hashfunktion ist deterministisch.",
+      "Es gibt keine Hashfunktion, die Kollisionen vollständig vermeiden kann.",
+      "Das Hauptziel von Hashfunktionen in Hashtabellen ist die Verschlüsselung von Schlüsseln zur Sicherheit."
+    ],
+    "explanation": "Determinismus ist überhaupt erst die Voraussetzung für das Nachschlagen — derselbe Schlüssel muss stets im selben Slot landen ✓. Sobald das Schlüsseluniversum größer ist als die Tabelle, macht das Schubfachprinzip Kollisionen unvermeidbar ✓. Hashing dient dem schnellen Zugriff, nicht der Kompression ✗ oder Verschlüsselung ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.8"
+  },
+  {
+    "id": "hash-q-3",
+    "prompt": "In einer Hashtabelle mit Verkettung beträgt die erwartete Suchzeit O(1 + α). Was ist α?",
+    "options": [
+      "Die Anzahl der verwendeten Hashfunktionen",
+      "Der Füllgrad n/m — Schlüssel pro Slot",
+      "Der gesamte Speicherbedarf der Tabelle in Byte",
+      "Die Anzahl der bisher aufgetretenen Kollisionen"
+    ],
+    "explanation": "α = n/m (n Schlüssel, m Slots) ist der Füllgrad, also die durchschnittliche Kettenlänge. Die 1 steht für das Berechnen des Hashwerts und das Erreichen des Slots, das α für das Durchlaufen der dortigen Kette.",
+    "source": "AuD-Zusammenfassung §7.3"
+  },
+  {
+    "id": "hash-mc-1",
+    "prompt": "Kollisionsauflösung — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Bei Verkettung hält jeder Slot eine verkettete Liste aller dorthin gehashten Schlüssel.",
+      "Beim offenen Adressieren wird eine deterministische Sondierungsfolge durchlaufen, bis ein freier Slot gefunden ist; zusätzlicher Listenspeicher entfällt.",
+      "Offenes Adressieren ist vom Füllgrad unabhängig, da es keine Listen verwendet.",
+      "Verkettung erfordert, dass der Füllgrad α unter 1 bleibt."
+    ],
+    "explanation": "Das sind die beiden Standardverfahren ✓✓. Offenes Adressieren verschlechtert sich mit α → 1 durch Clusterbildung erheblich ✗, und gerade die Verkettung verträgt α > 1 problemlos — die Ketten werden nur länger ✗.",
+    "source": "AuD-Zusammenfassung §7.3"
+  },
+  {
+    "id": "hash-mc-2",
+    "prompt": "Eine maximal schlechte Hashfunktion h(k) = 0, die dennoch in den gültigen Indexbereich abbildet — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Alle Schlüssel landen im selben Slot, eine Tabelle mit Verkettung degeneriert also zu einer einzigen verketteten Liste.",
+      "Die Suche verschlechtert sich von erwartet O(1) auf Θ(n).",
+      "Die Tabelle wird strukturell ungültig, da doppelte Slots nicht erlaubt sind.",
+      "Die Suche bleibt O(1), da das Berechnen des Hashwerts weiterhin konstante Zeit kostet."
+    ],
+    "explanation": "Eine konstante Hashfunktion ist völlig zulässig (sie bildet in den Bereich ab), aber nutzlos: Jeder Schlüssel kollidiert ✓, wodurch aus dem erwarteten O(1+α) ein linearer Durchlauf mit Θ(n) wird ✓. Die Struktur bleibt gültig ✗, und die Kosten werden vom Durchlaufen der Kette dominiert, nicht vom Berechnen des Hashwerts ✗.",
+    "source": "Altklausur WS23/24 · Aufgabe 3.2.3"
+  },
+  {
+    "id": "hash-mc-3",
+    "prompt": "n verschiedene Schlüssel werden gleichverteilt zufällig in eine Tabelle mit a Slots gehasht. Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Wahrscheinlichkeit, dass ein fest gewählter Slot leer bleibt, ist (1 − 1/a)ⁿ.",
+      "Die erwartete Anzahl leerer Slots ist a · (1 − 1/a)ⁿ.",
+      "Die erwartete Anzahl leerer Slots ist a − n, da jeder Schlüssel einen Slot belegt.",
+      "Das Ergebnis setzt voraus, dass die Leer-Indikatoren verschiedener Slots unabhängig sind."
+    ],
+    "explanation": "Jeder der n Schlüssel muss den Slot unabhängig verfehlen ⟹ (1−1/a)ⁿ ✓, und die Summation über alle a Slots per Linearität des Erwartungswerts liefert a·(1−1/a)ⁿ ✓. a − n ignoriert Kollisionen ✗, und die Linearität des Erwartungswerts braucht *keine* Unabhängigkeit zwischen den Slots — nur zwischen den Schlüsseln ✗.",
+    "source": "AuD26 Blatt 09 · erwartete leere Slots"
+  },
+  {
+    "id": "hash-mc-4",
+    "prompt": "Skip-Listen mit n Elementen und Aufstiegswahrscheinlichkeit p — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Suchen, Einfügen und Löschen liegen erwartet in O(log n).",
+      "Skip-Listen erreichen die Leistung balancierter Bäume durch Randomisierung statt durch strenge Invarianten und Rotationen.",
+      "Die durchschnittliche Höhe liegt nicht in Ω(log n).",
+      "Die erwartete Zeit-Komplexität für das Löschen liegt in Θ(n)."
+    ],
+    "explanation": "Erwartet O(log n) für alle drei Operationen ✓, erreicht durch zufälliges Hochstufen statt durch Rotationen ✓ — genau deshalb sind Skip-Listen so viel einfacher zu implementieren. Die durchschnittliche Höhe *ist* Θ(log n) und damit in Ω(log n) ✗, und das Löschen ist O(log n), nicht Θ(n) ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.1"
+  },
+  {
+    "id": "hash-mc-5",
+    "prompt": "Einfügen in eine Skip-Liste — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Das Element tritt immer zuerst der Ebene 1 bei, genau wie beim Einfügen in eine sortierte verkettete Liste.",
+      "Der Aufstieg wird Ebene für Ebene geprüft und endet beim ersten fehlgeschlagenen Münzwurf.",
+      "Die Ebene eines neuen Elements wird vor dem Einfügen durch eine Suche über die bestehenden Ebenen bestimmt.",
+      "Die Suche beginnt auf der untersten Ebene und steigt auf, sobald der nächste Knoten über das Ziel hinausschießen würde."
+    ],
+    "explanation": "Immer zuerst Ebene 1 ✓, dann aufsteigen, solange die Prüfung gelingt, und beim ersten Fehlschlag stoppen ✓. Die Ebene ergibt sich *aus* diesen Münzwürfen, statt vorab festgelegt zu werden ✗, und die Suche läuft andersherum — sie beginnt *oben* und steigt beim Überschießen ab ✗.",
+    "source": "AuD-Zusammenfassung §7.2, Einfügemechanik"
+  },
+  {
+    "id": "hash-mc-6",
+    "prompt": "Eigenschaften von Bloomfiltern — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein klassischer Bloomfilter auf einem Bit-Array kann keine Elemente löschen, weil das Zurücksetzen eines Bits die Mitgliedschaft eines anderen Elements zerstören könnte, das sich dieses Bit teilt.",
+      "Ein Bloomfilter kann seinen Inhalt nicht aufzählen — er unterstützt nur Einfügen und Mitgliedschaftstest.",
+      "Ein Bloomfilter speichert die eingefügten Elemente selbst, nur in komprimierter Form.",
+      "Eine größere Anzahl von Hashfunktionen k senkt die False-Positive-Rate stets weiter."
+    ],
+    "explanation": "Gemeinsam genutzte Bits machen das Löschen unsicher ✓, und da nur das Bit-Array gehalten wird, lässt sich die Menge nicht zurücklesen ✓. Vom Element selbst wird nichts gespeichert ✗. Und k hat ein Optimum: Zu viele Hashfunktionen sättigen das Bit-Array mit Einsen und *erhöhen* die False-Positive-Rate ✗.",
+    "source": "AuD-Zusammenfassung §7.4"
+  },
+  {
+    "id": "hash-mc-7",
+    "prompt": "Counting-Bloomfilter — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Jedes Bit wird durch einen kleinen Zähler ersetzt; das Einfügen inkrementiert die k Positionen, das Löschen dekrementiert sie.",
+      "Die Garantie „keine False Negatives“ bleibt erhalten, ein Zählerüberlauf muss aber verhindert werden.",
+      "Counting-Bloomfilter beseitigen auch die False Positives.",
+      "Sie benötigen genauso viel Speicher wie ein klassischer Bloomfilter."
+    ],
+    "explanation": "Zähler statt Bits ermöglichen echtes Löschen ✓ und erhalten die Garantie ohne False Negatives, solange kein Zähler überläuft ✓. False Positives bleiben möglich — überlappende Hashes kollidieren weiterhin ✗ — und der Speicherbedarf wächst um die Zählerbreite (z. B. um den Faktor 4) ✗.",
+    "source": "AuD-Zusammenfassung §7.4, Counting-Bloomfilter"
+  },
+  {
+    "id": "hash-q-5",
+    "prompt": "Ein Bloomfilter mit 12 Bits und 3 Hashfunktionen hat die Bits {1,4,5,6,8,9} gesetzt. Eine Anfrage für x = 33 findet alle drei Positionen (1, 9, 6) bereits gesetzt, obwohl 33 nie eingefügt wurde. Welche Aussage ist korrekt?",
+    "options": [
+      "Ein False Positive — die drei Positionen wurden zufällig von anderen eingefügten Elementen gesetzt.",
+      "Ein False Negative — der Filter meldet Abwesenheit, obwohl das Element vorhanden ist.",
+      "Der Filter ist beschädigt und muss neu aufgebaut werden.",
+      "33 muss vorher eingefügt worden sein, ohne dass es festgehalten wurde."
+    ],
+    "explanation": "Genau so entstehen False Positives im Bloomfilter: Die k Positionen eines nie eingefügten Elements können alle zufällig bereits auf 1 stehen, und der Filter kann das nicht von einer echten Mitgliedschaft unterscheiden. Das Verhalten ist voll mit der Garantie vereinbar — ausgeschlossen sind nur False *Negatives*.",
+    "source": "AuD26 Blatt 09 · durchgerechnetes Bloomfilter-Beispiel"
+  },
+  {
+    "id": "hash-mc-8",
+    "prompt": "Wenn ein Bloomfilter eine falsche Antwort gibt, wie viele Elemente müssen zuvor mindestens eingefügt worden sein? Welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Eine falsche Antwort ist zwangsläufig ein False Positive, da False Negatives unmöglich sind.",
+      "Ein einziges eingefügtes Element kann bereits genügen, wenn seine k Bits alle k Positionen des angefragten Elements abdecken.",
+      "Es müssen mindestens zwei Elemente eingefügt worden sein, weil ein einzelnes Element nicht genug Bits setzen kann.",
+      "Eine falsche Antwort beweist, dass die k Hashfunktionen nicht unabhängig sind."
+    ],
+    "explanation": "Nur False Positives sind möglich ✓, und ein einziges Einfügen genügt bereits, sobald h₁(y), …, h_k(y) ⊆ {h₁(x), …, h_k(x)} gilt — etwa wenn beide Elemente auf dieselben Positionen hashen ✓. Die Behauptung „mindestens zwei“ wird durch dieses Gegenbeispiel widerlegt ✗, und die Unabhängigkeit der Hashfunktionen spielt hier keine Rolle ✗.",
+    "source": "Altklausur WS23/24 · Aufgabe 3.3.2"
+  }
+]

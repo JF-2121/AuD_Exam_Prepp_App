@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ListChecks, SquareStack } from 'lucide-react';
 import type { TopicMastery } from '../../lib/mastery';
+import { useT } from '../../lib/i18n/locale';
 
 function colorFor(score: number): string {
   if (score < 40) return 'var(--color-bad)';
@@ -9,13 +10,15 @@ function colorFor(score: number): string {
 }
 
 export function MasteryHeatmap({ mastery }: { mastery: TopicMastery[] }) {
+  const t = useT();
+
   if (mastery.length === 0) {
-    return <p className="text-[var(--color-text-dim)]">No topics yet.</p>;
+    return <p className="text-[var(--color-text-dim)]">{t('dash.noTopics')}</p>;
   }
 
   return (
     <div className="card p-5">
-      <h2 className="mb-4 text-sm font-semibold text-[var(--color-text-h)]">Mastery by topic — weakest first</h2>
+      <h2 className="mb-4 text-sm font-semibold text-[var(--color-text-h)]">{t('dash.masteryTitle')}</h2>
       <ul className="flex flex-col gap-4">
         {mastery.map((m) => (
           <li key={m.topicId}>
@@ -33,10 +36,10 @@ export function MasteryHeatmap({ mastery }: { mastery: TopicMastery[] }) {
             </div>
             <div className="flex gap-3 text-xs">
               <Link to={`/quiz?topic=${m.topicId}`} className="flex items-center gap-1 text-[var(--color-text-dim)] hover:text-[var(--color-accent)]">
-                <ListChecks size={12} /> Practice
+                <ListChecks size={12} /> {t('nav.practice')}
               </Link>
               <Link to={`/flashcards?topic=${m.topicId}`} className="flex items-center gap-1 text-[var(--color-text-dim)] hover:text-[var(--color-accent)]">
-                <SquareStack size={12} /> Flashcards
+                <SquareStack size={12} /> {t('nav.flashcards')}
               </Link>
             </div>
           </li>

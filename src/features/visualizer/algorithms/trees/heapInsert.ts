@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
 
 const pseudocode = [
@@ -37,7 +37,7 @@ function buildState(arr: number[], highlightIdx?: number, newIdx?: number): Tree
 function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
   const arr: number[] = [];
   const steps: AlgorithmStep<TreeState>[] = [
-    { state: buildState(arr), description: 'Empty heap.', highlightLine: 0 },
+    { state: buildState(arr), description: msg('viz.d.emptyTree'), highlightLine: 0 },
   ];
 
   for (const k of input) {
@@ -45,32 +45,32 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
     let i = arr.length - 1;
     steps.push({
       state: buildState(arr, undefined, i),
-      description: `Insert ${k}: append at index ${i} (the last free slot — keeps the tree complete).`,
+      description: msg('viz.heap.insertAppend', { value: k, i }),
       highlightLine: 1,
     });
     while (i > 0 && arr[parentOf(i)] < arr[i]) {
       const p = parentOf(i);
       steps.push({
         state: buildState(arr, i),
-        description: `Compare index ${i} (${arr[i]}) with parent index ${p} (${arr[p]}): ${arr[i]} > ${arr[p]}, violates heap property — sift up.`,
+        description: msg('viz.heap.siftUp', { i, vi: arr[i], p, vp: arr[p] }),
         highlightLine: 3,
       });
       [arr[p], arr[i]] = [arr[i], arr[p]];
       i = p;
       steps.push({
         state: buildState(arr, i),
-        description: `Swapped. ${arr[i]} now at index ${i}.`,
+        description: msg('viz.heap.swapped', { value: arr[i], i }),
         highlightLine: 4,
       });
     }
     steps.push({
       state: buildState(arr, i),
-      description: `${k} settles at index ${i}: parent (if any) is now ≥ ${k}, heap property restored.`,
+      description: msg('viz.heap.settled', { value: k, i }),
       highlightLine: 0,
     });
   }
 
-  steps.push({ state: buildState(arr), description: 'All values inserted. Every parent ≥ its children.', highlightLine: 0 });
+  steps.push({ state: buildState(arr), description: msg('viz.heap.doneInsert'), highlightLine: 0 });
   return steps;
 }
 

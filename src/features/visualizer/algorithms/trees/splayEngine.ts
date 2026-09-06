@@ -1,4 +1,4 @@
-import type { AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmStep, type StepText } from '../../core/types';
 import type { TreeNode, TreeState } from './TreeRenderer';
 
 export interface SplayNode {
@@ -97,7 +97,7 @@ export function createSplayEngine() {
   }
 
   /** Runs splay(nodeId) to the root, invoking onStep after each Zig/Zig-Zig/Zig-Zag rotation. */
-  function splay(nodeId: string, onStep: (label: 'Zig' | 'Zig-Zig' | 'Zig-Zag', description: string) => void) {
+  function splay(nodeId: string, onStep: (label: 'Zig' | 'Zig-Zig' | 'Zig-Zag', description: StepText) => void) {
     while (nodes[nodeId].parent) {
       const p = nodes[nodeId].parent!;
       const g = nodes[p].parent;
@@ -105,7 +105,7 @@ export function createSplayEngine() {
         const nodeIsRight = nodes[p].right === nodeId;
         if (nodeIsRight) rotateLeft(p);
         else rotateRight(p);
-        onStep('Zig', `Zig: ${nodes[nodeId].value}'s parent (${nodes[p].value}) is the root — single rotation.`);
+        onStep('Zig', msg('viz.splay.zig', { node: nodes[nodeId].value, parent: nodes[p].value }));
       } else {
         const pIsLeftOfG = nodes[g].left === p;
         const nodeIsLeftOfP = nodes[p].left === nodeId;
@@ -114,13 +114,16 @@ export function createSplayEngine() {
           else rotateLeft(g);
           if (nodeIsLeftOfP) rotateRight(p);
           else rotateLeft(p);
-          onStep('Zig-Zig', `Zig-Zig: ${nodes[nodeId].value} and its parent are both ${pIsLeftOfG ? 'left' : 'right'} children — rotate around the grandparent first, then the parent.`);
+          onStep(
+            'Zig-Zig',
+            msg(pIsLeftOfG ? 'viz.splay.zigzigLeft' : 'viz.splay.zigzigRight', { node: nodes[nodeId].value }),
+          );
         } else {
           if (nodeIsLeftOfP) rotateRight(p);
           else rotateLeft(p);
           if (pIsLeftOfG) rotateRight(g);
           else rotateLeft(g);
-          onStep('Zig-Zag', `Zig-Zag: ${nodes[nodeId].value} and its parent are on opposite sides — rotate around the parent first, then the grandparent.`);
+          onStep('Zig-Zag', msg('viz.splay.zigzag', { node: nodes[nodeId].value }));
         }
       }
     }
@@ -155,12 +158,12 @@ export function performInsert(
   lines: { insert: number; zig: number; zigzig: number; zigzag: number; done: number },
 ) {
   const id = engine.insertPlain(value);
-  steps.push({ state: engine.snapshot(undefined, id), description: `Insert ${value}: plain BST insert places it as a new leaf.`, highlightLine: lines.insert });
+  steps.push({ state: engine.snapshot(undefined, id), description: msg('viz.splay.insertLeaf', { value }), highlightLine: lines.insert });
   engine.splay(id, (label, description) => {
     const line = label === 'Zig' ? lines.zig : label === 'Zig-Zig' ? lines.zigzig : lines.zigzag;
     steps.push({ state: engine.snapshot(id), description, highlightLine: line });
   });
-  steps.push({ state: engine.snapshot(undefined, id), description: `${value} has been splayed to the root.`, highlightLine: lines.done });
+  steps.push({ state: engine.snapshot(undefined, id), description: msg('viz.splay.splayed', { value }), highlightLine: lines.done });
   return id;
 }
 
@@ -177,14 +180,14 @@ export function performSearch(
   steps.push({
     state: engine.snapshot(id),
     description: found
-      ? `Search ${value}: found at this node.`
-      : `Search ${value}: not present — the search falls off the tree here, at the last node visited (${engine.nodes[id].value}).`,
+      ? msg('viz.splay.searchFound', { value })
+      : msg('viz.splay.searchAbsent', { value, node: engine.nodes[id].value }),
     highlightLine: lines.search,
   });
   engine.splay(id, (label, description) => {
     const line = label === 'Zig' ? lines.zig : label === 'Zig-Zig' ? lines.zigzig : lines.zigzag;
     steps.push({ state: engine.snapshot(id), description, highlightLine: line });
   });
-  steps.push({ state: engine.snapshot(undefined, id), description: `${engine.nodes[id].value} has been splayed to the root${found ? '' : ' (the search still splays even though it failed)'}.`, highlightLine: lines.done });
+  steps.push({ state: engine.snapshot(undefined, id), description: msg(found ? 'viz.splay.splayedFound' : 'viz.splay.splayedNotFound', { value: engine.nodes[id].value }), highlightLine: lines.done });
   return id;
 }

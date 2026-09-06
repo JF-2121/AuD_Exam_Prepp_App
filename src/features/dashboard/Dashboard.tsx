@@ -4,11 +4,13 @@ import { getAllExamAttempts, getAllQuizAttempts, getAllReviewLog, getAllSrsState
 import { computeMastery, type TopicMastery } from '../../lib/mastery';
 import { buildActivityCalendar } from '../../lib/activity';
 import type { ExamAttempt, Flashcard, QuizAttempt, SrsState, Topic } from '../../lib/types';
+import { useT } from '../../lib/i18n/locale';
 import { MasteryHeatmap } from './MasteryHeatmap';
 import { ActivityHeatmap } from './ActivityHeatmap';
 import { BackupPanel } from './BackupPanel';
 
 export function Dashboard({ topics, flashcards }: { topics: Topic[]; flashcards: Flashcard[] }) {
+  const t = useT();
   const [srsStates, setSrsStates] = useState<SrsState[]>([]);
   const [quizAttempts, setQuizAttempts] = useState<QuizAttempt[]>([]);
   const [examAttempts, setExamAttempts] = useState<ExamAttempt[]>([]);
@@ -32,7 +34,7 @@ export function Dashboard({ topics, flashcards }: { topics: Topic[]; flashcards:
   }, []);
 
   if (!loaded) {
-    return <p className="text-[var(--color-text-dim)]">Loading…</p>;
+    return <p className="text-[var(--color-text-dim)]">{t('app.loading')}</p>;
   }
 
   const mastery: TopicMastery[] = computeMastery(topics, flashcards, srsStates, quizAttempts, examAttempts).sort(
@@ -50,15 +52,15 @@ export function Dashboard({ topics, flashcards }: { topics: Topic[]; flashcards:
   return (
     <div>
       <h1 className="mb-1 flex items-center gap-2.5 text-[28px] font-semibold tracking-tight text-[var(--color-text-h)]">
-        <LayoutDashboard size={24} className="text-[var(--color-accent)]" strokeWidth={2} /> Dashboard
+        <LayoutDashboard size={24} className="text-[var(--color-accent)]" strokeWidth={2} /> {t('dash.title')}
       </h1>
       <p className="mb-6 text-sm text-[var(--color-text-dim)]">
-        Weakest topics first — combines flashcard maturity, quiz accuracy, and mock exam performance.
+        {t('dash.subtitle')}
       </p>
 
       <div className="card mb-6 overflow-hidden p-5 sm:p-6">
         <div className="mb-3 flex items-baseline justify-between gap-4">
-          <h2 className="text-sm tracking-wide text-[var(--color-text-dim)]">Overall exam readiness</h2>
+          <h2 className="text-sm tracking-wide text-[var(--color-text-dim)]">{t('dash.readiness')}</h2>
           <span className="text-4xl font-semibold tabular-nums text-[var(--color-accent)]">
             {overallScore}
             <span className="text-xl text-[var(--color-text-dim)]">%</span>
@@ -73,12 +75,12 @@ export function Dashboard({ topics, flashcards }: { topics: Topic[]; flashcards:
       </div>
 
       <div className="mb-6 grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
-        <Stat icon={SquareStack} label="Cards reviewed" value={srsStates.length} />
-        <Stat icon={ListChecks} label="Quiz attempts" value={quizAttempts.length} />
-        <Stat icon={Trophy} label="Mock exams taken" value={examAttempts.length} />
+        <Stat icon={SquareStack} label={t('dash.cardsReviewed')} value={srsStates.length} />
+        <Stat icon={ListChecks} label={t('dash.quizAttempts')} value={quizAttempts.length} />
+        <Stat icon={Trophy} label={t('dash.examsTaken')} value={examAttempts.length} />
         <Stat
           icon={TrendingUp}
-          label="Avg exam score"
+          label={t('dash.avgExamScore')}
           value={
             examAttempts.length
               ? `${Math.round((examAttempts.reduce((s, e) => s + e.score, 0) / examAttempts.length) * 100)}%`

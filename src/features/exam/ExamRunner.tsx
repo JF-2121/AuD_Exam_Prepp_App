@@ -8,6 +8,7 @@ import { assembleExam } from './examAssembler';
 import { MultipleChoice } from '../quiz/MultipleChoice';
 import { ShortAnswer } from '../quiz/ShortAnswer';
 import { TraceAlgorithm } from '../quiz/TraceAlgorithm';
+import { useT } from '../../lib/i18n/locale';
 
 type Phase = 'select' | 'running' | 'review';
 
@@ -20,6 +21,7 @@ export function ExamRunner({
   questions: Question[];
   topics: Topic[];
 }) {
+  const t = useT();
   const [phase, setPhase] = useState<Phase>('select');
   const [templateId, setTemplateId] = useState(examTemplates[0]?.id);
   const [examQuestions, setExamQuestions] = useState<Question[]>([]);
@@ -29,7 +31,7 @@ export function ExamRunner({
   const [startedAt, setStartedAt] = useState('');
   const [results, setResults] = useState<Record<string, GradeResult> | null>(null);
 
-  const template = examTemplates.find((t) => t.id === templateId);
+  const template = examTemplates.find((tpl) => tpl.id === templateId);
 
   useEffect(() => {
     if (phase !== 'running' || secondsLeft <= 0) return;
@@ -69,7 +71,7 @@ export function ExamRunner({
     }
 
     const perTopic = Object.fromEntries(
-      Object.keys(perTopicTotal).map((t) => [t, (perTopicCorrect[t] ?? 0) / perTopicTotal[t]]),
+      Object.keys(perTopicTotal).map((id) => [id, (perTopicCorrect[id] ?? 0) / perTopicTotal[id]]),
     );
     const totalCorrect = Object.values(graded).filter((r) => r.correct).length;
     const score = examQuestions.length ? totalCorrect / examQuestions.length : 0;
@@ -86,28 +88,28 @@ export function ExamRunner({
     setPhase('review');
   }
 
-  const topicTitle = useMemo(() => new Map(topics.map((t) => [t.id, t.title])), [topics]);
+  const topicTitle = useMemo(() => new Map(topics.map((topic) => [topic.id, topic.title])), [topics]);
 
   if (phase === 'select') {
     return (
       <div>
         <h1 className="mb-4 flex items-center gap-2 text-2xl font-semibold tracking-tight text-[var(--color-text-h)]">
-          <Trophy size={22} className="text-[var(--color-accent)]" /> Mock Exam
+          <Trophy size={22} className="text-[var(--color-accent)]" /> {t('exam.title')}
         </h1>
         {examTemplates.length === 0 ? (
-          <p className="text-[var(--color-text-dim)]">No exam templates authored yet.</p>
+          <p className="text-[var(--color-text-dim)]">{t('exam.noTemplates')}</p>
         ) : (
           <div className="card max-w-sm p-5">
-            <label className="mb-1.5 block text-xs font-semibold text-[var(--color-text-dim)]">Choose a template</label>
+            <label className="mb-1.5 block text-xs font-semibold text-[var(--color-text-dim)]">{t('exam.chooseTemplate')}</label>
             <select className="input mb-4 w-full" value={templateId} onChange={(e) => setTemplateId(e.target.value)}>
-              {examTemplates.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.title} ({t.durationMinutes} min)
+              {examTemplates.map((tpl) => (
+                <option key={tpl.id} value={tpl.id}>
+                  {tpl.title} ({tpl.durationMinutes} {t('exam.minutesShort')})
                 </option>
               ))}
             </select>
             <button className="btn btn-primary w-full justify-center" onClick={start}>
-              <Play size={14} /> Start exam
+              <Play size={14} /> {t('exam.start')}
             </button>
           </div>
         )}
@@ -169,15 +171,15 @@ export function ExamRunner({
         )}
         <div className="mt-4 flex justify-between">
           <button className="btn" disabled={cursor === 0} onClick={() => setCursor((c) => c - 1)}>
-            <ChevronLeft size={14} /> Previous
+            <ChevronLeft size={14} /> {t('common.previous')}
           </button>
           {cursor < examQuestions.length - 1 ? (
             <button className="btn" onClick={() => setCursor((c) => c + 1)}>
-              Next <ChevronRight size={14} />
+              {t('common.next')} <ChevronRight size={14} />
             </button>
           ) : (
             <button className="btn btn-primary" onClick={submit}>
-              Submit exam
+              {t('exam.submit')}
             </button>
           )}
         </div>
@@ -189,10 +191,10 @@ export function ExamRunner({
   return (
     <div>
       <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold tracking-tight text-[var(--color-text-h)]">
-        <Trophy size={22} className="text-[var(--color-accent)]" /> Results
+        <Trophy size={22} className="text-[var(--color-accent)]" /> {t('exam.results')}
       </h1>
       <p className="mb-4 text-[var(--color-text-dim)]">
-        <span className="font-semibold text-[var(--color-text)]">{totalCorrect}/{examQuestions.length}</span> correct
+        <span className="font-semibold text-[var(--color-text)]">{totalCorrect}/{examQuestions.length}</span> {t('exam.correctCount')}
       </p>
       <div className="flex flex-col gap-3">
         {examQuestions.map((q, i) => {
@@ -205,7 +207,7 @@ export function ExamRunner({
               <p className="my-1">{q.prompt}</p>
               <p className={`flex items-center gap-1.5 text-sm font-semibold ${r?.correct ? 'text-[var(--color-good)]' : 'text-[var(--color-bad)]'}`}>
                 {r?.correct ? <CheckCircle2 size={14} /> : <XCircle size={14} />}
-                {r?.correct ? 'Correct' : 'Incorrect'}
+                {r?.correct ? t('common.correct') : t('common.incorrect')}
               </p>
               <p className="text-sm text-[var(--color-text-dim)]">{r?.explanation}</p>
             </div>
@@ -213,7 +215,7 @@ export function ExamRunner({
         })}
       </div>
       <button className="btn btn-primary mt-4" onClick={() => setPhase('select')}>
-        Back to exam menu
+        {t('exam.backToMenu')}
       </button>
     </div>
   );

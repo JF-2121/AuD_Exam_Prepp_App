@@ -1,0 +1,146 @@
+[
+  {
+    "id": "real-graph-1",
+    "prompt": "Grundlagen zu Graphen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Ein endlicher Graph besteht aus einer endlichen Anzahl an Knoten und einer endlichen Anzahl an Kanten.",
+      "Ein endlicher Graph besteht aus einer endlichen Anzahl Knoten und kann eine unendliche Anzahl an Kanten besitzen.",
+      "Die Kantenmenge in einem *gerichteten* Graphen ist definiert als E := V×V (mit Knotenmenge V), sodass gilt: (u,v) ∈ E ⇔ (v,u) ∈ E.",
+      "Die Kantenmenge in einem *ungerichteten* Graphen ist definiert als E := V×V (mit Knotenmenge V), sodass gilt: (u,v) ∈ E ⇔ (v,u) ∈ E."
+    ],
+    "explanation": "Endlich viele Knoten beschränken die Anzahl möglicher Kanten auf |V|² ✓✗. Die Symmetrie ist genau die definierende Eigenschaft ungerichteter Kanten ✓, während ein gerichteter Graph ausdrücklich (u,v) ∈ E ohne (v,u) ∈ E erlaubt ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.9"
+  },
+  {
+    "id": "real-graph-3",
+    "prompt": "Graphalgorithmen (BFS/DFS) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Breitensuche (BFS) kann zur Bestimmung der kürzesten Pfade in ungewichteten Graphen verwendet werden.",
+      "Bei der DFS muss eine Queue zur Verwaltung der offenen Knoten benutzt werden.",
+      "In einem ungerichteten Graphen G entstehen durch DFS nur Baum- und Rückwärtskanten.",
+      "Die BFS durchläuft bei jeder Eingabe stets weniger Knoten als die DFS."
+    ],
+    "explanation": "BFS erkundet in Schichten, ihre Baumdistanzen sind also genau die ungewichteten kürzesten Distanzen ✓. In einem ungerichteten Graphen wird jede Kante von beiden Endpunkten aus gesehen, was Vorwärts- und Querkanten ausschließt ✓. Die DFS verwendet einen *Stack* (explizit oder den Aufrufstack) ✗, und eine vollständige Traversierung besucht so oder so jeden erreichbaren Knoten ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.11"
+  },
+  {
+    "id": "real-graph-2",
+    "prompt": "Graphalgorithmen (Bäume, topologische Sortierung, DFS auf einem DAG) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Wenn ein zusammenhängender ungerichteter Graph mit n Knoten n−1 Kanten hat, muss es sich um einen Baum handeln.",
+      "Bei einem vollständig zusammenhängenden, gerichteten Graphen terminiert eine topologische Sortierung nicht.",
+      "Eine Preorder-Traversierung auf einem Min-Heap gibt die Elemente in sortierter Reihenfolge aus.",
+      "Beim Durchlauf der Tiefensuche (DFS) in einem Directed Acyclic Graph ist es möglich, dass Kreuzkanten entstehen."
+    ],
+    "explanation": "Zusammenhängend ∧ genau n−1 Kanten ⇔ kreisfrei ⇔ Baum — eine klassische Äquivalenz ✓. Ein DAG hat keine Rückwärtskanten, sehr wohl aber Vorwärts- *und* Kreuzkanten ✓. Die topologische Sortierung terminiert auch auf einem zyklischen Graphen; sie meldet lediglich einen Fehler ✗, und ein Heap hat keine Links-Rechts-Ordnung, Preorder ist also nicht sortiert ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.10"
+  },
+  {
+    "id": "gt-mc-1",
+    "prompt": "Darstellungen von Graphen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Eine Adjazenzliste braucht Θ(V+E) Speicher, eine Adjazenzmatrix Θ(V²).",
+      "Die Adjazenzmatrix beantwortet „ist (u,v) eine Kante?“ in O(1), die Adjazenzliste in O(deg(u)).",
+      "Die Adjazenzliste ist für dichte Graphen vorzuziehen, die Matrix für dünne.",
+      "Die Umwandlung zwischen den beiden Darstellungen kostet Θ(V + E)."
+    ],
+    "explanation": "Die Speicherschranken ✓ und die Nachschlagekosten ✓ sind der definierende Trade-off. Die Empfehlung ist vertauscht — Listen passen zu *dünnen*, Matrizen zu *dichten* Graphen ✗ — und die Umwandlung muss alle V² Matrixzellen anfassen, kostet also Θ(V²) ✗.",
+    "source": "AuD-Zusammenfassung §8.1"
+  },
+  {
+    "id": "gt-q-1",
+    "prompt": "Sie brauchen den kürzesten Pfad nach Kantenzahl zwischen zwei Knoten eines ungewichteten Graphen. Welche Aussage ist korrekt?",
+    "options": [
+      "BFS löst das in Θ(V+E), da sie den Graphen in Schichten von der Quelle nach außen erkundet.",
+      "DFS löst das in Θ(V+E), da sie jeden Pfad bis zum Ende verfolgt.",
+      "Nur Dijkstra löst das, da kürzeste Pfade immer eine Prioritätswarteschlange erfordern.",
+      "Dafür braucht es Bellman-Ford, da die Kantenzahl negativ sein kann."
+    ],
+    "explanation": "Die schichtweise Expansion der BFS bedeutet, dass ein Knoten genau dann entdeckt wird, wenn die kleinstmögliche Kantenzahl verbraucht ist — dist[] enthält also die ungewichteten kürzesten Distanzen. Die DFS kann einen Knoten zuerst über einen langen Umweg erreichen. Dijkstra funktioniert zwar, ist aber unnötiger Aufwand, und Kantenzahlen sind nie negativ.",
+    "source": "AuD-Zusammenfassung §8.2"
+  },
+  {
+    "id": "gt-mc-2",
+    "prompt": "BFS und DFS im Vergleich — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Beide laufen in Θ(V+E); sie unterscheiden sich in der Erkundungsreihenfolge, nicht in den asymptotischen Kosten.",
+      "BFS verwendet eine Queue (FIFO), DFS einen Stack (LIFO) — explizit oder über die Rekursion.",
+      "DFS ist auf dünnen Graphen asymptotisch schneller als BFS.",
+      "BFS berechnet Finish-Zeiten, die Grundlage für topologische Sortierung und SCCs sind."
+    ],
+    "explanation": "Identische Asymptotik ✓ und der FIFO/LIFO-Kontrast ✓ sind das Wesentliche. Keiner ist asymptotisch schneller ✗, und es ist die *DFS*, deren Finish-Zeiten die topologische Sortierung und den SCC-Algorithmus tragen ✗.",
+    "source": "AuD-Zusammenfassung §8.2–8.3"
+  },
+  {
+    "id": "gt-mc-3",
+    "prompt": "Kantenklassifikation bei der DFS — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Eine Kante (u,v) mit grau gefärbtem v ist eine Rückwärtskante und schließt einen Kreis.",
+      "Für schwarzes v ergibt u.disc < v.disc eine Vorwärtskante und u.disc > v.disc eine Kreuzkante.",
+      "Eine Kante (u,v) mit weiß gefärbtem v ist eine Kreuzkante.",
+      "Rückwärtskanten können in einem DAG auftreten."
+    ],
+    "explanation": "Grau = ein Vorfahre, der noch auf dem Rekursionsstack liegt ⟹ Rückwärtskante ⟹ Kreis ✓, und der Vergleich der disc-Zeiten trennt Vorwärts- von Kreuzkanten ✓. Weiß bedeutet Erstentdeckung, also eine *Baumkante* ✗, und eine Rückwärtskante wäre der Nachweis eines Kreises, den ein DAG nicht hat ✗.",
+    "source": "AuD-Zusammenfassung §8.3, Kantenklassifikation"
+  },
+  {
+    "id": "gt-q-3",
+    "prompt": "Topologische Sortierung per DFS — wo wird jeder fertiggestellte Knoten in die Ausgabeliste eingefügt?",
+    "options": [
+      "Am Anfang der Liste, sodass die gesamte Sortierung Θ(V+E) kostet.",
+      "Am Ende der Liste, sodass das Ergebnis anschließend umgekehrt werden muss.",
+      "An der Position, die seine Entdeckungszeit vorgibt.",
+      "Nach Knotenbezeichnung sortiert, nachdem die DFS abgeschlossen ist."
+    ],
+    "explanation": "Ein Knoten wird erst fertig, nachdem alle seine Nachfahren fertig sind; das Voranstellen jedes fertigen Knotens platziert ihn also vor allem von ihm aus Erreichbaren. Das Einfügen am Anfang einer verketteten Liste ist Θ(1), womit die Gesamtkosten bei Θ(V+E) bleiben.",
+    "source": "AuD-Zusammenfassung §8.3, TOPOLOGICAL-SORT"
+  },
+  {
+    "id": "gt-mc-4",
+    "prompt": "Topologische Sortierung — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Sie ist nur für gerichtete kreisfreie Graphen definiert.",
+      "Sie ordnet die Knoten so, dass für jede Kante (u,v) der Knoten u vor v steht.",
+      "Die topologische Ordnung eines DAG ist stets eindeutig.",
+      "Sie wird mit einer BFS über die Finish-Zeiten der Queue berechnet."
+    ],
+    "explanation": "Ein Kreis macht eine konsistente lineare Ordnung unmöglich, also nur DAGs ✓, und die Ordnungsbedingung ✓ ist die Definition. Meist existieren mehrere gültige Ordnungen (je zwei unvergleichbare Knoten dürfen tauschen) ✗, und der Algorithmus baut auf den Finish-Zeiten der DFS auf ✗.",
+    "source": "AuD-Zusammenfassung §8.3"
+  },
+  {
+    "id": "gt-mc-5",
+    "prompt": "Der SCC-Algorithmus — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Er führt eine DFS aus, berechnet die Transponierte Gᵀ und führt dann eine DFS auf Gᵀ aus, wobei die Knoten in absteigender Finish-Zeit des ersten Durchlaufs besucht werden.",
+      "Die Gesamtkosten sind Θ(V+E), da es zwei DFS-Durchläufe plus den Aufbau der Transponierten sind.",
+      "Zwei verschiedene starke Zusammenhangskomponenten dürfen sich einen Knoten teilen.",
+      "Der zweite DFS-Durchlauf besucht die Knoten in aufsteigender Finish-Zeit."
+    ],
+    "explanation": "Das Zwei-Durchlauf-Schema mit der Transponierten ✓ kostet Θ(V+E) ✓. SCCs sind maximal und damit stets disjunkt ✗, und die Reihenfolge im zweiten Durchlauf ist *absteigend* — aufsteigend lieferte nicht die Komponenten ✗.",
+    "source": "AuD-Zusammenfassung §8.4"
+  },
+  {
+    "id": "gt-q-7",
+    "prompt": "Wirkung des Hinzufügens oder Entfernens einer einzelnen Kante auf die Anzahl der SCCs — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Das Hinzufügen einer Kante kann die Anzahl der SCCs nur verringern oder gleich lassen, nie erhöhen.",
+      "Das Entfernen einer Kante kann die Anzahl der SCCs nur erhöhen oder gleich lassen, nie verringern.",
+      "Eine einzelne hinzugefügte Kante kann höchstens zwei SCCs zu einer verschmelzen.",
+      "Das Entfernen einer Kante kann eine SCC in höchstens zwei Komponenten zerlegen."
+    ],
+    "explanation": "Eine neue Kante kann nur neue wechselseitige Erreichbarkeit schaffen ⟹ nur Verschmelzungen ✓; ihr Entfernen kann sie nur zerstören ⟹ nur Aufspaltungen ✓. Beide „höchstens zwei“-Behauptungen sind falsch ✗✗: Im 10-Knoten-Beispiel der Vorlesung fädelt eine hinzugefügte Kante einen Kreis durch vier Komponenten auf einmal, und das Entfernen von 8→5 zerlegt {5,8,9} in drei Einzelkomponenten.",
+    "source": "AuD-Zusammenfassung §8.4, SCC-Randfälle"
+  },
+  {
+    "id": "gt-mc-6",
+    "prompt": "Eulerkreise in einem stark zusammenhängenden gerichteten Graphen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Eine notwendige Bedingung ist, dass an jedem Knoten der Eingangsgrad gleich dem Ausgangsgrad ist.",
+      "Ein gieriger Lauf von einem beliebigen Start schließt sich immer wieder am Start, muss aber nicht alle Kanten abdecken.",
+      "Ein Eulerkreis besucht jeden *Knoten* genau einmal.",
+      "Ein einzelner gieriger Lauf liefert stets einen vollständigen Eulerkreis."
+    ],
+    "explanation": "Jeder Besuch verbraucht eine eingehende und eine ausgehende Kante ⟹ die Gradbedingung ✓, und dasselbe Argument zeigt, dass der Lauf nur am Start steckenbleiben kann ✓ — anderswo können aber Kanten übrig bleiben, weshalb Kreise zusammengespleißt werden müssen ✗. Jeden *Knoten* einmal zu besuchen ist ein Hamiltonkreis; beim Eulerkreis geht es um *Kanten* ✗.",
+    "source": "AuD-Zusammenfassung §8, Eulerkreis"
+  }
+]

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { ShortAnswerQuestion } from '../../lib/types';
+import { useT } from '../../lib/i18n/locale';
 
 export function ShortAnswer({
   question,
@@ -8,6 +9,7 @@ export function ShortAnswer({
   question: ShortAnswerQuestion;
   onSubmit: (answer: string) => void;
 }) {
+  const t = useT();
   const [value, setValue] = useState('');
 
   return (
@@ -18,10 +20,10 @@ export function ShortAnswer({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && value.trim() && onSubmit(value)}
-        placeholder="Type your answer…"
+        placeholder={t('quiz.typeAnswer')}
       />
       <button className="btn btn-primary mt-3" disabled={!value.trim()} onClick={() => onSubmit(value)}>
-        Submit
+        {t('common.submit')}
       </button>
     </div>
   );

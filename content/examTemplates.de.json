@@ -1,0 +1,22 @@
+[
+  {
+    "id": "mock-full",
+    "title": "Vollständige Probeklausur"
+  },
+  {
+    "id": "mock-sorting",
+    "title": "Sortieren – Vertiefung"
+  },
+  {
+    "id": "mock-trees-graphs",
+    "title": "Bäume & Graphen – Vertiefung"
+  },
+  {
+    "id": "mock-strings",
+    "title": "String Matching – Vertiefung"
+  },
+  {
+    "id": "mock-advanced",
+    "title": "DP, Backtracking & NP-Vollständigkeit – Vertiefung"
+  }
+]

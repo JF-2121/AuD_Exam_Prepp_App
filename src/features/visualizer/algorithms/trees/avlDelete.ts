@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep, type StepText } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
 
 const pseudocode = [
@@ -52,7 +52,7 @@ function generateSteps({ initial, deletions }: AvlDeleteInput): AlgorithmStep<Tr
   let root: string | null = null;
   const steps: AlgorithmStep<TreeState>[] = [];
 
-  function pushStep(description: string, highlightLine: number, extra?: Partial<TreeState>) {
+  function pushStep(description: StepText, highlightLine: number, extra?: Partial<TreeState>) {
     steps.push({ state: { nodes: cloneNodes(nodes), rootId: root, ...extra }, description, highlightLine });
   }
 
@@ -164,22 +164,22 @@ function generateSteps({ initial, deletions }: AvlDeleteInput): AlgorithmStep<Tr
 
   // Build the initial tree silently (plain AVL inserts, no narration).
   for (const value of initial) insertPlain(value);
-  pushStep(`Starting tree, built from [${initial.join(', ')}].`, 0);
+  pushStep(msg('viz.d.startingTree', { values: initial.join(', ') }), 0);
 
   function rebalanceFrom(start: string | null) {
     let a = start;
     while (a) {
       updateHeight(a);
       const bf = balanceFactor(a);
-      pushStep(`Walk up to ${nodes[a].value}: height=${nodes[a].height}, balance factor=${bfLabel(bf)}.`, 2, { highlightId: a });
+      pushStep(msg('viz.avl.walkUp', { node: nodes[a].value, height: nodes[a].height, bf: bfLabel(bf) }), 2, { highlightId: a });
 
       if (bf > 1) {
         const leftChild = nodes[a].left!;
         if (balanceFactor(leftChild) < 0) {
-          pushStep(`${nodes[a].value} left-heavy (bf=${bfLabel(bf)}), left child right-heavy: rotate left at ${nodes[leftChild].value} first (LR case).`, 5);
+          pushStep(msg('viz.avl.lrCase', { node: nodes[a].value, bf: bfLabel(bf), child: nodes[leftChild].value }), 5);
           rotateLeft(leftChild);
         } else {
-          pushStep(`${nodes[a].value} is left-heavy (bf=${bfLabel(bf)}): rotate right at ${nodes[a].value} (LL case).`, 5);
+          pushStep(msg('viz.avl.llCase', { node: nodes[a].value, bf: bfLabel(bf) }), 5);
         }
         rotateRight(a);
         // rotateRight(a) sets a's parent to the new local subtree root; continue climbing from there.
@@ -188,10 +188,10 @@ function generateSteps({ initial, deletions }: AvlDeleteInput): AlgorithmStep<Tr
       } else if (bf < -1) {
         const rightChild = nodes[a].right!;
         if (balanceFactor(rightChild) > 0) {
-          pushStep(`${nodes[a].value} right-heavy (bf=${bfLabel(bf)}), right child left-heavy: rotate right at ${nodes[rightChild].value} first (RL case).`, 8);
+          pushStep(msg('viz.avl.rlCase', { node: nodes[a].value, bf: bfLabel(bf), child: nodes[rightChild].value }), 8);
           rotateRight(rightChild);
         } else {
-          pushStep(`${nodes[a].value} is right-heavy (bf=${bfLabel(bf)}): rotate left at ${nodes[a].value} (RR case).`, 8);
+          pushStep(msg('viz.avl.rrCase', { node: nodes[a].value, bf: bfLabel(bf) }), 8);
         }
         rotateLeft(a);
         a = nodes[a].parent;
@@ -205,26 +205,26 @@ function generateSteps({ initial, deletions }: AvlDeleteInput): AlgorithmStep<Tr
   for (const value of deletions) {
     const zId = findId(value);
     if (!zId) {
-      pushStep(`${value} is not in the tree — nothing to delete.`, 0);
+      pushStep(msg('viz.d.notInTree', { value }), 0);
       continue;
     }
     const z = nodes[zId];
-    pushStep(`Delete ${value}.`, 0, { highlightId: zId });
+    pushStep(msg('viz.d.deleteValue', { value }), 0, { highlightId: zId });
 
     let rebalanceStart: string | null;
     if (!z.left) {
-      pushStep(`${value} has no left child: transplant its right child into its place.`, 0);
+      pushStep(msg('viz.avl.noLeftChild', { value }), 0);
       rebalanceStart = z.parent;
       transplant(zId, z.right);
     } else if (!z.right) {
-      pushStep(`${value} has no right child: transplant its left child into its place.`, 0);
+      pushStep(msg('viz.avl.noRightChild', { value }), 0);
       rebalanceStart = z.parent;
       transplant(zId, z.left);
     } else {
       let yId = z.right;
       while (nodes[yId].left) yId = nodes[yId].left!;
       const y = nodes[yId];
-      pushStep(`${value} has two children: its successor is ${y.value} (leftmost node of its right subtree).`, 0, { highlightId: yId });
+      pushStep(msg('viz.bst.twoChildren', { value, succ: y.value }), 0, { highlightId: yId });
       if (y.parent !== zId) {
         rebalanceStart = y.parent;
         transplant(yId, y.right);
@@ -236,13 +236,13 @@ function generateSteps({ initial, deletions }: AvlDeleteInput): AlgorithmStep<Tr
       transplant(zId, yId);
       y.left = z.left;
       if (y.left) nodes[y.left].parent = yId;
-      pushStep(`${y.value} takes ${value}'s place, inheriting its subtrees.`, 0, { newId: yId });
+      pushStep(msg('viz.avl.succTakesPlace', { succ: y.value, value }), 0, { newId: yId });
     }
 
     rebalanceFrom(rebalanceStart);
   }
 
-  pushStep('All deletions complete. Every node satisfies |balance factor| ≤ 1.', 0);
+  pushStep(msg('viz.avl.doneDelete'), 0);
   return steps;
 }
 

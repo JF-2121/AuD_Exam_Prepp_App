@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
 import type { MultipleChoiceQuestion } from '../../lib/types';
+import { useT } from '../../lib/i18n/locale';
 
 export function MultipleChoice({
   question,
@@ -9,6 +10,7 @@ export function MultipleChoice({
   question: MultipleChoiceQuestion;
   onSubmit: (answer: number[]) => void;
 }) {
+  const t = useT();
   const [selected, setSelected] = useState<number[]>([]);
   const requiredCount = question.correctIndexes.length;
   const multi = requiredCount > 1;
@@ -30,7 +32,7 @@ export function MultipleChoice({
       <p className="mb-1">{question.prompt}</p>
       {multi && (
         <p className="mb-3 text-xs text-[var(--color-text-dim)]">
-          Select exactly {requiredCount} options ({selected.length}/{requiredCount} chosen).
+          {t('quiz.selectExactly', { count: requiredCount, chosen: selected.length })}
         </p>
       )}
       <div className={multi ? 'mt-3 flex flex-col gap-2' : 'flex flex-col gap-2'}>
@@ -59,7 +61,7 @@ export function MultipleChoice({
         })}
       </div>
       <button className="btn btn-primary mt-3" disabled={selected.length !== requiredCount} onClick={() => onSubmit(selected)}>
-        Submit
+        {t('common.submit')}
       </button>
     </div>
   );

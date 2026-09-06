@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
 
 const pseudocode = [
@@ -47,7 +47,7 @@ function generateSteps({ initial, extractCount }: HeapExtractInput): AlgorithmSt
   const n = arr.length;
   const extracted: number[] = [];
   const steps: AlgorithmStep<TreeState>[] = [
-    { state: buildState(arr, n), description: `Starting array [${arr.join(', ')}], not yet heap-ordered.`, highlightLine: 0 },
+    { state: buildState(arr, n), description: msg('viz.heap.startArray', { values: arr.join(', ') }), highlightLine: 0 },
   ];
 
   function heapify(size: number, i: number) {
@@ -58,14 +58,14 @@ function generateSteps({ initial, extractCount }: HeapExtractInput): AlgorithmSt
     if (r < size && arr[r] > arr[largest]) largest = r;
     steps.push({
       state: buildState(arr, size, i),
-      description: `heapify at index ${i} (${arr[i]}): compare with children — largest is index ${largest} (${arr[largest]}).`,
+      description: msg('viz.heap.heapify', { i, vi: arr[i], largest, vl: arr[largest] }),
       highlightLine: 9,
     });
     if (largest !== i) {
       [arr[i], arr[largest]] = [arr[largest], arr[i]];
       steps.push({
         state: buildState(arr, size, largest),
-        description: `Swap index ${i} and ${largest}: ${arr[largest]} moves up, ${arr[i]} sifts further down.`,
+        description: msg('viz.heap.siftDown', { i, largest, vl: arr[largest], vi: arr[i] }),
         highlightLine: 12,
       });
       heapify(size, largest);
@@ -76,25 +76,25 @@ function generateSteps({ initial, extractCount }: HeapExtractInput): AlgorithmSt
   for (let i = Math.floor((n - 1) / 2); i >= 0; i--) {
     heapify(n, i);
   }
-  steps.push({ state: buildState(arr, n), description: `Heap built: [${arr.join(', ')}] now satisfies the max-heap property everywhere.`, highlightLine: 0 });
+  steps.push({ state: buildState(arr, n), description: msg('viz.heap.built', { values: arr.join(', ') }), highlightLine: 0 });
 
   let size = n;
   for (let k = 0; k < extractCount && size > 0; k++) {
     const max = arr[0];
-    steps.push({ state: buildState(arr, size, 0, [...extracted]), description: `Extract max: root is ${max}.`, highlightLine: 4 });
+    steps.push({ state: buildState(arr, size, 0, [...extracted]), description: msg('viz.heap.extractMax', { max }), highlightLine: 4 });
     arr[0] = arr[size - 1];
     size -= 1;
     extracted.push(max);
     steps.push({
       state: buildState(arr, size, 0, [...extracted]),
-      description: `Move the last element (${arr[0]}) into the root, shrink the heap to size ${size}. ${max} is placed at the end of the sorted output.`,
+      description: msg('viz.heap.moveLast', { value: arr[0], size, max }),
       highlightLine: 5,
     });
     if (size > 0) heapify(size, 0);
-    steps.push({ state: buildState(arr, size, undefined, [...extracted]), description: `Heap property restored for the remaining ${size} element(s). Extracted so far: [${extracted.join(', ')}].`, highlightLine: 0 });
+    steps.push({ state: buildState(arr, size, undefined, [...extracted]), description: msg('viz.heap.restored', { size, extracted: extracted.join(', ') }), highlightLine: 0 });
   }
 
-  steps.push({ state: buildState(arr, size, undefined, [...extracted]), description: `Done. Extracted in order (descending): [${extracted.join(', ')}].`, highlightLine: 0 });
+  steps.push({ state: buildState(arr, size, undefined, [...extracted]), description: msg('viz.heap.doneExtract', { extracted: extracted.join(', ') }), highlightLine: 0 });
   return steps;
 }
 

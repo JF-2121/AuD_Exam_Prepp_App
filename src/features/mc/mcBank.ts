@@ -1,5 +1,6 @@
 import { mcFormat, mcPoints } from '../../lib/types';
 import type { Difficulty, McFormat, MultipleChoiceQuestion, Topic } from '../../lib/types';
+import type { MessageKey } from '../../lib/i18n/messages';
 
 /**
  * Shape of the real exam's MC section (Gedächtnisprotokoll SoSe 2025, Section 1 — 42 of 100
@@ -19,15 +20,10 @@ export const EXAM_MINUTES = 50;
 /** The paper passes at 50/100, so the same rate on this section is 21/42. */
 export const EXAM_PASS_POINTS = Math.ceil(EXAM_MAX_POINTS / 2);
 
-export const EXAM_INSTRUCTIONS: Record<McFormat, { de: string; en: string }> = {
-  single: {
-    de: 'In diesem Abschnitt ist bei jeder Aufgabe genau eine der vier Aussagen richtig. Markieren Sie diese mit einem Kreuz (X).',
-    en: 'Exactly one of the four statements is correct. Mark it.',
-  },
-  double: {
-    de: 'In diesem Abschnitt sind bei jeder Aufgabe genau zwei der vier Aussagen richtig. Markieren Sie diese mit einem Kreuz (X). Es werden nur dann Punkte vergeben, wenn genau die beiden richtigen Aussagen markiert wurden.',
-    en: 'Exactly two of the four statements are correct. Points are awarded only if exactly both correct statements are marked — one right and one wrong scores 0, not 1.',
-  },
+/** Message keys for the exam's own rubric text, one per format. */
+export const EXAM_INSTRUCTION_KEY: Record<McFormat, MessageKey> = {
+  single: 'mc.instructionsSingle',
+  double: 'mc.instructionsDouble',
 };
 
 export function shuffle<T>(arr: readonly T[]): T[] {

@@ -1,0 +1,98 @@
+[
+  {
+    "id": "real-sq-1",
+    "prompt": "Aussagen über Stacks und Queues — welche ist korrekt?",
+    "options": [
+      "Der Stack und die Queue arbeiten beide nach dem LIFO-Prinzip.",
+      "Der Stack und die Queue arbeiten beide nach dem FIFO-Prinzip.",
+      "Der Stack arbeitet nach dem LIFO-Prinzip, die Queue nach dem FIFO-Prinzip.",
+      "Der Stack arbeitet nach dem FIFO-Prinzip, die Queue nach dem LIFO-Prinzip."
+    ],
+    "explanation": "Stack = Last-In-First-Out (das zuletzt abgelegte Element wird zuerst entnommen). Queue = First-In-First-Out (das am längsten wartende Element wird zuerst entnommen).",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.2"
+  },
+  {
+    "id": "real-sq-2",
+    "prompt": "Aussagen über Stacks und Queues — welche zwei sind korrekt?",
+    "options": [
+      "Auf ein Element in der Mitte eines Stacks kann zugegriffen werden, ohne dass darüber liegende Elemente entfernt werden müssen.",
+      "Die Zeit-Komplexität von Push- und Pop-Operationen in Stacks beträgt typischerweise O(1).",
+      "Die Zeit-Komplexität von Enqueue- und Dequeue-Operationen in Queues beträgt typischerweise O(n).",
+      "Das Enqueue und anschließende Dequeue bei einer Queue gibt nur dann dasselbe Element zurück, wenn die Queue vorher leer war."
+    ],
+    "explanation": "Push/Pop sind sowohl in der Array- als auch in der verketteten Implementierung O(1) ✓. War die Queue nicht leer, liefert Dequeue das bereits vorne stehende Element und nicht das gerade eingefügte — nur eine leere Queue lässt beide zusammenfallen ✓. Ein Stack legt nur seine Spitze offen ✗, und Enqueue/Dequeue sind O(1), nicht O(n) ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.3"
+  },
+  {
+    "id": "sq-q-1",
+    "prompt": "Eine Queue auf einem Array fester Größe *ohne* Wraparound — welche Aussage ist korrekt?",
+    "options": [
+      "Ihr geht nutzbarer Platz aus, obwohl sie logisch nicht voll ist, weil front und rear stets nur vorwärts wandern.",
+      "Sie kann nie mehr als ein Element aufnehmen.",
+      "Sie wird unbemerkt zu einem Stack.",
+      "Es gibt kein Problem; das Array wächst einfach nach Bedarf."
+    ],
+    "explanation": "Ohne zyklische Behandlung des Arrays wachsen die Indizes nur und laufen irgendwann über das Ende hinaus, obwohl die am Anfang frei gewordenen Plätze weiterhin verfügbar wären. Die Lösung ist ein Ringpuffer: rear = (rear + 1) mod size.",
+    "source": "AuD-Zusammenfassung §5.2"
+  },
+  {
+    "id": "sq-mc-1",
+    "prompt": "Die Queue auf einem zyklischen Array (Ringpuffer) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Indexrechnung nutzt den Modulo-Operator, z. B. rear = (rear + 1) mod size.",
+      "Nach einem Wraparound muss die Reihenfolge der Array-Indizes nicht mehr der logischen Reihenfolge von vorne nach hinten entsprechen.",
+      "Der Ringpuffer macht Enqueue zu O(1), Dequeue aber zu O(n).",
+      "Ein Ringpuffer hebt die Kapazitätsgrenze vollständig auf — er kann nie überlaufen."
+    ],
+    "explanation": "Die Modulo-Arithmetik ist der Mechanismus ✓, und nach dem Umbruch kann Index 0 das *neueste* Element enthalten, während ein höherer Index das älteste hält ✓. Beide Operationen bleiben Θ(1) ✗, und das Array hat weiterhin feste Größe — der Wraparound nutzt freigewordene Plätze wieder, hebt die Kapazitätsgrenze aber nicht auf ✗.",
+    "source": "AuD-Zusammenfassung §5.2, durchgerechnetes Beispiel zur zyklischen Queue"
+  },
+  {
+    "id": "sq-mc-2",
+    "prompt": "Eine Queue mit zwei Stacks S1, S2 implementieren (Enqueue legt auf S1; Dequeue nimmt von S2 und schüttet S1 zuvor nach S2 um, wenn S2 leer ist) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Das Umschütten von S1 nach S2 kehrt die Reihenfolge um, sodass das zuerst eingefügte Element oben auf S2 landet.",
+      "Dequeue ist im Worst Case O(n), amortisiert aber O(1), da jedes Element höchstens einmal von S1 nach S2 wandert.",
+      "Dequeue ist im Worst Case O(1), da immer nur ein einziges Pop ausgeführt wird.",
+      "Die Konstruktion braucht eine Hilfs-Queue als Zwischenspeicher, um die Reihenfolge umzukehren."
+    ],
+    "explanation": "S1 hält das älteste Element unten; Pop von S1 und Push auf S2 dreht das um und legt das älteste obenauf ✓. Ein einzelnes Dequeue kann ein vollständiges Umschütten auslösen (O(n)), aber jedes Element wandert in seinem Leben höchstens einmal — amortisiert also O(1) ✓. Der Worst Case ist damit *nicht* O(1) ✗, und eine dritte Struktur wird nicht benötigt ✗.",
+    "source": "AuD-Zusammenfassung §5, Queue aus Stacks"
+  },
+  {
+    "id": "sq-mc-3",
+    "prompt": "Einen Stack mit zwei Queues Q1, Q2 implementieren (Invariante: eine ist immer leer) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Push ist O(1); Pop ist O(n), weil alle Elemente bis auf das letzte in die andere Queue umgeschichtet werden müssen.",
+      "Pop muss das *zuletzt* eingefügte Element erreichen, das eine Queue erst freigibt, wenn alles davor entnommen wurde.",
+      "Sowohl Push als auch Pop sind O(1), analog zur Queue aus zwei Stacks.",
+      "Die Konstruktion ist unmöglich: Eine LIFO-Ordnung lässt sich nicht mit FIFO-Strukturen nachbilden."
+    ],
+    "explanation": "Push fügt einfach hinten an (O(1)); Pop schiebt alle bis auf ein Element in die andere Queue und gibt das letzte zurück, was O(n) kostet ✓✓. Anders als bei der Queue aus zwei Stacks gibt es hier keine Amortisation — jedes Pop zahlt das volle Umschichten ✗. Die Konstruktion funktioniert offensichtlich, sie ist nur teuer ✗.",
+    "source": "AuD-Zusammenfassung §5, Stack aus Queues"
+  },
+  {
+    "id": "sq-mc-4",
+    "prompt": "Ein Array-Stack, der seine Kapazität bei Vollbelegung verdoppelt und bei ¼-Füllung halbiert — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Push und Pop werden trotz gelegentlicher Größenänderung amortisiert Θ(1).",
+      "Ein einzelnes Push kann im Worst Case weiterhin Θ(n) kosten, nämlich wenn es eine Größenänderung auslöst.",
+      "Jedes Push kostet im Worst Case Θ(1), sobald die Größenänderung implementiert ist.",
+      "Ein Halbieren bei ½-Füllung statt ¼ würde dieselbe amortisierte Schranke liefern."
+    ],
+    "explanation": "Verdoppeln/Halbieren verteilt die Kopierkosten auf viele billige Operationen ⟹ amortisiert Θ(1) ✓, aber das auslösende Push kopiert n Elemente ⟹ Θ(n) im Worst Case ✓✗. Das Schrumpfen bei ½ ist die klassische Falle: Abwechselndes Push/Pop an der Grenze löst jedes Mal eine Größenänderung aus und zerstört die amortisierte Schranke ✗.",
+    "source": "AuD-Zusammenfassung §5.1, Array-Stack mit Größenanpassung"
+  },
+  {
+    "id": "sq-mc-5",
+    "prompt": "Typische Anwendungen und Varianten — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Aufrufstack, Undo-Historie und Ausdrucksparsing sind klassische Anwendungen des Stacks.",
+      "Ein Deque verallgemeinert Stack und Queue, indem er Einfügen und Entfernen an beiden Enden erlaubt.",
+      "Die Breitensuche verwaltet die offenen Knoten mit einem Stack.",
+      "Ein Deque ist eine Queue, die nur gelesen und nie beschrieben werden kann."
+    ],
+    "explanation": "Aufrufstack / Undo / Parsing sind die kanonischen LIFO-Anwendungen ✓, und eine doppelendige Queue erlaubt beide Operationen an beiden Enden ✓. Die BFS verwendet eine *Queue* (die DFS einen Stack) ✗, und ein Deque ist vollständig veränderbar ✗.",
+    "source": "AuD-Zusammenfassung §5.1–5.2"
+  }
+]

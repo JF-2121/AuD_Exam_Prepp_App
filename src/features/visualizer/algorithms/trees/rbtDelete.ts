@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep, type StepText } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
 
 const pseudocode = [
@@ -62,7 +62,7 @@ function generateSteps({ initial, deletions }: RbtDeleteInput): AlgorithmStep<Tr
   let root: string = NIL;
   const steps: AlgorithmStep<TreeState>[] = [];
 
-  function pushStep(description: string, highlightLine: number, extra?: Partial<TreeState>) {
+  function pushStep(description: StepText, highlightLine: number, extra?: Partial<TreeState>) {
     steps.push({
       state: { nodes: cloneNodes(nodes), rootId: root === NIL ? null : root, ...extra },
       description,
@@ -179,26 +179,26 @@ function generateSteps({ initial, deletions }: RbtDeleteInput): AlgorithmStep<Tr
           nodes[w].color = 'black';
           nodes[parentId].color = 'red';
           rotateLeft(parentId);
-          pushStep(`Case 1: sibling is red — recolor and rotate left at ${nodes[parentId].value}.`, 9);
+          pushStep(msg('viz.rbt.delCase1Left', { parent: nodes[parentId].value }), 9);
           w = nodes[parentId].right;
         }
         if (nodes[nodes[w].left].color === 'black' && nodes[nodes[w].right].color === 'black') {
           nodes[w].color = 'red';
-          pushStep('Case 2: both of sibling’s children are black — recolor sibling red, move deficiency up.', 12);
+          pushStep(msg('viz.rbt.delCase2'), 12);
           x = parentId;
         } else {
           if (nodes[nodes[w].right].color === 'black') {
             nodes[nodes[w].left].color = 'black';
             nodes[w].color = 'red';
             rotateRight(w);
-            pushStep(`Case 3: sibling's outer nephew is black — recolor and rotate right at ${nodes[w].value}.`, 15);
+            pushStep(msg('viz.rbt.delCase3Left', { node: nodes[w].value }), 15);
             w = nodes[parentId].right;
           }
           nodes[w].color = nodes[parentId].color;
           nodes[parentId].color = 'black';
           nodes[nodes[w].right].color = 'black';
           rotateLeft(parentId);
-          pushStep(`Case 4: rotate left at ${nodes[parentId].value} — deficiency resolved.`, 18);
+          pushStep(msg('viz.rbt.delCase4Left', { parent: nodes[parentId].value }), 18);
           x = root;
         }
       } else {
@@ -207,26 +207,26 @@ function generateSteps({ initial, deletions }: RbtDeleteInput): AlgorithmStep<Tr
           nodes[w].color = 'black';
           nodes[parentId].color = 'red';
           rotateRight(parentId);
-          pushStep(`Case 1: sibling is red — recolor and rotate right at ${nodes[parentId].value}.`, 9);
+          pushStep(msg('viz.rbt.delCase1Right', { parent: nodes[parentId].value }), 9);
           w = nodes[parentId].left;
         }
         if (nodes[nodes[w].right].color === 'black' && nodes[nodes[w].left].color === 'black') {
           nodes[w].color = 'red';
-          pushStep('Case 2: both of sibling’s children are black — recolor sibling red, move deficiency up.', 12);
+          pushStep(msg('viz.rbt.delCase2'), 12);
           x = parentId;
         } else {
           if (nodes[nodes[w].left].color === 'black') {
             nodes[nodes[w].right].color = 'black';
             nodes[w].color = 'red';
             rotateLeft(w);
-            pushStep(`Case 3: sibling's outer nephew is black — recolor and rotate left at ${nodes[w].value}.`, 15);
+            pushStep(msg('viz.rbt.delCase3Right', { node: nodes[w].value }), 15);
             w = nodes[parentId].left;
           }
           nodes[w].color = nodes[parentId].color;
           nodes[parentId].color = 'black';
           nodes[nodes[w].left].color = 'black';
           rotateRight(parentId);
-          pushStep(`Case 4: rotate right at ${nodes[parentId].value} — deficiency resolved.`, 18);
+          pushStep(msg('viz.rbt.delCase4Right', { parent: nodes[parentId].value }), 18);
           x = root;
         }
       }
@@ -244,15 +244,15 @@ function generateSteps({ initial, deletions }: RbtDeleteInput): AlgorithmStep<Tr
   }
 
   for (const value of initial) insert(value);
-  pushStep(`Starting Red-Black tree, built from [${initial.join(', ')}].`, 0);
+  pushStep(msg('viz.rbt.startingTree', { values: initial.join(', ') }), 0);
 
   for (const value of deletions) {
     const zId = findId(value);
     if (!zId) {
-      pushStep(`${value} is not in the tree — nothing to delete.`, 0);
+      pushStep(msg('viz.d.notInTree', { value }), 0);
       continue;
     }
-    pushStep(`Delete ${value}.`, 0, { highlightId: zId });
+    pushStep(msg('viz.d.deleteValue', { value }), 0, { highlightId: zId });
     const z = nodes[zId];
     let y = zId;
     let yOriginalColor = z.color;
@@ -279,16 +279,16 @@ function generateSteps({ initial, deletions }: RbtDeleteInput): AlgorithmStep<Tr
       nodes[y].left = z.left;
       nodes[nodes[y].left].parent = y;
       nodes[y].color = z.color;
-      pushStep(`${value} has two children: successor ${nodes[y].value} takes its place.`, 0, { newId: y });
+      pushStep(msg('viz.rbt.twoChildren', { value, succ: nodes[y].value }), 0, { newId: y });
     }
 
     if (yOriginalColor === 'black') {
-      pushStep('Spliced-out node was black — the tree may now be unbalanced. Fixing up.', 6);
+      pushStep(msg('viz.rbt.splicedBlack'), 6);
       deleteFixup(x);
     }
   }
 
-  pushStep('All deletions complete. Red-Black properties restored.', 0);
+  pushStep(msg('viz.rbt.doneDelete'), 0);
   return steps;
 }
 

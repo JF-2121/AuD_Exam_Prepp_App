@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { ArrayRenderer, type ArrayState } from './ArrayRenderer';
 
 const pseudocode = [
@@ -15,7 +15,7 @@ const pseudocode = [
 function generateSteps(input: number[]): AlgorithmStep<ArrayState>[] {
   const a = [...input];
   const steps: AlgorithmStep<ArrayState>[] = [
-    { state: { values: [...a] }, description: 'Initial array.', highlightLine: 0 },
+    { state: { values: [...a] }, description: msg('viz.d.initialArray'), highlightLine: 0 },
   ];
 
   function partition(left: number, right: number): number {
@@ -24,7 +24,7 @@ function generateSteps(input: number[]): AlgorithmStep<ArrayState>[] {
     let q = right + 1;
     steps.push({
       state: { values: [...a], activeRange: [left, right], pivotIndex: left },
-      description: `Partitioning a[${left}..${right}] with pivot=${pivot}.`,
+      description: msg('viz.quick.partition', { left, right, pivot }),
       highlightLine: 6,
     });
     while (p < q) {
@@ -37,13 +37,13 @@ function generateSteps(input: number[]): AlgorithmStep<ArrayState>[] {
       if (p < q) {
         steps.push({
           state: { values: [...a], activeRange: [left, right], comparing: [p, q] },
-          description: `a[${p}]=${a[p]} and a[${q}]=${a[q]} are on the wrong side of the pivot.`,
+          description: msg('viz.quick.wrongSide', { p, ap: a[p], q, aq: a[q] }),
           highlightLine: 7,
         });
         [a[p], a[q]] = [a[q], a[p]];
         steps.push({
           state: { values: [...a], activeRange: [left, right], swapping: [p, q] },
-          description: `Swapped a[${p}] and a[${q}].`,
+          description: msg('viz.quick.swapped', { p, q }),
           highlightLine: 7,
         });
       }
@@ -59,7 +59,7 @@ function generateSteps(input: number[]): AlgorithmStep<ArrayState>[] {
   }
 
   quicksort(0, a.length - 1);
-  steps.push({ state: { values: [...a], sortedFrom: 0 }, description: 'Array is sorted.', highlightLine: 0 });
+  steps.push({ state: { values: [...a], sortedFrom: 0 }, description: msg('viz.d.arraySorted'), highlightLine: 0 });
   return steps;
 }
 

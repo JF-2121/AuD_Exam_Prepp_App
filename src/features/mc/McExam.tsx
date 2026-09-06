@@ -4,9 +4,10 @@ import { recordExamAttempt, recordQuizAttempt } from '../../lib/db';
 import { mcFormat } from '../../lib/types';
 import type { MultipleChoiceQuestion, Topic } from '../../lib/types';
 import { McCard } from './McCard';
+import { useT } from '../../lib/i18n/locale';
 import {
   assembleMcExam,
-  EXAM_INSTRUCTIONS,
+  EXAM_INSTRUCTION_KEY,
   EXAM_MAX_POINTS,
   EXAM_MINUTES,
   EXAM_PASS_POINTS,
@@ -27,6 +28,7 @@ export function McExam({
   questions: MultipleChoiceQuestion[];
   topics: Topic[];
 }) {
+  const t = useT();
   const [phase, setPhase] = useState<Phase>('idle');
   const [paper, setPaper] = useState<MultipleChoiceQuestion[]>([]);
   const [answers, setAnswers] = useState<Record<string, number[]>>({});
@@ -34,7 +36,7 @@ export function McExam({
   const [secondsLeft, setSecondsLeft] = useState(0);
   const startedAt = useRef('');
 
-  const topicTitle = useMemo(() => new Map(topics.map((t) => [t.id, t.title])), [topics]);
+  const topicTitle = useMemo(() => new Map(topics.map((topic) => [topic.id, topic.title])), [topics]);
 
   useEffect(() => {
     if (phase !== 'running') return;
@@ -110,7 +112,7 @@ export function McExam({
       <div>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-lg font-semibold tracking-tight text-[var(--color-text-h)]">
-            MC Section · {EXAM_MAX_POINTS} points
+            {t('mc.sectionHeading', { points: EXAM_MAX_POINTS })}
           </h2>
           <span
             className={`flex items-center gap-1.5 rounded-md px-3 py-1 font-mono text-sm ${
@@ -127,7 +129,7 @@ export function McExam({
         <QuestionPalette paper={paper} answers={answers} cursor={cursor} onJump={setCursor} />
 
         <p className="mb-3 text-xs text-[var(--color-text-dim)]">
-          {staged.answered} of {paper.length} answered
+          {t('mc.answeredCount', { answered: staged.answered, total: paper.length })}
         </p>
 
         {q && (
@@ -142,21 +144,21 @@ export function McExam({
 
         <div className="mt-4 flex justify-between gap-2">
           <button className="btn" disabled={cursor === 0} onClick={() => setCursor((c) => c - 1)}>
-            <ChevronLeft size={14} /> Previous
+            <ChevronLeft size={14} /> {t('common.previous')}
           </button>
           {cursor < paper.length - 1 ? (
             <button className="btn" onClick={() => setCursor((c) => c + 1)}>
-              Next <ChevronRight size={14} />
+              {t('common.next')} <ChevronRight size={14} />
             </button>
           ) : (
             <button className="btn btn-primary" onClick={() => void finish()}>
-              Submit section
+              {t('mc.submitSection')}
             </button>
           )}
         </div>
         {cursor < paper.length - 1 && (
           <button className="btn mt-3 w-full justify-center" onClick={() => void finish()}>
-            Submit section early
+            {t('mc.submitEarly')}
           </button>
         )}
       </div>
@@ -167,38 +169,38 @@ export function McExam({
 }
 
 function ExamIntro({ onStart, available }: { onStart: () => void; available: number }) {
+  const t = useT();
+
   return (
     <div className="card p-6">
       <h2 className="mb-1 text-lg font-semibold tracking-tight text-[var(--color-text-h)]">
-        Exam simulation
+        {t('mc.examSimTitle')}
       </h2>
       <p className="mb-5 text-sm text-[var(--color-text-dim)]">
-        The MC section exactly as it appears on the paper — {EXAM_MAX_POINTS} points in{' '}
-        {EXAM_MINUTES} minutes, drawn fresh from all {available} questions each run.
+        {t('mc.examSimLead', { points: EXAM_MAX_POINTS, minutes: EXAM_MINUTES, available })}
       </p>
 
       <div className="mb-5 grid gap-3 sm:grid-cols-2">
         <PartCard
-          title="Part I · 6 × 1 of 4"
-          points="6 points"
-          text={EXAM_INSTRUCTIONS.single.en}
+          title={t('mc.partOneTitle')}
+          points={t('mc.partOnePoints')}
+          text={t(EXAM_INSTRUCTION_KEY.single)}
           emphasis={false}
         />
         <PartCard
-          title="Part II · 18 × 2 of 4"
-          points="36 points"
-          text={EXAM_INSTRUCTIONS.double.en}
+          title={t('mc.partTwoTitle')}
+          points={t('mc.partTwoPoints')}
+          text={t(EXAM_INSTRUCTION_KEY.double)}
           emphasis
         />
       </div>
 
       <p className="mb-5 text-xs text-[var(--color-text-dim)]">
-        Pass mark on this section: {EXAM_PASS_POINTS} of {EXAM_MAX_POINTS} points, matching the
-        paper's own 50/100 threshold.
+        {t('mc.passNote', { pass: EXAM_PASS_POINTS, max: EXAM_MAX_POINTS })}
       </p>
 
       <button className="btn btn-primary" onClick={onStart}>
-        <Play size={14} /> Start the {EXAM_MINUTES}-minute section
+        <Play size={14} /> {t('mc.startSection', { minutes: EXAM_MINUTES })}
       </button>
     </div>
   );
@@ -247,6 +249,8 @@ function QuestionPalette({
   cursor: number;
   onJump: (i: number) => void;
 }) {
+  const t = useT();
+
   return (
     <div className="mb-4 flex flex-wrap gap-1">
       {paper.map((q, i) => {
@@ -260,7 +264,7 @@ function QuestionPalette({
           <button
             key={q.id}
             onClick={() => onJump(i)}
-            title={`Q${i + 1} · ${isDouble ? '2 of 4' : '1 of 4'}`}
+            title={`Q${i + 1} · ${t(isDouble ? 'mc.badgeDouble' : 'mc.badgeSingle')}`}
             className={`h-8 w-8 text-xs font-semibold transition-colors ${
               isDouble ? 'rounded-md' : 'rounded-full'
             } ${
@@ -292,6 +296,7 @@ function ExamReview({
   topicTitle: Map<string, string>;
   onRestart: () => void;
 }) {
+  const t = useT();
   const score = scoreMcRun(paper, answers);
   const passed = score.points >= EXAM_PASS_POINTS;
   const pct = score.maxPoints ? Math.round((score.points / score.maxPoints) * 100) : 0;
@@ -302,17 +307,20 @@ function ExamReview({
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="mb-1 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-dim)]">
-              <Trophy size={13} className="text-[var(--color-accent)]" /> Section result
+              <Trophy size={13} className="text-[var(--color-accent)]" /> {t('mc.sectionResult')}
             </p>
             <p className="text-4xl font-semibold tracking-tight text-[var(--color-text-h)]">
               {score.points}
-              <span className="text-xl text-[var(--color-text-dim)]"> / {score.maxPoints} P</span>
+              <span className="text-xl text-[var(--color-text-dim)]">
+                {' '}
+                / {score.maxPoints} {t('common.pointsShort')}
+              </span>
             </p>
           </div>
           <span
             className={`badge ${passed ? 'badge-easy' : 'badge-hard'} text-[12px]`}
           >
-            {passed ? 'Above pass mark' : `Below ${EXAM_PASS_POINTS} P pass mark`}
+            {passed ? t('mc.abovePass') : t('mc.belowPass', { pass: EXAM_PASS_POINTS })}
           </span>
         </div>
 
@@ -324,20 +332,16 @@ function ExamReview({
         </div>
 
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm text-[var(--color-text-dim)]">
-          <span>
-            <span className="font-semibold text-[var(--color-text)]">{score.correct}</span> of{' '}
-            {score.total} questions fully correct
-          </span>
+          <span>{t('mc.fullyCorrect', { correct: score.correct, total: score.total })}</span>
           {score.halfRight > 0 && (
             <span className="text-[var(--color-warn)]">
-              {score.halfRight} × half-right on a 2-of-4 — {score.halfRight * 2} points lost to
-              all-or-nothing
+              {t('mc.halfRightSummary', { count: score.halfRight, lost: score.halfRight * 2 })}
             </span>
           )}
         </div>
 
         <button className="btn btn-primary mt-5" onClick={onRestart}>
-          <Play size={14} /> New section
+          <Play size={14} /> {t('mc.newSection')}
         </button>
       </div>
 

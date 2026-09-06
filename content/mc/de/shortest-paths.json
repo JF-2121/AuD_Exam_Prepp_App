@@ -1,0 +1,122 @@
+[
+  {
+    "id": "real-sp-2",
+    "prompt": "Dijkstra und Bellman-Ford — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Der Algorithmus von Dijkstra funktioniert nur für nicht-negative Kantengewichte.",
+      "Der Algorithmus von Dijkstra funktioniert nur für Directed Acyclic Graphs (DAGs), also nur für gerichtete Graphen ohne Zyklen.",
+      "Der Algorithmus von Bellman-Ford funktioniert nur für nicht-negative Kantengewichte.",
+      "Der Algorithmus von Bellman-Ford funktioniert auch für Graphen mit nur negativen Kantengewichten."
+    ],
+    "explanation": "Dijkstras gieriges Finalisieren beruht darauf, dass Distanzen nie mehr schrumpfen — genau das würden negative Kanten brechen ✓ — Kreise sind dagegen völlig unproblematisch, die DAG-Einschränkung ist also falsch ✗. Bellman-Ford existiert gerade für negative Gewichte ✗ und funktioniert selbst dann, wenn alle Gewichte negativ sind, solange von der Quelle aus kein negativer *Kreis* erreichbar ist ✓.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.13"
+  },
+  {
+    "id": "real-sp-3",
+    "prompt": "Der Algorithmus von Dijkstra — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Dijkstra bricht bei einem erkannten Zyklus ab.",
+      "Kantengewichte dürfen gleich 0 sein.",
+      "Die Laufzeit von Dijkstra ist O(|V|·log(|V|)).",
+      "Die Laufzeit von Dijkstra ist Θ(|V|·log(|V|) + |E|)."
+    ],
+    "explanation": "„Nicht-negativ“ schließt 0 ein, Kanten mit Gewicht 0 sind also zulässig ✓, und Θ(V log V + E) ist die Schranke mit Fibonacci-Heap (amortisiert O(1) für decrease-key) ✓. Dijkstra erkennt Kreise weder noch bricht er bei ihnen ab — er besucht einen finalisierten Knoten schlicht nie wieder ✗ — und O(V log V) allein unterschlägt den Term für das Relaxieren der Kanten ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.14"
+  },
+  {
+    "id": "sp-q-1",
+    "prompt": "Ein Graph enthält eine Kante mit Gewicht −5. Welcher Algorithmus liefert korrekte kürzeste Pfade?",
+    "options": [
+      "Dijkstra, da er jeden Knoten nur einmal finalisiert",
+      "Bellman-Ford, da er alle Kanten |V|−1 mal relaxiert und zusätzlich negative Kreise erkennen kann",
+      "BFS, da sie immer den kürzesten Pfad findet",
+      "Keiner — kürzeste Pfade sind undefiniert, sobald ein Gewicht negativ ist"
+    ],
+    "explanation": "Bellman-Ford relaxiert jede Kante |V|−1 mal, was für jeden kürzesten Pfad (mit höchstens |V|−1 Kanten) genügt, und ein weiterer Durchlauf erkennt negative Kreise. Dijkstras frühes Finalisieren ist genau das, was negative Kanten kaputt machen. BFS ignoriert Gewichte vollständig, und kürzeste Pfade bleiben wohldefiniert, solange kein negativer Kreis erreichbar ist.",
+    "source": "AuD-Zusammenfassung §8.6"
+  },
+  {
+    "id": "sp-mc-1",
+    "prompt": "Die Relax-Operation — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Relax(u,v) prüft, ob dist(v) > dist(u) + w(u,v) gilt, und aktualisiert in diesem Fall dist(v) und pred(v).",
+      "Sowohl Dijkstra als auch Bellman-Ford bauen auf wiederholtem Relaxieren auf; sie unterscheiden sich nur in Reihenfolge und Anzahl der Relaxationen.",
+      "Relax kann dist(v) auch erhöhen, wenn ein längerer Pfad gefunden wird.",
+      "Relax setzt voraus, dass die Kantengewichte paarweise verschieden sind."
+    ],
+    "explanation": "Der Relaxationstest ✓ und die Beobachtung, dass beide Algorithmen nur unterschiedliche Relaxations-*Zeitpläne* sind ✓, bilden die Kernidee. dist(v) ist monoton nicht steigend — ein längerer Pfad wird schlicht ignoriert ✗ — und Gleichstände spielen keine Rolle ✗.",
+    "source": "AuD26 Maxine 11 · Relax"
+  },
+  {
+    "id": "sp-mc-2",
+    "prompt": "Bellman-Ford — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "|V|−1 Relaxationsrunden genügen, weil ein kürzester Pfad höchstens |V|−1 Kanten enthält.",
+      "Verbessert eine weitere Relaxationsrunde noch eine Distanz, so ist von der Quelle aus ein negativer Kreis erreichbar.",
+      "Seine Laufzeit ist Θ(V log V + E), wie die von Dijkstra.",
+      "Bellman-Ford benötigt eine Prioritätswarteschlange, um den nächsten Knoten auszuwählen."
+    ],
+    "explanation": "Ein einfacher Pfad besucht höchstens |V| Knoten ⟹ ≤ |V|−1 Kanten ✓, und jede Verbesserung nach so vielen Runden beweist einen negativen Kreis ✓. Die Laufzeit ist Θ(V·E) ✗, und Bellman-Ford kommt bewusst ohne Prioritätswarteschlange aus — er relaxiert in jeder Runde einfach *alle* Kanten ✗.",
+    "source": "AuD-Zusammenfassung §8.6"
+  },
+  {
+    "id": "sp-q-3",
+    "prompt": "Warum kommt der Kürzeste-Wege-Algorithmus für DAGs vollständig ohne Prioritätswarteschlange aus?",
+    "options": [
+      "Eine topologische Ordnung garantiert bereits, dass jeder Knoten erst nach allen seinen Vorgängern bearbeitet wird — ein Durchlauf in dieser Reihenfolge genügt also.",
+      "Weil DAGs nie negative Kantengewichte enthalten.",
+      "Weil in einem DAG alle Pfade gleich lang sind.",
+      "Er kommt nicht ohne aus — der DAG-Algorithmus braucht wie Dijkstra eine Prioritätswarteschlange."
+    ],
+    "explanation": "Relaxiert man die Knoten in topologischer Ordnung, ist dist(u) bereits endgültig, wenn die ausgehenden Kanten von u relaxiert werden — genau die Garantie, die Dijkstra sich mit einer Prioritätswarteschlange erkauft. Das ergibt Θ(V+E) und funktioniert auch mit negativen Gewichten, da ein DAG keinen Kreis welchen Vorzeichens auch immer enthalten kann.",
+    "source": "AuD-Zusammenfassung §8.6, kürzeste Wege im DAG"
+  },
+  {
+    "id": "real-sp-1",
+    "prompt": "Maximaler Fluss (Ford-Fulkerson) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Der maximale Fluss ist durch die Summe der Kapazität aller eingehenden Kanten am Zielknoten t definiert.",
+      "Der Algorithmus terminiert, wenn kein flusserhöhender Pfad mehr existiert.",
+      "Der Restkapazitätsgraph hat immer weniger Kanten als der ursprüngliche Graph.",
+      "Ein Knoten v ∈ V\\{s,t} kann nicht mehr eingehenden Fluss als ausgehenden Fluss haben."
+    ],
+    "explanation": "„Kein flusserhöhender Pfad mehr“ ist genau die Abbruchbedingung ✓, und die Flusserhaltung macht den eingehenden Fluss an jedem Zwischenknoten *gleich* dem ausgehenden, er kann ihn also erst recht nie übersteigen ✓. Jene Kapazitätssumme ist nur eine obere Schranke (eine Schnittkapazität), nicht die Definition ✗, und der Restgraph hat typischerweise *mehr* Kanten, da jede genutzte Kante eine Rückwärtskante beisteuert ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.12"
+  },
+  {
+    "id": "sp-mc-3",
+    "prompt": "Der Restkapazitätsgraph bei Ford-Fulkerson — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Für eine Kante (u,v), die Fluss f bei Kapazität c trägt, enthält der Restgraph eine Vorwärtskante der Kapazität c−f und eine Rückwärtskante der Kapazität f.",
+      "Die Rückwärtskanten erlauben es, früher gesendeten Fluss zurückzunehmen — genau das macht den gierigen Ansatz korrekt.",
+      "Der Restgraph enthält nur die noch nicht gesättigten Kanten.",
+      "Ist ein flusserhöhender Pfad einmal gewählt, kann er nie mehr revidiert werden."
+    ],
+    "explanation": "Die Aufteilung in Vorwärts-/Rückwärtskapazität ✓ und die Möglichkeit, frühere Routing-Entscheidungen rückgängig zu machen ✓, sind genau der Grund, warum flusserhöhende Pfade zum echten Optimum konvergieren. Rückwärtskanten existieren gerade auch für gesättigte Kanten ✗, und das Revidieren früheren Flusses *ist* der Mechanismus ✗.",
+    "source": "AuD-Zusammenfassung §8.7"
+  },
+  {
+    "id": "sp-q-7",
+    "prompt": "Welche Aussage über die Suche nach flusserhöhenden Pfaden bei Ford-Fulkerson ist korrekt?",
+    "options": [
+      "Es darf jeder Pfad von s nach t mit positiver Restkapazität gewählt werden; die Wahl beeinflusst nur die Anzahl der Iterationen, nicht die Korrektheit.",
+      "Es muss stets der Pfad mit maximaler Kapazität gewählt werden, sonst ist das Ergebnis falsch.",
+      "Es muss stets der nach Kantenzahl kürzeste Pfad gewählt werden, sonst terminiert der Algorithmus nicht.",
+      "Flusserhöhende Pfade werden im ursprünglichen Graphen gesucht, nicht im Restgraphen."
+    ],
+    "explanation": "Ford-Fulkerson ist für *jede* Wahl des flusserhöhenden Pfades korrekt; die konkrete Regel beeinflusst nur die Konvergenzgeschwindigkeit (die Wahl des kürzesten Pfades ist die Edmonds-Karp-Verfeinerung, die die Iterationszahl beschränkt). Entscheidend ist, dass die Suche stets im *Restgraphen* läuft — dort liegen die Rückwärtskanten.",
+    "source": "AuD-Zusammenfassung §8.7"
+  },
+  {
+    "id": "sp-mc-4",
+    "prompt": "Die gierige Struktur von Dijkstra — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "In jedem Schritt wird der noch nicht finalisierte Knoten mit der kleinsten vorläufigen Distanz entnommen und finalisiert.",
+      "Dijkstra ist ein Greedy-Algorithmus: Er revidiert eine finalisierte Distanz nie.",
+      "Dijkstra berechnet den kürzesten Pfad zwischen genau einem festen Paar (s,t) und kann nicht mehr.",
+      "Dijkstra setzt voraus, dass der Graph ungerichtet ist."
+    ],
+    "explanation": "Extract-min und anschließendes Finalisieren ✓ ist der gierige Schritt, und das Nie-wieder-Anfassen finalisierter Knoten ✓ macht ihn gierig — und erfordert zur Rechtfertigung genau die nicht-negativen Gewichte. Dijkstra ist ein *Single-Source*-Algorithmus, der die Distanzen zu *allen* Knoten berechnet ✗, und er funktioniert auf gerichteten wie ungerichteten Graphen ✗.",
+    "source": "AuD-Zusammenfassung §8.6 / Gedächtnisprotokoll MC II.17"
+  }
+]

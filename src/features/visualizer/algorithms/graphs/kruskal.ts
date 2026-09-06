@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { GraphRenderer, type GraphState } from './GraphRenderer';
 import { exampleEdges, exampleNodes } from './graphData';
 
@@ -34,7 +34,7 @@ function generateSteps(): AlgorithmStep<GraphState>[] {
   const steps: AlgorithmStep<GraphState>[] = [
     {
       state: {},
-      description: `Start with every node in its own set. Sort all ${sorted.length} edges by weight ascending.`,
+      description: msg('viz.kru.start', { edges: sorted.length }),
       highlightLine: 3,
     },
   ];
@@ -45,7 +45,7 @@ function generateSteps(): AlgorithmStep<GraphState>[] {
     const rootB = find(e.to);
     steps.push({
       state: { activeEdge: key, acceptedEdges: [...accepted], rejectedEdges: [...rejected] },
-      description: `Consider edge ${e.from}-${e.to} (weight ${e.weight}). set(${e.from})=${rootA}, set(${e.to})=${rootB}.`,
+      description: msg('viz.kru.consider', { from: e.from, to: e.to, weight: e.weight, rootA, rootB }),
       highlightLine: 5,
     });
     if (rootA !== rootB) {
@@ -53,14 +53,14 @@ function generateSteps(): AlgorithmStep<GraphState>[] {
       parent[rootA] = rootB;
       steps.push({
         state: { acceptedEdges: [...accepted], rejectedEdges: [...rejected] },
-        description: `Different sets → accept ${e.from}-${e.to} into the MST and merge the sets.`,
+        description: msg('viz.kru.accept', { from: e.from, to: e.to }),
         highlightLine: 6,
       });
     } else {
       rejected.push(key);
       steps.push({
         state: { acceptedEdges: [...accepted], rejectedEdges: [...rejected] },
-        description: `Same set already → ${e.from}-${e.to} would form a cycle. Reject.`,
+        description: msg('viz.kru.reject', { from: e.from, to: e.to }),
         highlightLine: 5,
       });
     }
@@ -69,7 +69,7 @@ function generateSteps(): AlgorithmStep<GraphState>[] {
 
   steps.push({
     state: { acceptedEdges: [...accepted], rejectedEdges: [...rejected] },
-    description: `MST complete: ${accepted.length} edges connect all ${exampleNodes.length} nodes.`,
+    description: msg('viz.kru.done', { accepted: accepted.length, nodes: exampleNodes.length }),
     highlightLine: 8,
   });
   return steps;

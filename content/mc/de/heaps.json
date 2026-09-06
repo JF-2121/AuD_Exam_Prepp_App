@@ -1,0 +1,98 @@
+[
+  {
+    "id": "real-heap-1",
+    "prompt": "Aussagen über binäre Max-Heaps — welche zwei sind korrekt?",
+    "options": [
+      "Das größte Element steht in der Wurzel.",
+      "Ein binärer Max-Heap ist immer ein binärer Suchbaum.",
+      "Das Löschen des maximalen Elements, gefolgt vom Verschieben des letzten Knotens des Heaps an die Wurzel und schließlich der Durchführung von Heapify, führt wieder zu einem gültigen binären Max-Heap.",
+      "In einem binären Max-Heap befinden sich die größten Elemente in den Blättern."
+    ],
+    "explanation": "Die Heap-Eigenschaft (Vater ≥ Kinder) zwingt das Maximum in die Wurzel ✓, und „letztes Element an die Wurzel + Sift-down“ ist genau das Standard-Extract-Max ✓. Ein Heap hat keine Links-Rechts-Ordnung und ist damit kein BST ✗, und in den Blättern landen die *kleinsten* Elemente ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.7"
+  },
+  {
+    "id": "heap-mc-1",
+    "prompt": "Array-Darstellung eines binären Heaps (0-indiziert) — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Kinder von Index i liegen bei 2i+1 und 2i+2.",
+      "Der Vater von Index i liegt bei ⌊(i−1)/2⌋.",
+      "Der Heap braucht einen expliziten Zeiger pro Knoten, da sich die Baumstruktur nicht aus den Indizes ableiten lässt.",
+      "Die Array-Darstellung funktioniert nur, wenn die Elementanzahl eine Zweierpotenz ist."
+    ],
+    "explanation": "Die Indexarithmetik ✓✓ ist genau das, was die Darstellung implizit macht — es werden überhaupt keine Zeiger gespeichert ✗. Gültig ist die Arithmetik durch die Vollständigkeit des Baums (jede Ebene voll außer möglicherweise der letzten, die von links gefüllt wird), und das gilt für jedes n ✗.",
+    "source": "AuD26 Blatt 07 · Heaps"
+  },
+  {
+    "id": "heap-q-4",
+    "prompt": "Beim Sift-down (Heapify) an Knoten i in einem Max-Heap ist Knoten i kleiner als beide Kinder. Was muss geschehen?",
+    "options": [
+      "Mit dem *größeren* der beiden Kinder tauschen und von dieser Position aus weiter absinken.",
+      "Mit dem kleineren der beiden Kinder tauschen.",
+      "Gleichzeitig mit beiden Kindern tauschen.",
+      "Nichts — die Heap-Eigenschaft gilt weiterhin."
+    ],
+    "explanation": "Ein Tausch mit dem kleineren Kind ließe das größere Kind über seinem neuen Vater stehen, die Verletzung bliebe auf dieser Seite also bestehen. Nur das Hochziehen des größeren Kindes stellt lokal Vater ≥ beide Kinder wieder her; die Rekursion repariert anschließend den Teilbaum, in den getauscht wurde.",
+    "source": "AuD26 Blatt 07 · heapify"
+  },
+  {
+    "id": "heap-q-2",
+    "prompt": "BuildHeap — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Nur etwa die erste Hälfte der Indizes braucht einen heapify-Aufruf, da die übrigen Blätter sind und keine Kinder haben, gegen die sie die Eigenschaft verletzen könnten.",
+      "Es muss von unten nach oben vorgehen, weil heapify(A, i) nur dann korrekt ist, wenn beide Kinder von i bereits gültige Heaps sind.",
+      "Die naheliegende Schranke n/2 · O(log n) ist scharf, BuildHeap liegt also in Θ(n log n).",
+      "Von oben nach unten und von unten nach oben liefern beide einen gültigen Heap; nur der konstante Faktor unterscheidet sich."
+    ],
+    "explanation": "Das Überspringen der Blatthälfte ✓ und die Bottom-up-Anforderung ✓ sind die beiden strukturellen Fakten. Eine schärfere Analyse liefert Θ(n), da die meisten Aufrufe nahe den Blättern stattfinden, wo ein Sift-down nur 1–2 Ebenen zurücklegt ✗. Und Top-down ist nicht bloß langsamer, sondern *falsch*: Ist die Wurzel einmal abgearbeitet, wird sie nie wieder betrachtet, tief liegende große Werte können also nie aufsteigen ✗.",
+    "source": "AuD26 Blatt 07 · BuildHeap"
+  },
+  {
+    "id": "heap-mc-2",
+    "prompt": "Einfügen in einen binären Max-Heap — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Der neue Schlüssel wird am letzten freien Platz angehängt, weil nur diese Position die Vollständigkeit erhält, und anschließend nach oben gesichtet.",
+      "Das Sift-up endet, sobald der Vater ≥ dem Schlüssel ist, nach höchstens ⌈log n⌉ Vergleichen.",
+      "Anhängen und anschließendes erneutes Ausführen des vollständigen BuildHeap ist falsch und liefert einen ungültigen Heap.",
+      "Der neue Schlüssel wird an der Wurzel eingefügt und nach unten gesichtet."
+    ],
+    "explanation": "Anhängen und Sift-up ✓ kostet höchstens einen Pfad von der Wurzel zum Blatt ✓. Anhängen + vollständiges BuildHeap ist *korrekt, aber verschwenderisch* — es prüft ⌈(n−1)/2⌉ Knoten erneut, um zu reparieren, was ein einzelner Pfad bereits erledigt ✗. Ein Einfügen an der Wurzel würde das Maximum überschreiben ✗.",
+    "source": "AuD26 Blatt 07 · Heap-Einfügen"
+  },
+  {
+    "id": "heap-q-8",
+    "prompt": "Ist Heap Sort stabil und/oder in-place?",
+    "options": [
+      "In-place, aber nicht stabil",
+      "Stabil, aber nicht in-place",
+      "Sowohl stabil als auch in-place",
+      "Weder stabil noch in-place"
+    ],
+    "explanation": "Heap Sort arbeitet vollständig im ursprünglichen Array mit O(1) Zusatzspeicher ⟹ in-place. Die weitreichenden Vertauschungen beim Sift-down und beim Tausch von Wurzel und letztem Element können gleiche Schlüssel jedoch umordnen, also nicht stabil.",
+    "source": "AuD26 Blatt 07 · Heap Sort"
+  },
+  {
+    "id": "heap-mc-3",
+    "prompt": "Strukturelle Eigenschaften von Heaps — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "Die Heap-Eigenschaft vergleicht einen Knoten nur mit seinen direkten Kindern, das zweitgrößte Element kann also irgendwo auf der zweiten Ebene stehen.",
+      "Ein Max-Heap mit n Elementen hat Höhe Θ(log n), da er ein vollständiger Binärbaum ist.",
+      "Ein aufsteigend sortiertes Array erfüllt stets die Max-Heap-Eigenschaft.",
+      "In einem Max-Heap liegt das drittgrößte Element garantiert in Tiefe 2."
+    ],
+    "explanation": "Die Eigenschaft ist rein lokal ✓, und die Vollständigkeit erzwingt Höhe Θ(log n) ✓. Ein aufsteigendes Array ist ein gültiger *Min*-Heap, kein Max-Heap ✗, und für das drittgrößte Element gibt es außer „nicht oberhalb eines größeren Vorfahren“ keine Positionsgarantie ✗.",
+    "source": "AuD26 Blatt 07 · Heap-Invarianten"
+  },
+  {
+    "id": "heap-mc-4",
+    "prompt": "Heaps als Prioritätswarteschlangen — welche zwei Aussagen sind korrekt?",
+    "options": [
+      "peek-max ist O(1), während insert und extract-max O(log n) sind.",
+      "Weder insert noch extract-max führen jemals eine Rotation aus — nur Vertauschungen entlang eines einzelnen Pfades.",
+      "Einen Heap aus einem unsortierten Array aufzubauen kostet Θ(n log n).",
+      "Eine Prioritätswarteschlange auf einem sortierten Array liefert ein insert in O(1)."
+    ],
+    "explanation": "Das Kostenprofil der Prioritätswarteschlange ✓ und das Fehlen von Rotationen ✓ sind beides klausurrelevante Punkte (Letzteres ist genau der Grund, warum Heaps in der Frage „braucht keine Rotationsfunktion“ auftauchen). BuildHeap ist Θ(n) ✗, und ein sortiertes Array braucht Θ(n) pro Einfügen, um die Ordnung zu halten ✗.",
+    "source": "AuD26 Blatt 07 · Prioritätswarteschlangen"
+  }
+]

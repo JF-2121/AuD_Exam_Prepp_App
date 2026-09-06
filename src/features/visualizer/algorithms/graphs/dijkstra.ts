@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { GraphRenderer, type GraphState } from './GraphRenderer';
 import { exampleNodes, neighborsOf } from './graphData';
 
@@ -39,7 +39,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
   const steps: AlgorithmStep<GraphState>[] = [
     {
       state: { labels: labelsOf(), visited: [...visited] },
-      description: `Initialize: dist[${source}]=0, all others ∞.`,
+      description: msg('viz.dij.init', { source }),
       highlightLine: 1,
     },
   ];
@@ -56,7 +56,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
     if (u === null) break; // remaining nodes unreachable
     steps.push({
       state: { labels: labelsOf(), visited: [...visited], current: u, acceptedEdges: acceptedOf() },
-      description: `Extract closest unvisited node: ${u} (dist=${dist[u]}).`,
+      description: msg('viz.dij.extract', { u, dist: dist[u] }),
       highlightLine: 4,
     });
 
@@ -64,7 +64,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
       if (visited.has(v)) continue;
       steps.push({
         state: { labels: labelsOf(), visited: [...visited], current: u, activeEdge: edgeKey(u, v), acceptedEdges: acceptedOf() },
-        description: `Relax edge ${u}-${v} (weight ${weight}): dist[${u}]+${weight} vs dist[${v}]=${dist[v] === Infinity ? '∞' : dist[v]}.`,
+        description: msg('viz.dij.relax', { u, v, weight, distV: dist[v] === Infinity ? '∞' : dist[v] }),
         highlightLine: 6,
       });
       if (dist[u] + weight < dist[v]) {
@@ -72,7 +72,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
         pred[v] = u;
         steps.push({
           state: { labels: labelsOf(), visited: [...visited], current: u, activeEdge: edgeKey(u, v), acceptedEdges: acceptedOf() },
-          description: `Improved: dist[${v}] = ${dist[v]}, pred[${v}] = ${u}.`,
+          description: msg('viz.dij.improved', { v, dist: dist[v], u }),
           highlightLine: 9,
         });
       }
@@ -82,7 +82,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
 
   steps.push({
     state: { labels: labelsOf(), visited: [...visited], acceptedEdges: acceptedOf() },
-    description: 'Done. Highlighted edges form the shortest-path tree from the source.',
+    description: msg('viz.dij.done'),
     highlightLine: 0,
   });
   return steps;

@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { TreeRenderer, type TreeState } from './TreeRenderer';
 import { createSplayEngine, performInsert, performSearch } from './splayEngine';
 
@@ -36,13 +36,13 @@ function generateSteps({ seed, insertions, searches, deletions }: SplayDeleteInp
   const steps: AlgorithmStep<TreeState>[] = [];
 
   for (const v of seed) engine.insertPlain(v);
-  steps.push({ state: engine.snapshot(), description: `Starting tree (given), built from [${seed.join(', ')}].`, highlightLine: 0 });
+  steps.push({ state: engine.snapshot(), description: msg('viz.d.startingTreeGiven', { values: seed.join(', ') }), highlightLine: 0 });
 
   for (const value of insertions) {
     performInsert(engine, steps, value, INSERT_LINES);
   }
   if (insertions.length) {
-    steps.push({ state: engine.snapshot(), description: `Insertions complete.`, highlightLine: 0 });
+    steps.push({ state: engine.snapshot(), description: msg('viz.splay.insertionsDone'), highlightLine: 0 });
   }
 
   for (const value of searches) {
@@ -52,14 +52,14 @@ function generateSteps({ seed, insertions, searches, deletions }: SplayDeleteInp
   for (const value of deletions) {
     const id = performSearch(engine, steps, value, FIND_LINES);
     if (!id) {
-      steps.push({ state: engine.snapshot(), description: `Delete ${value}: tree is empty, nothing to do.`, highlightLine: 7 });
+      steps.push({ state: engine.snapshot(), description: msg('viz.splay.deleteEmpty', { value }), highlightLine: 7 });
       continue;
     }
     const rootId = engine.getRoot()!;
     if (engine.nodes[rootId].value !== value) {
       steps.push({
         state: engine.snapshot(rootId),
-        description: `Delete ${value}: not present (${engine.nodes[rootId].value} splayed to root instead) — tree left unchanged.`,
+        description: msg('viz.splay.deleteAbsent', { value, root: engine.nodes[rootId].value }),
         highlightLine: 7,
       });
       continue;
@@ -68,7 +68,7 @@ function generateSteps({ seed, insertions, searches, deletions }: SplayDeleteInp
     const R = engine.nodes[rootId].right;
     steps.push({
       state: engine.snapshot(rootId),
-      description: `Delete ${value}: it is now the root (just splayed). Remove it, splitting the tree into L (left subtree) and R (right subtree).`,
+      description: msg('viz.splay.deleteRoot', { value }),
       highlightLine: 9,
     });
     engine.deleteNode(rootId);
@@ -76,22 +76,22 @@ function generateSteps({ seed, insertions, searches, deletions }: SplayDeleteInp
     if (!L) {
       if (R) engine.nodes[R].parent = null;
       engine.setRoot(R);
-      steps.push({ state: engine.snapshot(), description: 'L is empty: R becomes the new tree.', highlightLine: 10 });
+      steps.push({ state: engine.snapshot(), description: msg('viz.splay.lEmpty'), highlightLine: 10 });
     } else {
       engine.nodes[L].parent = null;
       engine.setRoot(L);
       const maxId = engine.maxOf(L);
-      steps.push({ state: engine.snapshot(maxId), description: `Find the maximum of L: ${engine.nodes[maxId].value} (descend rightmost — it has no right child).`, highlightLine: 12 });
+      steps.push({ state: engine.snapshot(maxId), description: msg('viz.splay.findMax', { max: engine.nodes[maxId].value }), highlightLine: 12 });
       engine.splay(maxId, (_label, description) => {
         steps.push({ state: engine.snapshot(maxId), description, highlightLine: 13 });
       });
       if (R) engine.nodes[R].parent = maxId;
       engine.nodes[maxId].right = R;
-      steps.push({ state: engine.snapshot(undefined, maxId), description: `${engine.nodes[maxId].value} is L's new root (no right child); attach R directly as its right child.`, highlightLine: 14 });
+      steps.push({ state: engine.snapshot(undefined, maxId), description: msg('viz.splay.attachR', { max: engine.nodes[maxId].value }), highlightLine: 14 });
     }
   }
 
-  steps.push({ state: engine.snapshot(), description: 'All operations complete.', highlightLine: 0 });
+  steps.push({ state: engine.snapshot(), description: msg('viz.d.allOperations'), highlightLine: 0 });
   return steps;
 }
 

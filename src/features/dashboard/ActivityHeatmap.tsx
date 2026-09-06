@@ -1,8 +1,8 @@
 import { Flame } from 'lucide-react';
 import type { ActivityDay } from '../../lib/activity';
 import { currentStreak } from '../../lib/activity';
-
-const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+import { useT } from '../../lib/i18n/locale';
+import type { MessageKey } from '../../lib/i18n/messages';
 
 function levelFor(count: number): 0 | 1 | 2 | 3 | 4 {
   if (count === 0) return 0;
@@ -21,6 +21,7 @@ const LEVEL_COLOR: Record<number, string> = {
 };
 
 export function ActivityHeatmap({ days }: { days: ActivityDay[] }) {
+  const t = useT();
   // Pad the front so the first column starts on a Sunday, GitHub-style.
   const firstDow = new Date(days[0].date + 'T00:00:00').getDay();
   const padded: (ActivityDay | null)[] = [...Array(firstDow).fill(null), ...days];
@@ -37,7 +38,7 @@ export function ActivityHeatmap({ days }: { days: ActivityDay[] }) {
     if (!firstReal) return;
     const month = new Date(firstReal.date + 'T00:00:00').getMonth();
     if (month !== lastMonth) {
-      monthLabels.push({ weekIndex: i, label: MONTH_LABELS[month] });
+      monthLabels.push({ weekIndex: i, label: t(`month.${month}` as MessageKey) });
       lastMonth = month;
     }
   });
@@ -48,12 +49,12 @@ export function ActivityHeatmap({ days }: { days: ActivityDay[] }) {
   return (
     <div className="card p-5">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-        <h2 className="text-sm font-semibold text-[var(--color-text-h)]">Study activity</h2>
+        <h2 className="text-sm font-semibold text-[var(--color-text-h)]">{t('dash.activity')}</h2>
         <div className="flex items-center gap-3 text-xs text-[var(--color-text-dim)]">
-          <span>{totalActive} active days</span>
+          <span>{t('dash.activeDays', { count: totalActive })}</span>
           {streak > 0 && (
             <span className="flex items-center gap-1 font-semibold text-[var(--color-warn)]">
-              <Flame size={13} /> {streak}-day streak
+              <Flame size={13} /> {t('dash.streak', { count: streak })}
             </span>
           )}
         </div>
@@ -75,7 +76,14 @@ export function ActivityHeatmap({ days }: { days: ActivityDay[] }) {
               week.map((day, di) => (
                 <div
                   key={`${wi}-${di}`}
-                  title={day ? `${day.date}: ${day.count} ${day.count === 1 ? 'activity' : 'activities'}` : ''}
+                  title={
+                    day
+                      ? t(day.count === 1 ? 'dash.activityTitleOne' : 'dash.activityTitle', {
+                          date: day.date,
+                          count: day.count,
+                        })
+                      : ''
+                  }
                   className="h-[11px] w-[11px] rounded-[2px]"
                   style={{ background: day ? LEVEL_COLOR[levelFor(day.count)] : 'transparent' }}
                 />
@@ -85,11 +93,11 @@ export function ActivityHeatmap({ days }: { days: ActivityDay[] }) {
         </div>
       </div>
       <div className="mt-3 flex items-center justify-end gap-1 text-[10px] text-[var(--color-text-dim)]">
-        Less
+        {t('dash.less')}
         {[0, 1, 2, 3, 4].map((l) => (
           <span key={l} className="h-[10px] w-[10px] rounded-[2px]" style={{ background: LEVEL_COLOR[l] }} />
         ))}
-        More
+        {t('dash.more')}
       </div>
     </div>
   );

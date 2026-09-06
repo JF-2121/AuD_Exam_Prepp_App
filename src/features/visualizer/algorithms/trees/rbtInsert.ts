@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep, type StepText } from '../../core/types';
 import { TreeRenderer, type TreeNode, type TreeState } from './TreeRenderer';
 
 const pseudocode = [
@@ -38,10 +38,10 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
   const nodes: Record<string, RBNode> = {};
   let root: string | null = null;
   const steps: AlgorithmStep<TreeState>[] = [
-    { state: { nodes: {}, rootId: null }, description: 'Empty tree.', highlightLine: 0 },
+    { state: { nodes: {}, rootId: null }, description: msg('viz.d.emptyTree'), highlightLine: 0 },
   ];
 
-  function pushStep(description: string, highlightLine: number, extra?: Partial<TreeState>) {
+  function pushStep(description: StepText, highlightLine: number, extra?: Partial<TreeState>) {
     steps.push({
       state: { nodes: cloneNodes(nodes), rootId: root, ...extra },
       description,
@@ -92,19 +92,19 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
           parent.color = 'black';
           uncle.color = 'black';
           grandparent.color = 'red';
-          pushStep(`Case 1 (uncle ${uncle.value} is red): recolor parent and uncle black, grandparent red.`, 7, { highlightId: grandparentId });
+          pushStep(msg('viz.rbt.case1Left', { uncle: uncle.value }), 7, { highlightId: grandparentId });
           z = grandparentId;
         } else {
           if (z === parent.right) {
             z = parentId;
             rotateLeft(z);
-            pushStep(`Case 2 (uncle black, z is inner child): rotate left at ${nodes[z].value}.`, 10);
+            pushStep(msg('viz.rbt.case2Left', { node: nodes[z].value }), 10);
           }
           nodes[nodes[z].parent!].color = 'black';
           nodes[nodes[nodes[z].parent!].parent!].color = 'red';
           const gp = nodes[nodes[z].parent!].parent!;
           rotateRight(gp);
-          pushStep('Case 3 (uncle black, z is outer child): recolor and rotate right at grandparent.', 12);
+          pushStep(msg('viz.rbt.case3Left'), 12);
         }
       } else {
         const uncleId = grandparent.left;
@@ -113,19 +113,19 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
           parent.color = 'black';
           uncle.color = 'black';
           grandparent.color = 'red';
-          pushStep(`Case 1 (uncle ${uncle.value} is red): recolor parent and uncle black, grandparent red.`, 7, { highlightId: grandparentId });
+          pushStep(msg('viz.rbt.case1Left', { uncle: uncle.value }), 7, { highlightId: grandparentId });
           z = grandparentId;
         } else {
           if (z === parent.left) {
             z = parentId;
             rotateRight(z);
-            pushStep(`Case 2 (uncle black, z is inner child): rotate right at ${nodes[z].value}.`, 10);
+            pushStep(msg('viz.rbt.case2Right', { node: nodes[z].value }), 10);
           }
           nodes[nodes[z].parent!].color = 'black';
           nodes[nodes[nodes[z].parent!].parent!].color = 'red';
           const gp = nodes[nodes[z].parent!].parent!;
           rotateLeft(gp);
-          pushStep('Case 3 (uncle black, z is outer child): recolor and rotate left at grandparent.', 12);
+          pushStep(msg('viz.rbt.case3Right'), 12);
         }
       }
     }
@@ -137,7 +137,7 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
 
     if (!root) {
       root = id;
-      pushStep(`Insert ${value}: tree was empty, becomes root.`, 1, { newId: id });
+      pushStep(msg('viz.d.insertBecomesRoot', { value }), 1, { newId: id });
     } else {
       let cursor = root;
       while (true) {
@@ -158,18 +158,18 @@ function generateSteps(input: number[]): AlgorithmStep<TreeState>[] {
           cursor = cur.right;
         }
       }
-      pushStep(`Insert ${value} as a red leaf (BST insert).`, 1, { newId: id });
+      pushStep(msg('viz.rbt.insertRedLeaf', { value }), 1, { newId: id });
     }
 
     fixup(id);
 
     if (nodes[root!].color !== 'black') {
       nodes[root!].color = 'black';
-      pushStep('Recolor root black (rule 2 must always hold).', 13);
+      pushStep(msg('viz.rbt.recolorRoot'), 13);
     }
   }
 
-  pushStep('All values inserted. Every root-to-leaf path has the same black-height.', 0);
+  pushStep(msg('viz.rbt.doneInsert'), 0);
   return steps;
 }
 

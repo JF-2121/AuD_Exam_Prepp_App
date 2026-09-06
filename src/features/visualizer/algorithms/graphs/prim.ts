@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { GraphRenderer, type GraphState } from './GraphRenderer';
 import { exampleNodes, neighborsOf } from './graphData';
 
@@ -37,7 +37,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
   const steps: AlgorithmStep<GraphState>[] = [
     {
       state: { labels: labelsOf(), visited: [] },
-      description: `Start Prim's from ${source}: key[${source}]=0, every other key ∞.`,
+      description: msg('viz.prim.start', { source }),
       highlightLine: 2,
     },
   ];
@@ -54,7 +54,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
     if (u === null) break; // remaining nodes unreachable
     steps.push({
       state: { labels: labelsOf(), visited: [...inTree], current: u, acceptedEdges: acceptedOf() },
-      description: `Extract cheapest vertex to attach: ${u} (key=${key[u]}).`,
+      description: msg('viz.prim.extract', { u, key: key[u] }),
       highlightLine: 5,
     });
     inTree.add(u);
@@ -63,7 +63,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
       if (inTree.has(v)) continue;
       steps.push({
         state: { labels: labelsOf(), visited: [...inTree], current: u, activeEdge: edgeKey(u, v), acceptedEdges: acceptedOf() },
-        description: `Edge ${u}-${v} (weight ${weight}) vs key[${v}]=${key[v] === Infinity ? '∞' : key[v]}.`,
+        description: msg('viz.prim.consider', { u, v, weight, keyV: key[v] === Infinity ? '∞' : key[v] }),
         highlightLine: 7,
       });
       if (weight < key[v]) {
@@ -71,7 +71,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
         parent[v] = u;
         steps.push({
           state: { labels: labelsOf(), visited: [...inTree], current: u, activeEdge: edgeKey(u, v), acceptedEdges: acceptedOf() },
-          description: `Cheaper connection found: key[${v}] = ${weight}, parent[${v}] = ${u}.`,
+          description: msg('viz.prim.cheaper', { v, weight, u }),
           highlightLine: 8,
         });
       }
@@ -80,7 +80,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
 
   steps.push({
     state: { labels: labelsOf(), visited: [...inTree], acceptedEdges: acceptedOf() },
-    description: 'Done. Highlighted edges form the minimum spanning tree grown from the source.',
+    description: msg('viz.prim.done'),
     highlightLine: 0,
   });
   return steps;

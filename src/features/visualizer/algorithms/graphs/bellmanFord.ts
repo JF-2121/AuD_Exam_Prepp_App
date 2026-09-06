@@ -1,4 +1,4 @@
-import type { AlgorithmDef, AlgorithmStep } from '../../core/types';
+import { msg, type AlgorithmDef, type AlgorithmStep } from '../../core/types';
 import { GraphRenderer, type GraphState } from './GraphRenderer';
 import { exampleNodes, exampleEdges } from './graphData';
 
@@ -41,7 +41,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
   const steps: AlgorithmStep<GraphState>[] = [
     {
       state: { labels: labelsOf(), visited: [] },
-      description: `Initialize: dist[${source}]=0, all others ∞. This demo graph has only non-negative weights (so Dijkstra also works here) — Bellman-Ford's payoff is graphs with negative edges, but it still relaxes every edge V−1 times regardless.`,
+      description: msg('viz.bf.init', { source }),
       highlightLine: 2,
     },
   ];
@@ -51,13 +51,13 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
     let changedInPass = false;
     steps.push({
       state: { labels: labelsOf(), visited: [], acceptedEdges: acceptedOf() },
-      description: `Pass ${pass} of ${V - 1}: relax every edge once.`,
+      description: msg('viz.bf.pass', { pass, total: V - 1 }),
       highlightLine: 4,
     });
     for (const { from: u, to: v, weight } of directedPairs) {
       steps.push({
         state: { labels: labelsOf(), visited: [], current: u, activeEdge: edgeKey(u, v), acceptedEdges: acceptedOf() },
-        description: `Relax ${u}→${v} (weight ${weight}): dist[${u}]+${weight} vs dist[${v}]=${dist[v] === Infinity ? '∞' : dist[v]}.`,
+        description: msg('viz.bf.relax', { u, v, weight, distV: dist[v] === Infinity ? '∞' : dist[v] }),
         highlightLine: 5,
       });
       if (dist[u] !== Infinity && dist[u] + weight < dist[v]) {
@@ -66,7 +66,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
         changedInPass = true;
         steps.push({
           state: { labels: labelsOf(), visited: [], current: u, activeEdge: edgeKey(u, v), acceptedEdges: acceptedOf() },
-          description: `Improved: dist[${v}] = ${dist[v]}, pred[${v}] = ${u}.`,
+          description: msg('viz.dij.improved', { v, dist: dist[v], u }),
           highlightLine: 5,
         });
       }
@@ -74,7 +74,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
     if (!changedInPass) {
       steps.push({
         state: { labels: labelsOf(), visited: [], acceptedEdges: acceptedOf() },
-        description: `No edge changed in pass ${pass} — distances have already converged (remaining passes would be no-ops, but the textbook algorithm always runs all V−1).`,
+        description: msg('viz.bf.converged', { pass }),
         highlightLine: 3,
       });
       break;
@@ -88,9 +88,7 @@ function generateSteps(source: string): AlgorithmStep<GraphState>[] {
 
   steps.push({
     state: { labels: labelsOf(), visited: [], acceptedEdges: acceptedOf() },
-    description: negativeCycle
-      ? 'A further relaxation still improves a distance after V−1 passes: a negative-weight cycle is reachable from the source.'
-      : 'Checked every edge once more: nothing improves, so no negative cycle. Highlighted edges form the shortest-path tree.',
+    description: msg(negativeCycle ? 'viz.bf.negativeCycle' : 'viz.bf.noNegativeCycle'),
     highlightLine: 6,
   });
   return steps;
