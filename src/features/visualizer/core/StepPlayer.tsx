@@ -5,7 +5,9 @@ import { useStepPlayback } from './useStepPlayback';
 export function StepPlayer<TInput, TState>({ algorithm, input }: { algorithm: AlgorithmDef<TInput, TState>; input: TInput }) {
   const steps = algorithm.generateSteps(input);
   const playback = useStepPlayback(steps.length);
-  const step = steps[playback.index];
+  // Editing the input regenerates `steps`, and the playback index only resets in an effect — i.e.
+  // one render later. Clamp so a shorter step list can't be indexed past its end in the meantime.
+  const step = steps[Math.min(playback.index, steps.length - 1)];
 
   return (
     <div className="flex flex-col gap-4 md:flex-row">

@@ -1,22 +1,5 @@
 [
   {
-    "id": "rad-q-1",
-    "topicId": "sorting-radix",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "Why doesn't the Ω(n log n) comparison-sort lower bound apply to Radix Sort?",
-    "options": [
-      "Radix Sort is actually O(n log n) too, so it's irrelevant",
-      "Radix Sort never directly compares two elements against each other",
-      "Radix Sort only works on already-sorted input",
-      "The lower bound only applies to recursive algorithms"
-    ],
-    "explanation": "The Ω(n log n) bound is specifically a lower bound for comparison-based sorts. Radix Sort distributes by digit value instead of comparing elements, so it's exempt.",
-    "correctIndexes": [
-      1
-    ]
-  },
-  {
     "id": "rad-q-2",
     "topicId": "sorting-radix",
     "type": "short-answer",
@@ -29,35 +12,5 @@
       "1s place"
     ],
     "explanation": "LSD = Least Significant Digit first; the first pass sorts by the 1s place."
-  },
-  {
-    "id": "rad-q-3",
-    "topicId": "sorting-radix",
-    "type": "multiple-choice",
-    "difficulty": "hard",
-    "prompt": "Sorting n b-bit numbers with r-bit digit groups costs O((b/r)*(n+2^r)). If b <= log(n), what is the optimal choice of r?",
-    "options": [
-      "r = b (a single digit covering the whole number)",
-      "r = 1 (single-bit digits)",
-      "r = log(n) regardless of b",
-      "r doesn't affect the runtime in this regime"
-    ],
-    "correctIndexes": [0],
-    "explanation": "With r=b, the runtime becomes O(n + 2^b), and since b <= log(n), 2^b <= n, giving O(n) -- a single pass over one full-width digit is optimal in this regime."
-  },
-  {
-    "id": "rad-q-4",
-    "topicId": "sorting-radix",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "Is Radix Sort's correctness guaranteed if an individual digit-pass uses an UNSTABLE sort (e.g. bucket order via a LIFO stack)?",
-    "options": [
-      "No -- an unstable digit-pass can reverse relative order and undo the correctness of previous passes",
-      "Yes -- stability doesn't matter since each pass only looks at one digit position",
-      "Yes, as long as the final pass (most significant digit) is stable",
-      "It depends only on whether the numbers have distinct digit values"
-    ],
-    "correctIndexes": [0],
-    "explanation": "RadixSort relies on each pass PRESERVING the relative order established by earlier (less significant) passes -- an unstable pass can silently break this and produce an incorrectly sorted result."
   }
 ]

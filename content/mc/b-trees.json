@@ -1,0 +1,146 @@
+[
+  {
+    "id": "btree-mc-1",
+    "topicId": "b-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "B-Tree of minimum degree t — which two statements are correct?",
+    "options": [
+      "Every node except the root holds between t−1 and 2t−1 keys.",
+      "All leaves lie at the same depth, so a B-Tree is height-balanced by construction.",
+      "A node with k keys has exactly k children.",
+      "The root must hold at least t−1 keys, like every other node."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The key-count bounds ✓ and the equal-depth property ✓ are definitional. A node with k keys has k+1 children — the extra child covers the range beyond the last key ✗ — and the root is the explicit exception, needing only 1 key ✗.",
+    "source": "AuD26 Sheet 08 · B-Trees"
+  },
+  {
+    "id": "btree-mc-2",
+    "topicId": "b-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Why are B-Trees used for disk-backed storage? Which two statements are correct?",
+    "options": [
+      "Many keys per node keep the tree very shallow, so few disk accesses are needed.",
+      "A fetch from memory takes much longer than a comparison, so comparing many keys already loaded in one node is cheap.",
+      "B-Trees need fewer comparisons in total than a BST holding the same keys.",
+      "B-Trees avoid pointers entirely, so no memory addresses have to be resolved."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Low height ⟹ few fetches ✓, and \"fetch takes longer than compare\" is exactly the architectural argument from the lecture ✓. A B-Tree may well perform *more* comparisons than a BST — it just performs far fewer expensive fetches ✗ — and it still uses child pointers ✗.",
+    "source": "AuD26 Sheet 08 · Warum B-Trees?"
+  },
+  {
+    "id": "btree-q-2",
+    "topicId": "b-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Which idea allows B-Tree insert to be a single top-to-bottom pass with no backtracking?",
+    "options": [
+      "Every full node encountered is preemptively split *before* the algorithm descends into it.",
+      "Insertion always happens at the root, and a background process rebalances later.",
+      "Excess keys are kept in a separate overflow list.",
+      "Only leaves that were pre-allocated with spare capacity are used."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Checking and splitting a child before descending guarantees that the leaf finally reached is non-full, so no split is ever required on the way back up. This is the exact mirror image of delete's \"ensure ≥ t keys before descending\" rule.",
+    "source": "AuD26 Sheet 08 · B-Tree insert"
+  },
+  {
+    "id": "btree-q-3",
+    "topicId": "b-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "A full node c (2t−1 keys) with parent x is split. Which two statements are correct?",
+    "options": [
+      "The median key — the t-th key of c — moves up into x at its correct sorted position.",
+      "The remaining 2t−2 keys split evenly: t−1 stay in c, t−1 move into a new right sibling.",
+      "The median key is discarded, since it is now represented by the split point.",
+      "All 2t−1 keys move into the new sibling, leaving c empty."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Promoting the median ✓ and splitting the remainder evenly into t−1 / t−1 ✓ is the split operation. If c was internal, its 2t children likewise split t / t. Nothing is discarded ✗ and c is never emptied ✗.",
+    "source": "AuD26 Sheet 08 · splitChild"
+  },
+  {
+    "id": "btree-q-6",
+    "topicId": "b-trees",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "B-Tree delete: while descending, the child c you must enter has exactly t−1 keys and an immediate sibling has ≥ t keys. What happens before descending?",
+    "options": [
+      "Borrow: the separating key rotates from the parent down into c, and the sibling's adjacent extreme key moves up into the parent.",
+      "Merge c with that sibling regardless of its key count.",
+      "Nothing — t−1 keys is enough to descend into.",
+      "c is removed and its keys are redistributed across the whole level."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Borrowing (a rotation through the parent) gives c a spare key without merging, and is preferred whenever a sibling can afford it. Merging is the fallback used only when *both* siblings have exactly t−1 keys.",
+    "source": "AuD26 Sheet 08 · B-Tree delete, case 3a"
+  },
+  {
+    "id": "btree-q-5",
+    "topicId": "b-trees",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "B-Tree delete: key k lies in the internal node x, and both the child before k and the child after k have exactly t−1 keys. What happens?",
+    "options": [
+      "The left child, k and the right child are merged into one node of 2t−1 keys, then k is deleted recursively from it.",
+      "k is removed directly from x, leaving a gap.",
+      "A key is borrowed from the grandparent.",
+      "This situation cannot occur in a valid B-Tree."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Neither child can spare a key for the predecessor/successor swap (cases 2a/2b), so the only remaining option is case 2c: merge y, k and z into a single legal node of exactly 2t−1 keys and continue the deletion there.",
+    "source": "AuD26 Sheet 08 · B-Tree delete, case 2c"
+  },
+  {
+    "id": "btree-mc-3",
+    "topicId": "b-trees",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "How does a B-Tree's height change? Which two statements are correct?",
+    "options": [
+      "The height grows only by splitting the root, which creates a new root holding a single key.",
+      "The height shrinks only when a merge consumes the root's last remaining key.",
+      "The height grows whenever any internal node is split.",
+      "The height shrinks whenever a leaf becomes empty."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Splitting an internal node pushes its median into an existing parent, so the depth is unchanged — only the root has no parent to absorb it, which is why the root split is the sole way to grow ✓✗. Symmetrically the root merge is the sole way to shrink ✓✗, since all leaves must stay at equal depth.",
+    "source": "AuD26 Sheet 08 · root split / root shrink"
+  },
+  {
+    "id": "btree-q-10",
+    "topicId": "b-trees",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "A B-Tree with minimum degree t = 2 is structurally equivalent to which classic structure?",
+    "options": [
+      "A 2-3-4 tree, which is structurally equivalent to a Red-Black tree",
+      "An AVL tree",
+      "A splay tree",
+      "A binary max-heap"
+    ],
+    "correctIndexes": [0],
+    "explanation": "With t = 2 every node holds 1–3 keys and therefore has 2, 3 or 4 children — a 2-3-4 tree. The standard correspondence maps a 3-key node onto a black node with two red children, which is exactly a Red-Black tree.",
+    "source": "AuD26 Sheet 08 · B-Trees"
+  },
+  {
+    "id": "btree-mc-4",
+    "topicId": "b-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Which two conditions would make a candidate tree structurally *invalid* as a B-Tree?",
+    "options": [
+      "A non-root node has k keys but only k children.",
+      "Two leaves lie at different depths.",
+      "A non-root node holds exactly 2t−1 keys.",
+      "The root holds only a single key."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "k keys demand exactly k+1 children ✗ and all leaves must share one depth ✗ — both are violations. A node with 2t−1 keys is merely *full*, which is legal ✓, and a single-key root is the explicit root exception ✓.",
+    "source": "AuD26 Sheet 08 · B-Tree invariants"
+  }
+]

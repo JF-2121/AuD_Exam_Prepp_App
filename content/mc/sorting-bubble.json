@@ -1,0 +1,50 @@
+[
+  {
+    "id": "bub-q-1",
+    "topicId": "sorting-bubble",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Which statement about Bubble Sort is correct?",
+    "options": [
+      "Random pivot selection gives Bubble Sort a Θ(n) best case.",
+      "An early-exit flag that stops when a full pass makes zero swaps gives Bubble Sort a Θ(n) best case.",
+      "Using a temporary array gives Bubble Sort a Θ(n) best case.",
+      "Bubble Sort has a Θ(n) best case even without any optimization."
+    ],
+    "correctIndexes": [1],
+    "explanation": "If a complete pass performs no swap, the array is provably sorted and the algorithm may stop — that single pass costs Θ(n). Without the flag the naive version still runs all n−1 passes, giving Θ(n²) even on sorted input. Bubble Sort has no pivot and needs no temp array.",
+    "source": "AuD-Zusammenfassung §4.3"
+  },
+  {
+    "id": "bub-mc-1",
+    "topicId": "sorting-bubble",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Bubble Sort — which two statements are correct?",
+    "options": [
+      "After the i-th pass, the i largest elements are guaranteed to be in their final positions at the end of the array.",
+      "Bubble Sort is stable, because it only ever swaps strictly out-of-order adjacent pairs.",
+      "Bubble Sort's worst case is Θ(n log n) on reverse-sorted input.",
+      "Bubble Sort needs Θ(n) additional memory for the swap buffer."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Each pass bubbles the largest remaining element to the end, so after i passes the last i slots are final ✓. Only `A[j] > A[j+1]` triggers a swap, so equal elements never cross ⟹ stable ✓. The worst case is Θ(n²) ✗, and swapping needs only Θ(1) extra space ✗.",
+    "source": "AuD-Zusammenfassung §4.3"
+  },
+  {
+    "id": "bub-mc-2",
+    "topicId": "sorting-bubble",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Bubble Sort compared with Insertion Sort — which two statements are correct?",
+    "options": [
+      "Both have Θ(n²) average and worst case, and both are stable and in place.",
+      "Insertion Sort is usually faster in practice because it performs fewer actual operations per element.",
+      "Bubble Sort is asymptotically faster than Insertion Sort in the average case.",
+      "Only Insertion Sort can achieve a Θ(n) best case; Bubble Sort cannot, even when optimized."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "They share the same asymptotic profile and both are stable in-place comparison sorts ✓, but Insertion Sort shifts rather than repeatedly swapping, so its constants are smaller ✓. Neither is asymptotically faster than the other ✗, and optimized Bubble Sort *does* reach Θ(n) on sorted input ✗.",
+    "source": "AuD-Zusammenfassung §4.3"
+  }
+]

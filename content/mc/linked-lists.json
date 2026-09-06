@@ -1,0 +1,114 @@
+[
+  {
+    "id": "real-ll-1",
+    "topicId": "linked-lists",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Statements about linked lists — which one is correct?",
+    "options": [
+      "Inserting two elements consecutively at the end of a singly linked list requires at most two traversals of the list.",
+      "Every element of a singly linked list contains at least two pointers.",
+      "Singly linked lists allow direct access to an arbitrary element by index.",
+      "In a singly linked list one can iterate backwards through the list."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Without a tail pointer each append walks from the head to the end — one traversal per insert, hence at most two for two inserts. A singly linked node holds exactly one pointer (next), there is no index access, and without prev pointers backward iteration is impossible.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.3"
+  },
+  {
+    "id": "real-ll-2",
+    "topicId": "linked-lists",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Linked lists and abstract data types — which two statements are correct?",
+    "options": [
+      "An advantage of linked lists is that insert and delete work by adjusting pointers, without shifting the remaining elements.",
+      "In a doubly linked list each element holds a pointer only to the next element.",
+      "An ADT describes the possible values, operations and behaviour of a data type, but not its concrete implementation.",
+      "The ADT description specifies the time complexity of the operations on linked lists."
+    ],
+    "correctIndexes": [0, 2],
+    "explanation": "No shifting is exactly the structural advantage over arrays ✓, and an ADT is an implementation-agnostic contract ✓. A doubly linked node holds *both* next and prev ✗, and complexity follows from the chosen implementation, not from the ADT ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.4"
+  },
+  {
+    "id": "ll-q-1",
+    "topicId": "linked-lists",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Given only a pointer to the node to be removed, deletion is Θ(1) in a doubly linked list but Θ(n) in a singly linked list. Which statement gives the reason?",
+    "options": [
+      "Doubly linked lists are always shorter than singly linked ones.",
+      "The prev pointer makes it unnecessary to walk from the head to find the predecessor.",
+      "Singly linked lists do not support deletion at all.",
+      "In a singly linked list the successor pointer must be recomputed for every remaining node."
+    ],
+    "correctIndexes": [1],
+    "explanation": "With prev available you can directly relink predecessor and successor in constant time. Without it, the predecessor — whose next pointer must be redirected — can only be found by scanning from the head, which costs Θ(n).",
+    "source": "AuD-Zusammenfassung §5.3"
+  },
+  {
+    "id": "ll-mc-1",
+    "topicId": "linked-lists",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Array versus linked list — which two statements are correct?",
+    "options": [
+      "Random access A[i] is Θ(1) in an array and Θ(n) in a linked list.",
+      "Inserting at a known position is Θ(n) in an array (shifting) and Θ(1) in a linked list.",
+      "A linked list uses less memory per element than an array, because it needs no contiguous block.",
+      "Searching for a value is Θ(log n) in an unsorted linked list."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "These are the two defining trade-offs ✓✓. A linked list uses *more* memory per element — each node carries pointer overhead on top of the value ✗ — and unsorted search is Θ(n), since binary search needs random access ✗.",
+    "source": "AuD-Zusammenfassung §5.3, comparison table"
+  },
+  {
+    "id": "ll-mc-2",
+    "topicId": "linked-lists",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Sentinels (Wächter) in linked lists — which two statements are correct?",
+    "options": [
+      "A sentinel is a permanent dummy node that removes the need to special-case the empty list and the list boundaries.",
+      "With a sentinel, every real node always has a valid prev/next to link against.",
+      "A sentinel reduces the asymptotic cost of search from Θ(n) to Θ(log n).",
+      "A sentinel stores the length of the list so that size queries become Θ(1)."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The sentinel's purpose is purely to eliminate boundary special cases ✓✓ — it trades slightly more complex initialization for simpler insert/delete code. It changes no asymptotics ✗ and is not a length counter ✗.",
+    "source": "AuD-Zusammenfassung §5.3, Sentinels"
+  },
+  {
+    "id": "ll-q-4",
+    "topicId": "linked-lists",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "`RemoveDuplicates` on a singly linked list uses a reference pointer a and a scanning pointer b, in O(1) extra space. Which two statements are correct?",
+    "options": [
+      "When b.next.key == a.key, the duplicate is spliced out via b.next = b.next.next.",
+      "The runtime is O(n²), because the inner scan runs (n−1) + (n−2) + … + 1 times in the worst case.",
+      "The algorithm needs an auxiliary hash set to remember which values have been seen.",
+      "The runtime is O(n), because each node is visited exactly once."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Splicing past the duplicate is the O(1) removal step ✓, and fixing each reference against everything ahead of it gives the arithmetic series ⟹ Θ(n²) ✓. Avoiding a hash set is precisely what forces the quadratic scan ✗✗.",
+    "source": "AuD26 Sheet 05 · RemoveDuplicates"
+  },
+  {
+    "id": "ll-mc-3",
+    "topicId": "linked-lists",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "The loop invariant of `RemoveDuplicates` (outer loop over a) — which two statements are correct?",
+    "options": [
+      "Before the i-th outer iteration, the sublist from the head up to and including a contains no duplicates.",
+      "At termination (a = nil) every node has served as reference point, so the list contains only unique values.",
+      "The invariant guarantees that the list is sorted after each outer iteration.",
+      "Initialization fails, because a one-element sublist cannot be shown to be duplicate-free."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The duplicate-free-prefix invariant ✓ combined with the exit condition yields the postcondition ✓. The algorithm never reorders anything, so sortedness is not claimed ✗, and a single-element sublist is trivially duplicate-free, so initialization holds ✗.",
+    "source": "AuD26 Sheet 05 · RemoveDuplicates loop invariant"
+  }
+]

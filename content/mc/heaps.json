@@ -1,0 +1,130 @@
+[
+  {
+    "id": "real-heap-1",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Statements about binary max-heaps — which two are correct?",
+    "options": [
+      "The largest element sits at the root.",
+      "A binary max-heap is always a binary search tree.",
+      "Deleting the maximum, then moving the last node of the heap to the root, then running heapify, again yields a valid binary max-heap.",
+      "In a binary max-heap the largest elements are located in the leaves."
+    ],
+    "correctIndexes": [0, 2],
+    "explanation": "The heap property (parent ≥ children) forces the maximum to the root ✓, and move-last-to-root + sift-down is exactly the standard extract-max ✓. A heap has no left/right ordering, so it is not a BST ✗, and the *smallest* elements end up in the leaves ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.7"
+  },
+  {
+    "id": "heap-mc-1",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Array representation of a binary heap (0-indexed) — which two statements are correct?",
+    "options": [
+      "The children of index i are at 2i+1 and 2i+2.",
+      "The parent of index i is at ⌊(i−1)/2⌋.",
+      "The heap needs an explicit pointer per node, since the tree structure cannot be derived from indices.",
+      "The array representation only works if the number of elements is a power of two."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The index arithmetic ✓✓ is exactly what makes the representation implicit — no pointers are stored at all ✗. Completeness of the tree (every level full except possibly the last, filled left to right) is what makes the arithmetic valid, and that holds for any n ✗.",
+    "source": "AuD26 Sheet 07 · Heaps"
+  },
+  {
+    "id": "heap-q-4",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "During sift-down (heapify) at node i in a max-heap, node i is smaller than both of its children. What must happen?",
+    "options": [
+      "Swap i with the *larger* of its two children, then continue sifting down from that position.",
+      "Swap i with the smaller of its two children.",
+      "Swap i with both children simultaneously.",
+      "Nothing — the heap property still holds."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Swapping with the smaller child would leave the larger child above its new parent, so the violation would persist on that side. Only promoting the larger child restores parent ≥ both children locally, after which the recursion fixes the subtree it was swapped into.",
+    "source": "AuD26 Sheet 07 · heapify"
+  },
+  {
+    "id": "heap-q-2",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "BuildHeap — which two statements are correct?",
+    "options": [
+      "Only about the first half of the indices needs a heapify call, because the remaining ones are leaves with no children to violate the property against.",
+      "It must proceed bottom-up, because heapify(A, i) is only correct if both children of i are already valid heaps.",
+      "The obvious bound n/2 · O(log n) is tight, so BuildHeap is Θ(n log n).",
+      "Top-down and bottom-up both yield a valid heap; only the constant factor differs."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Skipping the leaf half ✓ and the bottom-up requirement ✓ are the two structural facts. A tighter analysis gives Θ(n), because most calls happen near the leaves where a sift-down travels only 1–2 levels ✗. And top-down is not merely slower — it is *wrong*: once the root has been processed it is never revisited, so deep large values can never bubble up ✗.",
+    "source": "AuD26 Sheet 07 · BuildHeap"
+  },
+  {
+    "id": "heap-mc-2",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Insert into a binary max-heap — which two statements are correct?",
+    "options": [
+      "The new key is appended at the last free slot, because that is the only position preserving completeness, then sifted up.",
+      "Sift-up terminates as soon as the parent is ≥ the key, after at most ⌈log n⌉ comparisons.",
+      "Appending and then re-running the full BuildHeap is incorrect and produces an invalid heap.",
+      "The new key is inserted at the root and sifted down."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Append-then-sift-up ✓ costs at most one root-to-leaf path ✓. Append + full BuildHeap is *correct but wasteful* — it re-checks ⌈(n−1)/2⌉ nodes to fix what one path already handles ✗. Inserting at the root would overwrite the maximum ✗.",
+    "source": "AuD26 Sheet 07 · Heap insert"
+  },
+  {
+    "id": "heap-q-8",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Is Heap Sort stable and/or in place?",
+    "options": [
+      "In place, but not stable",
+      "Stable, but not in place",
+      "Both stable and in place",
+      "Neither stable nor in place"
+    ],
+    "correctIndexes": [0],
+    "explanation": "Heap Sort works entirely within the original array with O(1) extra space ⟹ in place. But the long-range swaps of sift-down and the swap-root-with-last step can reorder equal keys, so it is not stable.",
+    "source": "AuD26 Sheet 07 · Heap Sort"
+  },
+  {
+    "id": "heap-mc-3",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Structural properties of heaps — which two statements are correct?",
+    "options": [
+      "The heap property compares a node only to its direct children, so the second-largest element may sit anywhere on the second level.",
+      "A max-heap of n elements has height Θ(log n), because it is a complete binary tree.",
+      "An ascendingly sorted array always satisfies the max-heap property.",
+      "In a max-heap the third-largest element is guaranteed to lie at depth 2."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The property is purely local ✓, and completeness forces height Θ(log n) ✓. An ascending array is a valid *min*-heap, not a max-heap ✗, and no position guarantee beyond \"not above a larger ancestor\" exists for the third-largest element ✗.",
+    "source": "AuD26 Sheet 07 · Heap invariants"
+  },
+  {
+    "id": "heap-mc-4",
+    "topicId": "heaps",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Heaps as priority queues — which two statements are correct?",
+    "options": [
+      "peek-max is O(1), while insert and extract-max are O(log n).",
+      "Neither insert nor extract-max ever performs a rotation — only swaps along a single path.",
+      "Building a heap from an unsorted array costs Θ(n log n).",
+      "A priority queue backed by a sorted array gives O(1) insert."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The priority-queue cost profile ✓ and the absence of rotations ✓ are both standard exam points (the latter is exactly why heaps appear in the \"needs no rotation function\" question). BuildHeap is Θ(n) ✗, and a sorted array needs Θ(n) per insert to keep order ✗.",
+    "source": "AuD26 Sheet 07 · priority queues"
+  }
+]

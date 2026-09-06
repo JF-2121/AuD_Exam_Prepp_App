@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Link, NavLink, Route, Routes } from 'react-router-dom';
-import { BookOpen, LayoutDashboard, ListChecks, Play, SquareStack, Sigma } from 'lucide-react';
-import { loadExamTemplates, loadFlashcards, loadQuestions, loadTopics } from './lib/contentLoader';
+import { BookOpen, CircleCheckBig, LayoutDashboard, ListChecks, Play, SquareStack, Sigma } from 'lucide-react';
+import { loadExamTemplates, loadFlashcards, loadMcQuestions, loadQuestions, loadTopics } from './lib/contentLoader';
 
 // Route-level code splitting: each tab's code (and its dependencies, e.g. react-markdown for
 // Topics or every algorithm's generateSteps for Visualize) only loads when actually visited.
@@ -10,6 +10,7 @@ const TopicPage = lazy(() => import('./features/topics/TopicPage').then((m) => (
 const VisualizerPage = lazy(() => import('./features/visualizer/VisualizerPage').then((m) => ({ default: m.VisualizerPage })));
 const FlashcardReview = lazy(() => import('./features/flashcards/FlashcardReview').then((m) => ({ default: m.FlashcardReview })));
 const QuizRunner = lazy(() => import('./features/quiz/QuizRunner').then((m) => ({ default: m.QuizRunner })));
+const McPage = lazy(() => import('./features/mc/McPage').then((m) => ({ default: m.McPage })));
 const ExamRunner = lazy(() => import('./features/exam/ExamRunner').then((m) => ({ default: m.ExamRunner })));
 const Dashboard = lazy(() => import('./features/dashboard/Dashboard').then((m) => ({ default: m.Dashboard })));
 
@@ -17,6 +18,7 @@ const navItems = [
   { to: '/topics', label: 'Topics', icon: BookOpen },
   { to: '/visualize', label: 'Visualize', icon: Play },
   { to: '/flashcards', label: 'Flashcards', icon: SquareStack },
+  { to: '/mc', label: 'Multiple Choice', icon: CircleCheckBig },
   { to: '/quiz', label: 'Practice', icon: ListChecks },
   { to: '/exam', label: 'Mock Exam', icon: Sigma },
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -30,6 +32,7 @@ export default function App() {
   const topics = loadTopics();
   const flashcards = loadFlashcards();
   const questions = loadQuestions();
+  const mcQuestions = loadMcQuestions();
   const examTemplates = loadExamTemplates();
 
   return (
@@ -77,6 +80,7 @@ export default function App() {
             />
             <Route path="/visualize/:algoId?" element={<main className="min-w-0 flex-1"><VisualizerPage /></main>} />
             <Route path="/flashcards" element={<main className="min-w-0 flex-1"><FlashcardReview flashcards={flashcards} topics={topics} /></main>} />
+            <Route path="/mc" element={<main className="min-w-0 flex-1"><McPage questions={mcQuestions} topics={topics} /></main>} />
             <Route path="/quiz" element={<main className="min-w-0 flex-1"><QuizRunner questions={questions} topics={topics} /></main>} />
             <Route path="/exam" element={<main className="min-w-0 flex-1"><ExamRunner examTemplates={examTemplates} questions={questions} topics={topics} /></main>} />
             <Route path="/dashboard" element={<main className="min-w-0 flex-1"><Dashboard topics={topics} flashcards={flashcards} /></main>} />

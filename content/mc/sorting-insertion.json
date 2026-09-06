@@ -1,0 +1,82 @@
+[
+  {
+    "id": "ins-q-1",
+    "topicId": "sorting-insertion",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Which statement about Insertion Sort's running time is correct?",
+    "options": [
+      "Best, worst and average case are all Θ(n log n).",
+      "The worst case is Θ(n²), triggered by reverse-sorted input.",
+      "The worst case is Θ(n²), triggered by already-sorted input.",
+      "The best case is Θ(1) because the algorithm can detect sorted input immediately."
+    ],
+    "correctIndexes": [1],
+    "explanation": "Reverse-sorted input forces every key to shift past the whole sorted prefix → Θ(n²). Already-sorted input is the *best* case, Θ(n): the while-condition fails immediately for every key — but that still costs one comparison per element, so Θ(n), not Θ(1).",
+    "source": "AuD-Zusammenfassung §4.2"
+  },
+  {
+    "id": "ins-mc-1",
+    "topicId": "sorting-insertion",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Insertion Sort — which two statements are correct?",
+    "options": [
+      "The best case is Θ(n) and occurs when the input is already sorted.",
+      "Insertion Sort is stable and sorts in place.",
+      "The average case is Θ(n log n).",
+      "Insertion Sort is asymptotically faster than Quicksort in the worst case."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Already-sorted input needs one comparison per key ⟹ Θ(n) ✓, and the algorithm only shifts within the array using a strict `>` comparison ⟹ in place and stable ✓. The average case is Θ(n²), not Θ(n log n) ✗. Quicksort's worst case is also Θ(n²), so Insertion Sort is not asymptotically faster ✗.",
+    "source": "AuD26 Sheet 03 · G3(b)"
+  },
+  {
+    "id": "ins-q-4",
+    "topicId": "sorting-insertion",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Insertion Sort's inner loop uses the strict comparison `while i ≥ 0 and A[i] > key`. Which two statements are correct?",
+    "options": [
+      "The strict `>` means equal elements never trigger a shift, which is exactly what makes Insertion Sort stable.",
+      "Replacing `>` by `≥` would break stability without changing the asymptotic runtime.",
+      "Replacing `>` by `≥` would improve the best case to Θ(1).",
+      "Stability of Insertion Sort depends on the input containing pairwise distinct keys."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "With `>`, an equal element stops the shift immediately and the earlier occurrence stays in front ⟹ stable ✓. Using `≥` would shift equal elements past each other, destroying stability while leaving Θ(n²)/Θ(n) unchanged ✓. It would *worsen*, not improve, the best case ✗, and stability is a claim precisely about *duplicate* keys ✗.",
+    "source": "AuD-Zusammenfassung §4.2, stability discussion"
+  },
+  {
+    "id": "ins-mc-2",
+    "topicId": "sorting-insertion",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "The loop invariant of Insertion Sort — which two statements are correct?",
+    "options": [
+      "Before each iteration of the outer for-loop with index j, the subarray A[0..j−1] contains the original elements of A[0..j−1] in sorted order.",
+      "At termination (j = n) the invariant states that the entire array is sorted and is a permutation of the input.",
+      "The invariant asserts that A[0..j−1] contains the j smallest elements of the whole array in sorted order.",
+      "The invariant only holds if the input array is already partially sorted."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The sorted prefix consists of the *original first j elements*, re-ordered ✓ — not the j globally smallest elements ✗ (that would be Selection Sort's invariant). Substituting j = n yields the postcondition ✓, and the invariant holds for arbitrary input ✗.",
+    "source": "AuD26 Sheet 01, loop invariants"
+  },
+  {
+    "id": "ins-mc-3",
+    "topicId": "sorting-insertion",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "To sort in *descending* order, INSERTION-SORT's while-condition `A[i] > key` must be changed. Which statement is correct?",
+    "options": [
+      "It becomes `A[i] < key`, and the shift `A[i+1] = A[i]` plus decrement `i = i − 1` stay unchanged.",
+      "It becomes `A[i] < key`, and the decrement must change to `i = i + 1`.",
+      "The condition stays the same; only the outer loop must run backwards.",
+      "Descending order is impossible with Insertion Sort without an extra reversal pass."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Only the comparison direction flips: elements *smaller* than the key must now be pushed right. The scan still walks leftwards through the already-built prefix (`i = i − 1`), and the final placement `A[i+1] = key` is unchanged. No extra pass is needed.",
+    "source": "Altklausur WS23/24 · Aufgabe 1.1"
+  }
+]

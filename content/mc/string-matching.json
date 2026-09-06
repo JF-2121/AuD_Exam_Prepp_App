@@ -1,0 +1,146 @@
+[
+  {
+    "id": "strmatch-mc-1",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Naive string matching for text length n and pattern length m — which two statements are correct?",
+    "options": [
+      "The runtime is O((n−m+1)·m), because every shift is tested independently.",
+      "No information gained at one shift is carried over to the next one.",
+      "The runtime is O(n+m), because each character is read only once.",
+      "Naive matching finds a different set of valid shifts than Rabin-Karp does."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "n−m+1 shifts × up to m comparisons ✓, and the absence of any carry-over is exactly the weakness the smarter algorithms fix ✓. O(n+m) is Rabin-Karp's *expected* bound ✗, and all three algorithms return exactly the same set of valid shifts ✗.",
+    "source": "AuD26 Sheet 09 · Naive string matching"
+  },
+  {
+    "id": "strmatch-q-2",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "What is the core idea of the Rabin-Karp algorithm?",
+    "options": [
+      "Compare a numeric fingerprint (hash) of each text window against the pattern's fingerprint instead of comparing characters.",
+      "Precompute a finite automaton that reads the text in a single pass.",
+      "Sort text and pattern, then binary-search.",
+      "Build a suffix tree of the text."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Treating P and every length-m window of T as base-d numbers reduces an O(m) character comparison to an O(1) numeric one. The rolling update computes the next window's value from the current one in O(1). Option 2 describes FSM matching, the other two are unrelated.",
+    "source": "AuD26 Sheet 09 · Rabin-Karp"
+  },
+  {
+    "id": "strmatch-mc-2",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Rabin-Karp's rolling hash — which two statements are correct?",
+    "options": [
+      "t_{sft+1} = 10·(t_sft − 10^{m−1}·T[sft]) + T[sft+m] computes the next window's value in O(1).",
+      "The pattern value p and the first window value t₀ are computed in Θ(m) using Horner's rule.",
+      "The rolling update costs Θ(m), since the whole window has to be re-read.",
+      "The constant 10^{m−1} must be recomputed for every shift."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Subtract the leading digit's contribution, shift up, add the new trailing digit — O(1) ✓ — and Horner's rule gives the two initial values in Θ(m) ✓. That O(1) update is the entire point, so options 3 and 4 defeat it ✗✗ (10^{m−1} is precomputed once).",
+    "source": "AuD26 Sheet 09 · rolling update"
+  },
+  {
+    "id": "strmatch-q-3",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "In Rabin-Karp with modulus q, the test t_sft ≡ p (mod q) succeeds. What follows?",
+    "options": [
+      "sft *may* be a valid shift — a spurious hit is possible, so an explicit character check is required.",
+      "sft is definitely a valid shift; no further check is needed.",
+      "sft is definitely not a valid shift.",
+      "The algorithm has failed and must restart with a different q."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Working modulo q makes the test sound but imprecise: t_sft ≢ p proves a non-match (no false negatives), while t_sft ≡ p may be a spurious hit (\"unechter Treffer\"). Every hash hit therefore needs a character-by-character verification.",
+    "source": "AuD26 Sheet 09 · spurious hits"
+  },
+  {
+    "id": "strmatch-mc-3",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Why is Rabin-Karp computed modulo a prime q at all? Which two statements are correct?",
+    "options": [
+      "Without the modulus, p and t_sft can exceed a machine word for long patterns, breaking the O(1)-arithmetic assumption.",
+      "q is chosen so that 10·q still fits into a computer word.",
+      "The modulus removes spurious hits.",
+      "The modulus is needed for the rolling update to be computable at all."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Keeping the numbers small is the sole motivation ✓, with the 10q word-size condition as the sizing rule ✓. The modulus *introduces* spurious hits rather than removing them ✗, and the rolling update works fine over the integers ✗.",
+    "source": "AuD26 Sheet 09 · Rabin-Karp modulus"
+  },
+  {
+    "id": "strmatch-q-5",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "What does automaton state st mean in FSM-based string matching, after a prefix of T has been read?",
+    "options": [
+      "The last st characters read equal P[0..st−1], and no larger overlap holds.",
+      "st counts how many characters have been read in total.",
+      "st is always equal to the current shift sft.",
+      "st is the number of mismatches so far."
+    ],
+    "correctIndexes": [0],
+    "explanation": "st is the length of the *longest* suffix of the text read so far that is also a prefix of P. Because it is recomputed from scratch at each step, it can also decrease on a mismatch — unlike a naive match counter, which would simply reset to 0.",
+    "source": "AuD26 Sheet 09 · FSM matching"
+  },
+  {
+    "id": "strmatch-mc-4",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "The FSM transition function δ(st, w) — which two statements are correct?",
+    "options": [
+      "δ(st, w) is the length of the longest suffix of P[0..st−1]+w that is also a prefix of P.",
+      "Reaching st = m signals a match ending at the current position, i.e. the valid shift is currentIndex − m + 1.",
+      "δ(st, w) is always st+1 or 0.",
+      "Building δ costs Θ(m), independently of the alphabet."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The longest-suffix-that-is-a-prefix rule ✓ and the match condition ✓ are the definition. δ can drop to an intermediate value between 0 and st+1, not just those two extremes ✗, and building the table needs one row per state and one column per symbol ⟹ O(m·|Σ|) ✗.",
+    "source": "AuD26 Sheet 09 · transition function"
+  },
+  {
+    "id": "strmatch-q-6",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Which algorithm achieves O(n) matching time after preprocessing, with no spurious hits and no backtracking?",
+    "options": [
+      "Finite-automaton matching",
+      "Naive string matching",
+      "Rabin-Karp in the worst case",
+      "None of the three guarantees O(n)"
+    ],
+    "correctIndexes": [0],
+    "explanation": "After O(m·|Σ|) preprocessing the automaton reads T in one pass with no backtracking, and its transitions are exact, so spurious hits cannot arise. Rabin-Karp's O(n+m) is only an *expected* bound; its worst case is O((n−m+1)·m), the same as naive matching.",
+    "source": "AuD26 Sheet 09 · comparison"
+  },
+  {
+    "id": "strmatch-q-9",
+    "topicId": "string-matching",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Comparing naive, Rabin-Karp and FSM matching — which two statements are correct?",
+    "options": [
+      "All three return exactly the same set of valid shifts; they differ only in preprocessing cost versus per-character matching cost.",
+      "Rabin-Karp and naive matching share the same worst case, O((n−m+1)·m).",
+      "The three algorithms use different definitions of a valid shift.",
+      "Only the FSM supports patterns over an alphabet other than letters and digits."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The preprocessing-vs-matching trade-off is exactly the axis they differ on ✓, and a pathological spurious-hit pattern degrades Rabin-Karp to the naive bound ✓. The definition of a valid shift is shared ✗, and all three work over any finite alphabet ✗.",
+    "source": "AuD26 Sheet 09 · comparison table"
+  }
+]

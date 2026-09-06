@@ -2,6 +2,7 @@ import { bubbleSort } from './algorithms/sorting/bubbleSort';
 import { insertionSort } from './algorithms/sorting/insertionSort';
 import { mergeSort } from './algorithms/sorting/mergeSort';
 import { quickSort } from './algorithms/sorting/quickSort';
+import { radixSort } from './algorithms/sorting/radixSort';
 import { bstInsert } from './algorithms/trees/bstInsert';
 import { bstDelete } from './algorithms/trees/bstDelete';
 import { rbtInsert } from './algorithms/trees/rbtInsert';
@@ -29,6 +30,7 @@ export const algorithmRegistry: AnyAlgorithmDef[] = [
   bubbleSort,
   mergeSort,
   quickSort,
+  radixSort,
   bstInsert,
   bstDelete,
   rbtInsert,
@@ -51,7 +53,13 @@ export const algorithmRegistry: AnyAlgorithmDef[] = [
   rabinKarpMatch,
 ];
 
-export const FAMILY_ORDER: AlgorithmFamily[] = ['Sorting', 'Trees', 'Graphs', 'Strings'];
+export const FAMILY_ORDER: AlgorithmFamily[] = [
+  'Sorting',
+  'Non-Comparison Sorting',
+  'Trees',
+  'Graphs',
+  'Strings',
+];
 
 export function getAlgorithm(id: string): AnyAlgorithmDef | undefined {
   return algorithmRegistry.find((a) => a.id === id);

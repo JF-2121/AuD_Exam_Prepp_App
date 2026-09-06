@@ -1,22 +1,5 @@
 [
   {
-    "id": "ins-q-1",
-    "topicId": "sorting-insertion",
-    "type": "multiple-choice",
-    "difficulty": "easy",
-    "prompt": "What is the worst-case time complexity of Insertion Sort?",
-    "options": [
-      "O(n)",
-      "O(n log n)",
-      "O(n²)",
-      "O(log n)"
-    ],
-    "explanation": "Reverse-sorted input forces every element to shift all the way to the front → Θ(n²).",
-    "correctIndexes": [
-      2
-    ]
-  },
-  {
     "id": "ins-q-2",
     "topicId": "sorting-insertion",
     "type": "trace",
@@ -50,20 +33,5 @@
       "ja"
     ],
     "explanation": "Yes — it only shifts elements strictly greater than the key, so equal keys keep their original relative order."
-  },
-  {
-    "id": "ins-q-4",
-    "topicId": "sorting-insertion",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "[Lecture example] Sorting [5, 2, 5*, 1] (5* is the second occurrence of value 5, tracked to observe ordering) with Insertion Sort: at i=2 (key=5*), the while-condition compares A[1]=5 with key. What happens?",
-    "options": [
-      "5 > 5* is false (they're equal) -- no shift, 5* stays immediately after 5",
-      "5 > 5* is true -- 5 shifts right, 5* moves before it",
-      "The algorithm throws an error on duplicate values",
-      "5* is skipped entirely since it's a duplicate"
-    ],
-    "correctIndexes": [0],
-    "explanation": "The strict > comparison means equal values never trigger a shift, so 5 stays before 5* -- this is exactly what makes Insertion Sort stable. If the comparison were >=, this step would shift 5 past 5* and break stability."
   }
 ]

@@ -1,0 +1,130 @@
+[
+  {
+    "id": "real-sq-1",
+    "topicId": "stacks-queues",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Statements about stacks and queues — which one is correct?",
+    "options": [
+      "The stack and the queue both work by the LIFO principle.",
+      "The stack and the queue both work by the FIFO principle.",
+      "The stack works by the LIFO principle, the queue by the FIFO principle.",
+      "The stack works by the FIFO principle, the queue by the LIFO principle."
+    ],
+    "correctIndexes": [2],
+    "explanation": "Stack = Last-In-First-Out (the most recently pushed element is popped first). Queue = First-In-First-Out (the element that has waited longest is dequeued first).",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.2"
+  },
+  {
+    "id": "real-sq-2",
+    "topicId": "stacks-queues",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Statements about stacks and queues — which two are correct?",
+    "options": [
+      "An element in the middle of a stack can be accessed without removing the elements above it.",
+      "Push and pop on a stack typically run in O(1).",
+      "Enqueue and dequeue on a queue typically run in O(n).",
+      "Enqueueing and then immediately dequeueing on a queue returns the same element only if the queue was empty beforehand."
+    ],
+    "correctIndexes": [1, 3],
+    "explanation": "Push/pop are O(1) in both the array and the linked implementation ✓. If the queue was non-empty, dequeue returns whatever was already at the front, not the element just enqueued — only an empty queue makes the two coincide ✓. A stack exposes only its top ✗, and enqueue/dequeue are O(1), not O(n) ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.3"
+  },
+  {
+    "id": "sq-q-1",
+    "topicId": "stacks-queues",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "A queue implemented on a fixed-size array *without* wraparound — which statement is correct?",
+    "options": [
+      "It runs out of usable space even while logically not full, because front and rear only ever advance forward.",
+      "It can never hold more than one element.",
+      "It silently degenerates into a stack.",
+      "There is no problem; the array simply grows as needed."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Without treating the array as cyclic, the indices only increase and eventually run off the end although the slots that were freed at the beginning are still available. The fix is a ring buffer: rear = (rear + 1) mod size.",
+    "source": "AuD-Zusammenfassung §5.2"
+  },
+  {
+    "id": "sq-mc-1",
+    "topicId": "stacks-queues",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "The circular-array (ring buffer) queue — which two statements are correct?",
+    "options": [
+      "Index arithmetic uses the modulo operator, e.g. rear = (rear + 1) mod size.",
+      "After a wraparound the array index order no longer has to match the logical front-to-rear order of the queue.",
+      "The ring buffer makes enqueue O(1) but dequeue O(n).",
+      "A ring buffer removes the capacity limit entirely — it can never overflow."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Modulo arithmetic is the mechanism ✓, and once wrapped, index 0 may hold the *newest* element while a higher index holds the oldest ✓. Both operations stay Θ(1) ✗, and the array is still fixed-size — wraparound reuses freed slots but does not remove the capacity bound ✗.",
+    "source": "AuD-Zusammenfassung §5.2, worked circular-queue trace"
+  },
+  {
+    "id": "sq-mc-2",
+    "topicId": "stacks-queues",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Implementing a Queue with two Stacks S1, S2 (enqueue pushes onto S1; dequeue pops S2, draining S1 into S2 first when S2 is empty) — which two statements are correct?",
+    "options": [
+      "Draining S1 into S2 reverses the order, so the oldest enqueued element ends up on top of S2.",
+      "dequeue is O(n) in the worst case but amortized O(1), because each element moves from S1 to S2 at most once.",
+      "dequeue is O(1) in the worst case, since only one pop is ever performed.",
+      "The construction needs an auxiliary queue as intermediate storage to reverse the order."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "S1 holds the oldest element at the bottom; popping S1 and pushing onto S2 inverts that, putting the oldest on top ✓. A single dequeue can trigger a full drain (O(n)) but every element is moved at most once in its lifetime, giving amortized O(1) ✓. So the worst case is *not* O(1) ✗, and no third structure is needed ✗.",
+    "source": "AuD-Zusammenfassung §5, Queue-from-Stacks"
+  },
+  {
+    "id": "sq-mc-3",
+    "topicId": "stacks-queues",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Implementing a Stack with two Queues Q1, Q2 (invariant: one is always empty) — which two statements are correct?",
+    "options": [
+      "push is O(1); pop is O(n), because all but the last element must be shuffled into the other queue.",
+      "pop must reach the *most recently* pushed element, which a queue only exposes after everything in front of it has been removed.",
+      "Both push and pop are O(1), mirroring the two-stack queue construction.",
+      "The construction is impossible: a LIFO order cannot be simulated with FIFO structures."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "push simply enqueues (O(1)); pop dequeues all-but-one element across to the other queue and returns the last one, costing O(n) ✓✓. Unlike the two-stack queue there is no amortization here — every pop pays the full shuffle ✗. The construction clearly works, it is just expensive ✗.",
+    "source": "AuD-Zusammenfassung §5, Stack-from-Queues"
+  },
+  {
+    "id": "sq-mc-4",
+    "topicId": "stacks-queues",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "An array-based stack that doubles its capacity when full and halves it when it drops to ¼ full — which two statements are correct?",
+    "options": [
+      "push and pop become amortized Θ(1) despite the occasional resize.",
+      "A single push can still cost Θ(n) in the worst case, namely when a resize is triggered.",
+      "Every push costs Θ(1) in the worst case once resizing is implemented.",
+      "Halving at ½ instead of ¼ full would give the same amortized bound."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Doubling/halving spreads the copy cost over many cheap operations ⟹ amortized Θ(1) ✓, but the resizing push itself copies n elements ⟹ Θ(n) worst case ✓✗. Shrinking at ½ is the classic trap: alternating push/pop at the boundary triggers a resize every single time, destroying the amortized bound ✗.",
+    "source": "AuD-Zusammenfassung §5.1, array stack with resizing"
+  },
+  {
+    "id": "sq-mc-5",
+    "topicId": "stacks-queues",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Typical applications and variants — which two statements are correct?",
+    "options": [
+      "The function call stack, undo history and expression parsing are classic stack applications.",
+      "A deque generalizes stack and queue by allowing insertion and removal at either end.",
+      "Breadth-first search uses a stack to manage the open nodes.",
+      "A deque is a queue that can only be read, never written."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Call stack / undo / parsing are the canonical LIFO uses ✓, and a double-ended queue permits both operations at both ends ✓. BFS uses a *queue* (DFS uses a stack) ✗, and a deque is fully mutable ✗.",
+    "source": "AuD-Zusammenfassung §5.1–5.2"
+  }
+]

@@ -1,0 +1,130 @@
+[
+  {
+    "id": "real-bst-1",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Which traversal of a binary search tree outputs the elements in ascending sorted order?",
+    "options": [
+      "Preorder traversal",
+      "Postorder traversal",
+      "Inorder traversal",
+      "Each of the traversals named above"
+    ],
+    "correctIndexes": [2],
+    "explanation": "Inorder visits left subtree → node → right subtree. Combined with the BST invariant (everything left < node < everything right) this produces the keys in ascending order. Preorder and postorder do not.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.5"
+  },
+  {
+    "id": "real-bst-2",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Binary search trees (BST) with n elements — which statement is correct?",
+    "options": [
+      "In a BST, leaves can occur on every level.",
+      "On a level of depth d there are always fewer than 2^d nodes in the BST.",
+      "The height of a BST can be equal to n in the worst case.",
+      "In the best case the height of a BST is log₁₀ n."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Leaves may indeed appear at any depth in an unbalanced BST ✓. A level of depth d holds *at most* 2^d nodes — a full level has exactly 2^d, so \"always fewer\" is false. Height is measured in edges, so a degenerate chain of n nodes has height n−1, not n. The best-case height is ⌊log₂ n⌋ — the base is 2, not 10.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC I.4"
+  },
+  {
+    "id": "bst-q-4",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "A BST node with two children is deleted. Which node replaces it?",
+    "options": [
+      "Its parent",
+      "The root of the tree",
+      "Its in-order successor — the smallest key in its right subtree",
+      "An arbitrarily chosen descendant"
+    ],
+    "correctIndexes": [2],
+    "explanation": "The successor is the smallest key still larger than everything in the deleted node's left subtree, so putting it in the gap preserves the BST invariant on both sides. (The in-order predecessor — the maximum of the left subtree — works symmetrically; the lecture uses the successor.)",
+    "source": "AuD-Zusammenfassung §5.4"
+  },
+  {
+    "id": "bst-mc-1",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "BST delete — which two statements are correct?",
+    "options": [
+      "The three cases are: no child, exactly one child, and two children.",
+      "In the one-child case the child is simply transplanted into the removed node's position.",
+      "In the two-children case the deleted node's parent moves down to take its place.",
+      "Deleting a leaf requires a rotation to restore the BST property."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The standard case split is 0 / 1 / 2 children ✓, and a single child is transplanted directly ✓. Two children are handled via the successor, never the parent ✗, and plain BSTs never rotate at all ✗.",
+    "source": "AuD-Zusammenfassung §5.4"
+  },
+  {
+    "id": "bst-mc-2",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Complexity of BST operations on n elements — which two statements are correct?",
+    "options": [
+      "Search, insert and delete all cost Θ(h), where h is the height of the tree.",
+      "Inserting already-sorted keys into an empty BST produces a degenerate tree with Θ(n) search cost.",
+      "Search is Θ(log n) in a BST regardless of insertion order.",
+      "An inorder traversal of a BST costs Θ(log n)."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "All three operations follow one root-to-node path ⟹ Θ(h) ✓, and sorted input degenerates the BST into a linked list, so h = n−1 ✓. Θ(log n) holds only for *balanced* trees ✗, and a traversal must visit every node ⟹ Θ(n) ✗.",
+    "source": "AuD-Zusammenfassung §5.4"
+  },
+  {
+    "id": "bst-mc-3",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Tree traversals — which two statements are correct?",
+    "options": [
+      "Preorder visits node → left → right, postorder visits left → right → node.",
+      "Every traversal of a tree with n nodes costs Θ(n), because each node is visited exactly once.",
+      "A preorder traversal of a min-heap outputs the elements in sorted order.",
+      "Postorder traversal of a BST outputs the elements in descending sorted order."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The visit orders ✓ and the Θ(n) cost ✓ are definitional. A min-heap only guarantees parent ≤ children, so preorder output is not sorted ✗ (e.g. root 1, children 3 and 2 → 1,3,…,2). Descending order comes from *reverse inorder*, not postorder ✗.",
+    "source": "AuD-Zusammenfassung §5.4 / Gedächtnisprotokoll MC II.10"
+  },
+  {
+    "id": "bst-q-7",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "For one of the following sequences there is no binary search tree in which it is a valid search path. Which sequence is it?",
+    "options": [
+      "124, 153, 131, 148, 142, 156",
+      "47, 19, 41, 26, 33, 38",
+      "312, 814, 421, 715, 523, 618, 594",
+      "None — all three are valid search paths"
+    ],
+    "correctIndexes": [0],
+    "explanation": "A search path maintains a shrinking interval. After going right at 124 to 153 and then left at 153 to 131, every subsequent key must stay below 153. The final value 156 > 153 violates that bound, so no BST can produce this path. The other two sequences keep their intervals consistent throughout.",
+    "source": "Altklausur WS23/24 · Aufgabe 2.4"
+  },
+  {
+    "id": "bst-mc-4",
+    "topicId": "bst",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Successor and predecessor in a BST — which two statements are correct?",
+    "options": [
+      "If a node has a right subtree, its successor is the minimum of that right subtree.",
+      "If a node has no right subtree, its successor is the lowest ancestor whose left subtree contains the node.",
+      "The successor of a node is always one of its own children.",
+      "The maximum of a BST is the deepest node in the tree."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "These are the two standard cases of TREE-SUCCESSOR ✓✓. The successor can be an ancestor rather than a descendant ✗, and the maximum is the rightmost node, which need not be the deepest one ✗.",
+    "source": "AuD-Zusammenfassung §5.4"
+  }
+]

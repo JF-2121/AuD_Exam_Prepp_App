@@ -1,0 +1,146 @@
+[
+  {
+    "id": "algo-q-1",
+    "topicId": "algorithm-basics",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Properties of algorithms — which statement is correct?",
+    "options": [
+      "Determiniertheit requires that the same input always produces the exact same sequence of intermediate states.",
+      "Determinismus requires that the same input always produces the exact same sequence of intermediate states.",
+      "Terminierbarkeit requires that the description of the algorithm itself has finite length.",
+      "Effektivität requires that an algorithm works for a whole class of inputs, not just one special case."
+    ],
+    "correctIndexes": [1],
+    "explanation": "Determinismus is the sharpened form: identical input ⇒ identical *steps*. Determiniertheit only demands identical *output*. Terminierbarkeit is halting in finite time (finite *description* is Finitheit), and working for a whole input class is Allgemeinheit (Effektivität = every step is machine-executable).",
+    "source": "AuD-Zusammenfassung §2"
+  },
+  {
+    "id": "algo-mc-1",
+    "topicId": "algorithm-basics",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Definitions of algorithm properties — which two statements are correct?",
+    "options": [
+      "An algorithm terminates if, for every input, it performs only finitely many steps and then produces an output.",
+      "An algorithm is correct if it terminates for every input, regardless of what it outputs.",
+      "Every deterministic algorithm is also determiniert.",
+      "Every determinierte algorithm is also deterministic."
+    ],
+    "correctIndexes": [0, 2],
+    "explanation": "Termination = finitely many steps then an output ✓. Correctness is about the output matching the specification — termination alone is not enough ✗. Determinismus (same steps) is strictly stronger than Determiniertheit (same output), so deterministic ⇒ determiniert ✓, but not the reverse ✗ (two different step sequences can reach the same output).",
+    "source": "AuD26 Sheet 01, G2"
+  },
+  {
+    "id": "algo-mc-2",
+    "topicId": "algorithm-basics",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Loop invariants — which two statements are correct?",
+    "options": [
+      "A loop-invariant proof consists of initialization, maintenance and termination.",
+      "A loop invariant must hold before the first iteration and after every iteration of the loop.",
+      "A valid loop invariant on its own already proves that the loop terminates.",
+      "A loop invariant is only needed for recursive algorithms, not for iterative ones."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The three-part skeleton is initialization / maintenance / termination ✓, and the invariant must hold before the first and after every iteration ✓. It does *not* prove termination — that is a separate argument (usually a strictly decreasing measure) ✗. And loop invariants are specifically the tool for *iterative* algorithms; recursion is proven by induction ✗.",
+    "source": "AuD-Zusammenfassung §2, AuD26 Sheet 01"
+  },
+  {
+    "id": "algo-mc-3",
+    "topicId": "algorithm-basics",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Consider `Minimum(A)`: `min = A[0]; for i = 1 to len-1: if A[i] < min then min = A[i]; return min`. Which two statements are correct?",
+    "options": [
+      "The invariant \"before iteration i, min is the minimum of A[0..i-1]\" holds.",
+      "The invariant \"before iteration i, min is the minimum of A[0..i]\" holds.",
+      "At loop exit (i = len) the invariant implies min is the minimum of the whole array.",
+      "The invariant only holds if A contains pairwise distinct values."
+    ],
+    "correctIndexes": [0, 2],
+    "explanation": "The prefix already *processed* before iteration i is A[0..i-1] ✓ — A[i] has not been compared yet, so option 2 is off by one ✗. Substituting i = len into the invariant gives exactly the postcondition ✓. Duplicates are irrelevant: `<` simply leaves min unchanged on ties ✗.",
+    "source": "AuD26 Sheet 01, loop-invariant examples"
+  },
+  {
+    "id": "algo-mc-4",
+    "topicId": "algorithm-basics",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "`MaxIndex(A)` returns the largest idx such that every element of A[1..idx] is less than double its predecessor, using a latching flag `conditionTrue`. Which two statements are correct?",
+    "options": [
+      "Without the latching flag the algorithm could return an index that lies after a violation of the run condition.",
+      "The flag is only a performance optimization; removing it never changes the returned value.",
+      "Once the run condition fails, the flag must stay false for all remaining iterations.",
+      "The invariant can be stated purely in terms of idx, without mentioning conditionTrue."
+    ],
+    "correctIndexes": [0, 2],
+    "explanation": "A single violation invalidates *every* later index, not just the violating one — so without latching, a later element that happens to satisfy the condition would wrongly overwrite idx ✓✗. Latching (staying false forever) is exactly what makes this a genuine invariant ✓, and the invariant therefore has to mention the flag ✗.",
+    "source": "AuD26 Sheet 01, MaxIndex loop invariant"
+  },
+  {
+    "id": "algo-q-3",
+    "topicId": "algorithm-basics",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Reasons to deliberately choose a *less* efficient algorithm — which two statements are correct?",
+    "options": [
+      "A constant-time algorithm may be preferred because runtime itself can leak secret information through a timing side-channel.",
+      "A simpler but slower algorithm may be preferred because it is easier to verify formally.",
+      "It is never legitimate — the asymptotically fastest algorithm is always the correct choice.",
+      "Compilers automatically rewrite inefficient code into efficient code, so the choice is irrelevant."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Both timing side-channels ✓ and ease of formal verification ✓ are listed in the lecture as legitimate reasons. Parallelizability and code/silicon size are two more. Options 3 and 4 are simply false — asymptotics is one resource among several (time variance, memory, energy, size, kind of operation), and no compiler changes an algorithm's asymptotic class for you.",
+    "source": "AuD-Zusammenfassung §2, reflection question"
+  },
+  {
+    "id": "algo-mc-5",
+    "topicId": "algorithm-basics",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Abstract data types (ADTs) — which two statements are correct?",
+    "options": [
+      "An ADT describes possible values, operations and behaviour of a data type, but not its concrete implementation.",
+      "The ADT description specifies the time complexity of the operations.",
+      "The same ADT can be realised by several different data structures with different runtimes.",
+      "Two data structures implementing the same ADT must have the same asymptotic runtimes."
+    ],
+    "correctIndexes": [0, 2],
+    "explanation": "An ADT is a purely behavioural contract ✓ — it deliberately says nothing about complexity ✗. That is why one ADT (e.g. \"List\") has many realisations ✓ (array vs. linked list) whose runtimes differ substantially ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.4"
+  },
+  {
+    "id": "algo-mc-6",
+    "topicId": "algorithm-basics",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Correctness proof of an in-place sorting algorithm — which two statements are correct?",
+    "options": [
+      "Besides sortedness, one must show the permutation property: the algorithm only rearranges values, never invents or drops one.",
+      "Sortedness of the output alone is sufficient to prove a sorting algorithm correct.",
+      "Termination has to be shown separately, e.g. via a quantity that strictly decreases toward a bound.",
+      "For an in-place algorithm the permutation property follows automatically from termination."
+    ],
+    "correctIndexes": [0, 2],
+    "explanation": "The three-part standard argument is termination ✓, sortedness, and the permutation property ✓. Sortedness alone is not enough ✗ — an \"algorithm\" that outputs [0,0,...,0] is sorted but wrong. And nothing about halting implies values were preserved ✗.",
+    "source": "AuD-Zusammenfassung §2 / §4.1"
+  },
+  {
+    "id": "algo-mc-7",
+    "topicId": "algorithm-basics",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "Berechenbarkeit (computability) criteria — which two statements are correct?",
+    "options": [
+      "Finitheit: the description of the algorithm has finite length.",
+      "Effektivität: every single step is actually executable on a machine.",
+      "Finitheit: the algorithm halts after finitely many steps on every input.",
+      "Effektivität: the algorithm is the fastest known solution for the problem."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Berechenbarkeit splits into Finitheit (finite *description*) ✓, Terminierbarkeit (finite *execution* — that is what option 3 describes) ✗ and Effektivität (each step machine-executable) ✓. Effektivität has nothing to do with being the fastest known algorithm ✗ — that is Effizienz.",
+    "source": "AuD-Zusammenfassung §2"
+  }
+]

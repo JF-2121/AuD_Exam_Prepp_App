@@ -1,22 +1,5 @@
 [
   {
-    "id": "bub-q-1",
-    "topicId": "sorting-bubble",
-    "type": "multiple-choice",
-    "difficulty": "easy",
-    "prompt": "What optimization lets Bubble Sort achieve a Θ(n) best case?",
-    "options": [
-      "Random pivot selection",
-      "An early-exit flag when a pass makes zero swaps",
-      "Using a temp array",
-      "Recursion"
-    ],
-    "explanation": "If a full pass makes no swaps, the array is already sorted and the algorithm can stop early.",
-    "correctIndexes": [
-      1
-    ]
-  },
-  {
     "id": "bub-q-2",
     "topicId": "sorting-bubble",
     "type": "trace",
@@ -46,8 +29,18 @@
     "difficulty": "medium",
     "prompt": "[Lecture homework example] Run Bubble Sort on [6, 4, 9, 3]. Give the final sorted array as JSON.",
     "algorithmId": "bubble-sort",
-    "initialInput": [6, 4, 9, 3],
-    "expectedFinalOutput": [3, 4, 6, 9],
+    "initialInput": [
+      6,
+      4,
+      9,
+      3
+    ],
+    "expectedFinalOutput": [
+      3,
+      4,
+      6,
+      9
+    ],
     "explanation": "i=1: (6,4) swap, (6,9) no swap, (9,3) swap -> [4,6,3,9]. i=2: (4,6) no swap, (6,3) swap -> [4,3,6,9]. i=3: (4,3) swap -> [3,4,6,9]."
   },
   {
@@ -56,7 +49,12 @@
     "type": "short-answer",
     "difficulty": "medium",
     "prompt": "Besides proving the output array is sorted, what OTHER property must a Bubble Sort correctness proof establish about the relationship between input A and output A'?",
-    "acceptedAnswers": ["permutation", "A' is a permutation of A", "same length and same values", "it's a rearrangement of the same elements"],
+    "acceptedAnswers": [
+      "permutation",
+      "A' is a permutation of A",
+      "same length and same values",
+      "it's a rearrangement of the same elements"
+    ],
     "explanation": "A' must contain exactly the same elements as A (same length, same multiset of values) -- otherwise a sorted array of the WRONG values would trivially satisfy sortedness alone."
   }
 ]

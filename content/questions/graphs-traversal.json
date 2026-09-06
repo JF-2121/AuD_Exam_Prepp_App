@@ -1,22 +1,5 @@
 [
   {
-    "id": "gt-q-1",
-    "topicId": "graphs-traversal",
-    "type": "multiple-choice",
-    "difficulty": "easy",
-    "prompt": "You need the shortest path (by number of edges) between two nodes in an unweighted graph. Which traversal guarantees this?",
-    "options": [
-      "DFS",
-      "BFS",
-      "Either, they're equivalent here",
-      "Neither, you need Dijkstra"
-    ],
-    "explanation": "BFS explores in layers outward from the source, so the first time it reaches a node is guaranteed to be via a shortest (fewest-edge) path.",
-    "correctIndexes": [
-      1
-    ]
-  },
-  {
     "id": "gt-q-2",
     "topicId": "graphs-traversal",
     "type": "short-answer",
@@ -31,76 +14,16 @@
     "explanation": "Both visit every vertex once and examine every edge once (twice for undirected graphs) — Θ(V+E)."
   },
   {
-    "id": "real-graph-1",
-    "topicId": "graphs-traversal",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "[Real 2025 exam question] Which two statements about graph fundamentals are correct?",
-    "options": [
-      "A finite graph consists of a finite number of nodes and a finite number of edges.",
-      "A finite graph consists of a finite number of nodes and can have an infinite number of edges.",
-      "The edge set of a directed graph is defined as E := V×V such that (u,v)∈E ⇔ (v,u)∈E.",
-      "The edge set of an undirected graph is defined as E := V×V such that (u,v)∈E ⇔ (v,u)∈E."
-    ],
-    "correctIndexes": [
-      0,
-      3
-    ],
-    "explanation": "A finite graph has finitely many edges too (bounded by n² for simple graphs). Undirected edges are inherently symmetric; a directed graph's edges are not required to be."
-  },
-  {
-    "id": "real-graph-2",
-    "topicId": "graphs-traversal",
-    "type": "multiple-choice",
-    "difficulty": "hard",
-    "prompt": "[Real 2025 exam question] Which two statements are correct?",
-    "options": [
-      "If a connected undirected graph with n nodes has n−1 edges, it must be a tree.",
-      "For a fully/completely connected directed graph, topological sort does not terminate.",
-      "A preorder traversal of a min-heap outputs the elements in sorted order.",
-      "During DFS on a directed acyclic graph (DAG), cross edges can occur."
-    ],
-    "correctIndexes": [
-      0,
-      3
-    ],
-    "explanation": "Connected + exactly n-1 edges ⇔ acyclic ⇔ tree, a classic graph theory equivalence. Topological sort on a cyclic graph still terminates — it just fails/reports a cycle, it doesn't loop forever. A heap has no BST ordering so traversal order is meaningless for sortedness. DAGs can produce cross edges during DFS (no back edges since acyclic, but forward and cross edges are possible)."
-  },
-  {
-    "id": "real-graph-3",
-    "topicId": "graphs-traversal",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "[Real 2025 exam question] Which two statements about BFS/DFS are correct?",
-    "options": [
-      "BFS can be used to find shortest paths in unweighted graphs.",
-      "DFS must use a queue to manage the open nodes.",
-      "In an undirected graph, DFS produces only tree edges and back edges.",
-      "BFS always visits fewer nodes than DFS, for any input."
-    ],
-    "correctIndexes": [
-      0,
-      2
-    ],
-    "explanation": "DFS uses a stack (explicit or via recursion), not a queue — that's BFS. A full traversal of either visits every reachable node, so neither is universally 'fewer'. The undirected-DFS-only-tree-and-back-edges fact is a classic result (no forward/cross edges possible in undirected DFS)."
-  },
-  {
-    "id": "gt-q-3",
-    "topicId": "graphs-traversal",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "Topological sort via DFS inserts each finished vertex where in the output list?",
-    "options": ["At the back", "At the front", "Wherever it was discovered", "Sorted by vertex ID"],
-    "correctIndexes": [1],
-    "explanation": "Each vertex finishes only after all its descendants — inserting at the front as vertices finish naturally produces a valid topological order in Θ(V+E)."
-  },
-  {
     "id": "gt-q-4",
     "topicId": "graphs-traversal",
     "type": "short-answer",
     "difficulty": "medium",
     "prompt": "The SCC algorithm's second DFS pass runs on which graph, visited in what order?",
-    "acceptedAnswers": ["transpose graph in descending finish time", "the transpose, descending finish time", "gt in descending finish time order"],
+    "acceptedAnswers": [
+      "transpose graph in descending finish time",
+      "the transpose, descending finish time",
+      "gt in descending finish time order"
+    ],
     "explanation": "It runs on Gᵀ (all edges reversed), processing vertices in the main loop by descending finish time from the first DFS pass — each resulting tree is one SCC."
   },
   {
@@ -111,7 +34,14 @@
     "prompt": "Run BFS from node A on the example graph (edges: A-B=4, A-C=2, B-C=1, B-D=5, C-D=8, C-E=10, D-E=2, D-F=6, E-F=3 — weights are irrelevant for BFS). Give the final dist labels (edge count from A) as a JSON object.",
     "algorithmId": "bfs",
     "initialInput": "A",
-    "expectedFinalOutput": { "A": "0", "B": "1", "C": "1", "D": "2", "E": "2", "F": "3" },
+    "expectedFinalOutput": {
+      "A": "0",
+      "B": "1",
+      "C": "1",
+      "D": "2",
+      "E": "2",
+      "F": "3"
+    },
     "explanation": "A is distance 0. B and C are direct neighbors of A (distance 1). D and E are each reachable in 2 hops (via B or C). F is reachable in 3 hops (via D or E)."
   },
   {
@@ -122,18 +52,15 @@
     "prompt": "Run DFS from node A on the same example graph. Give the final disc/finish labels as a JSON object mapping each node to its \"disc/finish\" string.",
     "algorithmId": "dfs",
     "initialInput": "A",
-    "expectedFinalOutput": { "A": "1/12", "B": "2/11", "C": "3/10", "D": "4/9", "E": "5/8", "F": "6/7" },
+    "expectedFinalOutput": {
+      "A": "1/12",
+      "B": "2/11",
+      "C": "3/10",
+      "D": "4/9",
+      "E": "5/8",
+      "F": "6/7"
+    },
     "explanation": "A single deep chain forms: A→B→C→D→E→F, each nested inside the previous (disc times 1..6 descending into the graph, finish times 7..12 unwinding back out) — a classic nested-interval DFS pattern with no cross edges since the graph is undirected."
-  },
-  {
-    "id": "gt-q-7",
-    "topicId": "graphs-traversal",
-    "type": "multiple-choice",
-    "difficulty": "hard",
-    "prompt": "[Worked example] A directed graph has 5 SCCs: {1}, {3}, {2,4,6}, {5,8,9}, {7,10}. A new edge is added that threads a cycle through {1}, {3}, {2,4,6}, and {5,8,9} (but not {7,10}). How many SCCs does the graph have afterward?",
-    "options": ["1", "2", "4", "5"],
-    "correctIndexes": [1],
-    "explanation": "The four threaded components merge into one big SCC; {7,10} is untouched. 5 total − 4 merged + 1 merged-result = 2 SCCs afterward."
   },
   {
     "id": "gt-q-8",
@@ -141,22 +68,11 @@
     "type": "short-answer",
     "difficulty": "medium",
     "prompt": "What is the necessary condition on every vertex's in-degree and out-degree for a directed graph to have an Eulerian circuit?",
-    "acceptedAnswers": ["in-degree equals out-degree", "indegree = outdegree", "in-degree = out-degree for every vertex"],
-    "explanation": "If a vertex is visited k times by the circuit, exactly k incoming and k outgoing edges must be used there — no more, no fewer, since no edge is reused."
-  },
-  {
-    "id": "gt-q-9",
-    "topicId": "graphs-traversal",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "Removing a single edge from a directed graph can change its number of SCCs. Which of these outcomes is IMPOSSIBLE?",
-    "options": [
-      "The SCC count increases",
-      "The SCC count stays the same",
-      "The SCC count decreases",
-      "One SCC splits into three"
+    "acceptedAnswers": [
+      "in-degree equals out-degree",
+      "indegree = outdegree",
+      "in-degree = out-degree for every vertex"
     ],
-    "correctIndexes": [2],
-    "explanation": "Removing an edge can only break connectivity apart (split an SCC into more pieces) or leave it unchanged — it can never cause two SCCs to merge, so the count can never decrease."
+    "explanation": "If a vertex is visited k times by the circuit, exactly k incoming and k outgoing edges must be used there — no more, no fewer, since no edge is reused."
   }
 ]

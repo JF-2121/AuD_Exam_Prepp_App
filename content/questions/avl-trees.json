@@ -1,72 +1,17 @@
 [
   {
-    "id": "avl-q-1",
-    "topicId": "avl-trees",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "An AVL tree node has left subtree height 4 and right subtree height 1. Is this valid?",
-    "options": [
-      "Yes, always valid",
-      "No — balance factor of 3 violates the ≤1 invariant",
-      "Only valid for the root",
-      "Only valid if the tree has fewer than 10 nodes"
-    ],
-    "explanation": "AVL requires every node's left/right subtree heights to differ by at most 1. A difference of 3 requires rebalancing via rotation.",
-    "correctIndexes": [1]
-  },
-  {
-    "id": "avl-q-3",
-    "topicId": "avl-trees",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "During AVL insert, node a has bf(a) = 2 and bf(a.left) = 1. Which rotation case is this, and what's the fix?",
-    "options": [
-      "LL case: single rotateRight(a)",
-      "LR case: rotateLeft(a.left) then rotateRight(a)",
-      "RR case: single rotateLeft(a)",
-      "RL case: rotateRight(a.right) then rotateLeft(a)"
-    ],
-    "explanation": "bf(a) > 1 means left-heavy. bf(a.left) ≥ 0 (here +1) means the LL case: a single rotateRight(a) suffices.",
-    "correctIndexes": [0]
-  },
-  {
-    "id": "avl-q-4",
-    "topicId": "avl-trees",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "During AVL insert, node a has bf(a) = -2 and bf(a.right) = 1. Which rotation case is this, and what's the fix?",
-    "options": [
-      "RR case: single rotateLeft(a)",
-      "LL case: single rotateRight(a)",
-      "RL case: rotateRight(a.right) then rotateLeft(a)",
-      "LR case: rotateLeft(a.left) then rotateRight(a)"
-    ],
-    "explanation": "bf(a) < -1 means right-heavy. bf(a.right) > 0 (here +1) means the RL case: rotateRight(a.right) first, then rotateLeft(a).",
-    "correctIndexes": [2]
-  },
-  {
     "id": "avl-q-5",
     "topicId": "avl-trees",
     "type": "short-answer",
     "difficulty": "medium",
     "prompt": "AVL insert needs at most how many rotations (single or double) in total per insertion?",
-    "acceptedAnswers": ["1", "one", "at most 1", "at most one"],
-    "explanation": "A single rotation (or double rotation counted as one 'fix') restores the pre-insertion height of that subtree, so no ancestor further up can become unbalanced."
-  },
-  {
-    "id": "avl-q-6",
-    "topicId": "avl-trees",
-    "type": "multiple-choice",
-    "difficulty": "hard",
-    "prompt": "Why can AVL delete require rebalancing rotations at every level up to the root, unlike insert?",
-    "options": [
-      "A rotation during delete can shrink the rebalanced subtree's height, propagating imbalance further up.",
-      "Delete always removes the root first.",
-      "Delete uses a different rotation primitive than insert.",
-      "It's a historical convention with no structural reason."
+    "acceptedAnswers": [
+      "1",
+      "one",
+      "at most 1",
+      "at most one"
     ],
-    "explanation": "Unlike insert (where the rotated subtree's height returns to its pre-insertion value), a delete rotation can decrease the subtree's height, which can trigger a new imbalance at the next ancestor — so delete never breaks early.",
-    "correctIndexes": [0]
+    "explanation": "A single rotation (or double rotation counted as one 'fix') restores the pre-insertion height of that subtree, so no ancestor further up can become unbalanced."
   },
   {
     "id": "avl-q-7",
@@ -75,38 +20,24 @@
     "difficulty": "medium",
     "prompt": "Insert 10, 20, 30, 25, 5, 1, 15 (in that order) into an empty AVL tree. What is the in-order traversal of the final tree?",
     "algorithmId": "avl-insert",
-    "initialInput": [10, 20, 30, 25, 5, 1, 15],
-    "expectedFinalOutput": [1, 5, 10, 15, 20, 25, 30],
+    "initialInput": [
+      10,
+      20,
+      30,
+      25,
+      5,
+      1,
+      15
+    ],
+    "expectedFinalOutput": [
+      1,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30
+    ],
     "explanation": "AVL insert preserves BST ordering regardless of rotations, so the in-order traversal is always the sorted input: [1, 5, 10, 15, 20, 25, 30]."
-  },
-  {
-    "id": "real-avl-1",
-    "topicId": "avl-trees",
-    "type": "multiple-choice",
-    "difficulty": "hard",
-    "prompt": "[Real 2025 exam question] Which two statements about advanced tree equivalences are correct?",
-    "options": [
-      "Every binary max-heap can be colored as a valid Red-Black tree.",
-      "Every Red-Black tree is a binary search tree.",
-      "Every Red-Black tree is an AVL tree.",
-      "Every AVL tree can be colored as a valid Red-Black tree."
-    ],
-    "correctIndexes": [1, 3],
-    "explanation": "Red-Black trees are BSTs with coloring by definition. AVL's stricter height balance (≤1.44 log n) always fits within RBT's looser height bound (≤2 log(n+1)), so every AVL tree admits a valid RB coloring — a classic textbook result. The reverse doesn't hold (RBTs can be less balanced than AVL allows)."
-  },
-  {
-    "id": "real-avl-2",
-    "topicId": "avl-trees",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "[Real 2025 exam question] Which two trees need NO rotation function at all when inserting?",
-    "options": [
-      "Splay trees",
-      "AVL trees",
-      "Plain binary search trees",
-      "Binary max-heaps"
-    ],
-    "correctIndexes": [2, 3],
-    "explanation": "Splay trees rotate (splay) on every access including insert; AVL trees rotate to rebalance after insert. Plain BST insert never rotates, and heap insert uses sift-up (swaps along a path), not rotation."
   }
 ]

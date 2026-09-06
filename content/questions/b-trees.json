@@ -5,38 +5,12 @@
     "type": "short-answer",
     "difficulty": "easy",
     "prompt": "In a B-Tree of minimum degree t, what is the maximum number of keys a non-root node may hold?",
-    "acceptedAnswers": ["2t-1", "2t - 1", "2*t-1"],
+    "acceptedAnswers": [
+      "2t-1",
+      "2t - 1",
+      "2*t-1"
+    ],
     "explanation": "A node with 2t − 1 keys is 'full'. Any more would violate the invariant, which is why insert must split full nodes before descending into them."
-  },
-  {
-    "id": "btree-q-2",
-    "topicId": "b-trees",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "What is the key idea that lets B-Tree insert be a single downward pass with no backtracking?",
-    "options": [
-      "Preemptively split any full node encountered before ever descending into it.",
-      "Always insert at the root and let a background process rebalance later.",
-      "Keep a separate overflow list for excess keys.",
-      "Only insert into leaves that were pre-allocated with extra capacity."
-    ],
-    "correctIndexes": [0],
-    "explanation": "By checking (and splitting) a child before descending into it, the algorithm guarantees it never encounters a full node it would need to split on the way back up."
-  },
-  {
-    "id": "btree-q-3",
-    "topicId": "b-trees",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "When a full node c (2t−1 keys) with parent x is split, what happens to its median key?",
-    "options": [
-      "It moves up into x, at the correct sorted position.",
-      "It is discarded.",
-      "It stays in c's left half.",
-      "It becomes the root regardless of x."
-    ],
-    "correctIndexes": [0],
-    "explanation": "The median (the t-th key) is promoted into the parent; the remaining 2t−2 keys split evenly (t−1 each) between the original node and a new sibling."
   },
   {
     "id": "btree-q-4",
@@ -44,38 +18,13 @@
     "type": "short-answer",
     "difficulty": "medium",
     "prompt": "In a B-Tree, how does the height ever increase?",
-    "acceptedAnswers": ["splitting the root", "root split", "split the root", "when the root is split"],
+    "acceptedAnswers": [
+      "splitting the root",
+      "root split",
+      "split the root",
+      "when the root is split"
+    ],
     "explanation": "Only by splitting a full root (which has no parent to absorb its median) — a brand-new root is created with just that one key. This is the only way height grows."
-  },
-  {
-    "id": "btree-q-5",
-    "topicId": "b-trees",
-    "type": "multiple-choice",
-    "difficulty": "hard",
-    "prompt": "B-Tree delete: key k is in internal node x. The child before k has t−1 keys, and the child after k also has t−1 keys. What happens?",
-    "options": [
-      "Merge the left child, k, and the right child into one node of 2t−1 keys, then recursively delete k from it.",
-      "Delete k directly from x, leaving a gap.",
-      "Borrow a key from the grandparent.",
-      "It's impossible for both children to have exactly t−1 keys."
-    ],
-    "correctIndexes": [0],
-    "explanation": "Since neither child has a key to spare for the predecessor/successor swap, the only option is to merge both children with k into a single valid node, then continue the deletion recursively."
-  },
-  {
-    "id": "btree-q-6",
-    "topicId": "b-trees",
-    "type": "multiple-choice",
-    "difficulty": "hard",
-    "prompt": "B-Tree delete: while descending, the child c you must enter has exactly t−1 keys, and an immediate sibling of c has ≥ t keys. What's the fix, before descending?",
-    "options": [
-      "Borrow: rotate a key from the sibling through the parent into c.",
-      "Merge c with that sibling regardless.",
-      "Skip the check — t−1 keys is fine to descend into.",
-      "Delete c entirely."
-    ],
-    "correctIndexes": [0],
-    "explanation": "Borrowing (rotating the separating parent key down into c, and the sibling's adjacent extreme key up into the parent) gives c a key to spare without needing a merge — cheaper than merging when a sibling can afford it."
   },
   {
     "id": "btree-q-7",
@@ -83,7 +32,12 @@
     "type": "short-answer",
     "difficulty": "medium",
     "prompt": "In a B-Tree, how does the height ever decrease?",
-    "acceptedAnswers": ["root shrinks", "merging into the root", "when a merge empties the root", "root merge"],
+    "acceptedAnswers": [
+      "root shrinks",
+      "merging into the root",
+      "when a merge empties the root",
+      "root merge"
+    ],
     "explanation": "Only when a merge consumes the root's last remaining key (root had 1 key, both children had t−1) — the merged node becomes the new root, and height decreases by one."
   },
   {
@@ -95,10 +49,59 @@
     "algorithmId": "btree-insert",
     "initialInput": {
       "t": 2,
-      "initial": { "keys": [9, 40], "children": [{ "keys": [2, 4, 5] }, { "keys": [12, 15, 30] }, { "keys": [55, 60, 69] }] },
-      "insertions": [67, 45, 13, 56]
+      "initial": {
+        "keys": [
+          9,
+          40
+        ],
+        "children": [
+          {
+            "keys": [
+              2,
+              4,
+              5
+            ]
+          },
+          {
+            "keys": [
+              12,
+              15,
+              30
+            ]
+          },
+          {
+            "keys": [
+              55,
+              60,
+              69
+            ]
+          }
+        ]
+      },
+      "insertions": [
+        67,
+        45,
+        13,
+        56
+      ]
     },
-    "expectedFinalOutput": [2, 4, 5, 9, 12, 13, 15, 30, 40, 45, 55, 56, 60, 67, 69],
+    "expectedFinalOutput": [
+      2,
+      4,
+      5,
+      9,
+      12,
+      13,
+      15,
+      30,
+      40,
+      45,
+      55,
+      56,
+      60,
+      67,
+      69
+    ],
     "explanation": "All 11 original keys plus the 4 inserted ones (67, 45, 13, 56) remain present — a B-Tree never loses keys on insert, it only restructures via splits."
   },
   {
@@ -111,25 +114,102 @@
     "initialInput": {
       "t": 3,
       "initial": {
-        "keys": [16],
+        "keys": [
+          16
+        ],
         "children": [
-          { "keys": [3, 7, 13], "children": [{ "keys": [1, 2] }, { "keys": [4, 5, 6] }, { "keys": [10, 11, 12] }, { "keys": [14, 15] }] },
-          { "keys": [20, 23], "children": [{ "keys": [17, 18, 19] }, { "keys": [21, 22] }, { "keys": [24, 25] }] }
+          {
+            "keys": [
+              3,
+              7,
+              13
+            ],
+            "children": [
+              {
+                "keys": [
+                  1,
+                  2
+                ]
+              },
+              {
+                "keys": [
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "keys": [
+                  10,
+                  11,
+                  12
+                ]
+              },
+              {
+                "keys": [
+                  14,
+                  15
+                ]
+              }
+            ]
+          },
+          {
+            "keys": [
+              20,
+              23
+            ],
+            "children": [
+              {
+                "keys": [
+                  17,
+                  18,
+                  19
+                ]
+              },
+              {
+                "keys": [
+                  21,
+                  22
+                ]
+              },
+              {
+                "keys": [
+                  24,
+                  25
+                ]
+              }
+            ]
+          }
         ]
       },
-      "deletions": [6, 13, 7, 4]
+      "deletions": [
+        6,
+        13,
+        7,
+        4
+      ]
     },
-    "expectedFinalOutput": [1, 2, 3, 5, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
+    "expectedFinalOutput": [
+      1,
+      2,
+      3,
+      5,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
     "explanation": "6 is removed directly from a leaf with keys to spare. 13 is replaced by its predecessor 12. 7 forces a merge of its two t−1-key children. 4 forces the root's two t−1-key children to merge (root shrinks by one level), then descends into the now-merged node."
-  },
-  {
-    "id": "btree-q-10",
-    "topicId": "b-trees",
-    "type": "multiple-choice",
-    "difficulty": "easy",
-    "prompt": "A B-Tree with minimum degree t=2 is structurally equivalent to which classic structure?",
-    "options": ["A 2-3-4 tree, equivalent to a Red-Black Tree", "An AVL tree", "A Splay tree", "A binary max-heap"],
-    "correctIndexes": [0],
-    "explanation": "With t=2, every node has 2, 3, or 4 children — a '2-3-4 tree', which is structurally equivalent to a Red-Black Tree."
   }
 ]

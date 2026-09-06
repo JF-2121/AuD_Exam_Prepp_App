@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowDownWideNarrow, CaseSensitive, GitBranch, Play, RotateCcw, Share2, type LucideIcon } from 'lucide-react';
+import { ArrowDownWideNarrow, Boxes, CaseSensitive, GitBranch, Play, RotateCcw, Share2, type LucideIcon } from 'lucide-react';
 import { algorithmRegistry, FAMILY_ORDER, getAlgorithm } from './registry';
 import type { AlgorithmFamily } from './core/types';
 import { StepPlayer } from './core/StepPlayer';
 
 const FAMILY_ICON: Record<AlgorithmFamily, LucideIcon> = {
   Sorting: ArrowDownWideNarrow,
+  'Non-Comparison Sorting': Boxes,
   Trees: GitBranch,
   Graphs: Share2,
   Strings: CaseSensitive,

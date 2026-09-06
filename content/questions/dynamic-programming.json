@@ -1,39 +1,5 @@
 [
   {
-    "id": "dp-q-1",
-    "topicId": "dynamic-programming",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "What distinguishes Dynamic Programming from plain Divide & Conquer?",
-    "options": [
-      "DP never uses recursion",
-      "DP's subproblems overlap and get memoized; D&C's subproblems are independent",
-      "DP is always faster in every case",
-      "D&C cannot be implemented recursively"
-    ],
-    "explanation": "DP specifically targets problems where the same subproblem recurs, caching results to avoid recomputation — that's the whole point of memoization.",
-    "correctIndexes": [
-      1
-    ]
-  },
-  {
-    "id": "dp-q-2",
-    "topicId": "dynamic-programming",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "Which of these is correctly solved by a greedy algorithm?",
-    "options": [
-      "0/1 Knapsack",
-      "Fractional Knapsack",
-      "Longest Common Subsequence",
-      "Edit Distance"
-    ],
-    "explanation": "Fractional Knapsack has the greedy-choice property (take items by value/weight ratio). 0/1 Knapsack, LCS, and Edit Distance all require DP.",
-    "correctIndexes": [
-      1
-    ]
-  },
-  {
     "id": "dp-q-3",
     "topicId": "dynamic-programming",
     "type": "short-answer",
@@ -47,84 +13,14 @@
     "explanation": "Pruning: abandoning a partial candidate as soon as it can't possibly lead to a valid solution."
   },
   {
-    "id": "real-dp-1",
-    "topicId": "dynamic-programming",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "[Real 2025 exam question] Which two statements about D&C / DP / Greedy are correct?",
-    "options": [
-      "A Divide & Conquer algorithm's runtime depends only on the complexity of the combine step.",
-      "Dynamic programming is an efficient method for problems where a naive recursive algorithm would solve the same subproblems repeatedly.",
-      "If a problem can be optimally solved with dynamic programming, a greedy algorithm always finds the optimal solution for it too.",
-      "Both dynamic programming and greedy algorithms require the problem to have optimal substructure."
-    ],
-    "correctIndexes": [
-      1,
-      3
-    ],
-    "explanation": "D&C runtime depends on both the recursive part and the combine step (per the Master theorem), not combine alone. DP-solvability doesn't imply greedy works (e.g. 0/1 Knapsack). Both paradigms require optimal substructure; greedy additionally needs the greedy-choice property."
-  },
-  {
-    "id": "real-dp-2",
-    "topicId": "dynamic-programming",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "[Real 2025 exam question] Which two statements are correct?",
-    "options": [
-      "Backtracking makes, on average, the same number of steps as brute force.",
-      "Metaheuristics are a general-purpose approach for solving optimization problems.",
-      "Hill climbing always finds the best solution.",
-      "Minimum Edit Distance measures how many operations are needed to transform one string into another."
-    ],
-    "correctIndexes": [
-      1,
-      3
-    ],
-    "explanation": "Backtracking's whole point is pruning to take far fewer steps than brute force on average. Hill climbing can get stuck in local optima and does not guarantee the global best."
-  },
-  {
-    "id": "real-dp-3",
-    "topicId": "dynamic-programming",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "[Real 2025 exam question] Which two statements are correct?",
-    "options": [
-      "In Divide & Conquer, every decomposition step must split the problem into equally-sized subproblems for the algorithm to be correct.",
-      "Dijkstra's algorithm is an example of a greedy algorithm.",
-      "Backtracking can be applied to both decision problems and optimization problems.",
-      "Dynamic programming requires a problem to have non-overlapping subproblems."
-    ],
-    "correctIndexes": [
-      1,
-      2
-    ],
-    "explanation": "D&C correctness doesn't require equal-sized subproblems (e.g. Quicksort splits unevenly and is still correct, just with different complexity). DP requires OVERLAPPING subproblems — the opposite of what's stated."
-  },
-  {
-    "id": "real-dp-4",
-    "topicId": "dynamic-programming",
-    "type": "multiple-choice",
-    "difficulty": "hard",
-    "prompt": "[Real 2025 exam question] Which two statements about the Fast Fourier Transform (FFT) are correct?",
-    "options": [
-      "FFT is a metaheuristic method for solving optimization problems.",
-      "FFT uses exclusively real numbers, never complex numbers.",
-      "FFT uses the n-th primitive root of unity e^(2πi/n) to make the computation more efficient.",
-      "FFT reduces the runtime of multiplying two degree-(n-1) polynomials from Θ(n²) to Θ(n·log(n))."
-    ],
-    "correctIndexes": [
-      2,
-      3
-    ],
-    "explanation": "FFT is a divide-and-conquer numerical algorithm, not a metaheuristic, and it's fundamentally built on complex roots of unity. It's the classic way to speed up polynomial multiplication from the naive Θ(n²) to Θ(n log n)."
-  },
-  {
     "id": "dp-q-4",
     "topicId": "dynamic-programming",
     "type": "short-answer",
     "difficulty": "medium",
     "prompt": "[Lecture example] Climbing a staircase of n=4 steps, moving 1 or 2 steps at a time: how many distinct ways are there to reach the top?",
-    "acceptedAnswers": ["5"],
+    "acceptedAnswers": [
+      "5"
+    ],
     "explanation": "a4=1, a5=0 (base cases) => a3=a4+a5=1, a2=a3+a4=2, a1=a2+a3=3, a0=a1+a2=5."
   },
   {
@@ -133,53 +29,10 @@
     "type": "short-answer",
     "difficulty": "hard",
     "prompt": "[Lecture example] Using the standard unit-cost recurrence (insert/delete/substitute all cost 1, copy costs 0), what is the Minimum Edit Distance between X = TIGER and Y = WINTER?",
-    "acceptedAnswers": ["3"],
+    "acceptedAnswers": [
+      "3"
+    ],
     "explanation": "D[5][6] = 3, achieved via the operation sequence sub(T->W), copy(I), ins(N), sub(G->T), copy(E), copy(R)."
-  },
-  {
-    "id": "dp-q-6",
-    "topicId": "dynamic-programming",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "Coin change with denominations {1, 3, 4} and target amount 6: what does the greedy algorithm (always take the largest denomination that fits) produce, and is it optimal?",
-    "options": [
-      "4+1+1 = 3 coins; NOT optimal (3+3 = 2 coins is better)",
-      "3+3 = 2 coins; optimal",
-      "1+1+1+1+1+1 = 6 coins; optimal",
-      "4+1+1 = 3 coins; optimal"
-    ],
-    "correctIndexes": [0],
-    "explanation": "Greedy always grabs the biggest coin that fits: 4, then 1, then 1 (three coins). The true optimum, 3+3, uses only two coins — greedy's locally-best choice at each step doesn't guarantee a globally optimal count for arbitrary denominations."
-  },
-  {
-    "id": "dp-q-7",
-    "topicId": "dynamic-programming",
-    "type": "multiple-choice",
-    "difficulty": "hard",
-    "prompt": "0/1 Knapsack, capacity 50, items (value,weight): (60,10), (100,20), (120,30). Greedy-by-ratio picks items 1+2 for total value 160. What is the TRUE optimal value, and which items achieve it?",
-    "options": [
-      "220, via items 2+3 (weight 20+30=50, exactly full)",
-      "160, greedy is already optimal here",
-      "280, via items 1+2+3",
-      "120, via item 3 alone"
-    ],
-    "correctIndexes": [0],
-    "explanation": "Items 2+3 use the full capacity (20+30=50) for value 100+120=220, strictly beating greedy's 160. Item 3 can't fit alongside item 1 (weight 40) within 50 either, so greedy's early commitment to item 1 forecloses the better pairing — this is exactly why 0/1 Knapsack needs DP."
-  },
-  {
-    "id": "dp-q-8",
-    "topicId": "dynamic-programming",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "In the Word Search backtracking algorithm (find a word by tracing adjacent grid cells, each used at most once), what causes the search to prune a branch immediately?",
-    "options": [
-      "The candidate cell is out of bounds, has the wrong letter for the current position in the word, or is already used in the current path",
-      "The word has been fully matched",
-      "The grid has more than 100 cells",
-      "Two different starting cells produce the same path"
-    ],
-    "correctIndexes": [0],
-    "explanation": "These are exactly WordSearchBTR's 'invalid' conditions — any one of them means this branch can never lead to a valid solution, so it returns false immediately without recursing further."
   },
   {
     "id": "dp-q-9",
@@ -187,7 +40,11 @@
     "type": "short-answer",
     "difficulty": "medium",
     "prompt": "FFT: multiplying two polynomials of degree n-1 naively costs Θ(n²). What complexity does FFT-based multiplication achieve?",
-    "acceptedAnswers": ["O(n log n)", "Θ(n log n)", "n log n"],
+    "acceptedAnswers": [
+      "O(n log n)",
+      "Θ(n log n)",
+      "n log n"
+    ],
     "explanation": "By evaluating both polynomials at the n-th roots of unity (Θ(n log n) via the recursive even/odd split), multiplying pointwise (Θ(n)), then interpolating back (Θ(n log n)), the total stays Θ(n log n)."
   }
 ]

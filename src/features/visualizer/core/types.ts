@@ -7,7 +7,7 @@ export interface AlgorithmStep<TState> {
   meta?: Record<string, unknown>;
 }
 
-export type AlgorithmFamily = 'Sorting' | 'Trees' | 'Graphs' | 'Strings';
+export type AlgorithmFamily = 'Sorting' | 'Non-Comparison Sorting' | 'Trees' | 'Graphs' | 'Strings';
 
 export interface AlgorithmDef<TInput, TState> {
   id: string;

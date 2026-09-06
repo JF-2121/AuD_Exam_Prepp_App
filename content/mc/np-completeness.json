@@ -1,0 +1,162 @@
+[
+  {
+    "id": "np-mc-1",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "The complexity classes P and NP — which two statements are correct?",
+    "options": [
+      "A problem is in P if a deterministic algorithm solves it in polynomial worst-case time.",
+      "P ⊆ NP always holds, since a poly-time solver also serves as a poly-time verifier.",
+      "NP is defined as the class of problems that provably cannot be solved in polynomial time.",
+      "P = NP has been proven, which is why NP-complete problems are considered hard."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The definition of P ✓ and the trivial inclusion P ⊆ NP ✓ (just ignore the certificate and solve it yourself) are standard. NP is about *verifiability*, not about proven hardness ✗, and P vs. NP is famously still open — a Millennium Problem ✗.",
+    "source": "AuD-Zusammenfassung §10.3–10.4"
+  },
+  {
+    "id": "np-q-1",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "What does it mean for a problem to be NP-hard without necessarily being in NP?",
+    "options": [
+      "It is easier than the NP-complete problems.",
+      "Every problem in NP reduces to it in polynomial time, but its own solutions need not be verifiable in polynomial time.",
+      "It has already been proven unsolvable.",
+      "It is automatically also in P."
+    ],
+    "correctIndexes": [1],
+    "explanation": "NP-hard means only \"at least as hard as everything in NP\" via polynomial reduction — membership in NP is a separate requirement. NP-complete = NP-hard *and* in NP, so an NP-hard problem outside NP is at least as hard as, never easier than, the NP-complete ones.",
+    "source": "AuD-Zusammenfassung §10.5"
+  },
+  {
+    "id": "np-mc-2",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Polynomial-time reduction L₁ ≤_P L₂ — which two statements are correct?",
+    "options": [
+      "There is a poly-time computable f with x ∈ L₁ ⟺ f(x) ∈ L₂.",
+      "≤_P is transitive: L₁ ≤_P L₂ and L₂ ≤_P L₃ imply L₁ ≤_P L₃ via the composition f₂ ∘ f₁.",
+      "L₁ ≤_P L₂ means L₁ is at least as hard as L₂.",
+      "A reduction does not carry over to the complements: L₁ ≤_P L₂ says nothing about L̄₁ and L̄₂."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The definition ✓ and transitivity via composition ✓ are what make \"one for all, all for one\" work. The direction in option 3 is inverted — L₂ is at least as hard as L₁ ✗ — and negating both sides of the equivalence gives L̄₁ ≤_P L̄₂ with the *same* f ✗.",
+    "source": "AuD26 Sheet 13 · reduction proofs (a)/(d)"
+  },
+  {
+    "id": "np-mc-3",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Consequences of NP-completeness — which two statements are correct?",
+    "options": [
+      "If a single NP-complete problem lies in P, then P = NP.",
+      "If some problem in NP is not solvable in polynomial time, then no NP-complete problem is.",
+      "If a single NP-complete problem lies in P, only the problems reducible to it become efficient.",
+      "SAT is NP-complete, but every other NP-completeness proof must likewise be carried out directly via Cook-Levin."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Chaining a poly-time reduction with a poly-time solver makes every NP problem poly-time ✓, and option 2 is exactly its contrapositive ✓. Option 3 misses that *every* NP problem reduces to an NP-complete one ✗, and after Cook-Levin, new proofs chain off an already-known NP-complete problem ✗.",
+    "source": "AuD26 Sheet 13 · reduction proofs (b)/(c)"
+  },
+  {
+    "id": "np-q-4",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "2-SAT versus 3-SAT — which statement is correct?",
+    "options": [
+      "2-SAT is in P (via implication graphs and SCCs); 3-SAT is NP-complete.",
+      "Both are NP-complete.",
+      "Both are in P.",
+      "3-SAT is in P; 2-SAT is NP-complete."
+    ],
+    "correctIndexes": [0],
+    "explanation": "A 2-literal clause (a ∨ b) is equivalent to the implications ¬a → b and ¬b → a, so satisfiability reduces to a strongly-connected-components check on the implication graph — polynomial. Three literals per clause interlink variables in a way that resists this local shortcut; 3-SAT is the canonical NP-complete problem.",
+    "source": "AuD-Zusammenfassung §10.5, problem pairs"
+  },
+  {
+    "id": "np-q-3",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Which pair correctly matches (polynomial problem, NP-complete problem)?",
+    "options": [
+      "2-colourability (bipartiteness) is in P; 3-colourability is NP-complete.",
+      "3-colourability is in P; 2-colourability is NP-complete.",
+      "Both are in P.",
+      "Both are NP-complete."
+    ],
+    "correctIndexes": [0],
+    "explanation": "With two colours, colouring one vertex deterministically forces all its neighbours, so a single BFS/DFS decides it in O(V+E). With three colours each neighbour retains two open options, producing a genuinely exponential branching search. 3-colourability is one of Karp's original 21 NP-complete problems.",
+    "source": "AuD-Zusammenfassung §10.5, problem pairs"
+  },
+  {
+    "id": "np-mc-4",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Shortest versus longest simple path — which two statements are correct?",
+    "options": [
+      "The shortest simple path is in P, e.g. via Dijkstra or Bellman-Ford.",
+      "The longest simple path is NP-complete, because avoiding revisits destroys the optimal substructure.",
+      "Both problems are in P, since both can be solved with the same relaxation technique.",
+      "The longest simple path is in P, because one can simply negate all edge weights and run Dijkstra."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Shortest paths have optimal substructure that DP and greedy exploit ✓; the longest *simple* path must reason about exponentially many vertex subsets to avoid revisits, which breaks that substructure ✓. Negating weights produces negative edges Dijkstra cannot handle, and negative cycles for Bellman-Ford ✗✗.",
+    "source": "AuD-Zusammenfassung §10.5, problem pairs"
+  },
+  {
+    "id": "np-q-7",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Proving HAM-PATH ∈ NP with the certificate p = (v₁, …, vₙ): which of the four verifier conditions dominates the O(V²) total verification time?",
+    "options": [
+      "Checking that all vertices in p are pairwise distinct",
+      "Checking that p contains the right number of vertices",
+      "Checking that every vᵢ is a vertex of G",
+      "Checking that every consecutive pair (vᵢ, vᵢ₊₁) is an edge of G"
+    ],
+    "correctIndexes": [0],
+    "explanation": "Pairwise distinctness compares up to O(V²) pairs in the worst case. The other three are each a single O(V) pass over the certificate. Since all four together are exactly the definition of a Hamiltonian path, the verifier is correct — and polynomial, which is what membership in NP requires.",
+    "source": "AuD26 Sheet 13 · HAM-PATH ∈ NP"
+  },
+  {
+    "id": "np-q-8",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Hamiltonian Path restricted to directed acyclic graphs — which two statements are correct?",
+    "options": [
+      "In a DAG a Hamiltonian path must follow the topological order, so there is exactly one candidate to check.",
+      "The decision therefore costs O(V+E): topologically sort, then test whether every consecutive pair is an edge.",
+      "DAGs never have a Hamiltonian path, so the answer is trivially always \"no\".",
+      "This contradicts the NP-completeness of the general problem."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "A path cannot move against the edge directions without revisiting a vertex, so the topological order is the only possible candidate ✓, making the check O(V+E) ✓. DAGs certainly can have Hamiltonian paths ✗, and a restricted special case being easy never contradicts general-case hardness ✗.",
+    "source": "AuD26 Sheet 13 · HAM-PATH on DAGs"
+  },
+  {
+    "id": "np-mc-5",
+    "topicId": "np-completeness",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "How should one deal with a problem shown to be NP-complete? Which two statements are correct?",
+    "options": [
+      "Use approximation algorithms — e.g. a random assignment satisfies an expected ≥ ½ of all 3SAT clauses.",
+      "Check whether the concrete instance falls into a polynomial special case, such as Hamiltonian Path on a DAG.",
+      "Keep searching for an exact polynomial algorithm — one is simply not known yet for the specific instance.",
+      "Since no algorithm exists at all, the problem is undecidable."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Approximation ✓ and exploiting structural special cases ✓ are two of the four standard escapes (heuristics and pruned exponential search are the others). Finding an exact poly-time algorithm would prove P = NP ✗, and NP-complete problems are perfectly decidable — just not known to be efficiently so ✗.",
+    "source": "AuD-Zusammenfassung §10.5, practical takeaway"
+  }
+]

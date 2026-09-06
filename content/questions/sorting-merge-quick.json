@@ -1,22 +1,5 @@
 [
   {
-    "id": "mq-q-1",
-    "topicId": "sorting-merge-quick",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "Why does Quicksort hit Θ(n²) on already-sorted input when using the first element as pivot?",
-    "options": [
-      "Because comparisons take longer on sorted data",
-      "Because the pivot is always the minimum, producing maximally unbalanced partitions",
-      "Because Quicksort cannot handle sorted input at all",
-      "Because Merge Sort would be used instead"
-    ],
-    "explanation": "With sorted input and first-element pivot, every partition splits into one empty side and one side of size n-1, giving recursion depth n.",
-    "correctIndexes": [
-      1
-    ]
-  },
-  {
     "id": "mq-q-2",
     "topicId": "sorting-merge-quick",
     "type": "trace",

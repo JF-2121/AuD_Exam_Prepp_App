@@ -1,0 +1,130 @@
+[
+  {
+    "id": "mq-q-1",
+    "topicId": "sorting-merge-quick",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Why does Quicksort degrade to Θ(n²) on already-sorted input when the first element is used as pivot?",
+    "options": [
+      "Because comparisons are more expensive on sorted data.",
+      "Because the pivot is always the minimum, producing maximally unbalanced partitions and recursion depth n.",
+      "Because Quicksort cannot handle sorted input at all and must fall back to Merge Sort.",
+      "Because the partition step itself becomes Θ(n²) on sorted input."
+    ],
+    "correctIndexes": [1],
+    "explanation": "With sorted input and a first-element pivot, every partition splits into one empty side and one side of size n−1. The recursion depth becomes n and the partition costs sum to n + (n−1) + … = Θ(n²). Each individual partition call is still only Θ(n).",
+    "source": "AuD-Zusammenfassung §4.5"
+  },
+  {
+    "id": "mq-mc-1",
+    "topicId": "sorting-merge-quick",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Merge Sort and Quicksort — which two statements are correct?",
+    "options": [
+      "Merge Sort does trivial work while dividing and all the real work while combining; Quicksort is the other way around.",
+      "Merge Sort is Θ(n log n) in best, worst and average case.",
+      "Merge Sort loses stability when the two sublists being merged have an odd number of elements.",
+      "Quicksort needs Θ(n) extra memory, whereas Merge Sort sorts in place."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The divide/combine asymmetry is the defining contrast ✓, and merging always costs Θ(n) regardless of input order, so Merge Sort has no bad input ✓. Stability depends only on the merge tie-break (favouring the left element), not on sublist parity ✗. The memory claim is inverted: Quicksort is in place, Merge Sort needs the Θ(n) temp array ✗.",
+    "source": "AuD26 Sheet 03 · G3(a)"
+  },
+  {
+    "id": "mq-mc-2",
+    "topicId": "sorting-merge-quick",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Worst-case behaviour of the sorting algorithms — which two statements are correct?",
+    "options": [
+      "Quicksort has worst case Θ(n²), triggerable by an unlucky pivot choice such as always picking the smallest element.",
+      "Merge Sort has worst case Θ(n²) when the list is reverse-sorted.",
+      "Choosing the pivot randomly makes Quicksort's Θ(n²) worst case unlikely but does not eliminate it.",
+      "Quicksort's worst case disappears entirely once the pivot is chosen randomly."
+    ],
+    "correctIndexes": [0, 2],
+    "explanation": "Maximally unbalanced splits give Θ(n²) ✓, and randomisation only makes that outcome improbable — an unlucky random sequence can still produce it ✓. Merge Sort is Θ(n log n) on every input ✗, and no pivot rule removes the worst case from the algorithm's *worst-case* analysis ✗.",
+    "source": "AuD26 Sheet 03 · G3(e)"
+  },
+  {
+    "id": "mq-mc-3",
+    "topicId": "sorting-merge-quick",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "The Ω(n log n) lower bound for comparison-based sorting — which two statements are correct?",
+    "options": [
+      "Every correct comparison-based sorting algorithm needs Ω(n log n) comparisons in the worst case.",
+      "The bound follows from a decision-tree argument: n! orderings require a tree of depth ≥ log₂(n!) = Θ(n log n).",
+      "The bound applies only to unstable sorting algorithms.",
+      "A comparison-based algorithm can sort in O(n) worst case by first building a binary search tree."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The information-theoretic bound holds for every comparison-based sort ✓ and comes from the decision-tree depth ✓. Stability is irrelevant to it ✗. Building a BST does not escape the bound — an unbalanced BST degenerates to height n, giving Θ(n²) total ✗.",
+    "source": "AuD26 Sheet 03 · G3(c)"
+  },
+  {
+    "id": "mq-mc-4",
+    "topicId": "sorting-merge-quick",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Quicksort's `partition(A, left, right)` with `pivot = A[left]` — which two statements are correct?",
+    "options": [
+      "The returned index q is the split point, and the recursive calls are quicksort(A, left, q) and quicksort(A, q+1, right).",
+      "After partitioning, every element in A[left..q] is ≤ pivot and every element in A[q+1..right] is ≥ pivot.",
+      "After partitioning, the pivot is guaranteed to sit exactly at index q in its final sorted position.",
+      "Partition runs in Θ(n log n) for a subarray of length n."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "This is the Hoare-style partition used in the lecture: it returns q and recurses on [left..q] and [q+1..right] ✓, guaranteeing the two-sided ≤/≥ property ✓. Unlike Lomuto partitioning, Hoare's scheme does *not* place the pivot at its final position ✗. Partition is a single scan, Θ(n) ✗.",
+    "source": "AuD-Zusammenfassung §4.5, partition pseudocode"
+  },
+  {
+    "id": "mq-mc-5",
+    "topicId": "sorting-merge-quick",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Divide and Conquer — which two statements are correct?",
+    "options": [
+      "The runtime of a D&C algorithm depends only on the complexity of the combine step.",
+      "D&C splits a problem into smaller instances of the same problem, solves them recursively and combines the partial solutions.",
+      "The recurrence T(n) = a·T(n/b) + f(n) captures the cost of a D&C algorithm, with f(n) the divide-plus-combine cost.",
+      "A D&C algorithm must split each problem into equally sized subproblems in order to be correct."
+    ],
+    "correctIndexes": [1, 2],
+    "explanation": "The definition ✓ and the standard recurrence ✓ are correct. The runtime depends on the number and size of subproblems *and* the divide/combine cost — the Master Theorem's whole point is comparing them ✗. Equal-size splitting affects efficiency, never correctness (Quicksort splits unevenly and is still correct) ✗.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.15/17"
+  },
+  {
+    "id": "mq-mc-6",
+    "topicId": "sorting-merge-quick",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Ranking the three sorts by worst-case complexity — which two statements are correct?",
+    "options": [
+      "Merge Sort Θ(n log n) < Quicksort Θ(n²) = Insertion Sort Θ(n²) is the correct ascending worst-case ranking.",
+      "Quicksort and Insertion Sort tie in the worst case, but Quicksort's expected runtime Θ(n log n) beats Insertion Sort's Θ(n²).",
+      "Quicksort has a strictly better worst case than Insertion Sort.",
+      "Merge Sort and Quicksort tie in the worst case at Θ(n log n)."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Worst cases: Merge Sort Θ(n log n), Quicksort Θ(n²), Insertion Sort Θ(n²) ✓ — so the last two tie, and the tie-break is the *expected* runtime, where Quicksort's Θ(n log n) wins ✓. Options 3 and 4 both contradict Quicksort's Θ(n²) worst case ✗✗.",
+    "source": "Altklausur WS23/24 · Aufgabe 1.5"
+  },
+  {
+    "id": "mq-mc-7",
+    "topicId": "sorting-merge-quick",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Why does Quicksort usually beat Merge Sort in practice despite the same average complexity? Which two statements are correct?",
+    "options": [
+      "Quicksort sorts in place, avoiding the copying into and out of a temp array.",
+      "Quicksort has smaller constant factors hidden by the Θ-notation.",
+      "Quicksort performs asymptotically fewer comparisons on average.",
+      "Quicksort's recursion depth is Θ(log n) in the worst case, unlike Merge Sort's Θ(n)."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "In-place operation ✓ and smaller constants ✓ are the practical reasons. Both are Θ(n log n) comparisons on average, so neither is asymptotically fewer ✗. Recursion depth is the reverse: Merge Sort is always Θ(log n), Quicksort can reach Θ(n) in the worst case ✗.",
+    "source": "AuD-Zusammenfassung §4.5"
+  }
+]

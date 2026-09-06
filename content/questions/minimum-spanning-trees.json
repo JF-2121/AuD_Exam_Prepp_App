@@ -1,22 +1,5 @@
 [
   {
-    "id": "mst-q-1",
-    "topicId": "minimum-spanning-trees",
-    "type": "multiple-choice",
-    "difficulty": "medium",
-    "prompt": "What does Kruskal's algorithm use to avoid creating a cycle when adding an edge?",
-    "options": [
-      "A priority queue keyed by distance",
-      "A Union-Find (Disjoint-Set) structure",
-      "A BFS queue",
-      "A hash table of visited nodes"
-    ],
-    "explanation": "Union-Find lets Kruskal check in near-O(1) amortized time whether two endpoints are already connected, i.e. whether adding the edge would form a cycle.",
-    "correctIndexes": [
-      1
-    ]
-  },
-  {
     "id": "mst-q-2",
     "topicId": "minimum-spanning-trees",
     "type": "short-answer",
@@ -37,7 +20,13 @@
     "prompt": "Run Prim's algorithm from node A on the example graph (edges: A-B=4, A-C=2, B-C=1, B-D=5, C-D=8, C-E=10, D-E=2, D-F=6, E-F=3). Give the final accepted MST edges as a sorted JSON array of \"node-node\" strings.",
     "algorithmId": "prim",
     "initialInput": "A",
-    "expectedFinalOutput": ["A-C", "B-C", "B-D", "D-E", "E-F"],
+    "expectedFinalOutput": [
+      "A-C",
+      "B-C",
+      "B-D",
+      "D-E",
+      "E-F"
+    ],
     "explanation": "Prim grows from A: cheapest edge A-C(2), then B-C(1), then B-D(5), then D-E(2), then E-F(3) — total weight 13, connecting all 6 nodes with 5 edges."
   },
   {
@@ -48,23 +37,14 @@
     "prompt": "Run Kruskal's algorithm on the same example graph. Give the final accepted MST edges as a sorted JSON array of \"node-node\" strings.",
     "algorithmId": "kruskal",
     "initialInput": null,
-    "expectedFinalOutput": ["A-C", "B-C", "B-D", "D-E", "E-F"],
-    "explanation": "Sorted by weight: B-C(1), A-C(2)=D-E(2), E-F(3), A-B(4) rejected (cycle), B-D(5), ... Kruskal accepts B-C, A-C, D-E, E-F, B-D — the same MST Prim finds (this graph's MST happens to be unique despite the A-C/D-E weight tie)."
-  },
-  {
-    "id": "mst-q-5",
-    "topicId": "minimum-spanning-trees",
-    "type": "multiple-choice",
-    "difficulty": "hard",
-    "prompt": "You're shown a partial, highlighted edge subset of an 8-node graph as a candidate intermediate step of some MST algorithm. The highlighted edges form TWO disjoint tree fragments that don't yet touch each other. Which algorithm(s) could this be a snapshot of?",
-    "options": [
-      "Kruskal only",
-      "Prim only",
-      "Both Kruskal and Prim",
-      "Neither"
+    "expectedFinalOutput": [
+      "A-C",
+      "B-C",
+      "B-D",
+      "D-E",
+      "E-F"
     ],
-    "correctIndexes": [0],
-    "explanation": "Prim always grows exactly one connected tree from its start vertex — its intermediate state can never be a disjoint forest. Kruskal routinely holds several disjoint fragments mid-run (they only merge into one tree once enough edges are accepted), so a disjoint snapshot rules out Prim but is consistent with Kruskal."
+    "explanation": "Sorted by weight: B-C(1), A-C(2)=D-E(2), E-F(3), A-B(4) rejected (cycle), B-D(5), ... Kruskal accepts B-C, A-C, D-E, E-F, B-D — the same MST Prim finds (this graph's MST happens to be unique despite the A-C/D-E weight tie)."
   },
   {
     "id": "mst-q-6",
@@ -72,7 +52,12 @@
     "type": "short-answer",
     "difficulty": "medium",
     "prompt": "What sentinel value does this course initialize Prim's start-vertex key to (instead of 0)?",
-    "acceptedAnswers": ["-infinity", "-∞", "minus infinity", "negative infinity"],
+    "acceptedAnswers": [
+      "-infinity",
+      "-∞",
+      "minus infinity",
+      "negative infinity"
+    ],
     "explanation": "−∞ guarantees the start vertex is extracted first regardless of what other keys look like — the course's reference implementation literally names this constant MINUS_INFINITE."
   }
 ]

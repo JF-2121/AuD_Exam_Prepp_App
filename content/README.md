@@ -39,13 +39,8 @@ ID convention: `<topicId short>-fc-<n>`, unique across the whole app.
 
 ## Questions — `content/questions/<topicId>.json`
 
-One file per topic, an array of a discriminated union on `type`. Three types:
-
-**multiple-choice** (`correctIndexes` has 1 entry for classic single-answer MC, or 2+ entries for "choose exactly N" style — the real exam's 42-point MC section uses "choose exactly 2 of 4")
-```json
-{ "id": "sort-q-1", "topicId": "sorting-basics", "type": "multiple-choice", "difficulty": "easy",
-  "prompt": "...", "options": ["A", "B", "C"], "correctIndexes": [1], "explanation": "..." }
-```
+One file per topic, an array of a discriminated union on `type`. Two types live here;
+**multiple-choice questions live in `content/mc/` instead** (see below).
 
 **short-answer** (case-insensitive, whitespace-normalized match against any of `acceptedAnswers`)
 ```json
@@ -64,6 +59,47 @@ visualizer's own `generateSteps`/`extractResult` for `algorithmId`, so grading c
 ```
 
 `difficulty` is one of `easy | medium | hard`. ID convention: `<topicId short>-q-<n>`.
+
+## Multiple choice — `content/mc/<topicId>.json`
+
+The MC compendium powering the **Multiple Choice** tab. It gets its own folder because the MC
+section is 42 of the real exam's 100 points — the single largest block on the paper — and because
+every entry here follows the exam's own format, which the general question bank does not.
+
+`loadMcQuestions()` reads this folder; `loadQuestions()` merges it into the general pool, so
+Practice and Mock Exam draw from these questions too. Adding a file here needs no code changes.
+
+```json
+[
+  { "id": "sort-q-1", "topicId": "sorting-basics", "type": "multiple-choice", "difficulty": "easy",
+    "prompt": "Statements about Merge Sort — which two are correct?",
+    "options": ["A", "B", "C", "D"], "correctIndexes": [0, 2],
+    "explanation": "Why each of the four options is true or false.",
+    "source": "Gedächtnisprotokoll SoSe 2025 · MC II.5" }
+]
+```
+
+**Authoring contract** (all of it enforced by the app's assumptions, so keep to it):
+
+- **Exactly 4 options**, written as *declarative statements* about the topic — the exam's style,
+  not "which of these is the answer to…" with sentence-fragment options.
+- **`correctIndexes` has length 1 or 2**, and nothing else:
+  - **1 → the exam's Part I**, "genau *eine* der vier Aussagen ist richtig", worth **1 point**.
+  - **2 → the exam's Part II**, "genau *zwei* der vier Aussagen sind richtig", worth **2 points**,
+    awarded **only if exactly both** are marked. One right and one wrong scores **0, not 1**.
+- **Prefer 2-of-4.** Part II is 36 of the section's 42 points, so the bank is weighted heavily
+  toward it (currently 129 of 186 questions).
+- **`explanation` accounts for all four options**, not just the correct ones — the convention is
+  ✓ for each true statement and ✗ for each false one.
+- **`source`** attributes the question, e.g. `"Gedächtnisprotokoll SoSe 2025 · MC II.5"`,
+  `"Altklausur WS23/24 · Aufgabe 3.3.2"`, `"AuD-Zusammenfassung §6.2"`. It is shown in the
+  compendium and is searchable.
+- **No trace-shaped questions.** Anything whose answer is a produced data structure — a sorted
+  array, a tree after an insertion, a traversal output — belongs in `content/questions/` as a
+  `trace` question, not here.
+- Filename (minus `.json`) must equal every entry's `topicId`. IDs must be unique app-wide;
+  the convention is `<topic short>-mc-<n>` for new questions (`real-*` marks verbatim
+  reconstructions of real exam questions).
 
 ## Exam templates — `content/examTemplates.json`
 

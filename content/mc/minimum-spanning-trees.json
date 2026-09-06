@@ -1,0 +1,98 @@
+[
+  {
+    "id": "mst-q-1",
+    "topicId": "minimum-spanning-trees",
+    "type": "multiple-choice",
+    "difficulty": "easy",
+    "prompt": "What does Kruskal's algorithm use to avoid creating a cycle when adding an edge?",
+    "options": [
+      "A Union-Find (disjoint-set) structure: an edge is accepted only if its endpoints lie in different sets.",
+      "A priority queue keyed by the vertices' distances.",
+      "A DFS run before every single edge insertion.",
+      "Nothing — Kruskal cannot create cycles by construction."
+    ],
+    "correctIndexes": [0],
+    "explanation": "findSet(u) ≠ findSet(v) tests exactly whether u and v are already connected; if they are, the edge would close a cycle and is rejected. With path compression the operations are near-O(1) amortized, so the overall cost stays dominated by the initial sort, O(E log E).",
+    "source": "AuD26 Sheet 10 · Kruskal"
+  },
+  {
+    "id": "mst-mc-1",
+    "topicId": "minimum-spanning-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Kruskal and Prim — which two statements are correct?",
+    "options": [
+      "Both are greedy algorithms and both provably produce an optimal MST.",
+      "Kruskal costs O(E log E), dominated by sorting the edges; Prim costs O(E log V) with a binary heap.",
+      "Prim only works on graphs with pairwise distinct edge weights.",
+      "Kruskal needs a start vertex, which determines the resulting MST."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Both are greedy and both are provably optimal ✓, with the stated costs ✓. Distinct weights only matter for MST *uniqueness*, not for Prim's correctness ✗, and Kruskal is edge-centric — it has no start vertex at all ✗.",
+    "source": "AuD26 Sheet 10 · MST"
+  },
+  {
+    "id": "mst-q-5",
+    "topicId": "minimum-spanning-trees",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "You are shown a partial edge set of a weighted graph as a candidate intermediate state, and it consists of several disjoint tree fragments. Which statement is correct?",
+    "options": [
+      "This immediately rules out Prim, since Prim's intermediate result is always a single connected tree.",
+      "This immediately rules out Kruskal, since Kruskal always keeps one connected tree.",
+      "It can be an intermediate state of both algorithms.",
+      "It can be an intermediate state of neither."
+    ],
+    "correctIndexes": [0],
+    "explanation": "Prim grows exactly one tree outward from its start vertex, so its partial result is connected at every step. Kruskal, by contrast, routinely holds a forest of disjoint fragments that only merge at the very end — so a disconnected snapshot is Kruskal's signature.",
+    "source": "AuD26 Sheet 10 · Prim vs. Kruskal"
+  },
+  {
+    "id": "mst-mc-2",
+    "topicId": "minimum-spanning-trees",
+    "type": "multiple-choice",
+    "difficulty": "hard",
+    "prompt": "Uniqueness of the MST — which two statements are correct?",
+    "options": [
+      "If all edge weights are pairwise distinct, the MST is unique.",
+      "An edge that is the unique lightest edge of the graph lies in every MST.",
+      "If two edges have equal weight, the MST is never unique.",
+      "Every graph has exactly one MST, since the total weight is minimal."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "Both follow from the exchange argument ✓✓: adding the excluded edge creates exactly one cycle, and every other edge on it is strictly heavier, so swapping would strictly improve the tree. Equal weights merely *permit* several MSTs, they do not force them ✗, and minimal total weight can be realised by several distinct edge sets ✗.",
+    "source": "AuD26 Sheet 10 · MST uniqueness"
+  },
+  {
+    "id": "mst-mc-3",
+    "topicId": "minimum-spanning-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Prim's algorithm as implemented in this course — which two statements are correct?",
+    "options": [
+      "The start vertex's key is initialised to −∞ as a sentinel, guaranteeing it is extracted first.",
+      "Prim is structurally similar to Dijkstra, but keyed on the edge weight rather than on a cumulative distance.",
+      "Prim keys on the cumulative distance from the start vertex, exactly like Dijkstra.",
+      "Prim requires the graph to be directed."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "The −∞ sentinel ✓ and the \"Dijkstra but keyed on w(u,v) instead of dist(u)+w(u,v)\" contrast ✓ are exactly the course's framing. Option 3 states the very difference it denies ✗, and an MST is defined only for *undirected* graphs ✗.",
+    "source": "AuD26 Sheet 10 · Prim"
+  },
+  {
+    "id": "mst-mc-4",
+    "topicId": "minimum-spanning-trees",
+    "type": "multiple-choice",
+    "difficulty": "medium",
+    "prompt": "Properties of a minimum spanning tree of a connected graph with n vertices — which two statements are correct?",
+    "options": [
+      "It contains exactly n−1 edges.",
+      "It is connected and acyclic, i.e. a tree spanning all vertices.",
+      "It contains the shortest path between every pair of vertices.",
+      "It always contains the globally heaviest edge, to keep the graph connected."
+    ],
+    "correctIndexes": [0, 1],
+    "explanation": "n−1 edges ✓ and connected + acyclic ✓ are the definition of a spanning tree. An MST minimises *total* weight, not pairwise distances — the s–t path in an MST can be far from the shortest path ✗ — and the heaviest edge is typically the first one a greedy algorithm avoids ✗.",
+    "source": "AuD26 Sheet 10 · MST definition"
+  }
+]

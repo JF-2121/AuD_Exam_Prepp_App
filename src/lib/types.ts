@@ -28,9 +28,32 @@ interface QuestionBase {
 
 export interface MultipleChoiceQuestion extends QuestionBase {
   type: 'multiple-choice';
+  /** Always 4, matching the real exam's format. */
   options: string[];
-  /** Indexes of every correct option. Length 1 = classic single-answer MC; length 2+ = "choose exactly N" style (as used in the real exam's 42-point MC section). */
+  /**
+   * Indexes of every correct option. Length 1 = the exam's Part I ("genau eine der vier
+   * Aussagen ist richtig", 1 point); length 2 = Part II ("genau zwei der vier Aussagen sind
+   * richtig", 2 points, awarded only if *exactly* both are marked).
+   */
   correctIndexes: number[];
+  /** Where the question comes from, e.g. "Gedächtnisprotokoll SoSe 2025 · MC II.5". */
+  source?: string;
+}
+
+/** The two MC formats the exam uses, keyed off how many options are correct. */
+export type McFormat = 'single' | 'double';
+
+export function mcFormat(q: MultipleChoiceQuestion): McFormat {
+  return q.correctIndexes.length >= 2 ? 'double' : 'single';
+}
+
+/**
+ * Points a question is worth in the real exam: 1 for a 1-of-4, 2 for a 2-of-4. Scoring is
+ * all-or-nothing per question ("Es werden nur dann Punkte vergeben, wenn genau die beiden
+ * richtigen Aussagen markiert wurden") — a half-right 2-of-4 scores 0, not 1.
+ */
+export function mcPoints(q: MultipleChoiceQuestion): number {
+  return mcFormat(q) === 'double' ? 2 : 1;
 }
 
 export interface ShortAnswerQuestion extends QuestionBase {
